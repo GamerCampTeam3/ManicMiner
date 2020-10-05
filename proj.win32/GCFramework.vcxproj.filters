@@ -49,6 +49,18 @@
     <Filter Include="Classes\GamerCamp\GameController">
       <UniqueIdentifier>{4ae41667-3df5-4816-b3c8-f6aa92570597}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner">
+      <UniqueIdentifier>{e654da68-43e3-48a0-8182-ce1cb67d31b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\GameState">
+      <UniqueIdentifier>{d930c733-3f6f-4ec3-a7ba-582c3cf086f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers">
+      <UniqueIdentifier>{2d269e41-c584-40ce-989e-6c63a05b4cb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\GameInstance">
+      <UniqueIdentifier>{665745bc-f955-460d-b452-ca8883ab6d55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\GCCollisionManager.cpp">
       <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp">
+      <Filter>Classes\ManicMiner\GameInstance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +262,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\GCCollisionManager.h">
       <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\GameState\EGameState.h">
+      <Filter>Classes\ManicMiner\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h">
+      <Filter>Classes\ManicMiner\GameInstance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,7 @@ class CGCGameLayerPlatformer
 : public IGCGameLayer
 , public b2ContactListener 
 {
-private:
+protected:
 	// object groups
 	CGCObjGroupPlatform*			m_pcGCGroupPlatform;
 	CGCObjGroupItem*				m_pcGCGroupItem;
@@ -41,9 +41,10 @@ private:
 	// mario
 	CGCObjPlayer*					m_pcGCOPlayer;
 
+
 public:
-	CGCGameLayerPlatformer	( void );
-	~CGCGameLayerPlatformer	( void );
+			CGCGameLayerPlatformer	( void );
+	virtual ~CGCGameLayerPlatformer	( void );
 
 	//////////////////////////////////////////////////////////////////////////
 	// player actions 
@@ -98,7 +99,7 @@ public:
 	
 	////////////////////////////////////////////////////////////////////////// 
 	// reset handling
-private:
+protected:
 	bool							m_bResetWasRequested;
 
 	void RequestReset()

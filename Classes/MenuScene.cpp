@@ -3,8 +3,8 @@
 // Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "MenuScene.h"
-#include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-
+//#include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
+#include "Classes/ManicMiner/Layers/CTestLayer.h"
 
 USING_NS_CC;
 
@@ -95,5 +95,5 @@ bool CMenuLayer::init()
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
-	Director::getInstance()->replaceScene( TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CGCGameLayerPlatformer >::CreateScene() ) );
+	Director::getInstance()->replaceScene( TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CTestLayer >::CreateScene() ) );
 }
