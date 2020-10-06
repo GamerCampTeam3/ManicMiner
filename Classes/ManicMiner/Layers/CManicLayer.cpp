@@ -1,7 +1,7 @@
-#include "CTestLayer.h"
-
 #include <algorithm>
-#include <stdlib.h> 
+#include <stdlib.h>
+
+#include "CManicLayer.h"
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
@@ -51,21 +51,37 @@ USING_NS_CC;
 ///////////////////////////////////////////////////////////////////////////////
 // Constructor
 ///////////////////////////////////////////////////////////////////////////////
-CTestLayer::CTestLayer()
-	: IGCGameLayer( GetGCTypeIDOf( CTestLayer ) )
+CManicLayer::CManicLayer()
+	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
+	, m_rGameInstance ( *CGameInstance::getInstance() )
 	, m_pcGCGroupItem( nullptr )
 	, m_pcGCGroupInvader( nullptr )
 	, m_pcGCGroupProjectilePlayer( nullptr )
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcGCOPlayer( nullptr )
-	, m_bResetWasRequested( false )
 {}
+
+
+CManicLayer::CManicLayer( CGameInstance& rGameInstance )
+	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
+	, m_rGameInstance( rGameInstance )
+	, m_pcGCGroupItem( nullptr )
+	, m_pcGCGroupInvader( nullptr )
+	, m_pcGCGroupProjectilePlayer( nullptr )
+	, m_pcGCSprBackGround( nullptr )
+	, m_pcGCOPlayer( nullptr )
+{}
+
+
+
+
+
 
 
 //////////////////////////////////////////////////////////////////////////
 // Destructor
 //////////////////////////////////////////////////////////////////////////
-CTestLayer::~CTestLayer()
+CManicLayer::~CManicLayer()
 {}
 
 
@@ -75,7 +91,7 @@ CTestLayer::~CTestLayer()
 // fixes the case where an IGCGameLayer with a different mapping was
 // pushed over this one on Director's scene stack
 //////////////////////////////////////////////////////////////////////////
-void CTestLayer::onEnter()
+void CManicLayer::onEnter()
 {
 	IGCGameLayer::onEnter();
 
@@ -101,7 +117,7 @@ void CTestLayer::onEnter()
 // on create
 //////////////////////////////////////////////////////////////////////////
 //virtual
-void CTestLayer::VOnCreate()
+void CManicLayer::VOnCreate()
 {
 	///////////////////////////////////////////////////////////////////////////
 	// cache some useful values 
@@ -145,47 +161,6 @@ void CTestLayer::VOnCreate()
 	// create and register the object group for the player projectile objects
 	m_pcGCGroupProjectilePlayer = new CGCObjGroupProjectilePlayer();
 	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupProjectilePlayer );
-
-
-	///////////////////////////////////////////////////////////////////////////
-	// add menu
-	///////////////////////////////////////////////////////////////////////////
-
-	// add a "close" icon to exit the progress. it's an autorelease object
-	MenuItemImage* pResetItem
-		= MenuItemImage::create(	"Loose/CloseNormal.png",
-									"Loose/CloseSelected.png",
-									CC_CALLBACK_1( CTestLayer::Callback_OnResetButton, this ) );
-
-	pResetItem->setPosition( Vec2( ( ( visibleSize.width - ( pResetItem->getContentSize().width * 0.5f ) ) + origin.x ),
-		( ( ( pResetItem->getContentSize().height * 0.5f ) + origin.y ) ) ) );
-
-	MenuItemImage* pQuitItem
-		= MenuItemImage::create(	"Loose/CloseNormal.png",
-									"Loose/CloseSelected.png",
-									CC_CALLBACK_1( CTestLayer::Callback_OnQuitButton, this ) );
-
-	pQuitItem->setPosition( Vec2( ( ( visibleSize.width - ( pQuitItem->getContentSize().width * 0.5f ) ) + origin.x ),
-		( ( visibleSize.height - ( pQuitItem->getContentSize().height * 0.5f ) ) + origin.y ) ) );
-
-	// create menu, it's an autorelease object
-	Menu* pMenu = Menu::create( pResetItem, pQuitItem, nullptr );
-	pMenu->setPosition( Vec2::ZERO );
-	this->addChild( pMenu, 1 );
-
-
-	////////////////////////////////////////////////////////////////////////////
-	// add label
-	////////////////////////////////////////////////////////////////////////////
-
-	// create and initialize a label
-	Label* pLabel = Label::createWithTTF( "Game - Top button to Quit, bottom button to Reset", "fonts/arial.ttf", 24 );
-
-	// position the label on the center of the screen
-	pLabel->setPosition( Vec2( visibleSize.width / 2, visibleSize.height - 50 ) );
-
-	// add the label as a child to this layer
-	this->addChild( pLabel, 1 );
 
 	// add "CGCGameLayerPlatformer" splash screen"
 	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/background.plist";
@@ -325,18 +300,14 @@ void CTestLayer::VOnCreate()
 // on update
 //////////////////////////////////////////////////////////////////////////
 //virtual 
-void CTestLayer::VOnUpdate( f32 fTimeStep )
+void CManicLayer::VOnUpdate( f32 fTimeStep )
 {
 	IGCGameLayer::VOnUpdate( fTimeStep );
 
 	// this shows how to iterate and respond to the box2d collision info
 	HandleCollisions();
 
-	if( ResetWasRequested() )
-	{
-		VOnReset();
-		ResetRequestWasHandled();
-	}
+	m_rGameInstance.Update( fTimeStep );
 }
 
 
@@ -344,7 +315,7 @@ void CTestLayer::VOnUpdate( f32 fTimeStep )
 // on destroy
 ///////////////////////////////////////////////////////////////////////////////
 // virtual
-void CTestLayer::VOnDestroy()
+void CManicLayer::VOnDestroy()
 {
 	///////////////////////////////////////////////////////////////////////////
 	// clean up anything we allocated in opposite order to creation
@@ -380,31 +351,12 @@ void CTestLayer::VOnDestroy()
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// on quit button
-///////////////////////////////////////////////////////////////////////////////
-void CTestLayer::Callback_OnQuitButton( Ref* pSender )
-{
-	ReplaceScene( TransitionRotoZoom::create( 1.0f, CMenuLayer::scene() ) );
-}
-
-
-
-///////////////////////////////////////////////////////////////////////////////
-// on reset button
-///////////////////////////////////////////////////////////////////////////////
-void CTestLayer::Callback_OnResetButton( Ref* pSender )
-{
-	RequestReset();
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
 // begin contact
 // insert any logic that relies on detecting the first frame where a 
 // contact exists
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
-void CTestLayer::BeginContact( b2Contact* pB2Contact )
+void CManicLayer::BeginContact( b2Contact* pB2Contact )
 {}
 
 
@@ -414,7 +366,7 @@ void CTestLayer::BeginContact( b2Contact* pB2Contact )
 // contact exists
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
-void CTestLayer::EndContact( b2Contact* pB2Contact )
+void CManicLayer::EndContact( b2Contact* pB2Contact )
 {}
 
 
@@ -423,7 +375,7 @@ void CTestLayer::EndContact( b2Contact* pB2Contact )
 // insert any logic that needs to be done before a contact is resolved
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
-void CTestLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold )
+void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold )
 {
 	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
 	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
@@ -470,7 +422,7 @@ void CTestLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold
 // e.g. check the types and double the impulse
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
-void CTestLayer::PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse )
+void CManicLayer::PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse )
 {}
 
 
@@ -483,7 +435,7 @@ void CTestLayer::PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpu
 // e.g. for gamplay reasons like jumping up through a platform
 // 
 ///////////////////////////////////////////////////////////////////////////////
-void CTestLayer::HandleCollisions()
+void CManicLayer::HandleCollisions()
 {
 	// check for collisions
 	b2Body* pBodyToDestroy = nullptr;
@@ -560,13 +512,13 @@ void CTestLayer::HandleCollisions()
 ////////////////////////////////////////////////////////////////////////////
 
 // Player + Enemy
-void CTestLayer::PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact )
+void CManicLayer::PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact )
 {
 	CGameInstance::getInstance()->OnPlayerDeath( rPlayer );
 }
 
 // Player + Collectible
-void CTestLayer::ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact )
+void CManicLayer::ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact )
 {
 	CGameInstance::getInstance()->OnItemCollected( rItem );
 }

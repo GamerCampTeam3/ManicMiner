@@ -5,6 +5,8 @@
 #include "AppMacros.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCObject/GCObjGroupDefault.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
+#include "ManicMiner/GameInstance/CGameInstance.h"
 #include "MenuScene.h"
 
 
@@ -36,6 +38,11 @@ AppDelegate::~AppDelegate()
 	sm_pcControllerManager = nullptr;
 // GamerCamp Edit
 //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+// Henrique Edit
+	// clean up singletons
+	CLevelManager::release();
+	CGameInstance::release();
 }
 
 
@@ -121,15 +128,17 @@ bool AppDelegate::applicationDidFinishLaunching()
 		sm_pcControllerManager	= new CGCControllerManager();
 		InitialiseControllerManager();
 
+		CGameInstance::getInstance()->Init();
+
 		// create the initial GameScene
-		Scene* pScene = CMenuLayer::scene();
+		//Scene* pScene = CMenuLayer::scene();
 
 
 	// GamerCamp Edit
 	//////////////////////////////////////////////////////////////////////////
 
 	// run
-    pDirector->runWithScene( pScene );
+    //pDirector->runWithScene( pScene );
 
     return true;
 }

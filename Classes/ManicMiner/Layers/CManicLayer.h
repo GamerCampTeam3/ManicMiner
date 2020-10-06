@@ -1,13 +1,13 @@
-#ifndef _CTESTLAYER_H_
-#define _CTESTLAYER_H_
+#ifndef _CMANICLAYER_H_
+#define _CMANICLAYER_H_
 
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
-
 
 
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
+class CGameInstance;													  //
 class CGCObjSprite;														  //
 class CGCObjPlayer;														  //
 class CGCObjPlatform;													  //
@@ -19,9 +19,13 @@ class CGCObjGroupInvader;												  //
 class CGCObjGroupProjectilePlayer;										  //
 ////////////////////////////////////////////////////////////////////////////
 
-class CTestLayer: public IGCGameLayer, public b2ContactListener
+class CManicLayer : public IGCGameLayer, public b2ContactListener
 {
 private:
+	// Reference to the GameInstance
+	CGameInstance& m_rGameInstance;
+
+
 	// object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
 	CGCObjGroupItem* m_pcGCGroupItem;
@@ -34,27 +38,12 @@ private:
 	// Mario
 	CGCObjPlayer* m_pcGCOPlayer;
 
-	////////////////////////////////////////////////////////////////////////// 
-	// reset handling
-	bool m_bResetWasRequested;
 
-	void RequestReset()
-	{
-		m_bResetWasRequested = true;
-	}
 
-	void ResetRequestWasHandled()
-	{
-		m_bResetWasRequested = false;
-	}
-
-	bool ResetWasRequested()
-	{
-		return m_bResetWasRequested;
-	}
 public:
-	CTestLayer( void );
-	virtual ~CTestLayer( void );
+	CManicLayer( void );
+	CManicLayer( CGameInstance& rGameInstance );
+	virtual ~CManicLayer( void );
 
 	//////////////////////////////////////////////////////////////////////////
 	// player actions 
@@ -69,11 +58,6 @@ public:
 	// player actions 
 	//////////////////////////////////////////////////////////////////////////
 
-	//////////////////////////////////////////////////////////////////////////
-	// 'selector' callbacks for menu buttons
-	void Callback_OnQuitButton ( Ref* pSender );
-	void Callback_OnResetButton( Ref* pSender );
-
 	// called from VOnUpdate
 	void HandleCollisions( void );
 
@@ -86,9 +70,9 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	// IGCGameLayer interface
 
-	virtual	void VOnCreate	( void )			override;
-	virtual void VOnUpdate	( f32 fTimeStep )	override;
-	virtual	void VOnDestroy	( void )			override;
+	virtual	void VOnCreate( void )			override;
+	virtual void VOnUpdate( f32 fTimeStep )	override;
+	virtual	void VOnDestroy( void )			override;
 
 	// IGCGameLayer interface
 	//////////////////////////////////////////////////////////////////////////
@@ -98,13 +82,14 @@ public:
 	// b2ContactListener interface - see b2ContactListener for details of 
 	// when these get called and what they are
 
-	virtual void BeginContact(	b2Contact* pB2Contact );
-	virtual void EndContact  (	b2Contact* pB2Contact );
-	virtual void PreSolve	 (	b2Contact* pB2Contact, const b2Manifold* pOldManifold	);
-	virtual void PostSolve	 (	b2Contact* pB2Contact, const b2ContactImpulse* pImpulse );
+	virtual void BeginContact( b2Contact* pB2Contact );
+	virtual void EndContact( b2Contact* pB2Contact );
+	virtual void PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold );
+	virtual void PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse );
 
 	void PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
 	void ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact );
 };
 
-#endif //#ifndef _CTESTLAYER_H_
+
+#endif // #ifndef _CMANICLAYER_H_
