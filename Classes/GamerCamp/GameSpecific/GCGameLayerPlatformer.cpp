@@ -6,6 +6,7 @@
 #include "GCGameLayerPlatformer.h"
 #include <algorithm>
 #include <stdlib.h> 
+#include <iostream>
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
@@ -20,6 +21,7 @@
 #include "GamerCamp/GameSpecific/Invaders/GCObjInvader.h"
 #include "GamerCamp/GameSpecific/Invaders/GCObjGroupInvader.h"
 #include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
+#include "proj.win32/CPlayer.h"
 
 #include "AppDelegate.h"
 
@@ -154,7 +156,7 @@ void CGCGameLayerPlatformer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    MenuItemImage* pResetItem 
+    MenuItemImage* pResetItem
 		= MenuItemImage::create(	"Loose/CloseNormal.png",
 									"Loose/CloseSelected.png",
 									CC_CALLBACK_1( CGCGameLayerPlatformer::Callback_OnResetButton, this));
@@ -262,7 +264,7 @@ void CGCGameLayerPlatformer::VOnCreate()
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
 
 	// create player object
-	m_pcGCOPlayer = new CGCObjPlayer();
+	m_pcGCOPlayer = new CPlayer();
 	m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
 
 	///////////////////////////////////////////////////////////////////////////
@@ -318,11 +320,34 @@ void CGCGameLayerPlatformer::VOnCreate()
 	// GetCollisionManager().AddCollisionHandler( CB_TestCollisionHandler );
 	// 
 
-	GetCollisionManager().AddCollisionHandler( [] ( CGCObjPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [] (CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
 	{
 		COLLISIONTESTLOG( "(lambda) the player hit an item!" );
 	} );
 
+	GetCollisionManager().AddCollisionHandler([](CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact) -> void
+	{	
+		bool isColliding;
+		isColliding = rcContact.IsTouching();
+
+		rcContact;
+		rcContact;
+		Vec2 testVec;
+		Vec2 testVecPlayer;
+
+		if (isColliding)
+		{
+			testVec = rcPlatform.GetSpritePosition();
+			testVecPlayer = rcPlayer.GetSpritePosition();
+			if (testVecPlayer.y > testVec.y)
+			{
+				//rcPlayer.SetDirection(rcPlayer.GetDirection());
+				rcPlayer.SetCanJump(true);
+			}
+		}
+
+		rcPlayer.GetPhysicsTransform();
+	});
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
 

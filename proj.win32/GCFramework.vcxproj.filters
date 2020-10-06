@@ -49,6 +49,12 @@
     <Filter Include="Classes\GamerCamp\GameController">
       <UniqueIdentifier>{4ae41667-3df5-4816-b3c8-f6aa92570597}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner">
+      <UniqueIdentifier>{8f48f7c7-85c6-4ae3-b270-efc207bedb9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Player">
+      <UniqueIdentifier>{094d8caf-e274-4eff-8b24-58a5e39a26c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,6 +146,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\GCCollisionManager.cpp">
       <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Classes\ManicMiner\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers.cpp">
+      <Filter>Classes\ManicMiner\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +256,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\GCCollisionManager.h">
       <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Classes\ManicMiner\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers.h">
+      <Filter>Classes\ManicMiner\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@ class CGCObjGroupItem;
 class CGCObjInvader;
 class CGCObjGroupInvader;
 class CGCObjGroupProjectilePlayer;
+class CPlayer;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -39,7 +40,7 @@ private:
 	CGCObjSprite*					m_pcGCSprBackGround;
 
 	// mario
-	CGCObjPlayer*					m_pcGCOPlayer;
+	CPlayer*					m_pcGCOPlayer;
 
 public:
 	CGCGameLayerPlatformer	( void );
@@ -53,8 +54,9 @@ public:
 		EPA_Down,
 		EPA_Left,
 		EPA_Right,
-		EPA_Fire
+		EPA_Jump
 	};
+
 	// player actions 
 	//////////////////////////////////////////////////////////////////////////
 
