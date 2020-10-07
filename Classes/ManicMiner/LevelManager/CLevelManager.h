@@ -20,7 +20,9 @@ public:
 	CManicLayer& GetCurrentLevelLayer();
 private:
 	int m_iCurrentLevelIndex;			// Indicates level
-	CManicLayer* m_pArrManicLayers[3];
+	//CManicLayer* m_pArrManicLayers[3];	// Array to hold layer info
+
+	void UpdateLevelInfo();
 };
 
 #endif //#ifndef _CLEVELMANAGER_H_

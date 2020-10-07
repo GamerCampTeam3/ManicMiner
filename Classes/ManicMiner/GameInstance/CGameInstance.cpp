@@ -29,7 +29,7 @@ void CGameInstance::Init()
 	// Run CLevelManager Init
 	m_pLevelManager->Init();
 
-
+	//m_pPlayer = &m_pLevelManager->GetCurrentLevelLayer().GetPlayer();
 }
 
 EGameState CGameInstance::GetGameState()
@@ -42,16 +42,30 @@ void CGameInstance::SetGameState( EGameState gameState )
 	m_eGameState = gameState;
 }
 
+void CGameInstance::SetPlayer( CGCObjPlayer& rPlayer )
+{
+	m_pPlayer = &rPlayer;
+}
+
 void CGameInstance::ResetLevel()
 {
 	m_pLevelManager->GetCurrentLevelLayer().VOnReset();
+	//m_pPlayer = &m_pLevelManager->GetCurrentLevelLayer().GetPlayer();
+	m_iCollected = 0;
 	ResetRequestWasHandled();
+}
+
+void CGameInstance::PlayerEnteredNewLevel( CGCObjPlayer& rPlayer )
+{
+	m_iCollected = 0;
+	m_pPlayer = &rPlayer;
+	m_eGameState = EGameState::EGS_Looting;
 }
 
 void CGameInstance::OnFinishedLooting()
 {
 	SetGameState( EGameState::EGS_Escaping );
-	m_pLevelManager->GetCurrentLevelLayer().GetCollisionManager().AddCollisionHandler( [&] ( CGCObjPlayer& rcPlayer, CGCObjPlatform& rItem, const b2Contact& rcContact ) -> void
+	m_pLevelManager->GetCurrentLevelLayer().GetCollisionManager().AddCollisionHandler( [&] ( CGCObjPlayer& rcPlayer, CGCObjPlatform& rPlatform, const b2Contact& rcContact ) -> void
 		{
 			if( m_eGameState == EGameState::EGS_Escaping )
 			{
@@ -65,16 +79,21 @@ void CGameInstance::OnEscaped()
 	SetGameState( EGameState::EGS_Victory );
 	// Run Time animation and points and stuff
 	// when that ends, call this line:
+	m_pLevelManager->GoToNextLevel();
 }
 
 void CGameInstance::OnItemCollected( CGCObjItem& rItem )
 {
-	CGCObjectManager::ObjectKill( &rItem );
-	m_iCollected++;
-
-	if( m_eGameState == EGameState::EGS_Looting && m_iCollected > 3 )
+	if( !rItem.GetHasBeenCollected() )
 	{
-		OnFinishedLooting();
+		rItem.Collected();
+		CGCObjectManager::ObjectKill( &rItem );
+		m_iCollected++;
+
+		if( m_eGameState == EGameState::EGS_Looting && m_iCollected > 3 )
+		{
+			OnFinishedLooting();
+		}
 	}
 }
 
@@ -102,6 +121,7 @@ void CGameInstance::OnPlayerDeath( CGCObjPlayer& rPlayer )
 void CGameInstance::OutOfLives()
 {
 	// Death animation instead of the objkill
-	CGCObjectManager::ObjectKill( m_pPlayer );
+
 	// After death plays, pop up with retry UI
+	m_pLevelManager->GoToMainMenu();
 }

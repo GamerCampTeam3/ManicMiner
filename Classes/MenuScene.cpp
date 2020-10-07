@@ -4,6 +4,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "MenuScene.h"
 #include "Classes/ManicMiner/Layers/CManicLayer.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
+#include "ManicMiner/GameInstance/CGameInstance.h"
 
 USING_NS_CC;
 
@@ -84,15 +86,30 @@ bool CMenuLayer::init()
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+	CGameInstance::getInstance()->Init();
+
+
     return true;
 }
-
-
 
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
-	Director::getInstance()->replaceScene( TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CManicLayer >::CreateScene() ) );
+	CLevelManager::getInstance()->GoToNextLevel();
+	//Director::getInstance()->replaceScene( TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CManicLayer >::CreateScene() ) );
 }

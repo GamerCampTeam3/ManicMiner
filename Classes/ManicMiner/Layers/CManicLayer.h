@@ -1,8 +1,9 @@
 #ifndef _CMANICLAYER_H_
 #define _CMANICLAYER_H_
 
-#include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
+#include <stdlib.h>
 
+#include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
@@ -25,7 +26,6 @@ private:
 	// Reference to the GameInstance
 	CGameInstance& m_rGameInstance;
 
-
 	// object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
 	CGCObjGroupItem* m_pcGCGroupItem;
@@ -37,8 +37,6 @@ private:
 
 	// Mario
 	CGCObjPlayer* m_pcGCOPlayer;
-
-
 
 public:
 	CManicLayer( void );
@@ -74,9 +72,9 @@ public:
 	virtual void VOnUpdate( f32 fTimeStep )	override;
 	virtual	void VOnDestroy( void )			override;
 
+
 	// IGCGameLayer interface
 	//////////////////////////////////////////////////////////////////////////
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// b2ContactListener interface - see b2ContactListener for details of 
@@ -89,7 +87,14 @@ public:
 
 	void PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
 	void ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact );
+
+
+	////////////////////////////////////////////////////////////////////////////
+	// Getters
+	////////////////////////////////////////////////////////////////////////////
+
+	CGCObjPlayer& GetPlayer();
+
+
 };
-
-
 #endif // #ifndef _CMANICLAYER_H_

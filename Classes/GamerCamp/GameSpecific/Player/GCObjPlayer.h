@@ -35,8 +35,6 @@ class CGCObjPlayer
 : public CGCObjSpritePhysics
 {
 private:
-	// used to fire projectiles
-	CGCObjGroupProjectilePlayer* m_pProjectileManager; 
 
 	// member variables for 'physicsy' handling
 	// N.B. uses sprite to store position and has no rotation
@@ -50,6 +48,8 @@ private:
 	// action map for controllers
 	TGCActionToKeyMap< EPlayerActions >* m_pcControllerActionToKeyMap;
 
+	// used to fire projectiles
+	CGCObjGroupProjectilePlayer* m_pProjectileManager; 
 public:
 	CGCObjPlayer();
 

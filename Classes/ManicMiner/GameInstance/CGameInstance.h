@@ -25,9 +25,6 @@ private:
 
 	EGameState m_eGameState;
 
-
-
-
 	void OutOfLives();
 
 public:
@@ -38,11 +35,13 @@ public:
 	EGameState GetGameState();
 	void SetGameState( EGameState gameState );
 
+	void SetPlayer( CGCObjPlayer& rPlayer );
 
 	void OnFinishedLooting();
 	void OnPlayerDeath( CGCObjPlayer& rPlayer );
 	void OnEscaped();
 	void OnItemCollected( CGCObjItem& rItem );
+	void PlayerEnteredNewLevel( CGCObjPlayer& rPlayer );
 
 	void Update( f32 fTimeStep );
 
