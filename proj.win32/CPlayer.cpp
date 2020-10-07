@@ -8,8 +8,6 @@
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
-#include "GamerCamp/GameSpecific/Player/GCObjProjectilePlayer.h"
-#include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
 #include "GamerCamp/GameController/GCController.h"
 
 
@@ -29,20 +27,50 @@ static cocos2d::Controller::Key	s_aeKeys[] = { cocos2d::Controller::Key::JOYSTIC
 // this type - need this to construct our base type
 CPlayer::CPlayer()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlayer))
+	, m_ePlayerDirection			( EPlayerDirection::EPD_Static )
+	, m_eLastPlayerDirection		( EPlayerDirection::EPD_Static )
+	, m_bCanJump					( true )
+	, m_bCanBeControlled			( true )
+	, m_iLives						( m_kiStartingLives )
+	, m_iCollectibles               ( 0 )
+	, m_iCollectiblesNeeded (1)
+	, m_v2Movement					( 0.0f, 0.0f )
+	, m_v2Jump						( 0.0f, 0.0f )
+	, m_pcControllerActionToKeyMap	( nullptr )
+{
+
+}
+
+CPlayer::CPlayer(cocos2d::Vec2 startingPos)
+	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlayer))
 	, m_ePlayerDirection(EPlayerDirection::EPD_Static)
 	, m_eLastPlayerDirection(EPlayerDirection::EPD_Static)
 	, m_bCanJump(true)
 	, m_bCanBeControlled(true)
 	, m_iLives(m_kiStartingLives)
-	, m_v2MovementLeft(-10.0f, 0.0f)
-	, m_v2MovementRight(10.0f, 0.0f)
-	, m_v2MovementStatic(0.0f, 0.0f)
-	, m_v2JumpStatic(0.0f, 2000.0f)
-	, m_v2JumpRight(100.0f, 2000.0f)
-	, m_v2JumpLeft(-010.0f, 2000.0f)
+	, m_iCollectibles(0)
+	, m_iCollectiblesNeeded(1)
+	, m_v2Movement(0.0f, 0.0f)
+	, m_v2Jump(0.0f, 0.0f)
 	, m_pcControllerActionToKeyMap(nullptr)
 {
+	SetResetPosition(startingPos);
+}
 
+CPlayer::CPlayer(cocos2d::Vec2 startingPos, int startingLives)
+	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlayer))
+	, m_ePlayerDirection(EPlayerDirection::EPD_Static)
+	, m_eLastPlayerDirection(EPlayerDirection::EPD_Static)
+	, m_bCanJump(true)
+	, m_bCanBeControlled(true)
+	, m_iLives(startingLives)
+	, m_iCollectibles(0)
+	, m_iCollectiblesNeeded(1)
+	, m_v2Movement(0.0f, 0.0f)
+	, m_v2Jump(0.0f, 0.0f)
+	, m_pcControllerActionToKeyMap(nullptr)
+{
+	SetResetPosition(startingPos);
 }
 
 
@@ -107,7 +135,42 @@ void CPlayer::VOnResourceRelease()
 	m_pcControllerActionToKeyMap = nullptr;
 }
 
+void CPlayer::IncrementCollectible()
+{
+	m_iCollectibles++;
+	CheckIfEnoughCollectible();
+}
 
+void CPlayer::CheckIfEnoughCollectible()
+{
+	if (m_iCollectibles == m_iCollectiblesNeeded)
+	{
+		Vec2 resetPos(50.0f, 50.0f);
+		SetResetPosition(resetPos);
+		CCLOG("enough collectibles");
+	}
+}
+
+void CPlayer::TakeDamage()
+{
+	m_iLives--;
+
+	if (CheckForDeath())
+	{
+		Death();
+	}
+}
+
+bool CPlayer::CheckForDeath()
+{
+	return (m_iLives == 0);
+}
+
+void CPlayer::Death()
+{
+	Vec2 resetPos(50.0f, 50.0f);
+	SetResetPosition(resetPos);
+}
 
 //////////////////////////////////////////////////////////////////////////
 // 
@@ -133,7 +196,6 @@ void CPlayer::KeyboardInput()
 	{
 		if ((pKeyManager->ActionIsPressed(CGCGameLayerPlatformer::EPA_Jump)))
 		{
-
 			m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
 			m_bCanJump = false;
 		}
@@ -143,8 +205,7 @@ void CPlayer::KeyboardInput()
 		{
 			if (m_bCanBeControlled)
 			{
-				m_ePlayerDirection = EPlayerDirection::EPD_Left;
-				m_eLastPlayerDirection = m_ePlayerDirection;
+				ApplyDirectionChange(EPlayerDirection::EPD_Left, -10.0f, 0.0f);
 			}
 		}
 
@@ -152,8 +213,7 @@ void CPlayer::KeyboardInput()
 		{
 			if (m_bCanBeControlled)
 			{
-				m_ePlayerDirection = EPlayerDirection::EPD_Right;
-				m_eLastPlayerDirection = m_ePlayerDirection;
+				ApplyDirectionChange(EPlayerDirection::EPD_Right, 10.0f, 0.0f);
 			}
 		}
 
@@ -162,7 +222,7 @@ void CPlayer::KeyboardInput()
 			// Ladder Up
 			if (m_bIsOnLadder)
 			{
-
+				ApplyDirectionChange(EPlayerDirection::EPD_Up, 0.0f, 10.0f);
 			}
 		}
 
@@ -171,17 +231,24 @@ void CPlayer::KeyboardInput()
 			// Ladder Down
 			if (m_bIsOnLadder)
 			{
-
+				ApplyDirectionChange(EPlayerDirection::EPD_Down, 0.0f, -10.0f);
 			}
 		}
 
 		else
 		{
-
-			m_ePlayerDirection = EPlayerDirection::EPD_Static;
-			m_eLastPlayerDirection = m_ePlayerDirection;
+			ApplyDirectionChange(EPlayerDirection::EPD_Static, 0.0f, 0.0f);
 		}
 	}
+}
+
+
+void CPlayer::ApplyDirectionChange(EPlayerDirection newDirection, float xOffSet, float yOffSet)
+{
+	Vec2 l_v2Movement(xOffSet, yOffSet);
+	m_v2Movement = l_v2Movement;
+	m_ePlayerDirection = newDirection;
+	m_eLastPlayerDirection = m_ePlayerDirection;
 }
 
 
@@ -192,70 +259,77 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 	/// 
 	switch (m_ePlayerDirection)
 	{
+		case EPlayerDirection::EPD_Static:
+			//
+			SetVelocity(m_v2Movement);
+			break;
 
-	case EPlayerDirection::EPD_Left:
-		//
-		SetFlippedX(false);
-		CCLOG("Movement: Left");
-		SetVelocity(m_v2MovementLeft);
-		break;
+		case EPlayerDirection::EPD_Right:
+			SetFlippedX(true);
+			SetVelocity(m_v2Movement);
+			break;
 
-	case EPlayerDirection::EPD_Right:
-		//
-		SetFlippedX(true);
-		CCLOG("Movement: Right");
-		SetVelocity(m_v2MovementRight);
-		break;
+		case EPlayerDirection::EPD_Left:
+			SetFlippedX(false);
+			SetVelocity(m_v2Movement);
+			break;
 
-	case EPlayerDirection::EPD_Static:
-		//
-		SetVelocity(m_v2MovementStatic);
-		break;
+		case EPlayerDirection::EPD_Up:
+			SetVelocity(m_v2Movement);
+			break;
 
-		///	Jump Case
-		/// The logic is simple here, essentially locks the jump to 3 things:
-		/// Static: If no movement, will just be a static jump
-		/// Left Lock: If player was moving to the left, the jump will be locked to the Left
-		/// Right Lock: If player was moving to the right, the jump will be locked to the Right
+		case EPlayerDirection::EPD_Down:
+			SetVelocity(m_v2Movement);
+			break;
 
-	case EPlayerDirection::EPD_Jumping:
-		//
-		CCLOG("Movement: Jump Initiated");
-		GetPhysicsBody()->SetGravityScale(30.0f);
+			///	Jump Case
+			/// The logic is simple here, essentially locks the jump to 3 things:
+			/// Static: If no movement, will just be a static jump
+			/// Left Lock: If player was moving to the left, the jump will be locked to the Left
+			/// Right Lock: If player was moving to the right, the jump will be locked to the Right
 
-		if (m_eLastPlayerDirection == EPlayerDirection::EPD_Left)
-		{
-			CCLOG("Jump: Left Lock");
-			ApplyForceToCenter(m_v2JumpStatic);
-			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
-		}
+		case EPlayerDirection::EPD_Jumping:
+			//
+			CCLOG("Movement: Jump Initiated");
+			GetPhysicsBody()->SetGravityScale(m_kfGravitionalPull);
 
-		else if (m_eLastPlayerDirection == EPlayerDirection::EPD_Right)
-		{
-			CCLOG("Jump: Right Lock");
-			ApplyForceToCenter(m_v2JumpRight);
-			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
-		}
+			if (m_eLastPlayerDirection == EPlayerDirection::EPD_Left)
+			{
+				CCLOG("Jump: Left Lock");
+				Vec2 l_v2Jump(0.0f, 2000.0f);
+				m_v2Jump = l_v2Jump;
+				ApplyForceToCenter(m_v2Jump);
+				m_ePlayerDirection = EPlayerDirection::EPD_Falling;
+			}
 
-		else
-		{
-			CCLOG("Jump: Left Lock");
-			ApplyForceToCenter(m_v2JumpLeft);
-			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
-		}
-		break;
+			else if (m_eLastPlayerDirection == EPlayerDirection::EPD_Right)
+			{
+				CCLOG("Jump: Right Lock");
+				Vec2 l_v2Jump(100.0f, 2000.0f);
+				m_v2Jump = l_v2Jump;
+				ApplyForceToCenter(m_v2Jump);
+				m_ePlayerDirection = EPlayerDirection::EPD_Falling;
+			}
 
-	case EPlayerDirection::EPD_Falling:
-		m_bCanJump = false;
-		CCLOG("Movement: Falling");
-		GetPhysicsBody()->SetGravityScale(30.0f);
-		break;
+			else
+			{
+				CCLOG("Jump: Center Lock");
+				Vec2 l_v2Jump(0.0f, 2000.0f);
+				m_v2Jump = l_v2Jump;
+				ApplyForceToCenter(m_v2Jump);
+				m_ePlayerDirection = EPlayerDirection::EPD_Falling;
+			}
+			break;
 
-	case EPlayerDirection::EPD_Ladder:
-		CCLOG("Movement: Ladder");
+		case EPlayerDirection::EPD_Falling:
+			m_bCanJump = false;
+			m_bCanBeControlled = false;
+			CCLOG("Movement: Falling");
+			GetPhysicsBody()->SetGravityScale(m_kfGravitionalPull);
+			break;
 
-	default:
-		//
-		break;
+		default:
+			//
+			break;
 	}
 }

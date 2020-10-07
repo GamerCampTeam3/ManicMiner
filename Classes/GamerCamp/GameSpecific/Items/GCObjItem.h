@@ -16,6 +16,7 @@ public:
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CGCObjItem ) )
 	{}
 
+	
 	virtual void VOnResourceAcquire( void ) override;
 };
 

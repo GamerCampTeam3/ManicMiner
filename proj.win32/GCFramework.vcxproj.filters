@@ -55,6 +55,9 @@
     <Filter Include="Classes\ManicMiner\Player">
       <UniqueIdentifier>{094d8caf-e274-4eff-8b24-58a5e39a26c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Collectibles">
+      <UniqueIdentifier>{3827ee8b-05da-49ef-be20-8d47c322233d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -150,8 +153,11 @@
     <ClCompile Include="CPlayer.cpp">
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Helpers.cpp">
-      <Filter>Classes\ManicMiner\Player</Filter>
+    <ClCompile Include="CCollectible.cpp">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollectiblePool.cpp">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,8 +266,11 @@
     <ClInclude Include="CPlayer.h">
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Helpers.h">
-      <Filter>Classes\ManicMiner\Player</Filter>
+    <ClInclude Include="CCollectible.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollectiblePool.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

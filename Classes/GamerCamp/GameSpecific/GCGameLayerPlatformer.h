@@ -20,6 +20,7 @@ class CGCObjInvader;
 class CGCObjGroupInvader;
 class CGCObjGroupProjectilePlayer;
 class CPlayer;
+class CCollectible;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -40,7 +41,8 @@ private:
 	CGCObjSprite*					m_pcGCSprBackGround;
 
 	// mario
-	CPlayer*					m_pcGCOPlayer;
+	CPlayer*						m_pcGCOPlayer;
+	CCollectible* m_pColl;
 
 public:
 	CGCGameLayerPlatformer	( void );

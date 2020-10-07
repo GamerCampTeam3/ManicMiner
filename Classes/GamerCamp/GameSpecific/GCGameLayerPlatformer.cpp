@@ -22,6 +22,7 @@
 #include "GamerCamp/GameSpecific/Invaders/GCObjGroupInvader.h"
 #include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
 #include "proj.win32/CPlayer.h"
+#include "proj.win32/CCollectible.h"
 
 #include "AppDelegate.h"
 
@@ -223,6 +224,7 @@ void CGCGameLayerPlatformer::VOnCreate()
 	
 	b2Vec2	b2v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
 	Vec2	v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
+	Vec2	v2ScreenCentre_OffSet((origin.x + (visibleSize.width * 0.4f)), (origin.y + (visibleSize.height * 0.5f)));
 
 
 
@@ -264,8 +266,9 @@ void CGCGameLayerPlatformer::VOnCreate()
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
 
 	// create player object
-	m_pcGCOPlayer = new CPlayer();
-	m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
+	m_pcGCOPlayer = new CPlayer(v2MarioStartPos);
+	m_pColl = new CCollectible(v2ScreenCentre_OffSet);
+	//m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
 
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. invaders are added by the invader object group
@@ -323,9 +326,17 @@ void CGCGameLayerPlatformer::VOnCreate()
 	GetCollisionManager().AddCollisionHandler( [] (CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
 	{
 		COLLISIONTESTLOG( "(lambda) the player hit an item!" );
+
 	} );
 
-	GetCollisionManager().AddCollisionHandler([](CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact) -> void
+	GetCollisionManager().AddCollisionHandler([](CPlayer& rcPlayer, CCollectible& rcItem, const b2Contact& rcContact) -> void
+	{
+		rcPlayer.IncrementCollectible();
+		rcItem.Death();
+
+	});
+
+	GetCollisionManager().AddCollisionHandler( []( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact ) -> void
 	{	
 		bool isColliding;
 		isColliding = rcContact.IsTouching();
@@ -343,13 +354,14 @@ void CGCGameLayerPlatformer::VOnCreate()
 			{
 				//rcPlayer.SetDirection(rcPlayer.GetDirection());
 				rcPlayer.SetCanJump(true);
+				rcPlayer.SetCanBeControlled(true);
 			}
 		}
 
 		rcPlayer.GetPhysicsTransform();
 	});
 
-}// void CGCGameLayerPlatformer::VOnCreate() { ...
+}
 
 
 //////////////////////////////////////////////////////////////////////////
