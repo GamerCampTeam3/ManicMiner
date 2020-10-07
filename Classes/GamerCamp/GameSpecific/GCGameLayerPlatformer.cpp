@@ -283,28 +283,38 @@ void CGCGameLayerPlatformer::VOnCreate()
 	const u32 uNumColumns		= 3;
 	const u32 uNumRows			= 4;
 
-	float fColumnSpacing		= ( visibleSize.width / ( ((float) uNumColumns ) + 1.0f ) );
-	float fRowSpacing			= ( visibleSize.height / ( ((float) uNumRows ) + 1.0f ) );
+	//float fColumnSpacing		= ( visibleSize.width / ( ((float) uNumColumns ) + 1.0f ) );
+	//float fRowSpacing			= ( visibleSize.height / ( ((float) uNumRows ) + 1.0f ) );
+	//
+	//float fNextPlatformPos_x	= fColumnSpacing;
+	//float fRowStartPos_y		= fRowSpacing;
+	//
+	//for( u32 uColumn = 0; uColumn < uNumColumns; ++uColumn )
+	//{ 
+	//	Vec2 v2NextPlatformPos( fNextPlatformPos_x, fRowStartPos_y );
+	//
+	//	for( u32 uRow = 0; uRow < uNumRows; ++uRow )
+	//	{
+	//		CGCObjPlatform* pPlatform	= new CGCObjPlatform();
+	//		CGCObjItem*		pItem		= new CGCObjItem();
+	//
+	//		pPlatform->SetResetPosition	( v2NextPlatformPos );
+	//		pItem->SetResetPosition		( v2NextPlatformPos + Vec2( 0.0f, 30.0f ) );
+	//
+	//		v2NextPlatformPos.y += fRowSpacing;
+	//	}
+	//
+	//	fNextPlatformPos_x += fColumnSpacing;
+	//}
+	// CGCObjPlatform* pPlatform = new CGCObjPlatform();
+	// pPlatform->SetResetPosition(v2MarioStartPos);
 
-	float fNextPlatformPos_x	= fColumnSpacing;
-	float fRowStartPos_y		= fRowSpacing;
-
-	for( u32 uColumn = 0; uColumn < uNumColumns; ++uColumn )
-	{ 
-		Vec2 v2NextPlatformPos( fNextPlatformPos_x, fRowStartPos_y );
-
-		for( u32 uRow = 0; uRow < uNumRows; ++uRow )
-		{
-			CGCObjPlatform* pPlatform	= new CGCObjPlatform();
-			CGCObjItem*		pItem		= new CGCObjItem();
-
-			pPlatform->SetResetPosition	( v2NextPlatformPos );
-			pItem->SetResetPosition		( v2NextPlatformPos + Vec2( 0.0f, 30.0f ) );
-
-			v2NextPlatformPos.y += fRowSpacing;
-		}
-
-		fNextPlatformPos_x += fColumnSpacing;
+	i32	iOffsetX = 80;
+	i32	iOffsetY = 200;
+	for (u32 uLoop = 0; uLoop < 15; ++uLoop)
+	{
+		CGCObjPlatform* pPlatform = new CGCObjPlatform();
+		pPlatform->SetResetPosition(Vec2 (0 + (iOffsetX * uLoop), (visibleSize.height * 0.5f) ) );
 	}
 
 

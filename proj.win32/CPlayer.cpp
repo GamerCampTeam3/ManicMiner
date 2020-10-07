@@ -147,7 +147,7 @@ void CPlayer::CheckIfEnoughCollectible()
 	{
 		Vec2 resetPos(50.0f, 50.0f);
 		SetResetPosition(resetPos);
-		CCLOG("enough collectibles");
+		CCLOG("Enough Collectibles Gathered, Exit Open");
 	}
 }
 

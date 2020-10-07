@@ -37,7 +37,7 @@ private:
 
 public:
 	// number of invaders
-	static const u32 k_uNumProjectiles = 16;
+	static const u32 k_uNumProjectiles = 0;
 
 	CGCObjGroupInvader();		
 	virtual ~CGCObjGroupInvader() override;
