@@ -61,6 +61,12 @@
     <Filter Include="Classes\ManicMiner\GameInstance">
       <UniqueIdentifier>{665745bc-f955-460d-b452-ca8883ab6d55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\TSingleton">
+      <UniqueIdentifier>{6a83f711-0d89-4ecf-9f4d-c0b625e5647a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\LevelManager">
+      <UniqueIdentifier>{0081fb25-fd91-4cbf-997a-23c70273cbf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -158,6 +164,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp">
       <Filter>Classes\ManicMiner\GameInstance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h">
+      <Filter>Classes\ManicMiner\TSingleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp">
+      <Filter>Classes\ManicMiner\LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp">
+      <Filter>Classes\ManicMiner\Layers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +286,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h">
       <Filter>Classes\ManicMiner\GameInstance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h">
+      <Filter>Classes\ManicMiner\LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h">
+      <Filter>Classes\ManicMiner\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
