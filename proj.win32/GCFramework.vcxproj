@@ -181,6 +181,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GamerCamp\Win32Input\GCKeyboardManager.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h" />
@@ -223,6 +224,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameState\EGameState.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
     <ClInclude Include="..\Classes\MenuScene.h" />

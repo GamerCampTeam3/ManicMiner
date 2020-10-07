@@ -174,6 +174,9 @@
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp">
       <Filter>Classes\ManicMiner\Layers</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -291,6 +294,9 @@
       <Filter>Classes\ManicMiner\LevelManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h">
       <Filter>Classes\ManicMiner\Layers</Filter>
     </ClInclude>
   </ItemGroup>

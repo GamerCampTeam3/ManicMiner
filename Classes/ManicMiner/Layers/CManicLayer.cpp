@@ -45,9 +45,6 @@ USING_NS_CC;
 #endif
 
 
-
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // Constructor
 ///////////////////////////////////////////////////////////////////////////////
@@ -59,8 +56,9 @@ CManicLayer::CManicLayer()
 	, m_pcGCGroupProjectilePlayer( nullptr )
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcGCOPlayer( nullptr )
-{}
+{
 
+}
 
 CManicLayer::CManicLayer( CGameInstance& rGameInstance )
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
@@ -72,18 +70,11 @@ CManicLayer::CManicLayer( CGameInstance& rGameInstance )
 	, m_pcGCOPlayer( nullptr )
 {}
 
-
-
-
-
-
-
 //////////////////////////////////////////////////////////////////////////
 // Destructor
 //////////////////////////////////////////////////////////////////////////
 CManicLayer::~CManicLayer()
 {}
-
 
 //////////////////////////////////////////////////////////////////////////
 // in order to guarantee the actions this layer expects we need to 
@@ -293,8 +284,13 @@ void CManicLayer::VOnCreate()
 			ItemCollected( rItem, rcContact );
 		} );
 
-}// void CGCGameLayerPlatformer::VOnCreate() { ...
 
+
+	////////////////////////////////////////////////////////////////////////
+	// Update Game Instance Info
+	CGameInstance::getInstance()->PlayerEnteredNewLevel(*m_pcGCOPlayer);
+
+}// void CGCGameLayerPlatformer::VOnCreate() { ...
 
 //////////////////////////////////////////////////////////////////////////
 // on update
@@ -309,7 +305,6 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 
 	m_rGameInstance.Update( fTimeStep );
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // on destroy
@@ -349,7 +344,6 @@ void CManicLayer::VOnDestroy()
 	IGCGameLayer::VOnDestroy();
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // begin contact
 // insert any logic that relies on detecting the first frame where a 
@@ -359,7 +353,6 @@ void CManicLayer::VOnDestroy()
 void CManicLayer::BeginContact( b2Contact* pB2Contact )
 {}
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // end contact
 // insert any logic that relies on detecting the last frame where a 
@@ -368,7 +361,6 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 //virtual 
 void CManicLayer::EndContact( b2Contact* pB2Contact )
 {}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // pre solve
@@ -415,7 +407,6 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 	}
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // post solve
 // insert any logic that needs to be done after a contact is resolved
@@ -424,7 +415,6 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 //virtual 
 void CManicLayer::PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse )
 {}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // this function can only look at the collisions that happened (and which 
@@ -521,4 +511,9 @@ void CManicLayer::PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& r
 void CManicLayer::ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact )
 {
 	CGameInstance::getInstance()->OnItemCollected( rItem );
+}
+
+CGCObjPlayer& CManicLayer::GetPlayer()
+{
+	return *m_pcGCOPlayer;
 }
