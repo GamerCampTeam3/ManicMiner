@@ -128,17 +128,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 		sm_pcControllerManager	= new CGCControllerManager();
 		InitialiseControllerManager();
 
-		CGameInstance::getInstance()->Init();
-
 		// create the initial GameScene
-		//Scene* pScene = CMenuLayer::scene();
+		Scene* pScene = CMenuLayer::scene();
 
 
 	// GamerCamp Edit
 	//////////////////////////////////////////////////////////////////////////
 
 	// run
-    //pDirector->runWithScene( pScene );
+    pDirector->runWithScene( pScene );
 
     return true;
 }
