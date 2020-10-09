@@ -67,10 +67,11 @@
     <Filter Include="Classes\ManicMiner\LevelManager">
       <UniqueIdentifier>{0081fb25-fd91-4cbf-997a-23c70273cbf1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\Enemy">
-      <UniqueIdentifier>{e640ca23-1a90-4ead-af7a-5a10f04a9725}</UniqueIdentifier>
     <Filter Include="Classes\ManicMiner\AirManager">
       <UniqueIdentifier>{95a5a7b3-9bbb-4d4d-a30f-a509382705f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Enemy">
+      <UniqueIdentifier>{60658f93-e5f6-47c6-bf8d-1321ae9e02fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -182,16 +183,17 @@
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp">
       <Filter>Classes\ManicMiner\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
+    <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp">
+      <Filter>Classes\ManicMiner\AirManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.cpp">
       <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp">
       <Filter>Classes\ManicMiner\Enemy</Filter>
-    <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp">
-      <Filter>Classes\ManicMiner\AirManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -315,16 +317,17 @@
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h">
       <Filter>Classes\ManicMiner\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
+    <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h">
+      <Filter>Classes\ManicMiner\AirManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.h">
       <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h">
       <Filter>Classes\ManicMiner\Enemy</Filter>
-    <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h">
-      <Filter>Classes\ManicMiner\AirManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

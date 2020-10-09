@@ -1,14 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Classes",
     "\\Classes\\GamerCamp",
     "\\Classes\\GamerCamp\\GameSpecific",
     "\\Classes\\GamerCamp\\GameSpecific\\Invaders",
     "\\Classes\\ManicMiner",
     "\\Classes\\ManicMiner\\Enemy",
-    "\\Classes\\ManicMiner\\Layers"
+    "\\Classes\\ManicMiner\\Layers",
+    "\\cocos2d",
+    "\\proj.win32"
   ],
-  "SelectedNode": "\\Classes\\ManicMiner\\Layers\\CManicLayer.cpp",
+  "SelectedNode": "\\proj.win32\\GCFramework.sln",
   "PreviewInSolutionExplorer": false
 }

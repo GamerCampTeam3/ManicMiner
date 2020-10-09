@@ -55,8 +55,8 @@ CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_rGameInstance ( *CGameInstance::getInstance() )
 	, m_pcGCGroupItem( nullptr )
-	, m_pcGCGroupInvader( nullptr )
 	, m_pcGCGroupProjectilePlayer( nullptr )
+	, m_pcGCGroupEnemy ( nullptr )
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcGCOPlayer( nullptr )
 {
@@ -67,8 +67,8 @@ CManicLayer::CManicLayer( CGameInstance& rGameInstance )
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_rGameInstance( rGameInstance )
 	, m_pcGCGroupItem( nullptr )
-	, m_pcGCGroupInvader( nullptr )
 	, m_pcGCGroupProjectilePlayer( nullptr )
+	, m_pcGCGroupEnemy( nullptr )
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcGCOPlayer( nullptr )
 {}
@@ -148,9 +148,9 @@ void CManicLayer::VOnCreate()
 	m_pcGCGroupItem = new CGCObjGroupItem();
 	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupItem );
 
-	// create and register the object group for the invader objects
-	m_pcGCGroupInvader = new CGCObjGroupInvader();
-	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupInvader );
+	//// create and register the object group for the invader objects
+	//m_pcGCGroupInvader = new CGCObjGroupInvader();
+	//CGCObjectManager::ObjectGroupRegister( m_pcGCGroupInvader );
 
 	// create and register the object group for the player projectile objects
 	m_pcGCGroupProjectilePlayer = new CGCObjGroupProjectilePlayer();
@@ -238,7 +238,7 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. invaders are added by the invader object group
 	///////////////////////////////////////////////////////////////////////////
-	m_pcGCGroupInvader->SetFormationOrigin( v2ScreenCentre_Pixels + Vec2( -( visibleSize.width * 0.3f ), ( visibleSize.height * 0.25f ) ) );
+	//m_pcGCGroupInvader->SetFormationOrigin( v2ScreenCentre_Pixels + Vec2( -( visibleSize.width * 0.3f ), ( visibleSize.height * 0.25f ) ) );
 
 	m_pcGCGroupEnemy->SetFormationOrigin(origin);
 
@@ -349,9 +349,9 @@ void CManicLayer::VOnDestroy()
 	delete m_pcGCGroupProjectilePlayer;
 	m_pcGCGroupProjectilePlayer = nullptr;
 
-	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupInvader );
-	delete m_pcGCGroupInvader;
-	m_pcGCGroupInvader = nullptr;
+	//CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupInvader );
+	//delete m_pcGCGroupInvader;
+	//m_pcGCGroupInvader = nullptr;
 
 	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupItem );
 	delete m_pcGCGroupItem;

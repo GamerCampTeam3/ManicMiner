@@ -31,7 +31,6 @@ private:
 	// object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
 	CGCObjGroupItem* m_pcGCGroupItem;
-	CGCObjGroupInvader* m_pcGCGroupInvader;
 	CGCObjGroupProjectilePlayer* m_pcGCGroupProjectilePlayer;
 	CGCObjGroupEnemy* m_pcGCGroupEnemy;
 
