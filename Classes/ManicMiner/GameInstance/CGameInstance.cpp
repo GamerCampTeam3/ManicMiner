@@ -6,16 +6,19 @@
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
+#include "../AirManager/AirManager.h"
 
 CGameInstance::CGameInstance()
 	: TSingleton			()
 	, m_pPlayer				( nullptr )
 	, m_pLevelManager		( nullptr )
+	, m_pAirManager			( nullptr )
 	, m_iLivesLeft			( 3 )
 	, m_iCollected			( 0 )
 	, m_eGameState			( EGameState::EGS_Looting )
 	, m_bResetWasRequested	( false )
-{}
+{
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -50,16 +53,31 @@ void CGameInstance::SetPlayer( CGCObjPlayer& rPlayer )
 void CGameInstance::ResetLevel()
 {
 	m_pLevelManager->GetCurrentLevelLayer().VOnReset();
-	//m_pPlayer = &m_pLevelManager->GetCurrentLevelLayer().GetPlayer();
 	m_iCollected = 0;
+	m_pAirManager->Reset();
 	ResetRequestWasHandled();
 }
 
-void CGameInstance::PlayerEnteredNewLevel( CGCObjPlayer& rPlayer )
+void CGameInstance::PlayerEnteredNewLevel( CManicLayer& rNewManicLayer, CGCObjPlayer& rPlayer )
 {
+	if( m_pAirManager == nullptr )
+	{
+		cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+		cocos2d::Point origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+		m_pAirManager = new CAirManager(  origin, visibleSize );
+	}
+
 	m_iCollected = 0;
 	m_pPlayer = &rPlayer;
 	m_eGameState = EGameState::EGS_Looting;
+
+
+	m_pAirManager->Init( rNewManicLayer );
+}
+
+void CGameInstance::OutOfAir()
+{
+	OnPlayerDeath( m_pLevelManager->GetCurrentLevelLayer().GetPlayer() );
 }
 
 void CGameInstance::OnFinishedLooting()
@@ -97,8 +115,20 @@ void CGameInstance::OnItemCollected( CGCObjItem& rItem )
 	}
 }
 
+void CGameInstance::PlayerLeavingLevel( CManicLayer& rNewManicLayer )
+{
+	m_pAirManager->LeavingLevel(rNewManicLayer);
+}
+
 void CGameInstance::Update( f32 fTimeStep )
 {
+	// AIR MANAGER UPDATE
+	if( m_pAirManager )
+	{
+		m_pAirManager->Update( fTimeStep );
+	}
+
+	// RESET LEVEL REQUEST
 	if( ResetWasRequested() )
 	{
 		ResetLevel();
