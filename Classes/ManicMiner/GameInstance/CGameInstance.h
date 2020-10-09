@@ -20,6 +20,7 @@ private:
 	CLevelManager* m_pLevelManager;
 	CAirManager* m_pAirManager;
 	// Should go on player class
+	const int m_iMaxLives;
 	int m_iLivesLeft;
 
 	// Should be reference to the item obj group actually, which manages the num of collected items
@@ -43,6 +44,9 @@ public:
 	void OnPlayerDeath( CGCObjPlayer& rPlayer );
 	void OnEscaped();
 	void OnItemCollected( CGCObjItem& rItem );
+
+	void EnterCavern();
+
 
 	// Runs before level transition begins
 	void PlayerLeavingLevel( CManicLayer& rNewManicLayer );

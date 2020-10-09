@@ -3,8 +3,6 @@
 // Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "MenuScene.h"
-#include "Classes/ManicMiner/Layers/CManicLayer.h"
-#include "ManicMiner/LevelManager/CLevelManager.h"
 #include "ManicMiner/GameInstance/CGameInstance.h"
 
 USING_NS_CC;
@@ -89,16 +87,6 @@ bool CMenuLayer::init()
 
 
 
-
-
-
-
-
-
-
-
-
-
 	CGameInstance::getInstance()->Init();
 
 
@@ -110,6 +98,6 @@ bool CMenuLayer::init()
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
-	CLevelManager::getInstance()->GoToNextLevel();
+	CGameInstance::getInstance()->EnterCavern();
 	//Director::getInstance()->replaceScene( TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CManicLayer >::CreateScene() ) );
 }

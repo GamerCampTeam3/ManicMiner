@@ -15,7 +15,8 @@ USING_NS_CC;
 
 CLevelManager::CLevelManager()
 	: TSingleton()
-	, m_iCurrentLevelIndex( 0 )
+	, m_iCurrentLevelIndex	( -1 )
+	, m_pGameInstance		( nullptr )
 	//,	m_pArrManicLayers	()
 {}
 
@@ -24,14 +25,16 @@ CLevelManager::~CLevelManager()
 
 void CLevelManager::Init()
 {
-	
-	//cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CMenuLayer >::CreateScene() ) );
-	// run
+	CGameInstance* pGameInstance = CGameInstance::getInstance();
+	if( pGameInstance != nullptr )
+	{
+		m_pGameInstance = pGameInstance;
+	}
 }
 
 void CLevelManager::GoToMainMenu()
 {
-	CGameInstance::getInstance()->PlayerLeavingLevel( GetCurrentLevelLayer() );
+	m_pGameInstance->PlayerLeavingLevel( GetCurrentLevelLayer() );
 	m_iCurrentLevelIndex = -1;
 	Scene* pScene = CMenuLayer::scene();
 
@@ -42,27 +45,35 @@ void CLevelManager::GoToNextLevel()
 {
 	// If Not Coming Out Of MainMenu
 	// Run PlayerLeavingLevel()
-	if( m_iCurrentLevelIndex != 0 )
+	if( m_iCurrentLevelIndex != -1 )
 	{
-		CGameInstance::getInstance()->PlayerLeavingLevel( GetCurrentLevelLayer() );
+		m_pGameInstance->PlayerLeavingLevel( GetCurrentLevelLayer() );
 	}
 
 	// Select next level
 	switch( m_iCurrentLevelIndex )
 	{
-	case 0:
+	case -1:
 		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene() ) );
 		break;
-	case 1:
+	case 0:
 		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CManicLayer >::CreateScene() ) );
 		break;
-	case 2:
+	case 1:
 		GoToMainMenu();
 		break;
 	}
 
 	// Increment Level Identifier Index
 	m_iCurrentLevelIndex++;
+}
+
+void CLevelManager::EnterCavern()
+{
+	if ( m_iCurrentLevelIndex == -1 )
+	{
+		GoToNextLevel();
+	}
 }
 
 CManicLayer& CLevelManager::GetCurrentLevelLayer()
@@ -83,6 +94,5 @@ CManicLayer& CLevelManager::GetCurrentLevelLayer()
 
 void CLevelManager::UpdateLevelInfo()
 {
-	auto gameInstance = CGameInstance::getInstance();
-	gameInstance->SetPlayer( GetCurrentLevelLayer().GetPlayer() );
+	m_pGameInstance->SetPlayer( GetCurrentLevelLayer().GetPlayer() );
 }

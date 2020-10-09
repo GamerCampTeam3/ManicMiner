@@ -1,8 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Classes"
+    "\\Classes",
+    "\\Classes\\GamerCamp",
+    "\\Classes\\GamerCamp\\GameSpecific",
+    "\\Classes\\GamerCamp\\GameSpecific\\Invaders",
+    "\\Classes\\ManicMiner",
+    "\\Classes\\ManicMiner\\Enemy",
+    "\\Classes\\ManicMiner\\Layers"
   ],
-  "SelectedNode": "\\Classes\\ManicMiner",
+  "SelectedNode": "\\Classes\\ManicMiner\\Layers\\CManicLayer.cpp",
   "PreviewInSolutionExplorer": false
 }

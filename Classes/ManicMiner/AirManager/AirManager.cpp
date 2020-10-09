@@ -157,7 +157,7 @@ void CAirManager::LeavingLevel( CManicLayer& rNewManicLayer )
 	if( m_pcGCSprAirBar->GetSprite() != nullptr )
 	{
 		m_pcGCSprAirBar->GetSprite()->retain();
-		m_pcGCSprAirBar->SetParent();
+		m_pcGCSprAirVignette->RemoveFromParent();
 	}
 	if( m_pcGCSprAirVignette->GetSprite() != nullptr )
 	{

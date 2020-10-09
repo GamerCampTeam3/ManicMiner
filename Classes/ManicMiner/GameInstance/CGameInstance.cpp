@@ -13,7 +13,8 @@ CGameInstance::CGameInstance()
 	, m_pPlayer				( nullptr )
 	, m_pLevelManager		( nullptr )
 	, m_pAirManager			( nullptr )
-	, m_iLivesLeft			( 3 )
+	, m_iMaxLives			( 3 )
+	, m_iLivesLeft			( m_iMaxLives )
 	, m_iCollected			( 0 )
 	, m_eGameState			( EGameState::EGS_Looting )
 	, m_bResetWasRequested	( false )
@@ -113,6 +114,13 @@ void CGameInstance::OnItemCollected( CGCObjItem& rItem )
 			OnFinishedLooting();
 		}
 	}
+}
+
+void CGameInstance::EnterCavern()
+{
+	m_iLivesLeft = m_iMaxLives;
+	m_iCollected = 0;
+	m_pLevelManager->EnterCavern();
 }
 
 void CGameInstance::PlayerLeavingLevel( CManicLayer& rNewManicLayer )
