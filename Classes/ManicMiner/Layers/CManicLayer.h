@@ -18,6 +18,8 @@ class CGCObjGroupItem;													  //
 class CGCObjInvader;													  //
 class CGCObjGroupInvader;												  //
 class CGCObjGroupProjectilePlayer;										  //
+class CGCObjEnemy;													  //
+class CGCObjGroupEnemy;													  //
 ////////////////////////////////////////////////////////////////////////////
 
 class CManicLayer : public IGCGameLayer, public b2ContactListener
@@ -31,6 +33,7 @@ private:
 	CGCObjGroupItem* m_pcGCGroupItem;
 	CGCObjGroupInvader* m_pcGCGroupInvader;
 	CGCObjGroupProjectilePlayer* m_pcGCGroupProjectilePlayer;
+	CGCObjGroupEnemy* m_pcGCGroupEnemy;
 
 	// backgrounds
 	CGCObjSprite* m_pcGCSprBackGround;
@@ -86,6 +89,8 @@ public:
 	virtual void PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse );
 
 	void PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
+	void PlayerCollidedEnemy(CGCObjPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact);
+
 	void ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact );
 
 

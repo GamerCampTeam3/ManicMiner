@@ -20,6 +20,9 @@
 #include "GamerCamp/GameSpecific/Platforms/GCObjPlatform.h" 
 #include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
 #include "GamerCamp/GameSpecific/Player/GCObjPlayer.h"
+#include "ManicMiner/Enemy/GCObjGroupEnemy.h"
+#include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Enemy/GCEnemyDataStore.h"
 
 #include "MenuScene.h"
 #include "../GameInstance/CGameInstance.h"
@@ -153,6 +156,9 @@ void CManicLayer::VOnCreate()
 	m_pcGCGroupProjectilePlayer = new CGCObjGroupProjectilePlayer();
 	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupProjectilePlayer );
 
+	m_pcGCGroupEnemy = new CGCObjGroupEnemy();
+	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupEnemy);
+	
 	// add "CGCGameLayerPlatformer" splash screen"
 	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/background.plist";
 	{
@@ -234,6 +240,8 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 	m_pcGCGroupInvader->SetFormationOrigin( v2ScreenCentre_Pixels + Vec2( -( visibleSize.width * 0.3f ), ( visibleSize.height * 0.25f ) ) );
 
+	m_pcGCGroupEnemy->SetFormationOrigin(origin);
+
 	///////////////////////////////////////////////////////////////////////////
 	// add platforms & items
 	///////////////////////////////////////////////////////////////////////////
@@ -283,6 +291,14 @@ void CManicLayer::VOnCreate()
 		{
 			ItemCollected( rItem, rcContact );
 		} );
+
+	GetCollisionManager().AddCollisionHandler([&](CGCObjPlayer& rcPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact) -> void
+		{
+			PlayerCollidedEnemy( rcPlayer, rEnemy, rcContact );
+		});
+
+
+
 
 
 
@@ -341,6 +357,11 @@ void CManicLayer::VOnDestroy()
 	delete m_pcGCGroupItem;
 	m_pcGCGroupItem = nullptr;
 
+	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemy);
+	delete m_pcGCGroupEnemy;
+	m_pcGCGroupEnemy = nullptr;
+
+	
 	IGCGameLayer::VOnDestroy();
 }
 
@@ -505,6 +526,12 @@ void CManicLayer::HandleCollisions()
 void CManicLayer::PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact )
 {
 	CGameInstance::getInstance()->OnPlayerDeath( rPlayer );
+}
+
+// Player + Enemy
+void CManicLayer::PlayerCollidedEnemy(CGCObjPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact)
+{
+	CGameInstance::getInstance()->OnPlayerDeath( rPlayer);
 }
 
 // Player + Collectible
