@@ -182,6 +182,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp" />
@@ -227,6 +228,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h" />
+    <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameState\EGameState.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />

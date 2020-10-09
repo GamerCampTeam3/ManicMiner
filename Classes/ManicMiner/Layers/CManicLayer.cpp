@@ -304,7 +304,7 @@ void CManicLayer::VOnCreate()
 
 	////////////////////////////////////////////////////////////////////////
 	// Update Game Instance Info
-	CGameInstance::getInstance()->PlayerEnteredNewLevel(*m_pcGCOPlayer);
+	CGameInstance::getInstance()->PlayerEnteredNewLevel( *this, *m_pcGCOPlayer );
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
 

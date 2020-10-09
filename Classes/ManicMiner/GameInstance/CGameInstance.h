@@ -9,6 +9,8 @@ class CGCObjPlayer;
 class CGCObjItem;
 class IGCGameLayer;
 class CLevelManager;
+class CAirManager;
+class CManicLayer;
 
 
 class CGameInstance : public TSingleton<CGameInstance>
@@ -16,7 +18,7 @@ class CGameInstance : public TSingleton<CGameInstance>
 private:
 	CGCObjPlayer* m_pPlayer;
 	CLevelManager* m_pLevelManager;
-
+	CAirManager* m_pAirManager;
 	// Should go on player class
 	int m_iLivesLeft;
 
@@ -41,7 +43,13 @@ public:
 	void OnPlayerDeath( CGCObjPlayer& rPlayer );
 	void OnEscaped();
 	void OnItemCollected( CGCObjItem& rItem );
-	void PlayerEnteredNewLevel( CGCObjPlayer& rPlayer );
+
+	// Runs before level transition begins
+	void PlayerLeavingLevel( CManicLayer& rNewManicLayer );
+
+	void PlayerEnteredNewLevel( CManicLayer& rNewManicLayer, CGCObjPlayer& rPlayer );
+
+	void OutOfAir();
 
 	void Update( f32 fTimeStep );
 

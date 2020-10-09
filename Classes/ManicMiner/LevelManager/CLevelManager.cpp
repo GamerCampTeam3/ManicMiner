@@ -31,6 +31,7 @@ void CLevelManager::Init()
 
 void CLevelManager::GoToMainMenu()
 {
+	CGameInstance::getInstance()->PlayerLeavingLevel( GetCurrentLevelLayer() );
 	m_iCurrentLevelIndex = -1;
 	Scene* pScene = CMenuLayer::scene();
 
@@ -39,6 +40,14 @@ void CLevelManager::GoToMainMenu()
 
 void CLevelManager::GoToNextLevel()
 {
+	// If Not Coming Out Of MainMenu
+	// Run PlayerLeavingLevel()
+	if( m_iCurrentLevelIndex != 0 )
+	{
+		CGameInstance::getInstance()->PlayerLeavingLevel( GetCurrentLevelLayer() );
+	}
+
+	// Select next level
 	switch( m_iCurrentLevelIndex )
 	{
 	case 0:
@@ -51,6 +60,8 @@ void CLevelManager::GoToNextLevel()
 		GoToMainMenu();
 		break;
 	}
+
+	// Increment Level Identifier Index
 	m_iCurrentLevelIndex++;
 }
 

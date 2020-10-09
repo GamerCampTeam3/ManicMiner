@@ -6,7 +6,6 @@
 #define __MENUSCENE_H__
 
 #include "cocos2d.h"
-#include "ManicMiner/Layers/CManicLayer.h"
 
 //////////////////////////////////////////////////////////////////////////
 // class deriving from CCLayer that creates our main menu scene

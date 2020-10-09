@@ -48,6 +48,9 @@ private:
 	// used to reposition the sprite at its original position on reset
 	cocos2d::Vec2				m_v2InitialPosition;
 
+	// used to hold the current scale value of the sprite
+	cocos2d::Vec2                m_v2SpriteScale;
+
 protected:
 	CGCObjSprite( GCTypeID idDerivedType );
 
@@ -81,6 +84,33 @@ public:
 	// rotation accessors
 	inline void		SetSpriteRotation( float fRotationRadians );
 	inline float	GetSpriteRotation() const;
+
+	///////////////////////////////////////////////////////////////////////////
+	// Accessor Functions added by Umeer Rama
+	///////////////////////////////////////////////////////////////////////////
+
+	// size accessors
+	inline void                SetSpriteScale( float fWidth, float fHeight );
+	inline cocos2d::Vec2		GetSpriteScale() const;
+
+	// opacity accessors
+	inline void        SetSpriteOpacity( int iOpacity );
+	inline int        GetSpriteOpacity() const;
+
+	// global z-order accessors
+	inline void        SetSpriteGlobalZOrder( float fZOrder );
+	inline float    GetSpriteGlobalZOrder() const;
+	
+	///////////////////////////////////////////////////////////////////////////
+	// Sprite Parent Cleanup Functions added by Umeer Rama & Henrique Teixeira
+	///////////////////////////////////////////////////////////////////////////
+
+	// Force Sprite Parent Cleanup
+	inline void RemoveFromParent();
+
+	// Sprite Getter
+	inline cocos2d::Sprite* GetSprite() const;
+
 
 	// accessor for the sprite's rect
 	inline cocos2d::Rect GetBoundingBox() const;
@@ -232,6 +262,76 @@ inline cocos2d::Vec2 CGCObjSprite::GetSpritePosition() const
 	CCAssert( m_pcSprite, "m_pcSprite is nullptr. Have you called CreateSprite?" );
 	cocos2d::Point cPosition = m_pcSprite->getPosition();
 	return cocos2d::Vec2( cPosition.x, cPosition.y );
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////////
+inline void CGCObjSprite::SetSpriteScale( float fWidth, float fHeight )
+{
+	m_v2SpriteScale = cocos2d::Vec2( fWidth, fHeight );
+	m_pcSprite->setScale( fWidth, fHeight );
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////////
+inline cocos2d::Vec2 CGCObjSprite::GetSpriteScale() const
+{
+	return cocos2d::Vec2( m_v2SpriteScale.x, m_v2SpriteScale.y );
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////////
+inline void CGCObjSprite::SetSpriteOpacity( int iOpacity )
+{
+	m_pcSprite->setOpacity( iOpacity );
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////////
+inline int CGCObjSprite::GetSpriteOpacity() const
+{
+	return m_pcSprite->getOpacity();
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////////
+inline void CGCObjSprite::SetSpriteGlobalZOrder( float fZOrder )
+{
+	m_pcSprite->setGlobalZOrder( fZOrder );
+}
+
+//////////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////////
+inline float CGCObjSprite::GetSpriteGlobalZOrder() const
+{
+	return m_pcSprite->getGlobalZOrder();
+}
+
+//////////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////////
+inline void CGCObjSprite::RemoveFromParent()
+{
+	m_pcSprite->removeFromParent();
+}
+
+//////////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////////
+inline cocos2d::Sprite* CGCObjSprite::GetSprite() const
+{
+	return m_pcSprite;
 }
 
 
