@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////////////////////////////
 // fwd decl
 class CGCObjSprite;
-class CGCObjPlayer;
+class CPlayer;
 class CGCObjPlatform;
 class CGCObjGroupPlatform;
 class CGCObjItem;
@@ -19,8 +19,6 @@ class CGCObjGroupItem;
 class CGCObjInvader;
 class CGCObjGroupInvader;
 class CGCObjGroupProjectilePlayer;
-class CPlayer;
-class CCollectible;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -30,7 +28,7 @@ class CGCGameLayerPlatformer
 : public IGCGameLayer
 , public b2ContactListener 
 {
-private:
+protected:
 	// object groups
 	CGCObjGroupPlatform*			m_pcGCGroupPlatform;
 	CGCObjGroupItem*				m_pcGCGroupItem;
@@ -41,12 +39,12 @@ private:
 	CGCObjSprite*					m_pcGCSprBackGround;
 
 	// mario
-	CPlayer*						m_pcGCOPlayer;
-	CCollectible* m_pColl;
+	CPlayer*					m_pcGCOPlayer;
+
 
 public:
-	CGCGameLayerPlatformer	( void );
-	~CGCGameLayerPlatformer	( void );
+			CGCGameLayerPlatformer	( void );
+	virtual ~CGCGameLayerPlatformer	( void );
 
 	//////////////////////////////////////////////////////////////////////////
 	// player actions 
@@ -56,9 +54,8 @@ public:
 		EPA_Down,
 		EPA_Left,
 		EPA_Right,
-		EPA_Jump
+		EPA_Fire
 	};
-
 	// player actions 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -102,7 +99,7 @@ public:
 	
 	////////////////////////////////////////////////////////////////////////// 
 	// reset handling
-private:
+protected:
 	bool							m_bResetWasRequested;
 
 	void RequestReset()

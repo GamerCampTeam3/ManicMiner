@@ -1,7 +1,7 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//// (C) Gamer Camp / Alex Darby 2018
-//// Distributed under the MIT license - see readme.md
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// (C) Gamer Camp / Alex Darby 2018
+// Distributed under the MIT license - see readme.md
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#ifndef _GCOBJPLAYER_H_
 //#define _GCOBJPLAYER_H_
 //
@@ -16,58 +16,40 @@
 //template< typename TActionType > class TGCActionToKeyMap;
 //
 //// enum of user defined input actions the class
-//enum EPlayerActions
-//{
-//	EPA_AxisMove_X,
-//	EPA_AxisMove_Y,
-//	EPA_Jump
-//};
+//// enum EPlayerActions
+//// {
+//// 	EPA_AxisMove_X,
+//// 	EPA_AxisMove_Y,
+//// 	EPA_ButtonFire
+//// };
 //
-//enum class EPlayerDirection
-//{
-//	EPD_Static,
-//	EPD_Right,
-//	EPD_Left,
-//	EPD_Jumping,
-//	EPD_Falling
-//};
-//
-//
+////////////////////////////////////////////////////////////////////////////
+//// This is a sample class derived from CGCObject.
+//// 
+//// It could be the basis of your player object, it's up to you really.
+////
+//// The player will be the only gameplay object in the default object group
+////
+////////////////////////////////////////////////////////////////////////////
 //class CGCObjPlayer 
 //: public CGCObjSpritePhysics
 //{
 //private:
 //
-//	// Constant values
+//	// member variables for 'physicsy' handling
+//	// N.B. uses sprite to store position and has no rotation
+//	f32		m_fMaximumMoveForce_Horizontal;
+//	f32		m_fMaximumMoveForce_Vertical;
+//	f32		m_fDragCoefficient_Linear;
+//	f32		m_fDragCoefficient_Square;
+//	f32		m_fNoInput_ExtraDrag_Square;
+//	f32		m_fNoInput_VelocityThreshold;
 //
-//	const int	     m_kiStartingLives = 3;          // The starting life of the player, changing this will apply it to m_iLives on Construction
-//	const float	     m_kfGravitionalPull = 30.0f;    // The gravitional force that affects the player for jumping purpouses
+//	// action map for controllers
+//	// TGCActionToKeyMap< EPlayerActions >* m_pcControllerActionToKeyMap;
 //
-//	// Our Movement Related variables
-//
-//	EPlayerDirection m_ePlayerDirection;			 // This stores the current direction the player is at
-//	EPlayerDirection m_eLastPlayerDirection;		 // This stores the last direction of the player, used for the jump lock
-//
-//	bool m_bCanJump;								 // This regulates the player's ability to jump again
-//	bool m_bCanBeControlled;						 // This disables input of the X-axis directional movement of the player while jumping (or on a conveyor belt)
-//
-//	// TODO: Turn these to const Vectors as they are not modified during runtime
-//
-//	cocos2d::Vec2 m_v2MovementLeft;					 // Left Movement Speed
-//	cocos2d::Vec2 m_v2MovementRight;				 // Right Movement Speed
-//	cocos2d::Vec2 m_v2MovementStatic;				 // Static Movement Speed (none)
-//	cocos2d::Vec2 m_v2JumpStatic;					 // Static Jump Height (none)
-//	cocos2d::Vec2 m_v2JumpRight;				     // Right Jump Height
-//	cocos2d::Vec2 m_v2JumpLeft;					     // Left Jump Height
-//
-//	// Other values
-//
-//	int m_iLives;									 // The current life of the player
-//
-//	// The controller
-//
-//	TGCActionToKeyMap< EPlayerActions >* m_pcControllerActionToKeyMap;
-//
+//	// used to fire projectiles
+//	// CGCObjGroupProjectilePlayer* m_pProjectileManager; 
 //public:
 //	CGCObjPlayer();
 //
@@ -97,40 +79,26 @@
 //        // called immediately before the managing object group releases its own assets
 //        virtual void VOnResourceRelease( void );
 //
+//	// overridden virtuals from the game object interface
+//	//////////////////////////////////////////////////////////////////////////
 //
 //	// updates the movement of the CCSprite
 //	void UpdateMovement( f32 fTimeStep );
 //
-//	void KeyboardInput();
-//
-//
-//
-//
-//	//Getters and setters
-//	//For platform collisions:: CanJump bool
-//	bool GetCanJump() const		    {	  return m_bCanJump;	};
-//	void SetCanJump( bool canJump ) {	  m_bCanJump = canJump; };
-//
-//	// For GameState related things:: Player lives
-//	// Additionally included pre-made increment/decrement functions
-//	int GetLives() const			{     return m_iLives;      };
-//	void SetLives( int lives )		{     m_iLives = lives;     };
-//
-//	void IncrementLives()			{	  m_iLives++;		    };
-//	void DecrementLives()			{	  m_iLives--;			};
-//
-//
-//	// Returns the current movement direction of the player
-//	EPlayerDirection GetDirection()					            { return m_eLastPlayerDirection; };
-//
-//	// Avoid calling SetDirection unless you absolutely must do something to the player.
-//	// If you need this for conveyor belts, please use ConveyorBeltMovement.
-//	void SetDirection(EPlayerDirection lastDirection)           { m_ePlayerDirection = lastDirection; };
-//
-//
-//	void ConveyorBeltMovement(EPlayerDirection directionLock)   { m_ePlayerDirection = directionLock; m_bCanBeControlled = false; };
-//	void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; };
-//
-//
+//    // this function exists purely to better illustrate the EXAMPLE collision detection functionality in CGCGameLayerSpaceInvaders
+//    void NotifyOfCollisionWithInvader();
 //};
-//#endif // #ifndef _GCOBJPLAYER_H_
+//
+#ifndef _GCOBJPLAYER_H_
+#define _GCOBJPLAYER_H_
+
+#ifndef _GCOBJSPRITEPHYSICS_H_
+	#include "../../GCCocosInterface/GCObjSpritePhysics.h"
+#endif
+
+class CGCObjPlayer
+	: public CGCObjSpritePhysics
+{
+	
+};
+#endif // #ifndef _GCOBJPLAYER_H_

@@ -11,7 +11,7 @@
 // class deriving from CCLayer that creates our main menu scene
 //////////////////////////////////////////////////////////////////////////
 class CMenuLayer 
-: public cocos2d::CCLayer
+	: public cocos2d::CCLayer
 {
 public:
     // cocos2d-x classes all have a static create() function

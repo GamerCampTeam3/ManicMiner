@@ -50,13 +50,34 @@
       <UniqueIdentifier>{4ae41667-3df5-4816-b3c8-f6aa92570597}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ManicMiner">
-      <UniqueIdentifier>{8f48f7c7-85c6-4ae3-b270-efc207bedb9b}</UniqueIdentifier>
+      <UniqueIdentifier>{e654da68-43e3-48a0-8182-ce1cb67d31b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\GameState">
+      <UniqueIdentifier>{d930c733-3f6f-4ec3-a7ba-582c3cf086f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers">
+      <UniqueIdentifier>{2d269e41-c584-40ce-989e-6c63a05b4cb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\GameInstance">
+      <UniqueIdentifier>{665745bc-f955-460d-b452-ca8883ab6d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\TSingleton">
+      <UniqueIdentifier>{6a83f711-0d89-4ecf-9f4d-c0b625e5647a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\LevelManager">
+      <UniqueIdentifier>{0081fb25-fd91-4cbf-997a-23c70273cbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\AirManager">
+      <UniqueIdentifier>{95a5a7b3-9bbb-4d4d-a30f-a509382705f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Enemy">
+      <UniqueIdentifier>{60658f93-e5f6-47c6-bf8d-1321ae9e02fd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ManicMiner\Player">
-      <UniqueIdentifier>{094d8caf-e274-4eff-8b24-58a5e39a26c0}</UniqueIdentifier>
+      <UniqueIdentifier>{ee74a6cf-baec-4909-9639-70b718c6f195}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ManicMiner\Collectibles">
-      <UniqueIdentifier>{3827ee8b-05da-49ef-be20-8d47c322233d}</UniqueIdentifier>
+      <UniqueIdentifier>{9b1760a8-6045-4fa0-b8ae-c19c719ea6c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,13 +171,46 @@
     <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\GCCollisionManager.cpp">
       <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp">
+      <Filter>Classes\ManicMiner\GameInstance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h">
+      <Filter>Classes\ManicMiner\TSingleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp">
+      <Filter>Classes\ManicMiner\LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp">
+      <Filter>Classes\ManicMiner\AirManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp">
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClCompile>
-    <ClCompile Include="CCollectible.cpp">
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectible.cpp">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClCompile>
-    <ClCompile Include="CCollectiblePool.cpp">
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitch.cpp">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClCompile>
   </ItemGroup>
@@ -263,13 +317,49 @@
     <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\GCCollisionManager.h">
       <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayer.h">
+    <ClInclude Include="..\Classes\ManicMiner\GameState\EGameState.h">
+      <Filter>Classes\ManicMiner\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h">
+      <Filter>Classes\ManicMiner\GameInstance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h">
+      <Filter>Classes\ManicMiner\LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h">
+      <Filter>Classes\ManicMiner\AirManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h">
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CCollectible.h">
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectible.h">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClInclude>
-    <ClInclude Include="CCollectiblePool.h">
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\I_Interactible.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CSwitch.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.h">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClInclude>
   </ItemGroup>

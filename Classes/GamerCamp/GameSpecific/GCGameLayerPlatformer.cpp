@@ -6,7 +6,6 @@
 #include "GCGameLayerPlatformer.h"
 #include <algorithm>
 #include <stdlib.h> 
-#include <iostream>
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
@@ -21,10 +20,9 @@
 #include "GamerCamp/GameSpecific/Invaders/GCObjInvader.h"
 #include "GamerCamp/GameSpecific/Invaders/GCObjGroupInvader.h"
 #include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
-#include "proj.win32/CPlayer.h"
-#include "proj.win32/CCollectible.h"
 
 #include "AppDelegate.h"
+#include "ManicMiner/Player/CPlayer.h"
 
 
 USING_NS_CC;
@@ -43,6 +41,7 @@ USING_NS_CC;
 	#define COLLISIONTESTLOG( str )		/*nothing*/
 
 #endif
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -97,7 +96,7 @@ void CGCGameLayerPlatformer::onEnter()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void CB_TestCollisionHandler( CGCObjPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact )
+void CB_TestCollisionHandler( CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact )
 {
 	COLLISIONTESTLOG( "( standard function!) the player hit an item!" );
 }
@@ -157,7 +156,7 @@ void CGCGameLayerPlatformer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    MenuItemImage* pResetItem
+    MenuItemImage* pResetItem 
 		= MenuItemImage::create(	"Loose/CloseNormal.png",
 									"Loose/CloseSelected.png",
 									CC_CALLBACK_1( CGCGameLayerPlatformer::Callback_OnResetButton, this));
@@ -224,7 +223,6 @@ void CGCGameLayerPlatformer::VOnCreate()
 	
 	b2Vec2	b2v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
 	Vec2	v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
-	Vec2	v2ScreenCentre_OffSet((origin.x + (visibleSize.width * 0.4f)), (origin.y + (visibleSize.height * 0.5f)));
 
 
 
@@ -266,9 +264,8 @@ void CGCGameLayerPlatformer::VOnCreate()
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
 
 	// create player object
-	m_pcGCOPlayer = new CPlayer(v2MarioStartPos);
-	m_pColl = new CCollectible(v2ScreenCentre_OffSet);
-	//m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
+	m_pcGCOPlayer = new CPlayer();
+	m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
 
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. invaders are added by the invader object group
@@ -283,38 +280,28 @@ void CGCGameLayerPlatformer::VOnCreate()
 	const u32 uNumColumns		= 3;
 	const u32 uNumRows			= 4;
 
-	//float fColumnSpacing		= ( visibleSize.width / ( ((float) uNumColumns ) + 1.0f ) );
-	//float fRowSpacing			= ( visibleSize.height / ( ((float) uNumRows ) + 1.0f ) );
-	//
-	//float fNextPlatformPos_x	= fColumnSpacing;
-	//float fRowStartPos_y		= fRowSpacing;
-	//
-	//for( u32 uColumn = 0; uColumn < uNumColumns; ++uColumn )
-	//{ 
-	//	Vec2 v2NextPlatformPos( fNextPlatformPos_x, fRowStartPos_y );
-	//
-	//	for( u32 uRow = 0; uRow < uNumRows; ++uRow )
-	//	{
-	//		CGCObjPlatform* pPlatform	= new CGCObjPlatform();
-	//		CGCObjItem*		pItem		= new CGCObjItem();
-	//
-	//		pPlatform->SetResetPosition	( v2NextPlatformPos );
-	//		pItem->SetResetPosition		( v2NextPlatformPos + Vec2( 0.0f, 30.0f ) );
-	//
-	//		v2NextPlatformPos.y += fRowSpacing;
-	//	}
-	//
-	//	fNextPlatformPos_x += fColumnSpacing;
-	//}
-	// CGCObjPlatform* pPlatform = new CGCObjPlatform();
-	// pPlatform->SetResetPosition(v2MarioStartPos);
+	float fColumnSpacing		= ( visibleSize.width / ( ((float) uNumColumns ) + 1.0f ) );
+	float fRowSpacing			= ( visibleSize.height / ( ((float) uNumRows ) + 1.0f ) );
 
-	i32	iOffsetX = 80;
-	i32	iOffsetY = 200;
-	for (u32 uLoop = 0; uLoop < 15; ++uLoop)
-	{
-		CGCObjPlatform* pPlatform = new CGCObjPlatform();
-		pPlatform->SetResetPosition(Vec2 (0 + (iOffsetX * uLoop), (visibleSize.height * 0.5f) ) );
+	float fNextPlatformPos_x	= fColumnSpacing;
+	float fRowStartPos_y		= fRowSpacing;
+
+	for( u32 uColumn = 0; uColumn < uNumColumns; ++uColumn )
+	{ 
+		Vec2 v2NextPlatformPos( fNextPlatformPos_x, fRowStartPos_y );
+
+		for( u32 uRow = 0; uRow < uNumRows; ++uRow )
+		{
+			CGCObjPlatform* pPlatform	= new CGCObjPlatform();
+			CGCObjItem*		pItem		= new CGCObjItem();
+
+			pPlatform->SetResetPosition	( v2NextPlatformPos );
+			pItem->SetResetPosition		( v2NextPlatformPos + Vec2( 0.0f, 30.0f ) );
+
+			v2NextPlatformPos.y += fRowSpacing;
+		}
+
+		fNextPlatformPos_x += fColumnSpacing;
 	}
 
 
@@ -333,45 +320,13 @@ void CGCGameLayerPlatformer::VOnCreate()
 	// GetCollisionManager().AddCollisionHandler( CB_TestCollisionHandler );
 	// 
 
-	GetCollisionManager().AddCollisionHandler( [] (CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [] ( CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
 	{
 		COLLISIONTESTLOG( "(lambda) the player hit an item!" );
-
 	} );
 
-	GetCollisionManager().AddCollisionHandler([](CPlayer& rcPlayer, CCollectible& rcItem, const b2Contact& rcContact) -> void
-	{
-		rcPlayer.IncrementCollectible();
-		rcItem.Death();
 
-	});
-
-	GetCollisionManager().AddCollisionHandler( []( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact ) -> void
-	{	
-		bool isColliding;
-		isColliding = rcContact.IsTouching();
-
-		rcContact;
-		rcContact;
-		Vec2 testVec;
-		Vec2 testVecPlayer;
-
-		if (isColliding)
-		{
-			testVec = rcPlatform.GetSpritePosition();
-			testVecPlayer = rcPlayer.GetSpritePosition();
-			if (testVecPlayer.y > testVec.y)
-			{
-				//rcPlayer.SetDirection(rcPlayer.GetDirection());
-				rcPlayer.SetCanJump(true);
-				rcPlayer.SetCanBeControlled(true);
-			}
-		}
-
-		rcPlayer.GetPhysicsTransform();
-	});
-
-}
+}// void CGCGameLayerPlatformer::VOnCreate() { ...
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -610,4 +565,3 @@ void CGCGameLayerPlatformer::HandleCollisions()
 		}
 	}
 }
-

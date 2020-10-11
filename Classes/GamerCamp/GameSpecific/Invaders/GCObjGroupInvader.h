@@ -33,11 +33,11 @@ private:
 	cocos2d::Vec2	m_v2FormationOrigin; // origin of the formation
 
 	void	CreateInvaders	();
-	void	DestroyInvaders	();
 
 public:
+	void	DestroyInvaders	();
 	// number of invaders
-	static const u32 k_uNumProjectiles = 0;
+	static const u32 k_uNumProjectiles = 16;
 
 	CGCObjGroupInvader();		
 	virtual ~CGCObjGroupInvader() override;

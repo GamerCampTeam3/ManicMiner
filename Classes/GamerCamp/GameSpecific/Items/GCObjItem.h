@@ -10,14 +10,19 @@
 class CGCObjItem
 : public CGCObjSpritePhysics
 {
+private:
+	bool m_bHasBeenCollected;
 public:
 
 	CGCObjItem(	void )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CGCObjItem ) )
+		, m_bHasBeenCollected(false)
 	{}
 
-	
 	virtual void VOnResourceAcquire( void ) override;
+
+	void Collected() { m_bHasBeenCollected = true; }
+	bool GetHasBeenCollected() { return m_bHasBeenCollected; }
 };
 
 
