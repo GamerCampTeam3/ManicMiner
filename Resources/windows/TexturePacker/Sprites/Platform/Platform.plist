@@ -7,15 +7,15 @@
             <key>Hover/00.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{82,33}}</string>
+                <string>{{2,2},{60,30}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{82,33}}</string>
+                <string>{{0,0},{60,30}}</string>
                 <key>sourceSize</key>
-                <string>{82,33}</string>
+                <string>{60,30}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -29,9 +29,9 @@
             <key>realTextureFileName</key>
             <string>Platform.png</string>
             <key>size</key>
-            <string>{64,128}</string>
+            <string>{64,64}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:130982af335d2b48e508efbff91f7109:bd2250b8e0af20ff103330aaf8211691:b73b876ac794f4cf6e4a7b5bf549ec97$</string>
+            <string>$TexturePacker:SmartUpdate:effa498806efcceca984a7db174e7e6f:afc1b51837aa4db3b21d50961c0ea195:b73b876ac794f4cf6e4a7b5bf549ec97$</string>
             <key>textureFileName</key>
             <string>Platform.png</string>
         </dict>
