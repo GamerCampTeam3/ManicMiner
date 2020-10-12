@@ -22,6 +22,7 @@
 #include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
 
 #include "AppDelegate.h"
+#include "ManicMiner/Player/CPlayer.h"
 
 
 USING_NS_CC;
@@ -95,7 +96,7 @@ void CGCGameLayerPlatformer::onEnter()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void CB_TestCollisionHandler( CGCObjPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact )
+void CB_TestCollisionHandler( CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact )
 {
 	COLLISIONTESTLOG( "( standard function!) the player hit an item!" );
 }
@@ -263,7 +264,7 @@ void CGCGameLayerPlatformer::VOnCreate()
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
 
 	// create player object
-	m_pcGCOPlayer = new CGCObjPlayer();
+	m_pcGCOPlayer = new CPlayer();
 	m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
 
 	///////////////////////////////////////////////////////////////////////////
@@ -319,7 +320,7 @@ void CGCGameLayerPlatformer::VOnCreate()
 	// GetCollisionManager().AddCollisionHandler( CB_TestCollisionHandler );
 	// 
 
-	GetCollisionManager().AddCollisionHandler( [] ( CGCObjPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [] ( CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
 	{
 		COLLISIONTESTLOG( "(lambda) the player hit an item!" );
 	} );

@@ -5,7 +5,8 @@
 #include "ManicMiner/GameState/EGameState.h"
 #include "GamerCamp/Core/GCTypes.h"
 
-class CGCObjPlayer;
+class CCollectibleManager;
+class CPlayer;
 class CGCObjItem;
 class IGCGameLayer;
 class CLevelManager;
@@ -16,13 +17,11 @@ class CManicLayer;
 class CGameInstance : public TSingleton<CGameInstance>
 {
 private:
-	CGCObjPlayer* m_pPlayer;
+	CPlayer* m_pPlayer;
 	CLevelManager* m_pLevelManager;
 	CAirManager* m_pAirManager;
-	// Should go on player class
-	const int m_iMaxLives;
-	int m_iLivesLeft;
-
+	CCollectibleManager* m_pCollectibleManager;
+	
 	// Should be reference to the item obj group actually, which manages the num of collected items
 	int m_iCollected;
 
@@ -38,10 +37,10 @@ public:
 	EGameState GetGameState();
 	void SetGameState( EGameState gameState );
 
-	void SetPlayer( CGCObjPlayer& rPlayer );
+	void SetPlayer( CPlayer& rPlayer );
 
 	void OnFinishedLooting();
-	void OnPlayerDeath( CGCObjPlayer& rPlayer );
+	void OnPlayerDeath( CPlayer& rPlayer );
 	void OnEscaped();
 	void OnItemCollected( CGCObjItem& rItem );
 
@@ -51,7 +50,7 @@ public:
 	// Runs before level transition begins
 	void PlayerLeavingLevel( CManicLayer& rNewManicLayer );
 
-	void PlayerEnteredNewLevel( CManicLayer& rNewManicLayer, CGCObjPlayer& rPlayer );
+	void PlayerEnteredNewLevel( CManicLayer& rNewManicLayer, CPlayer& rPlayer );
 
 	void OutOfAir();
 

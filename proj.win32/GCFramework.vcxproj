@@ -179,6 +179,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GamerCamp\GCObject\GCObjGroupDefault.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\Win32Input\CInputKeyboard.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\Win32Input\GCKeyboardManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectible.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitch.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp" />
@@ -188,6 +191,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h" />
     <ClCompile Include="..\Classes\MenuScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -225,6 +229,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\GamerCamp\GCObject\GCObjGroupDefault.h" />
     <ClInclude Include="..\Classes\GamerCamp\Win32Input\CInputKeyboard.h" />
     <ClInclude Include="..\Classes\GamerCamp\Win32Input\GCKeyboardManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectible.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CSwitch.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\I_Interactible.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h" />
@@ -235,6 +243,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
     <ClInclude Include="..\Classes\MenuScene.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

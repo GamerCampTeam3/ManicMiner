@@ -22,13 +22,14 @@
 #include "GamerCamp/GameSpecific/Player/GCObjPlayer.h"
 #include "ManicMiner/Enemy/GCObjGroupEnemy.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Collectibles/CCollectible.h"
+#include "ManicMiner/Player/CPlayer.h"
+#include "ManicMiner/Collectibles/CCollectible.h"
 #include "ManicMiner/Enemy/GCEnemyDataStore.h"
 
 #include "MenuScene.h"
 #include "../GameInstance/CGameInstance.h"
-
-
-
+#include "ManicMiner/Collectibles/I_Interactible.h"
 
 
 USING_NS_CC;
@@ -58,7 +59,8 @@ CManicLayer::CManicLayer()
 	, m_pcGCGroupProjectilePlayer( nullptr )
 	, m_pcGCGroupEnemy ( nullptr )
 	, m_pcGCSprBackGround( nullptr )
-	, m_pcGCOPlayer( nullptr )
+	, m_pcPlayer( nullptr )
+        , m_pCollectibleTest( nullptr )
 {
 
 }
@@ -70,7 +72,8 @@ CManicLayer::CManicLayer( CGameInstance& rGameInstance )
 	, m_pcGCGroupProjectilePlayer( nullptr )
 	, m_pcGCGroupEnemy( nullptr )
 	, m_pcGCSprBackGround( nullptr )
-	, m_pcGCOPlayer( nullptr )
+	, m_pcPlayer( nullptr )
+	, m_pCollectibleTest(nullptr)
 {}
 
 //////////////////////////////////////////////////////////////////////////
@@ -191,6 +194,7 @@ void CManicLayer::VOnCreate()
 
 	b2Vec2	b2v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
 	Vec2	v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
+	Vec2	v2ScreenCentre_Offset((origin.x + (visibleSize.width * 0.5f)), (origin.y + (visibleSize.height * 0.4f)));
 
 
 
@@ -232,8 +236,9 @@ void CManicLayer::VOnCreate()
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
 
 	// create player object
-	m_pcGCOPlayer = new CGCObjPlayer();
-	m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
+	m_pcPlayer = new CPlayer(v2MarioStartPos);
+	m_pCollectibleTest = new CCollectible(v2ScreenCentre_Offset);
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. invaders are added by the invader object group
@@ -277,26 +282,52 @@ void CManicLayer::VOnCreate()
 	//////////////////////////////////////////////////////////////////////
 	// Add specific collision handles
 	//////////////////////////////////////////////////////////////////////
+	///
+	///
+	///
+	GetCollisionManager().AddCollisionHandler([](CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact) -> void
+	{
+		bool isColliding = rcContact.IsTouching();
 
-	GetCollisionManager().AddCollisionHandler( [] ( CGCObjPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
+		if (isColliding)
+		{
+			Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
+			Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
+			if (rcPlayerPosition.y > rcPlatformPosition.y)
+			{
+				//rcPlayer.SetDirection(rcPlayer.GetDirection());
+				rcPlayer.SetCanJump(true);
+				rcPlayer.SetCanBeControlled(true);
+			}
+		}
+
+	});
+
+
+
+	GetCollisionManager().AddCollisionHandler( [] (CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
 		{
 			COLLISIONTESTLOG( "(lambda) the player hit an item!" );
 		} );
-	GetCollisionManager().AddCollisionHandler( [&] ( CGCObjPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact ) -> void
 		{
 			PlayerCollidedInvader( rcPlayer, rcInvader, rcContact );
 		} );
 
-	GetCollisionManager().AddCollisionHandler( [&] ( CGCObjPlayer& rcPlayer, CGCObjItem& rItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjItem& rItem, const b2Contact& rcContact ) -> void
 		{
 			ItemCollected( rItem, rcContact );
 		} );
 
-	GetCollisionManager().AddCollisionHandler([&](CGCObjPlayer& rcPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact) -> void
+	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedEnemy( rcPlayer, rEnemy, rcContact );
 		});
 
+	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CCollectible& rItem, const b2Contact& rcContact) -> void
+	{
+		//
+	});
 
 
 
@@ -304,7 +335,7 @@ void CManicLayer::VOnCreate()
 
 	////////////////////////////////////////////////////////////////////////
 	// Update Game Instance Info
-	CGameInstance::getInstance()->PlayerEnteredNewLevel( *this, *m_pcGCOPlayer );
+	CGameInstance::getInstance()->PlayerEnteredNewLevel( *this, *m_pcPlayer );
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
 
@@ -331,8 +362,8 @@ void CManicLayer::VOnDestroy()
 	///////////////////////////////////////////////////////////////////////////
 	// clean up anything we allocated in opposite order to creation
 	///////////////////////////////////////////////////////////////////////////	
-	delete m_pcGCOPlayer;
-	m_pcGCOPlayer = nullptr;
+	delete m_pcPlayer;
+	m_pcPlayer = nullptr;
 
 	delete m_pcGCSprBackGround;
 	m_pcGCSprBackGround = nullptr;
@@ -523,13 +554,13 @@ void CManicLayer::HandleCollisions()
 ////////////////////////////////////////////////////////////////////////////
 
 // Player + Enemy
-void CManicLayer::PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact )
+void CManicLayer::PlayerCollidedInvader( CPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact )
 {
 	CGameInstance::getInstance()->OnPlayerDeath( rPlayer );
 }
 
 // Player + Enemy
-void CManicLayer::PlayerCollidedEnemy(CGCObjPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact)
+void CManicLayer::PlayerCollidedEnemy(CPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact)
 {
 	CGameInstance::getInstance()->OnPlayerDeath( rPlayer);
 }
@@ -540,7 +571,7 @@ void CManicLayer::ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact )
 	CGameInstance::getInstance()->OnItemCollected( rItem );
 }
 
-CGCObjPlayer& CManicLayer::GetPlayer()
+CPlayer& CManicLayer::GetPlayer()
 {
-	return *m_pcGCOPlayer;
+	return *m_pcPlayer;
 }

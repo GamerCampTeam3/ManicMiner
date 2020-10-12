@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////////////////////////////
 // fwd decl
 class CGCObjSprite;
-class CGCObjPlayer;
+class CPlayer;
 class CGCObjPlatform;
 class CGCObjGroupPlatform;
 class CGCObjItem;
@@ -39,7 +39,7 @@ protected:
 	CGCObjSprite*					m_pcGCSprBackGround;
 
 	// mario
-	CGCObjPlayer*					m_pcGCOPlayer;
+	CPlayer*					m_pcGCOPlayer;
 
 
 public:
