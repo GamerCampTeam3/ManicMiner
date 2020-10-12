@@ -1,20 +1,21 @@
 #include "CGameInstance.h"
 
+#include "ManicMiner/Collectibles/CCollectibleManager.h"
 #include "GamerCamp/GameSpecific/Items/GCObjItem.h"
 #include "GamerCamp/GameSpecific/Player/GCObjPlayer.h"
 #include "GamerCamp/GameSpecific/Platforms/GCObjPlatform.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
+#include "ManicMiner/Player/CPlayer.h"
 #include "../AirManager/AirManager.h"
 
 CGameInstance::CGameInstance()
 	: TSingleton			()
-	, m_pPlayer				( nullptr )
+	, m_pPlayer			( nullptr )
+	, m_pCollectibleManager(nullptr)
 	, m_pLevelManager		( nullptr )
 	, m_pAirManager			( nullptr )
-	, m_iMaxLives			( 3 )
-	, m_iLivesLeft			( m_iMaxLives )
 	, m_iCollected			( 0 )
 	, m_eGameState			( EGameState::EGS_Looting )
 	, m_bResetWasRequested	( false )
@@ -32,7 +33,6 @@ void CGameInstance::Init()
 	
 	// Run CLevelManager Init
 	m_pLevelManager->Init();
-
 	//m_pPlayer = &m_pLevelManager->GetCurrentLevelLayer().GetPlayer();
 }
 
@@ -46,7 +46,7 @@ void CGameInstance::SetGameState( EGameState gameState )
 	m_eGameState = gameState;
 }
 
-void CGameInstance::SetPlayer( CGCObjPlayer& rPlayer )
+void CGameInstance::SetPlayer( CPlayer& rPlayer )
 {
 	m_pPlayer = &rPlayer;
 }
@@ -59,7 +59,7 @@ void CGameInstance::ResetLevel()
 	ResetRequestWasHandled();
 }
 
-void CGameInstance::PlayerEnteredNewLevel( CManicLayer& rNewManicLayer, CGCObjPlayer& rPlayer )
+void CGameInstance::PlayerEnteredNewLevel( CManicLayer& rNewManicLayer, CPlayer& rPlayer )
 {
 	if( m_pAirManager == nullptr )
 	{
@@ -118,7 +118,6 @@ void CGameInstance::OnItemCollected( CGCObjItem& rItem )
 
 void CGameInstance::EnterCavern()
 {
-	m_iLivesLeft = m_iMaxLives;
 	m_iCollected = 0;
 	m_pLevelManager->EnterCavern();
 }
@@ -143,10 +142,11 @@ void CGameInstance::Update( f32 fTimeStep )
 	}
 }
 
-void CGameInstance::OnPlayerDeath( CGCObjPlayer& rPlayer )
+void CGameInstance::OnPlayerDeath( CPlayer& rPlayer )
 {
-	m_iLivesLeft--;
-	if( m_iLivesLeft )
+	m_pPlayer->DecrementLives();
+
+	if  (m_pPlayer->GetLives() )
 	{
 		RequestReset();
 	}

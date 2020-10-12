@@ -1,5 +1,5 @@
 #include "CMLCentralCavern.h"
-#include "GamerCamp/GameSpecific/Player/GCObjPlayer.h"
+#include "ManicMiner/Player/CPlayer.h"
 
 CMLCentralCavern::CMLCentralCavern()
 	: CManicLayer()
