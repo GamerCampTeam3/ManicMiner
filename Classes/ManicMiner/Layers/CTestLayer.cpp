@@ -10,6 +10,7 @@
 #include "AppDelegate.h"
 
 
+#include "ManicMiner/Player/CPlayer.h"
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GameSpecific/Invaders/GCObjGroupInvader.h"
@@ -260,8 +261,7 @@ void CTestLayer::VOnCreate()
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
 
 	// create player object
-	m_pcGCOPlayer = new CGCObjPlayer();
-	m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
+	m_pcGCOPlayer = new CPlayer(v2MarioStartPos);
 
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. invaders are added by the invader object group
@@ -304,16 +304,16 @@ void CTestLayer::VOnCreate()
 	// Add specific collision handles
 	//////////////////////////////////////////////////////////////////////
 
-	GetCollisionManager().AddCollisionHandler( [] ( CGCObjPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [] ( CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
 		{
 			COLLISIONTESTLOG( "(lambda) the player hit an item!" );
 		} );
-	GetCollisionManager().AddCollisionHandler( [&] ( CGCObjPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact ) -> void
 		{
 			PlayerCollidedInvader( rcPlayer, rcInvader, rcContact );
 		} );
 
-	GetCollisionManager().AddCollisionHandler( [&] ( CGCObjPlayer& rcPlayer, CGCObjItem& rItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjItem& rItem, const b2Contact& rcContact ) -> void
 		{
 			ItemCollected( rItem, rcContact );
 		} );
@@ -560,7 +560,7 @@ void CTestLayer::HandleCollisions()
 ////////////////////////////////////////////////////////////////////////////
 
 // Player + Enemy
-void CTestLayer::PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact )
+void CTestLayer::PlayerCollidedInvader(CPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact )
 {
 	CGameInstance::getInstance()->OnPlayerDeath( rPlayer );
 }

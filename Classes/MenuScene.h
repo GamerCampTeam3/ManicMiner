@@ -28,6 +28,8 @@ public:
 	// the Game Start button is pushed
     void CB_OnGameStartButton( Ref* pSender);
 
+	void CB_OnGameExitButton(Ref* pSender);
+
     // The cocos2d convention is to have the root layer of a scene
 	// be able to create and return a CCScene* (set to autorelease)
 	// which has an instance of itself as a child

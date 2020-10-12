@@ -9,7 +9,7 @@
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
 class CGCObjSprite;														  //
-class CGCObjPlayer;														  //
+class CPlayer;														  //
 class CGCObjPlatform;													  //
 class CGCObjGroupPlatform;												  //
 class CGCObjItem;														  //
@@ -32,7 +32,7 @@ private:
 	CGCObjSprite* m_pcGCSprBackGround;
 
 	// Mario
-	CGCObjPlayer* m_pcGCOPlayer;
+	CPlayer* m_pcGCOPlayer;
 
 	////////////////////////////////////////////////////////////////////////// 
 	// reset handling
@@ -103,7 +103,7 @@ public:
 	virtual void PreSolve	 (	b2Contact* pB2Contact, const b2Manifold* pOldManifold	);
 	virtual void PostSolve	 (	b2Contact* pB2Contact, const b2ContactImpulse* pImpulse );
 
-	void PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
+	void PlayerCollidedInvader(CPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
 	void ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact );
 };
 

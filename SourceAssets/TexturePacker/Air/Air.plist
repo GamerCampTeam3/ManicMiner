@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>Air.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{0,0.5}</string>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{802,20}</string>
+                <key>spriteSourceSize</key>
+                <string>{802,20}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{802,20}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>Air.png</string>
+            <key>size</key>
+            <string>{804,22}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:a656cb30b60cd4b39b3cbe24c8518226:493a5b2e04a7d62bd1a18bf40e97ace6:97a1821a2545e8477d1ff631b9c403ea$</string>
+            <key>textureFileName</key>
+            <string>Air.png</string>
+        </dict>
+    </dict>
+</plist>

@@ -73,6 +73,12 @@
     <Filter Include="Classes\ManicMiner\Enemy">
       <UniqueIdentifier>{60658f93-e5f6-47c6-bf8d-1321ae9e02fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Player">
+      <UniqueIdentifier>{ee74a6cf-baec-4909-9639-70b718c6f195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Collectibles">
+      <UniqueIdentifier>{9b1760a8-6045-4fa0-b8ae-c19c719ea6c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -194,6 +200,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp">
       <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp">
+      <Filter>Classes\ManicMiner\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectible.cpp">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitch.cpp">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +346,21 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h">
       <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h">
+      <Filter>Classes\ManicMiner\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectible.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\I_Interactible.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CSwitch.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

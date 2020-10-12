@@ -9,8 +9,7 @@
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
 class CGameInstance;													  //
-class CGCObjSprite;														  //
-class CGCObjPlayer;														  //
+class CGCObjSprite;														  //										
 class CGCObjPlatform;													  //
 class CGCObjGroupPlatform;												  //
 class CGCObjItem;														  //
@@ -18,8 +17,11 @@ class CGCObjGroupItem;													  //
 class CGCObjInvader;													  //
 class CGCObjGroupInvader;												  //
 class CGCObjGroupProjectilePlayer;										  //
-class CGCObjEnemy;													  //
+class CGCObjEnemy;														  //
 class CGCObjGroupEnemy;													  //
+class CPlayer;
+class CCollectible;
+//
 ////////////////////////////////////////////////////////////////////////////
 
 class CManicLayer : public IGCGameLayer, public b2ContactListener
@@ -27,7 +29,7 @@ class CManicLayer : public IGCGameLayer, public b2ContactListener
 private:
 	// Reference to the GameInstance
 	CGameInstance& m_rGameInstance;
-
+	
 	// object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
 	CGCObjGroupItem* m_pcGCGroupItem;
@@ -38,7 +40,8 @@ private:
 	CGCObjSprite* m_pcGCSprBackGround;
 
 	// Mario
-	CGCObjPlayer* m_pcGCOPlayer;
+	CPlayer* m_pcPlayer;
+	CCollectible* m_pCollectibleTest;
 
 public:
 	CManicLayer( void );
@@ -53,8 +56,9 @@ public:
 		EPA_Down,
 		EPA_Left,
 		EPA_Right,
-		EPA_Fire
+		EPA_Jump
 	};
+	
 	// player actions 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -93,6 +97,8 @@ public:
 
 	
 
+	void PlayerCollidedInvader( CPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
+	void PlayerCollidedEnemy(CPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact);
 
 	void ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact );
 
@@ -101,7 +107,9 @@ public:
 	// Getters
 	////////////////////////////////////////////////////////////////////////////
 
-	CGCObjPlayer& GetPlayer();
+	CPlayer& GetPlayer();
+
+	void CB_OnGameExitButton(Ref* pSender);
 
 
 };
