@@ -9,23 +9,18 @@
 #include "I_Interactible.h"
 
 
+class CCollectibleManager;
 
-
-//////////////////////////////////////////////////////////////////////////
-// This is a sample class derived from CGCObject.
-// 
-// It demonstrates how you might do projectiles, it relies on 
-// CGCObjGroupProjectilePlayer to manage the lifetimes of these.
-//
-//////////////////////////////////////////////////////////////////////////
 class CSwitch
 	: public CGCObjSpritePhysics, public I_Interactible
 {
 private:
 	int m_iIndex;
+	CCollectibleManager* m_rcCollectibleManager;
 
 public:
 	CSwitch();
+	CSwitch(CCollectibleManager& collectibleManager);
 	CSwitch(cocos2d::Vec2 initialPos);
 
 
@@ -34,9 +29,6 @@ public:
 	// this class to delete derived types.
 	virtual ~CSwitch()
 	{}
-
-
-
 	//////////////////////////////////////////////////////////////////////////
 	// overridden virtuals from the game object interface
 
@@ -45,12 +37,14 @@ public:
 	virtual void VOnReset() override;
 
 	virtual void VOnUpdate(f32 fTimeStep) override;
-
+	//////////////////////////////////////////////////////////////////////////
+	// overriden interface function
 	void InteractEvent() override;
-	
+
+
 	int GetIndex() { return m_iIndex; };
 	void SetIndex(int index) { m_iIndex = index; };
-	
+
 };
 
 

@@ -5,6 +5,7 @@
 #include "../../GCCocosInterface/GCObjSpritePhysics.h"
 #endif
 
+#include "ManicMiner/Enums/EPlayerMovement.h"
 
 //////////////////////////////////////////////////////////////////////////
 // forward declare
@@ -19,17 +20,6 @@ enum EPlayerActions
 	EPA_Jump
 };
 
-enum class EPlayerDirection
-{
-	EPD_Static = 0,
-	EPD_Right,
-	EPD_Left,
-	EPD_Up,
-	EPD_Down,
-	EPD_Jumping,
-	EPD_Falling
-};
-
 
 class CPlayer
 	: public CGCObjSpritePhysics
@@ -37,7 +27,7 @@ class CPlayer
 private:
 
 	// Constant values
-	// const int	     m_kiStartingLives = 3;        // The starting life of the player, changing this will apply it to m_iLives on Construction
+	// const int	     m_kiStartingLives = 3;      // The starting life of the player, changing this will apply it to m_iLives on Construction
 	const float	     m_kfGravitionalPull = 30.0f;    // The gravitional force that affects the player for jumping purpouses
 
 	// Our Movement Related variables
@@ -53,13 +43,8 @@ private:
 
 	// Other values
 	int m_iMaxLives;
-        int m_iLives;									 // The current life of the player
+    int m_iLives;									 // The current life of the player
 
-
-
-	// Those will be moved out upon merge
-	int m_iCollectibles;
-	int m_iCollectiblesNeeded;
 
 	// The controller
 	TGCActionToKeyMap< EPlayerActions >* m_pcControllerActionToKeyMap;
@@ -109,8 +94,7 @@ public:
 
 	void Death();
 
-	void CheckIfEnoughCollectible();
-
+	void SetGravity();
 
 
 	//Getters and setters
@@ -129,10 +113,6 @@ public:
 	void IncrementLives() { m_iLives++; };
 	void DecrementLives() { m_iLives--; };
 
-	void SetCollectible(int score) { m_iCollectibles = score; };
-	int GetCollectible() { return m_iCollectibles; };
-	void IncrementCollectible();
-
 
 	// Returns the current movement direction of the player
 	EPlayerDirection GetDirection() { return m_eLastPlayerDirection; };
@@ -146,7 +126,6 @@ public:
 
 	void MountedLadder(EPlayerDirection yAxisLock) { m_ePlayerDirection = yAxisLock; m_bIsOnLadder = true; };
 	void UnMountedLadder() { m_bIsOnLadder = false; };
-
 
 };
 #endif // #ifndef _CPLAYER_H_

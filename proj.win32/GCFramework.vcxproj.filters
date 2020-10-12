@@ -79,6 +79,12 @@
     <Filter Include="Classes\ManicMiner\Collectibles">
       <UniqueIdentifier>{9b1760a8-6045-4fa0-b8ae-c19c719ea6c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Structs">
+      <UniqueIdentifier>{5ad32101-5126-4c4e-8727-a6d94c67efc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Enums">
+      <UniqueIdentifier>{ff715d44-66a2-4396-9ead-27afb4969b4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -361,6 +367,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.h">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h">
+      <Filter>Classes\ManicMiner\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Structs\SSwitches.h">
+      <Filter>Classes\ManicMiner\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerMovement.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

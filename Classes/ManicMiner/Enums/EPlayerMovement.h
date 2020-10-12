@@ -1,0 +1,18 @@
+#ifndef _EPLAYERMOVEMENT_
+#define _EPLAYERMOVEMENT_
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Defined Game States for Player movement behaviours
+////////////////////////////////////////////////////////////////////////////////////////////////////
+enum class EPlayerDirection
+{
+	EPD_Static = 0,
+	EPD_Right,
+	EPD_Left,
+	EPD_Up,
+	EPD_Down,
+	EPD_Jumping,
+	EPD_Falling
+};
+
+#endif //ifndef _EPLAYERMOVEMENT_		#pragma once
