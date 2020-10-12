@@ -302,7 +302,7 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 		if (m_eLastPlayerDirection == EPlayerDirection::EPD_Left)
 		{
 			CCLOG("Jump: Left Lock");
-			Vec2 l_v2Jump(0.0f, 2000.0f);
+			Vec2 l_v2Jump(0.0f, 200.0f);
 			m_v2Jump = l_v2Jump;
 			ApplyForceToCenter(m_v2Jump);
 			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
@@ -311,7 +311,7 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 		else if (m_eLastPlayerDirection == EPlayerDirection::EPD_Right)
 		{
 			CCLOG("Jump: Right Lock");
-			Vec2 l_v2Jump(100.0f, 2000.0f);
+			Vec2 l_v2Jump(100.0f, 200.0f);
 			m_v2Jump = l_v2Jump;
 			ApplyForceToCenter(m_v2Jump);
 			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
@@ -320,7 +320,7 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 		else
 		{
 			CCLOG("Jump: Center Lock");
-			Vec2 l_v2Jump(0.0f, 2000.0f);
+			Vec2 l_v2Jump(0.0f, 200.0f);
 			m_v2Jump = l_v2Jump;
 			ApplyForceToCenter(m_v2Jump);
 			m_ePlayerDirection = EPlayerDirection::EPD_Falling;

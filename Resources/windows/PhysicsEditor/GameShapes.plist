@@ -10,7 +10,7 @@
             <key>format</key>
             <integer>1</integer>
             <key>ptm_ratio</key>
-            <real>20</real>
+            <real>60</real>
         </dict>
         <key>bodies</key>
 		<dict>
@@ -54,23 +54,6 @@
                          <dict>
                              <key>radius</key> <real>7.000</real>
                              <key>position</key> <string>{ -2.300,-7.200 }</string>
-                         </dict>
-                    </dict>
-					<dict>
-                        <key>density</key> <real>2</real>
-                        <key>friction</key> <real>0</real>
-                        <key>restitution</key> <real>0</real>
-                        <key>filter_categoryBits</key> <integer>1</integer>
-                        <key>filter_groupIndex</key> <integer>0</integer>
-                        <key>filter_maskBits</key> <integer>65535</integer>
-                        <key>isSensor</key> <true/>
-                        <key>id</key> <string>bottom_left</string>
-                        <key>fixture_type</key> <string>CIRCLE</string>
-
-                         <key>circle</key>
-                         <dict>
-                             <key>radius</key> <real>3.162</real>
-                             <key>position</key> <string>{ -10.666,-13.753 }</string>
                          </dict>
                     </dict>
 				</array>
@@ -219,19 +202,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 17.000,-14.000 }</string>	
-								<string>{ 29.000,5.000 }</string>	
-								<string>{ 27.000,14.000 }</string>	
-								<string>{ -26.000,14.000 }</string>	
-								<string>{ -29.000,12.000 }</string>	
-								<string>{ -30.000,3.000 }</string>	
-								<string>{ -16.000,-14.000 }</string>	
-								<string>{ 0.000,-15.000 }</string>
-							</array>
-							<array>	
-								<string>{ 29.000,12.000 }</string>	
-								<string>{ 27.000,14.000 }</string>	
-								<string>{ 29.000,5.000 }</string>
+								<string>{ -30.000,15.000 }</string>	
+								<string>{ 0.000,-15.000 }</string>	
+								<string>{ 15.000,-15.000 }</string>	
+								<string>{ 30.000,15.000 }</string>
 							</array>
 						</array>
                     </dict>
