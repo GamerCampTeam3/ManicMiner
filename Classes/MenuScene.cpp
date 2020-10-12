@@ -61,19 +61,24 @@ bool CMenuLayer::init()
     pMenu->setPosition( Vec2::ZERO );
     this->addChild(pMenu, 1);
 
+    ///////////////////////////////////////////////////////////////////////////
+	/// - Umeer Rama
+
+    MenuItemImage* pItemExitGame = MenuItemImage::create(
+        "Buttons/Exit/ExitButton_01.png",
+        "Buttons/Exit/ExitButton_01.png",
+        CC_CALLBACK_1(CMenuLayer::CB_OnGameExitButton, this));
+
+    pItemExitGame->setPosition(Vec2(1000.f, 68.f));
+
+    pMenu = Menu::create(pItemExitGame, nullptr);
+    pMenu->setPosition(Vec2::ZERO);
+    this->addChild(pMenu, 1);
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+
     /////////////////////////////
     // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-    Label* pLabel = Label::createWithTTF( "Menu - Press Button to Play", "fonts/arial.ttf", 24 );
-
-    // position the label on the center of the screen
-    pLabel->setPosition( Vec2(	origin.x + ( visibleSize.width * 0.5f ),
-								origin.y + ( visibleSize.height* 0.5f ) + pItemStartGame->getContentSize().height + ( pLabel->getContentSize().height * 0.5f) ));
-
-    // add the label as a child to this layer
-    this->addChild(pLabel, 1);
 
     // add "HelloWorld" splash screen"
     Sprite* pSprite = Sprite::create("Loose/HelloWorld.png");
@@ -100,4 +105,11 @@ void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
 	CGameInstance::getInstance()->EnterCavern();
 	//Director::getInstance()->replaceScene( TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CManicLayer >::CreateScene() ) );
+}
+
+void CMenuLayer::CB_OnGameExitButton(Ref* pSender)
+{
+    // add code to release anything that needs to be released before exiting the game
+
+    exit(0);
 }

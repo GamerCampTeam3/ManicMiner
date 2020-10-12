@@ -130,6 +130,24 @@ void CManicLayer::VOnCreate()
 	// create the default object group
 	IGCGameLayer::VOnCreate();
 
+	///////////////////////////////////////////////////////////////////////////
+	/// Full Screen + Exit Button
+
+	static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+
+	MenuItemImage* pItemExitGame = MenuItemImage::create(
+		"Buttons/Exit/ExitButton_01.png",
+		"Buttons/Exit/ExitButton_01.png",
+		CC_CALLBACK_1(CManicLayer::CB_OnGameExitButton, this));
+
+	pItemExitGame->setPosition(Vec2(1000.f, 120.f));
+
+	Menu* pMenu = Menu::create(pItemExitGame, nullptr);
+	pMenu->setPosition(Vec2::ZERO);
+	this->addChild(pMenu, 4);
+	///
+	///////////////////////////////////////////////////////////////////////////
+	
 
 	///////////////////////////////////////////////////////////////////////////
 	// custom object groups
@@ -543,4 +561,11 @@ void CManicLayer::ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact )
 CGCObjPlayer& CManicLayer::GetPlayer()
 {
 	return *m_pcGCOPlayer;
+}
+
+void CManicLayer::CB_OnGameExitButton(Ref* pSender)
+{
+	// add code to release anything that needs to be released before exiting the game
+
+	exit(0);
 }

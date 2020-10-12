@@ -99,6 +99,8 @@ public:
 
 	CGCObjPlayer& GetPlayer();
 
+	void CB_OnGameExitButton(Ref* pSender);
+
 
 };
 #endif // #ifndef _CMANICLAYER_H_
