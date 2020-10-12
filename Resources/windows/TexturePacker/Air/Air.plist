@@ -13,11 +13,11 @@
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{802,20}</string>
+                <string>{1762,24}</string>
                 <key>spriteSourceSize</key>
-                <string>{802,20}</string>
+                <string>{1762,24}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{802,20}}</string>
+                <string>{{1,1},{1762,24}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -33,9 +33,9 @@
             <key>realTextureFileName</key>
             <string>Air.png</string>
             <key>size</key>
-            <string>{804,22}</string>
+            <string>{1764,26}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a656cb30b60cd4b39b3cbe24c8518226:493a5b2e04a7d62bd1a18bf40e97ace6:97a1821a2545e8477d1ff631b9c403ea$</string>
+            <string>$TexturePacker:SmartUpdate:4e4ea308eb8781e9d7e5cd033e8629d6:89aaba98b52afb63f89aeeeb6123a597:97a1821a2545e8477d1ff631b9c403ea$</string>
             <key>textureFileName</key>
             <string>Air.png</string>
         </dict>

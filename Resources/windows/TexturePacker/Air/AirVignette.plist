@@ -8,14 +8,16 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{1024,768}</string>
+                <string>{1920,1080}</string>
                 <key>spriteSourceSize</key>
-                <string>{1024,768}</string>
+                <string>{1920,1080}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{1024,768}}</string>
+                <string>{{1,1},{1920,1080}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -31,9 +33,9 @@
             <key>realTextureFileName</key>
             <string>AirVignette.png</string>
             <key>size</key>
-            <string>{1024,768}</string>
+            <string>{1922,1082}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:ab598ca5d4ea5ddb9d7c421905d152d6:e2085300843cbf0e2b8b2e1955739e8d:d9e1f24af89287fa6eb9c5c2d9eedfd4$</string>
+            <string>$TexturePacker:SmartUpdate:bdfa56aac64514f5a828b053a078e5ea:d9876411e0c402adc5762944550dfae9:d9e1f24af89287fa6eb9c5c2d9eedfd4$</string>
             <key>textureFileName</key>
             <string>AirVignette.png</string>
         </dict>

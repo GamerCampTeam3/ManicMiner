@@ -40,9 +40,12 @@ bool CMenuLayer::init()
         return false;
     }
 
+	// set to fullscreen
     static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
 
+	// for windowed mode
     Director::getInstance()->getOpenGLView()->setFrameSize(1920, 1080);
+	// resolution
     Director::getInstance()->getOpenGLView()->setDesignResolutionSize(1920, 1080, ResolutionPolicy::EXACT_FIT);
 	
     Size visibleSize	= Director::getInstance()->getVisibleSize();
@@ -74,7 +77,7 @@ bool CMenuLayer::init()
         "Buttons/Exit/ExitButton_01.png",
         CC_CALLBACK_1(CMenuLayer::CB_OnGameExitButton, this));
 
-    pItemExitGame->setPosition(Vec2(1000.f, 68.f));
+    pItemExitGame->setPosition(Vec2(1900.f, 20.f));
 
     pMenu = Menu::create(pItemExitGame, nullptr);
     pMenu->setPosition(Vec2::ZERO);
