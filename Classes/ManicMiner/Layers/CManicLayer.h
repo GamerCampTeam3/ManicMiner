@@ -89,6 +89,10 @@ public:
 
 	void PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
 	void PlayerCollidedEnemy(CGCObjPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact);
+	void EnemyCollidedItem(CGCObjEnemy& rEnemy, const b2Contact& rcContact);
+
+	
+
 
 	void ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact );
 

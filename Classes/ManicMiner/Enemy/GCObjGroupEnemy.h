@@ -79,7 +79,7 @@ public:
 // CGCObjectGroup public interface
 //////////////////////////////////////////////////////////////////////////
 
-private:
+public:
 	
 	cocos2d::Animation* pAnimation1;
 	cocos2d::Animation* pAnimation2;

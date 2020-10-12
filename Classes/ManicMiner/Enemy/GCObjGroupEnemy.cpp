@@ -149,7 +149,7 @@ void CGCObjGroupEnemy::VOnGroupResourceAcquire_PostObject()
 		const char* pszAnim_Coin_Rotate = "Rotate";
 
 		ValueMap& rdicPList1 = GCCocosHelpers::CreateDictionaryFromPlist(pszPlist_Coin);
-		Animation* pAnimation1 = GCCocosHelpers::CreateAnimation(rdicPList1, pszAnim_Coin_Rotate);
+	    pAnimation1 = GCCocosHelpers::CreateAnimation(rdicPList1, pszAnim_Coin_Rotate);
 
 
 		// set up animations for pAnimation group 2
@@ -158,7 +158,7 @@ void CGCObjGroupEnemy::VOnGroupResourceAcquire_PostObject()
 
 		// make an animation
 		ValueMap& rdictPList2 = GCCocosHelpers::CreateDictionaryFromPlist(pszPlist2);
-		Animation* pAnimation2 = GCCocosHelpers::CreateAnimation(rdictPList2, pszAnim_Fly2);
+		pAnimation2 = GCCocosHelpers::CreateAnimation(rdictPList2, pszAnim_Fly2);
 
 
 
@@ -220,18 +220,18 @@ void CGCObjGroupEnemy::CreateEnemys()
 
 		// koopas
 
-		CGCObjEnemy* pEnemy = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(50.0f,100.0f), 500.0f, 0.0f, 5.0f, CGCObjEnemy::EEnemyIdentifier_Type2, rFactoryCreationParams_Type2, pAnimation2);
+		CGCObjEnemy* pEnemy = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(50.0f,100.0f), 500.0f, 300.0f, false, 1.0f, CGCObjEnemy::EEnemyIdentifier_Type2, rFactoryCreationParams_Type2);
 		pEnemy->SetName("Derek2");
 
 	
 
-		CGCObjEnemy* pEnemy2 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(100.0f, 200.0f), 400.0f, 0.0f, 8.0f, CGCObjEnemy::EEnemyIdentifier_Type2, rFactoryCreationParams_Type2, pAnimation2);
+		CGCObjEnemy* pEnemy2 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(100.0f, 200.0f), 400.0f, 350.0f, true, 1.0f, CGCObjEnemy::EEnemyIdentifier_Type2, rFactoryCreationParams_Type2);
 		pEnemy2->SetName("Derek3");
 
 		
 
 
-		CGCObjEnemy* pEnemy3 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(150.0f, 300.0f), 250.0f, 0.0f, 2.5f, CGCObjEnemy::EEnemyIdentifier_Type2, rFactoryCreationParams_Type2, pAnimation2);
+		CGCObjEnemy* pEnemy3 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(150.0f, 300.0f), 250.0f, 200.0f, true, 1.0f, CGCObjEnemy::EEnemyIdentifier_Type2, rFactoryCreationParams_Type2);
 		pEnemy3->SetName("Derek4");
 
 
@@ -239,17 +239,17 @@ void CGCObjGroupEnemy::CreateEnemys()
 
 		// coins
 
-		CGCObjEnemy* pEnemy4 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(700.0f, 500.0f), 50.0f, 0.0f, 2.5f, CGCObjEnemy::EEnemyIdentifier_Type1, rFactoryCreationParams_Type1, pAnimation1);
+		CGCObjEnemy* pEnemy4 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(700.0f, 500.0f), 50.0f, 0.0f, true, 2.5f, CGCObjEnemy::EEnemyIdentifier_Type1, rFactoryCreationParams_Type1);
 		pEnemy4->SetName("Derek5");
 
 		
 
-		CGCObjEnemy* pEnemy5 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(800.0f, 550.0f), 100.0f, 0.0f, 10.0f, CGCObjEnemy::EEnemyIdentifier_Type1, rFactoryCreationParams_Type1, pAnimation1);
+		CGCObjEnemy* pEnemy5 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(800.0f, 550.0f), 100.0f, 5.0f, false, 2.5f, CGCObjEnemy::EEnemyIdentifier_Type1, rFactoryCreationParams_Type1);
 		pEnemy5->SetName("Derek6");
 
 		
 
-		CGCObjEnemy* pEnemy6 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(900.0f, 100.0f), 500.0f, 0.0f, 30.0f, CGCObjEnemy::EEnemyIdentifier_Type1, rFactoryCreationParams_Type1, pAnimation1);
+		CGCObjEnemy* pEnemy6 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(900.0f, 100.0f), 500.0f, 0.0f, true, 2.5f, CGCObjEnemy::EEnemyIdentifier_Type1, rFactoryCreationParams_Type1);
 		pEnemy6->SetName("Derek7");
 
 

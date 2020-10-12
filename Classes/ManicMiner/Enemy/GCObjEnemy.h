@@ -19,15 +19,22 @@ namespace cocos2d
 	class ActionInterval;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// This is a sample class derived from CGCObject.
-// 
-// It could be the basis of your invader object, it's up to you really.
-//
-//////////////////////////////////////////////////////////////////////////
 class CGCObjEnemy
 : public CGCObjSpritePhysics
 {
+
+private:
+
+	CGCCollisionManager		m_cGCCollisionManager;
+
+public:
+	CGCCollisionManager& GetCollisionManager()
+	{
+		return m_cGCCollisionManager;
+	}
+
+	void FlipEnemyDirection();
+	void ResetFlipLatch();
 
 public: 
 
@@ -42,20 +49,20 @@ private:
 	float						fInitialDistanceFromAnchor;
 	cocos2d::Vec2				cAnchorPoint;
 	float						fMovementWindowLength;
-	bool						bMovingAWayFromStartPosition;
+	bool						bMovingAWayFromAnchorPoint;
 	cocos2d::Vec2				TotalVelocity;
 	const bool					k_bArtDefaultIsEnemyFacingRight;
 	CGCFactoryCreationParams&	rFactoryCreationParams;
+	bool						bInitialyMovingAwayFromAnchorPoint;
+	bool                        bFlipisCurrentLatchedDisabled;
 
 	bool CGCObjEnemy::checkForDirectionFlip();
 	void CGCObjEnemy::SetFacingOrientation();
-	
-	cocos2d::Animation* pAnimation;
-
+		
 public:
 
-	CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementWindowLength, float InitialDistanceFromAnchor, float SpeedInput, EEnemyIdentifier EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput,
-				cocos2d::Animation* pAnimationInput);
+	CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementRange, float InitialDistanceFromAnchor, bool MovingAwayFromAnchorPoint, float Speed, 
+				EEnemyIdentifier EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput);
 	
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
@@ -71,13 +78,8 @@ public:
 
 	virtual void CGCObjEnemy::VOnUpdate(float fTimeStep) override;
 
-
-	inline void SetAnimationAction()
+	inline void SetAnimationAction(cocos2d::Animation* pAnimation)
 	{
-		//  NOT USED AT PRESENT.
-
-		//pItemSprite->RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation1));
-
 		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 	}
 

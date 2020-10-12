@@ -11,25 +11,34 @@
 
 #include "GCObjEnemy.h"
 
+
+
+
+// REQUIRED FOR COLLISION HANDLER TO SEE
+#include "GamerCamp/GameSpecific/Items/GCObjItem.h" 
+
+
+
 USING_NS_CC;
 
 //////////////////////////////////////////////////////////////////////////
 // GetGCTypeIDOf uses the template in GCTypeID to generate a unique ID for 
 // this type - need this to construct our base type
 
-CGCObjEnemy::CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementWindowLength, float InitialDistanceFromAnchor, float SpeedInput, EEnemyIdentifier EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput,
-						 cocos2d::Animation* pAnimationInput)
+CGCObjEnemy::CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementRange, float InitialDistanceFromAnchor, bool MovingAwayFromAnchorPoint, float Speed,
+						 EEnemyIdentifier EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput)
 
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
 	, eMovementAxis(EMovementAxisInput)
 	, eEnemyIdentifier(EnemyIdentifierInput)
 	, cAnchorPoint(AnchorPoint)
-	, fMovementWindowLength(MovementWindowLength)
-	, fSpeed(SpeedInput)
-	, bMovingAWayFromStartPosition(true)
+	, fMovementWindowLength(MovementRange)
+	, fSpeed(Speed)
+	, bMovingAWayFromAnchorPoint(MovingAwayFromAnchorPoint)
 	, k_bArtDefaultIsEnemyFacingRight(false)
 	, rFactoryCreationParams(ParamsInput)
-	, pAnimation(pAnimationInput)
+	, fInitialDistanceFromAnchor (InitialDistanceFromAnchor)
+	, bFlipisCurrentLatchedDisabled(false)
 {
 }
 
@@ -55,19 +64,38 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
-	SetResetPosition(Vec2(cAnchorPoint));
-	SetFacingOrientation();
-
 	TotalVelocity = Vec2::ZERO;
 
 	if (EMovementAxis_LeftRight == eMovementAxis)
 	{
+
 		TotalVelocity.x = fSpeed;
+
+		Vec2 AnchorPointAndOffset = cAnchorPoint;
+		AnchorPointAndOffset.x += fInitialDistanceFromAnchor;
+		SetResetPosition(AnchorPointAndOffset);
 	}
 	else
 	{
 		TotalVelocity.y = fSpeed;
+
+		Vec2 AnchorPointAndOffset = cAnchorPoint;
+		AnchorPointAndOffset.y += fInitialDistanceFromAnchor;
+		SetResetPosition(AnchorPointAndOffset);
 	}
+
+
+	SetFacingOrientation();
+	
+
+	
+	GetCollisionManager().AddCollisionHandler([&](CGCObjItem& rcItem, CGCObjEnemy& rEnemy, const b2Contact& rcContact) -> void
+		{
+			bMovingAWayFromAnchorPoint = !bMovingAWayFromAnchorPoint;
+		});
+
+		
+
 }
 
 
@@ -90,32 +118,32 @@ bool CGCObjEnemy::checkForDirectionFlip()
 	if (EMovementAxis_LeftRight == eMovementAxis)
 	{
 		// Test right side boundary limit passed and flip to moving back to start if required.
-		if (bMovingAWayFromStartPosition && CurrentPosition.x >= cAnchorPoint.x + fMovementWindowLength)
+		if (bMovingAWayFromAnchorPoint && CurrentPosition.x >= cAnchorPoint.x + fMovementWindowLength)
 		{
-			bMovingAWayFromStartPosition = false;
+			bMovingAWayFromAnchorPoint = false;
 			return true;
 		}
 
 		// Test left side boundary limit passed and flip to moving away from start if required.
-		if (!bMovingAWayFromStartPosition && CurrentPosition.x <= cAnchorPoint.x)
+		if (!bMovingAWayFromAnchorPoint && CurrentPosition.x <= cAnchorPoint.x)
 		{
-			bMovingAWayFromStartPosition = true;
+			bMovingAWayFromAnchorPoint = true;
 			return true;
 		}
 	}
 	else
 	{
 		// Test upper boundary limit passed and flip to moving back to start if required.
-		if (bMovingAWayFromStartPosition && CurrentPosition.y >= cAnchorPoint.y + fMovementWindowLength)
+		if (bMovingAWayFromAnchorPoint && CurrentPosition.y >= cAnchorPoint.y + fMovementWindowLength)
 		{
-			bMovingAWayFromStartPosition = false;
+			bMovingAWayFromAnchorPoint = false;
 			return true;
 		}
 
 		// Test lower boundary limit passed and flip to moving away from start if required.
-		if (!bMovingAWayFromStartPosition && CurrentPosition.y <= cAnchorPoint.y)
+		if (!bMovingAWayFromAnchorPoint && CurrentPosition.y <= cAnchorPoint.y)
 		{
-			bMovingAWayFromStartPosition = true;
+			bMovingAWayFromAnchorPoint = true;
 			return true;
 		}
 	}
@@ -123,16 +151,17 @@ bool CGCObjEnemy::checkForDirectionFlip()
 	return false;
 }
 
+
 void CGCObjEnemy::SetFacingOrientation()
 {
 
 	if (k_bArtDefaultIsEnemyFacingRight)
 	{
-		SetFlippedX(!bMovingAWayFromStartPosition);
+		SetFlippedX(!bMovingAWayFromAnchorPoint);
 	}
 	else
 	{
-		SetFlippedX(bMovingAWayFromStartPosition);
+		SetFlippedX(bMovingAWayFromAnchorPoint);
 	}
 
 }
@@ -142,7 +171,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 {
 	CGCObject::VOnUpdate(fTimeStep);
 
-	if (bMovingAWayFromStartPosition)
+	if (bMovingAWayFromAnchorPoint)
 	{
 		SetVelocity(TotalVelocity);
 	}
@@ -161,9 +190,27 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 		}
 	}
 	
-
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// this class' public interface
+void CGCObjEnemy::FlipEnemyDirection()
+{
+	if (!bFlipisCurrentLatchedDisabled)
+	{
+
+		if (EMovementAxis_LeftRight == eMovementAxis)
+		{
+			SetFlippedX(!bMovingAWayFromAnchorPoint);
+		}
+		bMovingAWayFromAnchorPoint = !bMovingAWayFromAnchorPoint;
+	}
+	bFlipisCurrentLatchedDisabled = true;
+}
+
+void CGCObjEnemy::ResetFlipLatch()
+{
+	bFlipisCurrentLatchedDisabled = false;
+}
+
+
+
+
