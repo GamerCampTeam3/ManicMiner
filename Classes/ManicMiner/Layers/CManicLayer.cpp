@@ -133,6 +133,9 @@ void CManicLayer::VOnCreate()
 	// create the default object group
 	IGCGameLayer::VOnCreate();
 
+	Director::getInstance()->getOpenGLView()->setFrameSize(1920, 1080);
+	Director::getInstance()->getOpenGLView()->setDesignResolutionSize(1920, 1080, ResolutionPolicy::EXACT_FIT);
+	
 	///////////////////////////////////////////////////////////////////////////
 	/// Exit Button
 
@@ -141,7 +144,7 @@ void CManicLayer::VOnCreate()
 		"Buttons/Exit/ExitButton_01.png",
 		CC_CALLBACK_1(CManicLayer::CB_OnGameExitButton, this));
 
-	pItemExitGame->setPosition(Vec2(1000.f, 120.f));
+	pItemExitGame->setPosition(Vec2(1900.f, 20.f));
 
 	Menu* pMenu = Menu::create(pItemExitGame, nullptr);
 	pMenu->setPosition(Vec2::ZERO);
