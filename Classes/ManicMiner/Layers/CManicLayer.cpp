@@ -138,6 +138,9 @@ void CManicLayer::VOnCreate()
 
 	static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
 
+	Director::getInstance()->getOpenGLView()->setFrameSize(1920, 1080);
+	Director::getInstance()->getOpenGLView()->setDesignResolutionSize(1920, 1080, ResolutionPolicy::EXACT_FIT);
+
 	MenuItemImage* pItemExitGame = MenuItemImage::create(
 		"Buttons/Exit/ExitButton_01.png",
 		"Buttons/Exit/ExitButton_01.png",

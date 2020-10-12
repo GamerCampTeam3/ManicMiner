@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>Hover/00.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{82,33}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{82,33}}</string>
+                <key>sourceSize</key>
+                <string>{82,33}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>Platform.png</string>
+            <key>size</key>
+            <string>{64,128}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:d33eb3e4c236d48a3b285f245bb5d2d2:bd2250b8e0af20ff103330aaf8211691:b73b876ac794f4cf6e4a7b5bf549ec97$</string>
+            <key>textureFileName</key>
+            <string>Platform.png</string>
+        </dict>
+    </dict>
+</plist>
