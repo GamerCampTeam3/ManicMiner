@@ -10,7 +10,6 @@
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
-class CGameInstance;													  //
 class CGCObjSprite;														  //										
 class CGCObjPlatform;													  //
 class CGCObjGroupPlatform;												  //
@@ -21,17 +20,17 @@ class CGCObjGroupInvader;												  //
 class CGCObjGroupProjectilePlayer;										  //
 class CGCObjEnemy;														  //
 class CGCObjGroupEnemy;													  //
-class CPlayer;
-class CCollectible;
-class CCollectiblesGroup;
-//
+class CPlayer;															  //
+class CCollectible;														  //
+class CCollectiblesGroup;												  //
+class CLevelManager;													  //
 ////////////////////////////////////////////////////////////////////////////
 
 class CManicLayer : public IGCGameLayer, public b2ContactListener
 {
 private:
 	// Reference to the GameInstance
-	CGameInstance& m_rGameInstance;
+	CLevelManager* m_pcLevelManager;
 	
 	// object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
@@ -53,7 +52,6 @@ private:
 
 public:
 	CManicLayer( void );
-	CManicLayer( CGameInstance& rGameInstance );
 	virtual ~CManicLayer( void );
 
 	//////////////////////////////////////////////////////////////////////////
@@ -99,14 +97,14 @@ public:
 	virtual void PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold );
 	virtual void PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse );
 
-	void EnemyCollidedItem(CGCObjEnemy& rEnemy, const b2Contact& rcContact);
+	void EnemyCollidedItem(CGCObjEnemy& rcEnemy, const b2Contact& rcContact);
 
 	
 
-	void PlayerCollidedInvader( CPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
-	void PlayerCollidedEnemy(CPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact);
+	void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
+	void PlayerCollidedEnemy(CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact);
 
-	void ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact );
+	void ItemCollected( CGCObjItem& rcItem, const b2Contact& rcContact );
 
 
 	////////////////////////////////////////////////////////////////////////////
