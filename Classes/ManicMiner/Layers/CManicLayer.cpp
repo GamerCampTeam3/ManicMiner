@@ -275,8 +275,8 @@ void CManicLayer::VOnCreate()
 	const u32 uNumRows = 4;
 
 
-	i32	iOffsetX = 50;
-	for (u32 uLoop = 0; uLoop < 40; ++uLoop)
+	i32	iOffsetX = 60;
+	for (u32 uLoop = 0; uLoop < 50; ++uLoop)
 	{
 		CGCObjPlatform* pPlatform = new CGCObjPlatform();
 		pPlatform->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.1f) ) );
