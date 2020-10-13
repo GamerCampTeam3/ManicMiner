@@ -91,8 +91,6 @@ public:
 	virtual void PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold );
 	virtual void PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse );
 
-	void PlayerCollidedInvader( CGCObjPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact );
-	void PlayerCollidedEnemy(CGCObjPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact);
 	void EnemyCollidedItem(CGCObjEnemy& rEnemy, const b2Contact& rcContact);
 
 	

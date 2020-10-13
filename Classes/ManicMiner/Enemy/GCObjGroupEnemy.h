@@ -31,6 +31,9 @@ namespace cocos2d
 	#include "GamerCamp/GCObject/GCObjectGroup.h"
 #endif
 
+#include "ManicMiner/Enums/EEnemyTypes.h"
+#include <unordered_map>
+
 //////////////////////////////////////////////////////////////////////////
 // forward declare
 class CGCObjSprite;
@@ -79,11 +82,6 @@ public:
 // CGCObjectGroup public interface
 //////////////////////////////////////////////////////////////////////////
 
-public:
-	
-	cocos2d::Animation* pAnimation1;
-	cocos2d::Animation* pAnimation2;
-	
 };
 
 #endif

@@ -437,63 +437,6 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 void CManicLayer::EndContact( b2Contact* pB2Contact )
 {
 
-	for (const b2Contact* pB2Contact = IGCGameLayer::ActiveInstance()->B2dGetWorld()->GetContactList();
-		nullptr != pB2Contact;
-		pB2Contact = pB2Contact->GetNext())
-
-	{
-
-		const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
-		const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
-
-		const b2Body* pBodyA = pFixtureA->GetBody();
-		const b2Body* pBodyB = pFixtureB->GetBody();
-
-		CGCObjSpritePhysics* pGcSprPhysA = (CGCObjSpritePhysics*)pBodyA->GetUserData();
-		// if( this is not a GC object )
-		if (pGcSprPhysA == nullptr)
-		{
-			return;
-		}
-
-		CGCObjSpritePhysics* pGcSprPhysB = (CGCObjSpritePhysics*)pBodyB->GetUserData();
-		// if( this is not a GC object )
-		if (pGcSprPhysB == nullptr)
-		{
-			return;
-		}
-
-		// if an enemy has just ended contact with a Item then signal to enemy they can 
-		// reset their latching flag.  This avoids flipping direction continously whilst
-		// a collision is occuring.
-		if (pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID())
-		{
-			if (((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf(CGCObjEnemy))
-				&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf(CGCObjItem)))
-				|| ((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf(CGCObjItem))
-					&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf(CGCObjEnemy))))
-			{
-
-				CGCObjEnemy* pEnemyA = CGCObject::SafeCastToDerived< CGCObjEnemy* >(pGcSprPhysA);
-				CGCObjEnemy* pEnemyB = CGCObject::SafeCastToDerived< CGCObjEnemy* >(pGcSprPhysB);
-
-				// at least one of them is an enemy?
-				if (pEnemyA || pEnemyB)
-				{
-					CGCObjEnemy* pKillMe = (pEnemyA ? pEnemyA : pEnemyB);
-					GCTypeID tidNotEnemy = (pEnemyA ? pGcSprPhysB->GetGCTypeID() : pGcSprPhysA->GetGCTypeID());
-
-					if (GetGCTypeIDOf(CGCObjItem) == tidNotEnemy)
-					{
-						pKillMe->ResetFlipLatch();
-					}
-				}
-
-			}
-		}
-
-	}
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -650,10 +593,9 @@ void CManicLayer::PlayerCollidedEnemy(CPlayer& rPlayer, CGCObjEnemy& rEnemy, con
 
 void CManicLayer::EnemyCollidedItem(CGCObjEnemy& rEnemy, const b2Contact& rcContact)
 {
-	rEnemy.FlipEnemyDirection();
-	rEnemy.SetAnimationAction(m_pcGCGroupEnemy->pAnimation1);
 
-
+	rEnemy.BounceEnemyDirection();
+	
 }
 
 

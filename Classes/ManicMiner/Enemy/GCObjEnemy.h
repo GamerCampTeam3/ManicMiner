@@ -11,6 +11,7 @@
 
 #include <string>
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
+#include "ManicMiner/Enums/EEnemyTypes.h"
 
 namespace cocos2d
 {
@@ -23,46 +24,35 @@ class CGCObjEnemy
 : public CGCObjSpritePhysics
 {
 
-private:
-
-	CGCCollisionManager		m_cGCCollisionManager;
-
 public:
-	CGCCollisionManager& GetCollisionManager()
-	{
-		return m_cGCCollisionManager;
-	}
 
-	void FlipEnemyDirection();
-	void ResetFlipLatch();
-
-public: 
-
+	void BounceEnemyDirection();
+	
 	enum EMovementAxis { EMovementAxis_UpDown, EMovementAxis_LeftRight };
-	enum EEnemyIdentifier { EEnemyIdentifier_Type1, EEnemyIdentifier_Type2 };
 
 private:
 
 	EMovementAxis				eMovementAxis;
-	EEnemyIdentifier			eEnemyIdentifier;
+	EnemyTypes::EEnemyId	    eEnemyIdentifier;
+	cocos2d::Vec2				cAnchorPoint;
+	cocos2d::Vec2				TotalVelocity;
 	float						fSpeed;
 	float						fInitialDistanceFromAnchor;
-	cocos2d::Vec2				cAnchorPoint;
 	float						fMovementWindowLength;
 	bool						bMovingAWayFromAnchorPoint;
-	cocos2d::Vec2				TotalVelocity;
+	bool						bInitialyMovingAwayFromAnchorPoint;
+	bool                        bBounceIsLatchedDisabled;
+	bool						bSpriteIsFlippable;
 	const bool					k_bArtDefaultIsEnemyFacingRight;
 	CGCFactoryCreationParams&	rFactoryCreationParams;
-	bool						bInitialyMovingAwayFromAnchorPoint;
-	bool                        bFlipisCurrentLatchedDisabled;
 
-	bool CGCObjEnemy::checkForDirectionFlip();
+	bool CGCObjEnemy::CheckForDirectionFlip();
 	void CGCObjEnemy::SetFacingOrientation();
 		
 public:
 
-	CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementRange, float InitialDistanceFromAnchor, bool MovingAwayFromAnchorPoint, float Speed, 
-				EEnemyIdentifier EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput);
+	CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementRange, float InitialDistanceFromAnchor, bool MovingAwayFromAnchorPoint, float Speed, bool SpriteIsFlippable, 
+		EnemyTypes::EEnemyId EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput);
 	
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
@@ -77,17 +67,10 @@ public:
 	virtual void VOnResurrected		( void ) override;
 
 	virtual void CGCObjEnemy::VOnUpdate(float fTimeStep) override;
-
-	inline void SetAnimationAction(cocos2d::Animation* pAnimation)
-	{
-		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
-	}
-
-
-	inline EEnemyIdentifier GetEnemyIdentifier()
+	
+	inline  EnemyTypes::EEnemyId GetEnemyIdentifier()
 	{
 		return eEnemyIdentifier;
 	}
-
 };
 #endif // #ifndef _GCOBJENEMY_H_
