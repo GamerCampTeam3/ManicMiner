@@ -3,7 +3,8 @@
 // Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "MenuScene.h"
-#include "ManicMiner/GameInstance/CGameInstance.h"
+
+#include "ManicMiner/LevelManager/CLevelManager.h"
 
 USING_NS_CC;
 
@@ -11,7 +12,7 @@ USING_NS_CC;
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
-Scene* CMenuLayer::scene()
+Scene* CMenuLayer::scene( CLevelManager& rcLevelManager )
 {
     // 'scene' is an autorelease object
     Scene *scene = Scene::create();
@@ -22,11 +23,18 @@ Scene* CMenuLayer::scene()
     // add layer as a child to scene
     scene->addChild(layer);
 
+	// Set ptr to CLevelManager
+	layer->SetLevelManager( rcLevelManager );
+
     // return the scene
     return scene;
 }
 
 
+void CMenuLayer::SetLevelManager( CLevelManager& rcLevelManager )
+{
+	m_pcLevelManager = &rcLevelManager;
+}
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -96,12 +104,6 @@ bool CMenuLayer::init()
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-    
-
-
-
-	CGameInstance::getInstance()->Init();
-
 
     return true;
 }
@@ -111,8 +113,7 @@ bool CMenuLayer::init()
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
-	CGameInstance::getInstance()->EnterCavern();
-	//Director::getInstance()->replaceScene( TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CManicLayer >::CreateScene() ) );
+	m_pcLevelManager->EnterCavern();
 }
 
 void CMenuLayer::CB_OnGameExitButton(Ref* pSender)

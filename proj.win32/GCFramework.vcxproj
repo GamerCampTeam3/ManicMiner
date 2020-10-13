@@ -186,10 +186,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h" />
@@ -239,11 +243,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerMovement.h" />
-    <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h" />
+    <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\GameState\EGameState.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />

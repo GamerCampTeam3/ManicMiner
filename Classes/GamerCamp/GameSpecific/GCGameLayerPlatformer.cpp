@@ -392,7 +392,7 @@ void CGCGameLayerPlatformer::VOnDestroy()
 ///////////////////////////////////////////////////////////////////////////////
 void CGCGameLayerPlatformer::Callback_OnQuitButton( Ref* pSender )
 {
-	ReplaceScene( TransitionRotoZoom::create( 1.0f, CMenuLayer::scene() ) );
+	//ReplaceScene( TransitionRotoZoom::create( 1.0f, CMenuLayer::scene() ) );
 }
 
 

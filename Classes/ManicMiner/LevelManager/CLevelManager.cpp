@@ -8,61 +8,70 @@
 #include "MenuScene.h"
 #include "../Layers/CMLCentralCavern.h"
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-#include "../GameInstance/CGameInstance.h"
 
+#include "cocos2d/cocos/base/CCDirector.h"
 USING_NS_CC;
 
 
-CLevelManager::CLevelManager()
-	: TSingleton()
-	, m_iCurrentLevelIndex	( -1 )
-	, m_pGameInstance		( nullptr )
-	//,	m_pArrManicLayers	()
-{}
+CLevelManager::CLevelManager( cocos2d::Director& rcDirector )
+	: m_iCurrentLevelIndex	( -1 )
+{
+	// Create CMenuLayer, assign a pointer to this CLevelManager instance
+	Scene* pScene = CMenuLayer::scene(*this);
+
+	// Run
+	rcDirector.runWithScene( pScene );
+}
 
 CLevelManager::~CLevelManager()
 {}
 
 void CLevelManager::Init()
 {
-	CGameInstance* pGameInstance = CGameInstance::getInstance();
-	if( pGameInstance != nullptr )
-	{
-		m_pGameInstance = pGameInstance;
-	}
+
 }
 
 void CLevelManager::GoToMainMenu()
 {
-	m_pGameInstance->PlayerLeavingLevel( GetCurrentLevelLayer() );
 	m_iCurrentLevelIndex = -1;
-	Scene* pScene = CMenuLayer::scene();
+	Scene* pScene = CMenuLayer::scene( *this );
 
 	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, pScene ) );
 }
 
 void CLevelManager::GoToNextLevel()
 {
-	// If Not Coming Out Of MainMenu
-	// Run PlayerLeavingLevel()
-	if( m_iCurrentLevelIndex != -1 )
-	{
-		m_pGameInstance->PlayerLeavingLevel( GetCurrentLevelLayer() );
-	}
+	// Prepare Scene to be created
+	cocos2d::Scene* pScene = nullptr;
 
 	// Select next level
+	// Runs the template function CreateScene(), and assigns scene it to pScene
+
 	switch( m_iCurrentLevelIndex )
 	{
 	case -1:
-		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene() ) );
+		// CENTRAL CAVERN
+		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
 		break;
 	case 0:
-		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CManicLayer >::CreateScene() ) );
+		// SECOND LEVEL
+		pScene = TGCGameLayerSceneCreator< CManicLayer >::CreateScene();
 		break;
 	case 1:
+		// BEAT FINAL LEVEL, GO BACK TO FIRST LEVEL
+		// but actually goes to menu
 		GoToMainMenu();
 		break;
 	}
+
+	// If pScene is nullptr, means a CManicLayer was not created
+	// This means we are transitioning to the menu, don't need to transition a second time
+	// This logic shouldn't be here anyways, will get removed eventually
+	if ( pScene != nullptr )
+	{
+		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, pScene ) );
+	}
+
 
 	// Increment Level Identifier Index
 	m_iCurrentLevelIndex++;
@@ -76,23 +85,7 @@ void CLevelManager::EnterCavern()
 	}
 }
 
-CManicLayer& CLevelManager::GetCurrentLevelLayer()
+CManicLayer& CLevelManager::GetCurrentManicLayer()
 {
-	// RIGHT APPROACH
-	//int z = 0;
-	//auto a1 = cocos2d::Director::getInstance();
-	//auto a2 = a1->getRunningScene();
-	//auto a3 = a2->getChildren();
-	//auto *dynamic_cast< CManicLayer* >( cocos2d::Director::getInstance()->getRunningScene()->getChildByTag( 0 ) )
-	//for( auto node : nodeVector )
-	//{
-	//	z++;
-	//}
-	//z = 99999;
 	return *static_cast< CManicLayer* >( cocos2d::Director::getInstance()->getRunningScene()->getChildByTag( 0 ) );
-}
-
-void CLevelManager::UpdateLevelInfo()
-{
-	m_pGameInstance->SetPlayer( GetCurrentLevelLayer().GetPlayer() );
 }

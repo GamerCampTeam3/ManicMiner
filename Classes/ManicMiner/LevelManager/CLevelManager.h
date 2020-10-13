@@ -1,16 +1,17 @@
 #ifndef _CLEVELMANAGER_H_
 #define _CLEVELMANAGER_H_
 
-#include "Classes/ManicMiner/TSingleton/TSingleton.h"
-
 class IGCGameLayer;
 class CManicLayer;
-class CGameInstance;
+namespace cocos2d
+{
+	class Director;
+}
 
-class CLevelManager : public TSingleton< CLevelManager >
+class CLevelManager
 {
 public:
-	CLevelManager();
+	CLevelManager( cocos2d::Director& rcDirector );
 	virtual ~CLevelManager();
 
 	void Init();
@@ -21,13 +22,10 @@ public:
 	// Gets called to start game (after menu)
 	void EnterCavern();
 
-
-	CManicLayer& GetCurrentLevelLayer();
+	// Returns current Layer, casted as a CManicLayer
+	CManicLayer& GetCurrentManicLayer();
 private:
 	int m_iCurrentLevelIndex;			// Indicates level
-	CGameInstance* m_pGameInstance;		// Ptr to GameInstance
 	//CManicLayer* m_pArrManicLayers[3];	// Array to hold layer info
-
-	void UpdateLevelInfo();
 };
 #endif //#ifndef _CLEVELMANAGER_H_

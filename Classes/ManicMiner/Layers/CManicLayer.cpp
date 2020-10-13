@@ -26,9 +26,9 @@
 #include "ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/Collectibles/CCollectible.h"
 #include "ManicMiner/Enemy/GCEnemyDataStore.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
 
 #include "MenuScene.h"
-#include "../GameInstance/CGameInstance.h"
 #include "ManicMiner/Collectibles/I_Interactible.h"
 
 
@@ -52,22 +52,10 @@ USING_NS_CC;
 ///////////////////////////////////////////////////////////////////////////////
 // Constructor
 ///////////////////////////////////////////////////////////////////////////////
-CManicLayer::CManicLayer()
-	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
-	, m_rGameInstance ( *CGameInstance::getInstance() )
-	, m_pcGCGroupItem( nullptr )
-	, m_pcGCGroupProjectilePlayer( nullptr )
-	, m_pcGCGroupEnemy ( nullptr )
-	, m_pcGCSprBackGround( nullptr )
-	, m_pcPlayer( nullptr )
-        , m_pCollectibleTest( nullptr )
-{
 
-}
-
-CManicLayer::CManicLayer( CGameInstance& rGameInstance )
+CManicLayer::CManicLayer( )
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
-	, m_rGameInstance( rGameInstance )
+	, m_pcLevelManager( nullptr )
 	, m_pcGCGroupItem( nullptr )
 	, m_pcGCGroupProjectilePlayer( nullptr )
 	, m_pcGCGroupEnemy( nullptr )
@@ -331,17 +319,9 @@ void CManicLayer::VOnCreate()
 			EnemyCollidedItem(rEnemy, rcContact);
 		});
 	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CCollectible& rItem, const b2Contact& rcContact) -> void
-	{
-		//
-	});
+		{
+		});
 
-
-
-
-
-	////////////////////////////////////////////////////////////////////////
-	// Update Game Instance Info
-	CGameInstance::getInstance()->PlayerEnteredNewLevel( *this, *m_pcPlayer );
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
 
@@ -355,8 +335,6 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 
 	// this shows how to iterate and respond to the box2d collision info
 	HandleCollisions();
-
-	m_rGameInstance.Update( fTimeStep );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -562,30 +540,30 @@ void CManicLayer::HandleCollisions()
 ////////////////////////////////////////////////////////////////////////////
 
 // Player + Enemy
-void CManicLayer::PlayerCollidedInvader( CPlayer& rPlayer, CGCObjInvader& rInvader, const b2Contact& rcContact )
+void CManicLayer::PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact )
 {
-	CGameInstance::getInstance()->OnPlayerDeath( rPlayer );
+	//OnPlayerDeath( rcPlayer );
 }
 
 // Player + Enemy
-void CManicLayer::PlayerCollidedEnemy(CPlayer& rPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact)
+void CManicLayer::PlayerCollidedEnemy(CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact)
 {
-	CGameInstance::getInstance()->OnPlayerDeath( rPlayer);
+	//OnPlayerDeath( rcPlayer);
 }
 
 
-void CManicLayer::EnemyCollidedItem(CGCObjEnemy& rEnemy, const b2Contact& rcContact)
+void CManicLayer::EnemyCollidedItem(CGCObjEnemy& rcEnemy, const b2Contact& rcContact)
 {
 
-	rEnemy.BounceEnemyDirection();
+	rcEnemy.BounceEnemyDirection();
 	
 }
 
 
 // Player + Collectible
-void CManicLayer::ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact )
+void CManicLayer::ItemCollected( CGCObjItem& rcItem, const b2Contact& rcContact )
 {
-	CGameInstance::getInstance()->OnItemCollected( rItem );
+	//OnItemCollected( rcItem );
 }
 
 CPlayer& CManicLayer::GetPlayer()

@@ -3,7 +3,7 @@
 
 #include "ManicMiner/Layers/CManicLayer.h"
 
-class CMLCentralCavern : public CManicLayer
+class CMLCentralCavern: public CManicLayer
 {
 public:
 	CMLCentralCavern();
