@@ -39,7 +39,7 @@ private:
 public:
 	// Ctor + Overloaded to take in array of Vector2s with an amount to spawn as well as required collectibles for first level
 	CCollectibleManager();
-	CCollectibleManager(cocos2d::Vec2 spawnPosition[], int numToSpawn, int collectiblesNeeded);
+	CCollectibleManager( cocos2d::Vec2 spawnPosition[], int numToSpawn, int collectiblesNeeded );
 	// Dtor, clears the arrays
 	~CCollectibleManager();
 
@@ -63,6 +63,7 @@ public:
 	void RemoveCollectible(CCollectible& collectible);
 	void IncrementSwitches();
 	void FlipSwitch(CSwitch& cswitch);
+	void ResetCurrentCollectibles();
 
 	// Checks if level can be completed
 	bool CheckCollectiblesNeeded();

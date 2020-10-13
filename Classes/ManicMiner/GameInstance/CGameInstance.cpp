@@ -5,6 +5,7 @@
 #include "GamerCamp/GameSpecific/Player/GCObjPlayer.h"
 #include "GamerCamp/GameSpecific/Platforms/GCObjPlatform.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
+#include "ManicMiner/Collectibles/CCollectibleManager.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
 #include "ManicMiner/Player/CPlayer.h"
@@ -12,13 +13,12 @@
 
 CGameInstance::CGameInstance()
 	: TSingleton			()
-	, m_pPlayer			( nullptr )
-	, m_pCollectibleManager(nullptr)
+	, m_pPlayer				( nullptr )
 	, m_pLevelManager		( nullptr )
 	, m_pAirManager			( nullptr )
-	, m_iCollected			( 0 )
+	, m_pCollectibleManager	( nullptr )
 	, m_eGameState			( EGameState::EGS_Looting )
-	, m_bResetWasRequested	( false )
+	, m_bResetWasRequested	( false	  )
 {
 }
 
@@ -28,8 +28,11 @@ CGameInstance::CGameInstance()
 ////////////////////////////////////////////////////////////////////////////////////////
 void CGameInstance::Init()
 {
+	
 	// Create CLevelManager singleton, assign it to said pointer
 	m_pLevelManager = CLevelManager::getInstance();
+
+	m_pCollectibleManager = new CCollectibleManager();
 	
 	// Run CLevelManager Init
 	m_pLevelManager->Init();
@@ -54,7 +57,7 @@ void CGameInstance::SetPlayer( CPlayer& rPlayer )
 void CGameInstance::ResetLevel()
 {
 	m_pLevelManager->GetCurrentLevelLayer().VOnReset();
-	m_iCollected = 0;
+	m_pCollectibleManager->ResetCurrentCollectibles();
 	m_pAirManager->Reset();
 	ResetRequestWasHandled();
 }
@@ -68,7 +71,7 @@ void CGameInstance::PlayerEnteredNewLevel( CManicLayer& rNewManicLayer, CPlayer&
 		m_pAirManager = new CAirManager(  origin, visibleSize );
 	}
 
-	m_iCollected = 0;
+	m_pCollectibleManager->ResetCurrentCollectibles();
 	m_pPlayer = &rPlayer;
 	m_eGameState = EGameState::EGS_Looting;
 
@@ -84,6 +87,7 @@ void CGameInstance::OutOfAir()
 void CGameInstance::OnFinishedLooting()
 {
 	SetGameState( EGameState::EGS_Escaping );
+	
 	m_pLevelManager->GetCurrentLevelLayer().GetCollisionManager().AddCollisionHandler( [&] ( CGCObjPlayer& rcPlayer, CGCObjPlatform& rPlatform, const b2Contact& rcContact ) -> void
 		{
 			if( m_eGameState == EGameState::EGS_Escaping )
@@ -107,9 +111,9 @@ void CGameInstance::OnItemCollected( CGCObjItem& rItem )
 	{
 		rItem.Collected();
 		CGCObjectManager::ObjectKill( &rItem );
-		m_iCollected++;
 
-		if( m_eGameState == EGameState::EGS_Looting && m_iCollected > 3 )
+
+		if ((m_eGameState == EGameState::EGS_Looting) && (m_pCollectibleManager->CheckCollectiblesNeeded()))
 		{
 			OnFinishedLooting();
 		}
@@ -118,7 +122,6 @@ void CGameInstance::OnItemCollected( CGCObjItem& rItem )
 
 void CGameInstance::EnterCavern()
 {
-	m_iCollected = 0;
 	m_pLevelManager->EnterCavern();
 }
 

@@ -8,7 +8,7 @@
 
 CCollectibleManager::CCollectibleManager()
     : m_iCollected(0)
-    , m_iCollectiblesNeeded(0)
+    , m_iCollectiblesNeeded(4)
     , m_iSwitchesFlipped(0)
     , m_iSwitchedFlippedNeeded(0)
 {
@@ -83,7 +83,6 @@ void CCollectibleManager::GenerateNewCSwitches(int numToSpawn, cocos2d::Vec2 spa
 {
     m_iCollected = 0;
     SetNeededNumofSwitchesFlipped(switchesNeeded);
-
     for (int i = 0; i < numToSpawn; i++)
     {
         m_asSwitches[i].p_cSwitch->SetSpritePosition(spawnPos[i]);
@@ -104,6 +103,10 @@ void CCollectibleManager::SetNeededNumofSwitchesFlipped(int amount)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void CCollectibleManager::ResetCurrentCollectibles()
+{
+    m_iCollected = 0;
+}
 
 
 // Removes the collectibles from the screen

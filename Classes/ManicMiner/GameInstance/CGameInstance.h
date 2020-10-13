@@ -22,9 +22,6 @@ private:
 	CAirManager* m_pAirManager;
 	CCollectibleManager* m_pCollectibleManager;
 	
-	// Should be reference to the item obj group actually, which manages the num of collected items
-	int m_iCollected;
-
 	EGameState m_eGameState;
 
 	void OutOfLives();
