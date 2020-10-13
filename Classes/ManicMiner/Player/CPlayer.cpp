@@ -1,7 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// (C) Gamer Camp / Alex Darby 2018
-// Distributed under the MIT license - see readme.md
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <memory.h>
 
 #include "AppDelegate.h"
@@ -12,7 +8,6 @@
 
 
 #include "Classes/ManicMiner/Player/CPlayer.h"
-
 #include "ManicMiner/Layers/CManicLayer.h"
 
 USING_NS_CC;
@@ -36,8 +31,6 @@ CPlayer::CPlayer()
 	, m_bIsOnLadder(false)
 	, m_iMaxLives(3)
 	, m_iLives(m_iMaxLives)
-	, m_iCollectibles(0)
-	, m_iCollectiblesNeeded(1)
 	, m_v2Movement(0.0f, 0.0f)
 	, m_v2Jump(0.0f, 0.0f)
 	, m_pcControllerActionToKeyMap(nullptr)
@@ -54,8 +47,6 @@ CPlayer::CPlayer(cocos2d::Vec2 startingPos)
 	, m_bCanBeControlled(true)
 	, m_iMaxLives(3)
 	, m_iLives(m_iMaxLives)
-	, m_iCollectibles(0)
-	, m_iCollectiblesNeeded(1)
 	, m_v2Movement(0.0f, 0.0f)
 	, m_v2Jump(0.0f, 0.0f)
 	, m_pcControllerActionToKeyMap(nullptr)
@@ -70,8 +61,6 @@ CPlayer::CPlayer(cocos2d::Vec2 startingPos, int startingLives)
 	, m_bCanJump(true)
 	, m_bCanBeControlled(true)
 	, m_iLives(startingLives)
-	, m_iCollectibles(0)
-	, m_iCollectiblesNeeded(1)
 	, m_v2Movement(0.0f, 0.0f)
 	, m_v2Jump(0.0f, 0.0f)
 	, m_pcControllerActionToKeyMap(nullptr)
@@ -141,21 +130,6 @@ void CPlayer::VOnResourceRelease()
 	m_pcControllerActionToKeyMap = nullptr;
 }
 
-void CPlayer::IncrementCollectible()
-{
-	m_iCollectibles++;
-	CheckIfEnoughCollectible();
-}
-
-void CPlayer::CheckIfEnoughCollectible()
-{
-	if (m_iCollectibles == m_iCollectiblesNeeded)
-	{
-		Vec2 resetPos(50.0f, 50.0f);
-		SetResetPosition(resetPos);
-		CCLOG("Enough Collectibles Gathered, Exit Open");
-	}
-}
 
 void CPlayer::TakeDamage()
 {
@@ -302,7 +276,7 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 		if (m_eLastPlayerDirection == EPlayerDirection::EPD_Left)
 		{
 			CCLOG("Jump: Left Lock");
-			Vec2 l_v2Jump(0.0f, 2000.0f);
+			Vec2 l_v2Jump(0.0f, 200.0f);
 			m_v2Jump = l_v2Jump;
 			ApplyForceToCenter(m_v2Jump);
 			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
@@ -311,7 +285,7 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 		else if (m_eLastPlayerDirection == EPlayerDirection::EPD_Right)
 		{
 			CCLOG("Jump: Right Lock");
-			Vec2 l_v2Jump(100.0f, 2000.0f);
+			Vec2 l_v2Jump(100.0f, 200.0f);
 			m_v2Jump = l_v2Jump;
 			ApplyForceToCenter(m_v2Jump);
 			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
@@ -320,7 +294,7 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 		else
 		{
 			CCLOG("Jump: Center Lock");
-			Vec2 l_v2Jump(0.0f, 2000.0f);
+			Vec2 l_v2Jump(0.0f, 200.0f);
 			m_v2Jump = l_v2Jump;
 			ApplyForceToCenter(m_v2Jump);
 			m_ePlayerDirection = EPlayerDirection::EPD_Falling;

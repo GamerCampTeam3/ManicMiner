@@ -2,49 +2,73 @@
 #define _CCOLLECTIBLEMANAGER_H_
 #include <array>
 
+#include "ManicMiner/Structs/SCollectibles.h"
+#include "ManicMiner/Structs/SSwitches.h"
+
+///////////////////////////////////////////
+/// Namespaces and Class declaration
 namespace cocos2d
 {
 	class Vec2;
 }
 
-class CSwitch;
 class CCollectible;
-
-struct CCollectibleStruct
-{
-	CCollectible* p_cCollectible;
-	bool	      b_IsActive;
-};
-
-struct CSwitchStruct
-{
-	CSwitch*      p_cSwitch;
-	bool	      b_IsActive;
-};
-
+class CSwitch;
+///////////////////////////////////////////
 
 class CCollectibleManager
 {
 public:
-	static const int m_kiMaxCollectiblesToGenerate = 10;
-	static const int m_kiMaxSwitchesToGenerate = 10;
+	// Those values dictates how much total Switch/Collectibles to generate
+	// This should never be above the highest maximum from any level
+	static const int m_kiMaxCollectiblesToGenerate = 2;
+	static const int m_kiMaxSwitchesToGenerate = 2;
 
 
 private:
-	CCollectibleStruct m_asCollectibles[m_kiMaxCollectiblesToGenerate];
-	CSwitchStruct	   m_asSwitches[m_kiMaxSwitchesToGenerate];
-	int m_iCollected;
-	int m_iCollectiblesNeeded;
+	// TODO: clean up the structs
+	SCollectibles	m_asCollectibles[m_kiMaxCollectiblesToGenerate];
+	SSwitches		m_asSwitches[m_kiMaxSwitchesToGenerate];
+
+	int			    m_iCollected;
+	int				m_iCollectiblesNeeded;
+
+	int				m_iSwitchesFlipped;
+	int				m_iSwitchedFlippedNeeded;
 
 public:
+	// Ctor + Overloaded to take in array of Vector2s with an amount to spawn as well as required collectibles for first level
 	CCollectibleManager();
+	CCollectibleManager(cocos2d::Vec2 spawnPosition[], int numToSpawn, int collectiblesNeeded);
+	// Dtor, clears the arrays
 	~CCollectibleManager();
 
-	void CollectiblesToSpawn ( int numToSpawn, cocos2d::Vec2 spawnPos[] );
-	void SwitchesToSpawn( int numToSpawn, cocos2d::Vec2 spawnPos[]);
-	void ArrTest(cocos2d::Vec2 spawnPos[], int numToSpawn);
-	void ResetCollectibles();
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Functions used for level generation and clearing
+	// Generates CCollectibles and Switches depending on the levels need
+	void GenerateNewCCollectibles(int numToSpawn, cocos2d::Vec2 spawnPos[], int collectiblesNeeded);
+	void GenerateNewCSwitches(int numToSpawn, cocos2d::Vec2 spawnPos[], int switchesNeeded);
+
+	// Feeds into the above, used to check when level can end
 	void SetNeededNumOfCollectibles(int amount);
+	void SetNeededNumofSwitchesFlipped(int amount);
+
+	// Resets all collectibles to be used for next level
+	void ResetCollectibles();
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// Collision things for Collectibles/Switches
+	void IncrementCollectible();
+	void RemoveCollectible(CCollectible& collectible);
+	void IncrementSwitches();
+	void FlipSwitch(CSwitch& cswitch);
+
+	// Checks if level can be completed
+	bool CheckCollectiblesNeeded();
+	bool CheckSwitchNeeded();
+
+
 private:
 };
 

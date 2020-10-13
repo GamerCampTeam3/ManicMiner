@@ -237,6 +237,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerMovement.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameState\EGameState.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />
@@ -244,6 +245,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Structs\SSwitches.h" />
     <ClInclude Include="..\Classes\MenuScene.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
