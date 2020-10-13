@@ -7,6 +7,7 @@
 #define _GCENEMYDATASTORE_H_
 
 // Class intended to be used as a datastore for animations/physiscs/enumerate list of enemies etc.
+// UNUSED AT PRESENT.
 class CGCEnemyDataStore
 
 {

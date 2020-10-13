@@ -11,6 +11,7 @@
 
 #include <string>
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
+#include "ManicMiner/Enums/EEnemyTypes.h"
 
 namespace cocos2d
 {
@@ -19,43 +20,39 @@ namespace cocos2d
 	class ActionInterval;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// This is a sample class derived from CGCObject.
-// 
-// It could be the basis of your invader object, it's up to you really.
-//
-//////////////////////////////////////////////////////////////////////////
 class CGCObjEnemy
 : public CGCObjSpritePhysics
 {
 
-public: 
+public:
 
+	void BounceEnemyDirection();
+	
 	enum EMovementAxis { EMovementAxis_UpDown, EMovementAxis_LeftRight };
-	enum EEnemyIdentifier { EEnemyIdentifier_Type1, EEnemyIdentifier_Type2 };
 
 private:
 
 	EMovementAxis				eMovementAxis;
-	EEnemyIdentifier			eEnemyIdentifier;
+	EnemyTypes::EEnemyId	    eEnemyIdentifier;
+	cocos2d::Vec2				cAnchorPoint;
+	cocos2d::Vec2				TotalVelocity;
 	float						fSpeed;
 	float						fInitialDistanceFromAnchor;
-	cocos2d::Vec2				cAnchorPoint;
 	float						fMovementWindowLength;
-	bool						bMovingAWayFromStartPosition;
-	cocos2d::Vec2				TotalVelocity;
+	bool						bMovingAWayFromAnchorPoint;
+	bool						bInitialyMovingAwayFromAnchorPoint;
+	bool                        bBounceIsLatchedDisabled;
+	bool						bSpriteIsFlippable;
 	const bool					k_bArtDefaultIsEnemyFacingRight;
 	CGCFactoryCreationParams&	rFactoryCreationParams;
 
-	bool CGCObjEnemy::checkForDirectionFlip();
+	bool CGCObjEnemy::CheckForDirectionFlip();
 	void CGCObjEnemy::SetFacingOrientation();
-	
-	cocos2d::Animation* pAnimation;
-
+		
 public:
 
-	CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementWindowLength, float InitialDistanceFromAnchor, float SpeedInput, EEnemyIdentifier EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput,
-				cocos2d::Animation* pAnimationInput);
+	CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementRange, float InitialDistanceFromAnchor, bool MovingAwayFromAnchorPoint, float Speed, bool SpriteIsFlippable, 
+		EnemyTypes::EEnemyId EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput);
 	
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
@@ -70,22 +67,10 @@ public:
 	virtual void VOnResurrected		( void ) override;
 
 	virtual void CGCObjEnemy::VOnUpdate(float fTimeStep) override;
-
-
-	inline void SetAnimationAction()
-	{
-		//  NOT USED AT PRESENT.
-
-		//pItemSprite->RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation1));
-
-		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
-	}
-
-
-	inline EEnemyIdentifier GetEnemyIdentifier()
+	
+	inline  EnemyTypes::EEnemyId GetEnemyIdentifier()
 	{
 		return eEnemyIdentifier;
 	}
-
 };
 #endif // #ifndef _GCOBJENEMY_H_

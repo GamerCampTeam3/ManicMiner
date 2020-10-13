@@ -237,6 +237,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerMovement.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameState\EGameState.h" />

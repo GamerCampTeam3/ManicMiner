@@ -377,6 +377,9 @@
     <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerMovement.h">
       <Filter>Classes\ManicMiner\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

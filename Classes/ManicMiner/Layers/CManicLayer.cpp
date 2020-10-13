@@ -253,7 +253,7 @@ void CManicLayer::VOnCreate()
 
 	// starting position
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
-
+	
 	// create player object
 	m_pcPlayer = new CPlayer(v2MarioStartPos);
 	m_pCollectibleTest = new CCollectible(v2ScreenCentre_Offset);
@@ -325,7 +325,11 @@ void CManicLayer::VOnCreate()
 		{
 			PlayerCollidedEnemy( rcPlayer, rEnemy, rcContact );
 		});
-
+	
+	GetCollisionManager().AddCollisionHandler([&](CGCObjItem& rcItem, CGCObjEnemy& rEnemy, const b2Contact& rcContact) -> void
+		{
+			EnemyCollidedItem(rEnemy, rcContact);
+		});
 	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CCollectible& rItem, const b2Contact& rcContact) -> void
 	{
 		//
@@ -414,7 +418,9 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
 void CManicLayer::EndContact( b2Contact* pB2Contact )
-{}
+{
+
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // pre solve
@@ -566,6 +572,15 @@ void CManicLayer::PlayerCollidedEnemy(CPlayer& rPlayer, CGCObjEnemy& rEnemy, con
 {
 	CGameInstance::getInstance()->OnPlayerDeath( rPlayer);
 }
+
+
+void CManicLayer::EnemyCollidedItem(CGCObjEnemy& rEnemy, const b2Contact& rcContact)
+{
+
+	rEnemy.BounceEnemyDirection();
+	
+}
+
 
 // Player + Collectible
 void CManicLayer::ItemCollected( CGCObjItem& rItem, const b2Contact& rcContact )
