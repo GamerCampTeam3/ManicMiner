@@ -85,6 +85,12 @@
     <Filter Include="Classes\ManicMiner\Enums">
       <UniqueIdentifier>{ff715d44-66a2-4396-9ead-27afb4969b4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\CollectiblesGroup">
+      <UniqueIdentifier>{dfca1f85-aa8c-461d-95a9-13c1997017a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Collectible">
+      <UniqueIdentifier>{bd94f2aa-9f33-42b4-aa08-c74b60f6e23f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -210,13 +216,19 @@
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp">
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectible.cpp">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitch.cpp">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CCollectiblesGroup.cpp">
+      <Filter>Classes\ManicMiner\CollectiblesGroup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Collectible\CCollectible.cpp">
+      <Filter>Classes\ManicMiner\Collectible</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleOLD.cpp">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClCompile>
   </ItemGroup>
@@ -356,9 +368,6 @@
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h">
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectible.h">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\I_Interactible.h">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClInclude>
@@ -379,6 +388,21 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h">
       <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CCollectiblesGroup.h">
+      <Filter>Classes\ManicMiner\CollectiblesGroup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectible\CCollectible.h">
+      <Filter>Classes\ManicMiner\Collectible</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleType.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleTypeRequired.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleOLD.h">
+      <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

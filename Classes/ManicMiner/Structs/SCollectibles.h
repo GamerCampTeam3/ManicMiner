@@ -1,11 +1,11 @@
 #ifndef _SCOLLECTIBLES_
 #define _SCOLLECTIBLES_
 
-class CCollectible;
+class CCollectibleOLD;
 
 struct SCollectibles
 {
-	CCollectible* p_cCollectible;
+	CCollectibleOLD* p_cCollectible;
 	bool	      b_IsActive;
 };
 

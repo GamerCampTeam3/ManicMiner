@@ -4,6 +4,8 @@
 #include <stdlib.h>
 
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
+#include "ManicMiner/Enums/ECollectibleTypeRequired.h"
+
 
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
@@ -21,6 +23,7 @@ class CGCObjEnemy;														  //
 class CGCObjGroupEnemy;													  //
 class CPlayer;
 class CCollectible;
+class CCollectiblesGroup;
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -41,7 +44,12 @@ private:
 
 	// Mario
 	CPlayer* m_pcPlayer;
-	CCollectible* m_pCollectibleTest;
+	CCollectiblesGroup* m_pcCollectiblesGroup;
+
+	ECollectibleTypeRequired m_eCollectibleTypeRequired;
+	int m_iNumCollectiblesNeeded;
+	int m_iNumSwitchesNeeded;
+
 
 public:
 	CManicLayer( void );

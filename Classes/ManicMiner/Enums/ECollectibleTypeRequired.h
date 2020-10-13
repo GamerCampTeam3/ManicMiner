@@ -1,0 +1,14 @@
+#ifndef _ECOLLECTIBLETYPEREQUIRED_H_
+#define _ECOLLECTIBLETYPEREQUIRED_H_
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Enum to be used by levels to determine what logic collectibles should follow
+////////////////////////////////////////////////////////////////////////////////////////////////////
+enum class ECollectibleTypeRequired
+{
+	Collectible = 0,
+	Switch,
+	Both
+};
+
+#endif //ifndef _ECOLLECTIBLETYPEREQUIRED_H_		#pragma once

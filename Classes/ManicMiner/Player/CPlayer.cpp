@@ -225,8 +225,8 @@ void CPlayer::KeyboardInput()
 
 void CPlayer::ApplyDirectionChange(EPlayerDirection newDirection, float xOffSet, float yOffSet)
 {
-	Vec2 l_v2Movement(xOffSet, yOffSet);
-	m_v2Movement = l_v2Movement;
+	Vec2 v2Movement(xOffSet, yOffSet);
+	m_v2Movement = v2Movement;
 	m_ePlayerDirection = newDirection;
 	m_eLastPlayerDirection = m_ePlayerDirection;
 }

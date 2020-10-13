@@ -38,7 +38,7 @@ CGCObjectGroup::~CGCObjectGroup()
 //////////////////////////////////////////////////////////////////////////
 void CGCObjectGroup::OnObjectRegister( CGCObject* pArgObject )
 {
-	GCASSERT( ( m_uNumGCObjects < EMaxGCObjects), "you have run out of space in a GCObjectGroup! maximum oijects handled is EMaxGCObjects" );
+	GCASSERT( ( m_uNumGCObjects < EMaxGCObjects), "you have run out of space in a GCObjectGroup! maximum objects handled is EMaxGCObjects" );
 
 	// insert the GCObject at the end of m_apGCObjects
 	// N.B. post increment of object count

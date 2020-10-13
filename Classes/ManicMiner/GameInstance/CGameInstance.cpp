@@ -32,7 +32,7 @@ void CGameInstance::Init()
 	// Create CLevelManager singleton, assign it to said pointer
 	m_pLevelManager = CLevelManager::getInstance();
 
-	m_pCollectibleManager = new CCollectibleManager();
+	//m_pCollectibleManager = new CCollectibleManager();
 	
 	// Run CLevelManager Init
 	m_pLevelManager->Init();
@@ -57,7 +57,7 @@ void CGameInstance::SetPlayer( CPlayer& rPlayer )
 void CGameInstance::ResetLevel()
 {
 	m_pLevelManager->GetCurrentLevelLayer().VOnReset();
-	m_pCollectibleManager->ResetCurrentCollectibles();
+	//m_pCollectibleManager->ResetCurrentCollectibles();
 	m_pAirManager->Reset();
 	ResetRequestWasHandled();
 }
@@ -71,7 +71,7 @@ void CGameInstance::PlayerEnteredNewLevel( CManicLayer& rNewManicLayer, CPlayer&
 		m_pAirManager = new CAirManager(  origin, visibleSize );
 	}
 
-	m_pCollectibleManager->ResetCurrentCollectibles();
+	//m_pCollectibleManager->ResetCurrentCollectibles();
 	m_pPlayer = &rPlayer;
 	m_eGameState = EGameState::EGS_Looting;
 
@@ -113,7 +113,8 @@ void CGameInstance::OnItemCollected( CGCObjItem& rItem )
 		CGCObjectManager::ObjectKill( &rItem );
 
 
-		if ((m_eGameState == EGameState::EGS_Looting) && (m_pCollectibleManager->CheckCollectiblesNeeded()))
+		//if ((m_eGameState == EGameState::EGS_Looting) && (m_pCollectibleManager->CheckCollectiblesNeeded()))
+		if (m_eGameState == EGameState::EGS_Looting)
 		{
 			OnFinishedLooting();
 		}

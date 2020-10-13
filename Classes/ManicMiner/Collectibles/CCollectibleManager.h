@@ -2,9 +2,12 @@
 #define _CCOLLECTIBLEMANAGER_H_
 #include <array>
 
+
+#include "GamerCamp/GCObject/GCObjectGroup.h"
 #include "ManicMiner/Structs/SCollectibles.h"
 #include "ManicMiner/Structs/SSwitches.h"
 
+class CCollectibleOLD;
 ///////////////////////////////////////////
 /// Namespaces and Class declaration
 namespace cocos2d
@@ -12,11 +15,11 @@ namespace cocos2d
 	class Vec2;
 }
 
-class CCollectible;
+class CCollectibleOLD;
 class CSwitch;
 ///////////////////////////////////////////
 
-class CCollectibleManager
+class CCollectibleManager : public CGCObjectGroup
 {
 public:
 	// Those values dictates how much total Switch/Collectibles to generate
@@ -57,10 +60,11 @@ public:
 	void ResetCollectibles();
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	virtual void	VOnGroupResourceAcquire_PostObject	() override;
 
 	// Collision things for Collectibles/Switches
 	void IncrementCollectible();
-	void RemoveCollectible(CCollectible& collectible);
+	void RemoveCollectible(CCollectibleOLD& collectible);
 	void IncrementSwitches();
 	void FlipSwitch(CSwitch& cswitch);
 	void ResetCurrentCollectibles();

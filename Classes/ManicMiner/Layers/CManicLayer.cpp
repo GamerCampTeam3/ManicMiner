@@ -9,7 +9,6 @@
 
 #include "AppDelegate.h"
 
-
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GameSpecific/Invaders/GCObjGroupInvader.h"
@@ -19,13 +18,13 @@
 #include "GamerCamp/GameSpecific/Platforms/GCObjGroupPlatform.h"
 #include "GamerCamp/GameSpecific/Platforms/GCObjPlatform.h" 
 #include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
-#include "GamerCamp/GameSpecific/Player/GCObjPlayer.h"
 #include "ManicMiner/Enemy/GCObjGroupEnemy.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
-#include "ManicMiner/Collectibles/CCollectible.h"
+#include "ManicMiner/Collectible/CCollectible.h"
+#include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
-#include "ManicMiner/Collectibles/CCollectible.h"
 #include "ManicMiner/Enemy/GCEnemyDataStore.h"
+
 
 #include "MenuScene.h"
 #include "../GameInstance/CGameInstance.h"
@@ -60,7 +59,9 @@ CManicLayer::CManicLayer()
 	, m_pcGCGroupEnemy ( nullptr )
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcPlayer( nullptr )
-        , m_pCollectibleTest( nullptr )
+	, m_pcCollectiblesGroup(nullptr)
+	, m_eCollectibleTypeRequired(ECollectibleTypeRequired::Collectible)
+	, m_iNumCollectiblesNeeded( 4 )
 {
 
 }
@@ -73,7 +74,9 @@ CManicLayer::CManicLayer( CGameInstance& rGameInstance )
 	, m_pcGCGroupEnemy( nullptr )
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcPlayer( nullptr )
-	, m_pCollectibleTest(nullptr)
+	, m_pcCollectiblesGroup( nullptr )
+	, m_eCollectibleTypeRequired( ECollectibleTypeRequired::Collectible )
+	, m_iNumCollectiblesNeeded( 4 )
 {}
 
 //////////////////////////////////////////////////////////////////////////
@@ -180,6 +183,9 @@ void CManicLayer::VOnCreate()
 
 	m_pcGCGroupEnemy = new CGCObjGroupEnemy();
 	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupEnemy);
+
+	m_pcCollectiblesGroup = new CCollectiblesGroup( m_eCollectibleTypeRequired, m_iNumCollectiblesNeeded );
+	CGCObjectManager::ObjectGroupRegister( m_pcCollectiblesGroup );
 	
 	// add "CGCGameLayerPlatformer" splash screen"
 	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/background.plist";
@@ -256,7 +262,9 @@ void CManicLayer::VOnCreate()
 	
 	// create player object
 	m_pcPlayer = new CPlayer(v2MarioStartPos);
-	m_pCollectibleTest = new CCollectible(v2ScreenCentre_Offset);
+	
+	//m_pcCollectibleManager = new CCollectibleManager();
+	// m_pCollectibleTest = new CCollectible(v2ScreenCentre_Offset);
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -280,6 +288,9 @@ void CManicLayer::VOnCreate()
 	{
 		CGCObjPlatform* pPlatform = new CGCObjPlatform();
 		pPlatform->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.1f) ) );
+		
+		CCollectible* pCollectible = new CCollectible( ECollectibleType::Collectible, *m_pcCollectiblesGroup );
+		pCollectible->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.2f) ) );
 	}
 	//////////////////////////////////////////////////////////////////////
 	// Add specific collision handles
@@ -305,12 +316,18 @@ void CManicLayer::VOnCreate()
 
 	});
 
+	GetCollisionManager().AddCollisionHandler( []( CPlayer& rcPlayer, CCollectible& collectible, const b2Contact& rcContact ) -> void
+	{
+		collectible.InteractEvent();
+	} );
+
 
 
 	GetCollisionManager().AddCollisionHandler( [] (CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
 		{
 			COLLISIONTESTLOG( "(lambda) the player hit an item!" );
 		} );
+	
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact ) -> void
 		{
 			PlayerCollidedInvader( rcPlayer, rcInvader, rcContact );
@@ -330,11 +347,6 @@ void CManicLayer::VOnCreate()
 		{
 			EnemyCollidedItem(rEnemy, rcContact);
 		});
-	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CCollectible& rItem, const b2Contact& rcContact) -> void
-	{
-		//
-	});
-
 
 
 

@@ -1,5 +1,5 @@
-#ifndef _CCOLLECTIBLE_H_
-#define _CCOLLECTIBLE_H_
+#ifndef _CCOLLECTIBLEOLD_H_
+#define _CCOLLECTIBLEOLD_H_
 
 #ifndef _GCOBJSPRITEPHYSICS_H_
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
@@ -11,7 +11,7 @@
 
 class CCollectibleManager;
 
-class CCollectible
+class CCollectibleOLD
 	: public CGCObjSpritePhysics, public I_Interactible
 {
 private:
@@ -19,16 +19,16 @@ private:
 	CCollectibleManager* m_rcCollectibleManager;
 
 public:
-	CCollectible();
-	CCollectible(CCollectibleManager& collectibleManager);
+	CCollectibleOLD();
+	CCollectibleOLD(CCollectibleManager& collectibleManager);
 
-	CCollectible(cocos2d::Vec2 initialPos);
+	CCollectibleOLD(cocos2d::Vec2 initialPos);
 
 
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
 	// this class to delete derived types.
-	virtual ~CCollectible() {}
+	virtual ~CCollectibleOLD() {}
 
 	//////////////////////////////////////////////////////////////////////////
 	// overridden virtuals from the game object interface
@@ -55,4 +55,4 @@ public:
 
 
 
-#endif // #ifndef _CCOLLECTIBLE_H_
+#endif // #ifndef _CCOLLECTIBLEOLD_H_

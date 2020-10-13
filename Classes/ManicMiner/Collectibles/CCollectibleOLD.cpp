@@ -1,7 +1,7 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 
-#include "CCollectible.h"
+#include "CCollectibleOLD.h"
 #include "CCollectibleManager.h"
 
 USING_NS_CC;
@@ -12,15 +12,15 @@ USING_NS_CC;
 // N.B. this is super important!
 //
 //////////////////////////////////////////////////////////////////////////
-CCollectible::CCollectible()
-	: CGCObjSpritePhysics(GetGCTypeIDOf(CCollectible))
+CCollectibleOLD::CCollectibleOLD()
+	: CGCObjSpritePhysics(GetGCTypeIDOf(CCollectibleOLD))
 	, m_iIndex(0)
 {
 
 }
 
-CCollectible::CCollectible(CCollectibleManager& collectibleManager)
-	: CGCObjSpritePhysics(GetGCTypeIDOf(CCollectible))
+CCollectibleOLD::CCollectibleOLD(CCollectibleManager& collectibleManager)
+	: CGCObjSpritePhysics(GetGCTypeIDOf( CCollectibleOLD ))
 	, m_iIndex(0)
 	, m_rcCollectibleManager(nullptr)
 {
@@ -28,8 +28,8 @@ CCollectible::CCollectible(CCollectibleManager& collectibleManager)
 }
 
 
-CCollectible::CCollectible(cocos2d::Vec2 startPos)
-	: CGCObjSpritePhysics(GetGCTypeIDOf(CCollectible))
+CCollectibleOLD::CCollectibleOLD(cocos2d::Vec2 startPos)
+	: CGCObjSpritePhysics(GetGCTypeIDOf( CCollectibleOLD ))
 	, m_iIndex(0)
 {
 	SetResetPosition(startPos);
@@ -43,7 +43,7 @@ CCollectible::CCollectible(cocos2d::Vec2 startPos)
 //////////////////////////////////////////////////////////////////////////
 IN_CPP_CREATION_PARAMS_DECLARE(CCollectible, "TexturePacker/Sprites/Egg/Egg.plist", "egg", b2_dynamicBody, true);
 //virtual 
-void CCollectible::VOnResourceAcquire()
+void CCollectibleOLD::VOnResourceAcquire()
 {
 	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE(CCollectible);
 	CGCObjSpritePhysics::VOnResourceAcquire();
@@ -52,12 +52,12 @@ void CCollectible::VOnResourceAcquire()
 //////////////////////////////////////////////////////////////////////////
 //        virtual 
 //////////////////////////////////////////////////////////////////////////
-void CCollectible::VOnReset()
+void CCollectibleOLD::VOnReset()
 {
 	CGCObjSpritePhysics::VOnReset();
 }
 
-void CCollectible::VOnUpdate(f32 fTimeStep)
+void CCollectibleOLD::VOnUpdate(f32 fTimeStep)
 {
 	GetPhysicsBody()->SetGravityScale(0);
 }
@@ -65,7 +65,7 @@ void CCollectible::VOnUpdate(f32 fTimeStep)
 //////////////////////////////////////////////////////////////////////////
 // Wrapper function to set the transform as PhysicsBody cannot be accessed
 //////////////////////////////////////////////////////////////////////////
-void CCollectible::SetPosition(const b2Vec2 pos)
+void CCollectibleOLD::SetPosition(const b2Vec2 pos)
 {
 	GetPhysicsBody()->SetTransform(pos, 0);
 }
@@ -73,7 +73,7 @@ void CCollectible::SetPosition(const b2Vec2 pos)
 //////////////////////////////////////////////////////////////////////////
 // Fires off on Collision and calls appropriate event on Manager
 //////////////////////////////////////////////////////////////////////////
-void CCollectible::InteractEvent()
+void CCollectibleOLD::InteractEvent()
 {
 	m_rcCollectibleManager->IncrementCollectible();
 	m_rcCollectibleManager->RemoveCollectible(*this);
