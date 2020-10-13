@@ -185,7 +185,7 @@ void CPlayer::KeyboardInput()
 		{
 			if (m_bCanBeControlled)
 			{
-				ApplyDirectionChange(EPlayerDirection::EPD_Left, -10.0f, 0.0f);
+				ApplyDirectionChange(EPlayerDirection::EPD_Left, -4.0f, 0.0f);
 			}
 		}
 
@@ -193,7 +193,7 @@ void CPlayer::KeyboardInput()
 		{
 			if (m_bCanBeControlled)
 			{
-				ApplyDirectionChange(EPlayerDirection::EPD_Right, 10.0f, 0.0f);
+				ApplyDirectionChange(EPlayerDirection::EPD_Right, 4.0f, 0.0f);
 			}
 		}
 
@@ -202,7 +202,7 @@ void CPlayer::KeyboardInput()
 			// Ladder Up
 			if (m_bIsOnLadder)
 			{
-				ApplyDirectionChange(EPlayerDirection::EPD_Up, 0.0f, 10.0f);
+				ApplyDirectionChange(EPlayerDirection::EPD_Up, 0.0f, 4.0f);
 			}
 		}
 
@@ -211,7 +211,7 @@ void CPlayer::KeyboardInput()
 			// Ladder Down
 			if (m_bIsOnLadder)
 			{
-				ApplyDirectionChange(EPlayerDirection::EPD_Down, 0.0f, -10.0f);
+				ApplyDirectionChange(EPlayerDirection::EPD_Down, 0.0f, -4.0f);
 			}
 		}
 
@@ -276,7 +276,7 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 		if (m_eLastPlayerDirection == EPlayerDirection::EPD_Left)
 		{
 			CCLOG("Jump: Left Lock");
-			Vec2 l_v2Jump(0.0f, 200.0f);
+			Vec2 l_v2Jump(-4.0f, 200.0f);
 			m_v2Jump = l_v2Jump;
 			ApplyForceToCenter(m_v2Jump);
 			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
@@ -285,7 +285,7 @@ void CPlayer::UpdateMovement(f32 fTimeStep)
 		else if (m_eLastPlayerDirection == EPlayerDirection::EPD_Right)
 		{
 			CCLOG("Jump: Right Lock");
-			Vec2 l_v2Jump(100.0f, 200.0f);
+			Vec2 l_v2Jump(4.0f, 200.0f);
 			m_v2Jump = l_v2Jump;
 			ApplyForceToCenter(m_v2Jump);
 			m_ePlayerDirection = EPlayerDirection::EPD_Falling;
