@@ -289,7 +289,7 @@ bool CAirManager::UpdateAirTimer()
 {
 	if( m_fRemainingAirAmount <= 0.0f ) // if no air left return false
 	{
-		CGameInstance::getInstance()->OutOfAir();
+		//OutOfAir();
 		return false;
 	}
 

@@ -1,14 +1,12 @@
 #include "CMLCentralCavern.h"
 #include "ManicMiner/Player/CPlayer.h"
 
-CMLCentralCavern::CMLCentralCavern()
-	: CManicLayer()
-{
-}
+CMLCentralCavern::CMLCentralCavern( )
+	: CManicLayer( )
+{}
 
 CMLCentralCavern::~CMLCentralCavern()
-{
-}
+{}
 
 void CMLCentralCavern::VOnCreate( void )
 {
