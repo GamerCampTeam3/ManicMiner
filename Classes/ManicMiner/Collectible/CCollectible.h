@@ -15,6 +15,7 @@ private:
 	CCollectiblesGroup* m_pcCollectiblesGroup;
 
 public:
+	
 	CCollectible( void )
 		: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
 		, m_bHasBeenCollected( false )
