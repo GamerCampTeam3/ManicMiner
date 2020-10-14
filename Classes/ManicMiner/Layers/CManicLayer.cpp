@@ -305,26 +305,14 @@ void CManicLayer::VOnCreate()
 
 	});
 
-	GetCollisionManager().AddCollisionHandler( []( CPlayer& rcPlayer, CCollectible& collectible, const b2Contact& rcContact ) -> void
-	{
-		collectible.InteractEvent();
-	} );
-
-
-
-	GetCollisionManager().AddCollisionHandler( [] (CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
 		{
-			COLLISIONTESTLOG( "(lambda) the player hit an item!" );
+			ItemCollected( rcCollectible, rcPlayer, rcContact );
 		} );
-	
+
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact ) -> void
 		{
 			PlayerCollidedInvader( rcPlayer, rcInvader, rcContact );
-		} );
-
-	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
-		{
-			ItemCollected( rcItem, rcContact );
 		} );
 
 	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact) -> void
@@ -571,9 +559,9 @@ void CManicLayer::EnemyCollidedItem(CGCObjEnemy& rcEnemy, const b2Contact& rcCon
 
 
 // Player + Collectible
-void CManicLayer::ItemCollected( CGCObjItem& rcItem, const b2Contact& rcContact )
+void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact )
 {
-	m_pcCollectiblesGroup->CollectibleEvent();
+	rcCollectible.InteractEvent();
 }
 
 void CManicLayer::OnDeath()

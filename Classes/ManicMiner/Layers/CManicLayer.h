@@ -132,7 +132,7 @@ public:
 		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
-		void ItemCollected( CGCObjItem& rcItem, const b2Contact& rcContact );
+		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
 
 
 
