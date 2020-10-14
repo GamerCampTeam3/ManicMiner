@@ -76,9 +76,6 @@
     <Filter Include="Classes\ManicMiner\Player">
       <UniqueIdentifier>{ee74a6cf-baec-4909-9639-70b718c6f195}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\Collectibles">
-      <UniqueIdentifier>{9b1760a8-6045-4fa0-b8ae-c19c719ea6c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ManicMiner\Structs">
       <UniqueIdentifier>{5ad32101-5126-4c4e-8727-a6d94c67efc8}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,9 @@
     </Filter>
     <Filter Include="Classes\ManicMiner\Collectible">
       <UniqueIdentifier>{bd94f2aa-9f33-42b4-aa08-c74b60f6e23f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\OLD_Collectibles">
+      <UniqueIdentifier>{9b1760a8-6045-4fa0-b8ae-c19c719ea6c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -217,10 +217,10 @@
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitch.cpp">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CCollectiblesGroup.cpp">
       <Filter>Classes\ManicMiner\CollectiblesGroup</Filter>
@@ -229,7 +229,7 @@
       <Filter>Classes\ManicMiner\Collectible</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleOLD.cpp">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -369,13 +369,13 @@
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\I_Interactible.h">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\CSwitch.h">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.h">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h">
       <Filter>Classes\ManicMiner\Structs</Filter>
@@ -402,7 +402,7 @@
       <Filter>Classes\ManicMiner\Enums</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleOLD.h">
-      <Filter>Classes\ManicMiner\Collectibles</Filter>
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

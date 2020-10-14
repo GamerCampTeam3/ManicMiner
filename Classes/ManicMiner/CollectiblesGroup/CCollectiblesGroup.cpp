@@ -16,6 +16,7 @@
 
 
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
+#include "ManicMiner/Layers/CManicLayer.h"
 
 //////////////////////////////////////////////////////////////////////////
 // using
@@ -26,33 +27,35 @@ using namespace cocos2d;
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
-CCollectiblesGroup::CCollectiblesGroup()
-	: m_iCollectibles(0)
-	, m_iSwitches(0)
-	, m_iMaxCollectibles(0)
-	, m_iMaxSwitches(0)
-	, m_eCollectibleTypeRequired(ECollectibleTypeRequired::Collectible)
+CCollectiblesGroup::CCollectiblesGroup( CManicLayer& cLayer )
+	: m_iCollectibles			( 0 )
+	, m_iSwitches				( 0 )
+	, m_iMaxCollectibles		( 0 )
+	, m_iMaxSwitches			( 0 )
+	, m_eCollectibleTypeRequired( ECollectibleTypeRequired::Collectible )
+	, m_pcManicLayer			( &cLayer )
 {
 }
 
-CCollectiblesGroup::CCollectiblesGroup(ECollectibleTypeRequired typeCollectibles )
-	: m_iCollectibles( 0 )
-	, m_iSwitches( 0 )
-	, m_iMaxCollectibles( 0 )
-	, m_iMaxSwitches( 0 )
+CCollectiblesGroup::CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeRequired typeCollectibles )
+	: m_iCollectibles			( 0 )
+	, m_iSwitches				( 0 )
+	, m_iMaxCollectibles		( 0 )
+	, m_iMaxSwitches			( 0 )
 	, m_eCollectibleTypeRequired( typeCollectibles )
+	, m_pcManicLayer			( &cLayer )
 {
-	
+
 }
 
-CCollectiblesGroup::CCollectiblesGroup( ECollectibleTypeRequired typeCollectibles, int numCollectibles )
-	: m_iCollectibles( 0 )
-	, m_iSwitches( 0 )
-	, m_iMaxCollectibles( numCollectibles )
-	, m_iMaxSwitches( 0 )
+CCollectiblesGroup::CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeRequired typeCollectibles, int numCollectibles )
+	: m_iCollectibles			( 0 )
+	, m_iSwitches				( 0 )
+	, m_iMaxCollectibles		( numCollectibles )
+	, m_iMaxSwitches			( 0 )
 	, m_eCollectibleTypeRequired( typeCollectibles )
+	, m_pcManicLayer			( &cLayer )
 {
-
 }
 
 
@@ -131,7 +134,7 @@ void CCollectiblesGroup::VOnGroupResourceAcquire_PostObject( void )
 	const char* pszPlist_Coin = "TexturePacker/Sprites/Coin/Coin.plist";
 	const char* pszAnim_Coin_Rotate = "Rotate";
 	// To add different animations here
-	
+
 	// make an animation
 	// N.B. pdictPList is returned autoreleased - will clean itself at end of frame if not retained
 	ValueMap& rdicPList = GCCocosHelpers::CreateDictionaryFromPlist( pszPlist_Coin );

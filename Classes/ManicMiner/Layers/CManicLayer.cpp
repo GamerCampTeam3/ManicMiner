@@ -291,9 +291,9 @@ void CManicLayer::VOnCreate()
 
 		if (isColliding)
 		{
-			Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
-			Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
-			if (rcPlayerPosition.y > rcPlatformPosition.y)
+			Vec2 const rcPlatformPosition	= rcPlatform.GetSpritePosition();
+			Vec2 const rcPlayerPosition		= rcPlayer.GetSpritePosition();
+			if ( rcPlayerPosition.y > rcPlatformPosition.y )
 			{
 				//rcPlayer.SetDirection(rcPlayer.GetDirection());
 				rcPlayer.SetCanJump(true);

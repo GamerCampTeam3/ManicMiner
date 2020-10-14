@@ -28,22 +28,24 @@ private:
 
 	// Constant values
 	// const int	     m_kiStartingLives = 3;      // The starting life of the player, changing this will apply it to m_iLives on Construction
-	const float	     m_kfGravitionalPull = 30.0f;    // The gravitional force that affects the player for jumping purpouses
+	const float			m_kfGravitionalPull = 30.0f;    // The gravitational force that affects the player for jumping purposes
 
 	// Our Movement Related variables
-	EPlayerDirection m_ePlayerDirection;			 // This stores the current direction the player is at
-	EPlayerDirection m_eLastPlayerDirection;		 // This stores the last direction of the player, used for the jump lock
+	EPlayerDirection	m_ePlayerDirection;			 // This stores the current direction the player is at
+	EPlayerDirection	m_eLastPlayerDirection;		 // This stores the last direction of the player, used for the jump lock
 
-	bool m_bCanJump;								 // This regulates the player's ability to jump again
-	bool m_bCanBeControlled;						 // This disables input of the X-axis directional movement of the player while jumping (or on a conveyor belt)
-	bool m_bIsOnLadder;
+	bool				m_bCanJump;					 // This regulates the player's ability to jump again
+	bool				m_bCanBeControlled;			 // This disables input of the X-axis directional movement of the player while jumping (or on a conveyor belt)
+	bool				m_bIsOnLadder;
 
-	cocos2d::Vec2 m_v2Movement;						 // Used to move the player
-	cocos2d::Vec2 m_v2Jump;							 // Used for the jump
+	cocos2d::Vec2		m_v2Movement;				 // Used to move the player
+	cocos2d::Vec2		m_v2Jump;					 // Used for the jump
+	float				m_fMovementSpeed;
+	float				m_fJumpHeight;
 
 	// Other values
-	int m_iMaxLives;
-    int m_iLives;									 // The current life of the player
+	int					m_iMaxLives;
+    int					m_iLives;					 // The current life of the player
 
 
 	// The controller
@@ -103,6 +105,8 @@ public:
 	void SetCanJump(bool canJump) { m_bCanJump = canJump; };
 	bool GetCanBeControlled() const { return m_bCanBeControlled; };
 	void SetCanBeControlled(bool canControl) { m_bCanBeControlled = canControl; };
+	void JumpEvent(float x, float y);
+	
 
 	// For GameState related things:: Player lives
 	// Additionally included pre-made increment/decrement functions

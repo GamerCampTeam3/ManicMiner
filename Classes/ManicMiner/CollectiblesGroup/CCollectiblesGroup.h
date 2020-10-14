@@ -7,6 +7,8 @@
 
 #include "ManicMiner/Enums/ECollectibleTypeRequired.h"
 
+class CManicLayer;
+
 class CCollectiblesGroup
 : public CGCObjectGroup
 {
@@ -19,12 +21,13 @@ class CCollectiblesGroup
 	int m_iMaxSwitches;
 
 	ECollectibleTypeRequired m_eCollectibleTypeRequired;
+	CManicLayer* m_pcManicLayer;
 
 public:
 
-	CCollectiblesGroup();
-	CCollectiblesGroup( ECollectibleTypeRequired typeCollectibles );
-	CCollectiblesGroup( ECollectibleTypeRequired typeCollectibles, int numCollectibles );
+	CCollectiblesGroup( CManicLayer& cLayer );
+	CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeRequired typeCollectibles );
+	CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeRequired typeCollectibles, int numCollectibles );
 	virtual ~CCollectiblesGroup();
 
 
