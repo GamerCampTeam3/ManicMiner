@@ -626,6 +626,11 @@ CLevelManager& CManicLayer::GetLevelManager() const
 	return *m_pcLevelManager;
 }
 
+void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )
+{
+	m_pcLevelManager = &rcLevelManager;
+}
+
 void CManicLayer::CB_OnGameExitButton(Ref* pSender)
 {
 	// add code to release anything that needs to be released before exiting the game
