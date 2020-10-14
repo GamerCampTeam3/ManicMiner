@@ -17,7 +17,7 @@ CLevelManager::CLevelManager( cocos2d::Director& rcDirector )
 	: m_iCurrentLevelIndex	( -1 )
 {
 	// Create CMenuLayer, assign a pointer to this CLevelManager instance
-	Scene* pScene = CMenuLayer::scene(*this);
+	Scene* pScene = CMenuLayer::scene( *this );
 
 	// Run
 	rcDirector.runWithScene( pScene );
