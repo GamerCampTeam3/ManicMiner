@@ -17,7 +17,7 @@ CLevelManager::CLevelManager( cocos2d::Director& rcDirector )
 	: m_iCurrentLevelIndex	( -1 )
 {
 	// Create CMenuLayer, assign a pointer to this CLevelManager instance
-	Scene* pScene = CMenuLayer::scene(*this);
+	Scene* pScene = CMenuLayer::scene( *this );
 
 	// Run
 	rcDirector.runWithScene( pScene );
@@ -64,11 +64,16 @@ void CLevelManager::GoToNextLevel()
 		break;
 	}
 
-	// If pScene is nullptr, means a CManicLayer was not created
-	// This means we are transitioning to the menu, don't need to transition a second time
-	// This logic shouldn't be here anyways, will get removed eventually
+	// If pScene is not nullptr, means a CManicLayer was created / we are not going into main menu
 	if ( pScene != nullptr )
 	{
+		// Get the new CManicLayer ( child of pScene, tag = 0 )
+		auto newManicLayer = static_cast< CManicLayer* >( pScene->getChildByTag( 0 ) );
+		
+		// Assign its pointer to this CLevelManager
+		newManicLayer->SetLevelManager( *this );
+		
+		// Begin transition
 		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, pScene ) );
 	}
 

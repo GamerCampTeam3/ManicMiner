@@ -5,6 +5,7 @@
 
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "ManicMiner/Enums/ECollectibleTypeRequired.h"
+#include "../GameState/EGameState.h"
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -32,6 +33,9 @@ private:
 	// Reference to the GameInstance
 	CLevelManager* m_pcLevelManager;
 	
+	// GameState Enum
+	EGameState m_eGameState;
+
 	// object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
 	CGCObjGroupItem* m_pcGCGroupItem;
@@ -97,24 +101,80 @@ public:
 	virtual void PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold );
 	virtual void PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse );
 
-	void EnemyCollidedItem(CGCObjEnemy& rcEnemy, const b2Contact& rcContact);
-
-	
-
-	void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
-	void PlayerCollidedEnemy(CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact);
-
-	void ItemCollected( CGCObjItem& rcItem, const b2Contact& rcContact );
 
 
 	////////////////////////////////////////////////////////////////////////////
 	// Getters
 	////////////////////////////////////////////////////////////////////////////
 
-	CPlayer& GetPlayer();
+	CPlayer& GetPlayer() const;
+	CLevelManager& GetLevelManager() const;
 
+	////////////////////////////////////////////////////////////////////////////
+	// Setters
+	////////////////////////////////////////////////////////////////////////////
+	void SetLevelManager( CLevelManager& rcLevelManager );
+
+
+
+	////////////////////////////////////////////////////////////////////////////
+	// Button
+	////////////////////////////////////////////////////////////////////////////
 	void CB_OnGameExitButton(Ref* pSender);
 
 
+	private:
+
+
+		////////////////////////////////////////////////////////////////////////////
+		// Collision Events
+		////////////////////////////////////////////////////////////////////////////
+		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
+		void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
+		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
+		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
+
+
+
+		////////////////////////////////////////////////////////////////////////////
+		// General Game Logic
+		////////////////////////////////////////////////////////////////////////////
+		void OnDeath();
+		void OnFinishedLooting();
+		void OnEscaped();
+		void OutOfLives();
+
+
+
+
+
+
+
+
+
+
+
+
+
+		////////////////////////////////////////////////////////////////////////// 
+		// reset handling
+		bool m_bResetWasRequested;
+
+		void RequestReset()
+		{
+			m_bResetWasRequested = true;
+		}
+
+		void ResetRequestWasHandled()
+		{
+			m_bResetWasRequested = false;
+		}
+
+		bool ResetWasRequested()
+		{
+			return m_bResetWasRequested;
+		}
+
+		void ResetLevel();
 };
 #endif // #ifndef _CMANICLAYER_H_

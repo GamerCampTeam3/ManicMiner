@@ -29,6 +29,7 @@
 #include "MenuScene.h"
 #include "../GameInstance/CGameInstance.h"
 #include "ManicMiner/Collectibles/I_Interactible.h"
+#include "../LevelManager/CLevelManager.h"
 
 
 USING_NS_CC;
@@ -54,6 +55,7 @@ USING_NS_CC;
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcLevelManager ( nullptr )
+	, m_eGameState		(EGameState::EGS_Looting)
 	, m_pcGCGroupItem( nullptr )
 	, m_pcGCGroupProjectilePlayer( nullptr )
 	, m_pcGCGroupEnemy ( nullptr )
@@ -303,36 +305,24 @@ void CManicLayer::VOnCreate()
 
 	});
 
-	GetCollisionManager().AddCollisionHandler( []( CPlayer& rcPlayer, CCollectible& collectible, const b2Contact& rcContact ) -> void
-	{
-		collectible.InteractEvent();
-	} );
-
-
-
-	GetCollisionManager().AddCollisionHandler( [] (CPlayer& rcPlayer, CGCObjItem& rcItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
 		{
-			COLLISIONTESTLOG( "(lambda) the player hit an item!" );
+			ItemCollected( rcCollectible, rcPlayer, rcContact );
 		} );
-	
+
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact ) -> void
 		{
 			PlayerCollidedInvader( rcPlayer, rcInvader, rcContact );
 		} );
 
-	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjItem& rItem, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact) -> void
 		{
-			ItemCollected( rItem, rcContact );
-		} );
-
-	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjEnemy& rEnemy, const b2Contact& rcContact) -> void
-		{
-			PlayerCollidedEnemy( rcPlayer, rEnemy, rcContact );
+			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
 		});
 	
-	GetCollisionManager().AddCollisionHandler([&](CGCObjItem& rcItem, CGCObjEnemy& rEnemy, const b2Contact& rcContact) -> void
+	GetCollisionManager().AddCollisionHandler([&](CGCObjItem& rcItem, CGCObjEnemy& rcEnemy, const b2Contact& rcContact) -> void
 		{
-			EnemyCollidedItem(rEnemy, rcContact);
+			EnemyCollidedItem(rcEnemy, rcContact);
 		});
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
@@ -408,9 +398,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
 void CManicLayer::EndContact( b2Contact* pB2Contact )
-{
-
-}
+{}
 
 ///////////////////////////////////////////////////////////////////////////////
 // pre solve
@@ -554,33 +542,81 @@ void CManicLayer::HandleCollisions()
 // Player + Enemy
 void CManicLayer::PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact )
 {
-	//OnPlayerDeath( rcPlayer );
+	OnDeath();
 }
 
 // Player + Enemy
-void CManicLayer::PlayerCollidedEnemy(CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact)
+void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
 {
-	//OnPlayerDeath( rcPlayer);
+	OnDeath();
 }
 
 
 void CManicLayer::EnemyCollidedItem(CGCObjEnemy& rcEnemy, const b2Contact& rcContact)
 {
-
-	rcEnemy.BounceEnemyDirection();
-	
+	rcEnemy.BounceEnemyDirection();	
 }
 
 
 // Player + Collectible
-void CManicLayer::ItemCollected( CGCObjItem& rcItem, const b2Contact& rcContact )
+void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact )
 {
-	//OnItemCollected( rcItem );
+	rcCollectible.InteractEvent();
 }
 
-CPlayer& CManicLayer::GetPlayer()
+void CManicLayer::OnDeath()
+{
+	m_pcPlayer->DecrementLives();
+
+	if( m_pcPlayer->GetLives() )
+	{
+		RequestReset();
+	}
+	else
+	{
+		OutOfLives();
+	}
+}
+
+void CManicLayer::OnFinishedLooting()
+{
+	m_eGameState = EGameState::EGS_Escaping;
+
+	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjPlatform& rPlatform, const b2Contact& rcContact ) -> void
+		{
+			if( m_eGameState == EGameState::EGS_Escaping )
+			{
+				OnEscaped();
+			}
+		} );
+}
+
+void CManicLayer::OnEscaped()
+{
+	m_eGameState = EGameState::EGS_Victory;
+	// Run Time animation and points and stuff
+	// when that ends, call this line:
+	m_pcLevelManager->GoToNextLevel();
+}
+
+void CManicLayer::OutOfLives()
+{
+	m_pcLevelManager->GoToMainMenu();
+}
+
+CPlayer& CManicLayer::GetPlayer() const
 {
 	return *m_pcPlayer;
+}
+
+CLevelManager& CManicLayer::GetLevelManager() const
+{
+	return *m_pcLevelManager;
+}
+
+void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )
+{
+	m_pcLevelManager = &rcLevelManager;
 }
 
 void CManicLayer::CB_OnGameExitButton(Ref* pSender)
@@ -588,4 +624,10 @@ void CManicLayer::CB_OnGameExitButton(Ref* pSender)
 	// add code to release anything that needs to be released before exiting the game
 
 	exit(0);
+}
+
+void CManicLayer::ResetLevel()
+{
+	//m_pcCollectiblesGroup->ResetCurrentCollectibles();
+	ResetRequestWasHandled();
 }
