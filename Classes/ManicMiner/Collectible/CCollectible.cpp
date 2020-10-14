@@ -31,6 +31,7 @@ CCollectible::CCollectible(ECollectibleType eType, CCollectiblesGroup &collectib
 
 void CCollectible::VOnReset()
 {
+	CGCObjSpritePhysics::VOnReset();
 	m_bHasBeenCollected = false;
 }
 
