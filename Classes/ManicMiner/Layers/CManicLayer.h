@@ -142,7 +142,7 @@ public:
 		void OnDeath();
 		void OnFinishedLooting();
 		void OnEscaped();
-		void OutOfLives();
+
 
 
 
@@ -160,10 +160,7 @@ public:
 		// reset handling
 		bool m_bResetWasRequested;
 
-		void RequestReset()
-		{
-			m_bResetWasRequested = true;
-		}
+
 
 		void ResetRequestWasHandled()
 		{
@@ -176,5 +173,14 @@ public:
 		}
 
 		void ResetLevel();
+
+public:
+	void OutOfLives();
+	
+	void RequestReset()
+	{
+		//ResetLevel();
+		m_bResetWasRequested = true;
+	}
 };
 #endif // #ifndef _CMANICLAYER_H_

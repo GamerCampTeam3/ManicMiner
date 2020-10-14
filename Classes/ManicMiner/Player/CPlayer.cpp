@@ -34,13 +34,15 @@ CPlayer::CPlayer()
 	, m_v2Movement( 0.0f, 0.0f )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
-	, m_fJumpHeight( 200.f )
+	, m_fJumpHeight( -2000.0f )
 	, m_pcControllerActionToKeyMap( nullptr )
+	, m_pcManicLayer(nullptr)
+	, isalive(true)
 {
 
 }
 
-CPlayer::CPlayer( cocos2d::Vec2 startingPos )
+CPlayer::CPlayer( CManicLayer& cLayer, cocos2d::Vec2 startingPos )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
 	, m_ePlayerDirection( EPlayerDirection::EPD_Static )
 	, m_eLastPlayerDirection( EPlayerDirection::EPD_Static )
@@ -53,11 +55,13 @@ CPlayer::CPlayer( cocos2d::Vec2 startingPos )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
 	, m_pcControllerActionToKeyMap( nullptr )
+	, m_pcManicLayer( &cLayer )
+	, isalive( true )
 {
 	SetResetPosition( startingPos );
 }
 
-CPlayer::CPlayer( cocos2d::Vec2 startingPos, int startingLives )
+CPlayer::CPlayer( CManicLayer& cLayer, cocos2d::Vec2 startingPos, int startingLives )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
 	, m_ePlayerDirection( EPlayerDirection::EPD_Static )
 	, m_eLastPlayerDirection( EPlayerDirection::EPD_Static )
@@ -68,6 +72,8 @@ CPlayer::CPlayer( cocos2d::Vec2 startingPos, int startingLives )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
 	, m_pcControllerActionToKeyMap( nullptr )
+	, m_pcManicLayer( &cLayer )
+	, isalive( true )
 {
 	SetResetPosition( startingPos );
 }
@@ -111,6 +117,9 @@ void CPlayer::VOnReset()
 	// reset velocity and flip state
 	SetFlippedX( false );
 	SetFlippedY( false );
+	m_ePlayerDirection = EPlayerDirection::EPD_Static;
+	m_eLastPlayerDirection = m_eLastPlayerDirection;
+	isalive = true;
 
 	// reset
 	if (GetPhysicsBody())
@@ -138,16 +147,40 @@ void CPlayer::VOnResourceRelease()
 void CPlayer::TakeDamage()
 {
 	m_iLives--;
-
-	if (CheckForDeath())
+	if (isalive)
 	{
-		Death();
+		if (m_iLives > 0)
+		{
+			VOnReset();
+			m_pcManicLayer->RequestReset();
+		}
+
+		if (m_iLives == 0)
+		{
+			m_pcManicLayer->OutOfLives();
+		}
+		isalive = false;
+
 	}
+	//if (CheckIfOutOfLives())
+	//{
+	//	Death();
+	//	m_pcManicLayer->RequestReset();
+	//}
+	//
+	//else
+	//{
+	//	m_pcManicLayer->OutOfLives();
+	//}
 }
 
-bool CPlayer::CheckForDeath()
+bool CPlayer::CheckIfOutOfLives()
 {
-	return (m_iLives == 0);
+	if (m_iLives == 0)
+	{
+		return true;
+	}
+	return false;
 }
 
 void CPlayer::Death()

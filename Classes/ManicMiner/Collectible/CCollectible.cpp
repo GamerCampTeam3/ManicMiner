@@ -29,6 +29,12 @@ CCollectible::CCollectible(ECollectibleType eType, CCollectiblesGroup &collectib
 {
 }
 
+void CCollectible::VOnReset()
+{
+	m_bHasBeenCollected = false;
+}
+
+
 void CCollectible::InteractEvent()
 {
 	int collectibleIncrement;

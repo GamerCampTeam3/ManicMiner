@@ -24,6 +24,7 @@ public:
 	CCollectible( ECollectibleType eType, CCollectiblesGroup &collectibleGroup );
 
 	virtual void VOnResourceAcquire( void ) override;
+	virtual void VOnReset() override;
 
 	void InteractEvent();
 

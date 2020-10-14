@@ -250,7 +250,7 @@ void CManicLayer::VOnCreate()
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
 	
 	// create player object
-	m_pcPlayer = new CPlayer(v2MarioStartPos);
+	m_pcPlayer = new CPlayer(*this, v2MarioStartPos);
 	
 	//m_pcCollectibleManager = new CCollectibleManager();
 	// m_pCollectibleTest = new CCollectible(v2ScreenCentre_Offset);
@@ -281,6 +281,7 @@ void CManicLayer::VOnCreate()
 		CCollectible* pCollectible = new CCollectible( ECollectibleType::Collectible, *m_pcCollectiblesGroup );
 		pCollectible->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.2f) ) );
 	}
+	
 	//////////////////////////////////////////////////////////////////////
 	// Add specific collision handles
 	//////////////////////////////////////////////////////////////////////
@@ -337,6 +338,13 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 
 	// this shows how to iterate and respond to the box2d collision info
 	HandleCollisions();
+
+	// Reset level request
+	if (ResetWasRequested())
+	{
+		ResetLevel();
+		CCLOG( "Reset" );
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -552,7 +560,8 @@ void CManicLayer::PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInv
 // Player + Enemy
 void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
 {
-	OnDeath();
+	rcPlayer.TakeDamage();
+	//OnDeath();
 }
 
 
@@ -572,14 +581,15 @@ void CManicLayer::OnDeath()
 {
 	m_pcPlayer->DecrementLives();
 
-	if( m_pcPlayer->GetLives() )
+	if (m_pcPlayer->GetLives() < 0 )
 	{
 		RequestReset();
 	}
-	else
+	else  
 	{
 		OutOfLives();
 	}
+
 }
 
 void CManicLayer::OnFinishedLooting()
@@ -634,4 +644,6 @@ void CManicLayer::ResetLevel()
 {
 	//m_pcCollectiblesGroup->ResetCurrentCollectibles();
 	ResetRequestWasHandled();
+	VOnReset();
+	m_pcPlayer->VOnReset();
 }
