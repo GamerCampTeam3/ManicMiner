@@ -24,13 +24,13 @@ class CCollectiblesGroup
 	CManicLayer* m_pcManicLayer;
 
 public:
-
+	CCollectiblesGroup();
 	CCollectiblesGroup( CManicLayer& cLayer );
 	CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeRequired typeCollectibles );
 	CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeRequired typeCollectibles, int numCollectibles );
 	virtual ~CCollectiblesGroup();
 
-
+	void SetLayer( CManicLayer& cLayer );
 	void CollectibleEvent();
 	void SwitchEvent();
 	bool CheckIfEnoughToOpenExit();

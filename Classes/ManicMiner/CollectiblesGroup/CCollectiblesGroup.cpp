@@ -27,6 +27,19 @@ using namespace cocos2d;
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
+
+CCollectiblesGroup::CCollectiblesGroup()
+	: m_iCollectibles			( 0 )
+	, m_iSwitches				( 0 )
+	, m_iMaxCollectibles		( 0 )
+	, m_iMaxSwitches			( 0 )
+	, m_eCollectibleTypeRequired( ECollectibleTypeRequired::Collectible )
+	, m_pcManicLayer			( nullptr )
+{
+}
+
+
+
 CCollectiblesGroup::CCollectiblesGroup( CManicLayer& cLayer )
 	: m_iCollectibles			( 0 )
 	, m_iSwitches				( 0 )
@@ -56,6 +69,11 @@ CCollectiblesGroup::CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeReq
 	, m_eCollectibleTypeRequired( typeCollectibles )
 	, m_pcManicLayer			( &cLayer )
 {
+}
+
+void CCollectiblesGroup::SetLayer(CManicLayer& cLayer)
+{
+	m_pcManicLayer = &cLayer;
 }
 
 
