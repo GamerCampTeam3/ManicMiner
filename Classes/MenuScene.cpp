@@ -4,6 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "MenuScene.h"
 
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
 
 USING_NS_CC;
@@ -113,6 +114,8 @@ bool CMenuLayer::init()
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
+	PreloadSoundEffect( ESoundName::ESN_KeyCollected );
+	PlaySoundEffect( ESoundName::ESN_KeyCollected );
 	m_pcLevelManager->EnterCavern();
 }
 
