@@ -91,6 +91,9 @@
     <Filter Include="Classes\ManicMiner\OLD_Collectibles">
       <UniqueIdentifier>{9b1760a8-6045-4fa0-b8ae-c19c719ea6c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\AudioHelper">
+      <UniqueIdentifier>{70aafd66-5716-47f7-a843-8cbffbeff39b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -403,6 +406,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleOLD.h">
       <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\AudioHelper\ManicAudio.h">
+      <Filter>Classes\ManicMiner\AudioHelper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
