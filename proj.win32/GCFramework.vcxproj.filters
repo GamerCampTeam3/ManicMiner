@@ -219,6 +219,12 @@
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp">
       <Filter>Classes\ManicMiner\Collectibles</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupLander.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjLander.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -379,6 +385,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h">
       <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupLander.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjLander.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
