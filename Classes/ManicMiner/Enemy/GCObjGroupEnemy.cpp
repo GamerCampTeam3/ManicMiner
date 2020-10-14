@@ -158,28 +158,28 @@ void CGCObjGroupEnemy::CreateEnemys()
 
 		// koopas
 
-		CGCObjEnemy* pEnemy = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(50.0f,100.0f), 500.0f, 300.0f, false, 2.0f, true, EnemyTypes::EEnemyId::EDuck, rFactoryCreationParams_Type1);
-		pEnemy->SetName("Derek2");
-
-		CGCObjEnemy* pEnemy2 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(100.0f, 250.0f), 550.0f, 200.0f, true, 1.0f, true, EnemyTypes::EEnemyId::EDuck, rFactoryCreationParams_Type1);
-		pEnemy2->SetName("Derek3");
-
-		CGCObjEnemy* pEnemy3 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(150.0f, 400.0f), 250.0f, 200.0f, true, 1.0f, true, EnemyTypes::EEnemyId::EDuck, rFactoryCreationParams_Type1);
-		pEnemy3->SetName("Derek4");
-
-
-		
-
-		// coins
-
-		CGCObjEnemy* pEnemy4 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(700.0f, 500.0f), 50.0f, 0.0f, true, 0.3f, true, EnemyTypes::EEnemyId::EPenguin, rFactoryCreationParams_Type2);
-		pEnemy4->SetName("Derek5");
-
-		CGCObjEnemy* pEnemy5 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(800.0f, 550.0f), 100.0f, 5.0f, false, 1.0f, true, EnemyTypes::EEnemyId::EPenguin, rFactoryCreationParams_Type2);
-		pEnemy5->SetName("Derek6");
-
-		CGCObjEnemy* pEnemy6 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(900.0f, 100.0f), 500.0f, 0.0f, true, 0.5f, true, EnemyTypes::EEnemyId::EPenguin, rFactoryCreationParams_Type2);
-		pEnemy6->SetName("Derek7");
+		 CGCObjEnemy* pEnemy = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(50.0f,100.0f), 500.0f, 300.0f, false, 2.0f, true, EnemyTypes::EEnemyId::EDuck, rFactoryCreationParams_Type1);
+		 pEnemy->SetName("Derek2");
+		 
+		 CGCObjEnemy* pEnemy2 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(100.0f, 250.0f), 550.0f, 200.0f, true, 1.0f, true, EnemyTypes::EEnemyId::EDuck, rFactoryCreationParams_Type1);
+		 pEnemy2->SetName("Derek3");
+		 
+		 CGCObjEnemy* pEnemy3 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(150.0f, 400.0f), 250.0f, 200.0f, true, 1.0f, true, EnemyTypes::EEnemyId::EDuck, rFactoryCreationParams_Type1);
+		 pEnemy3->SetName("Derek4");
+		 
+		 
+		 
+		 
+		 // coins
+		 
+		 // CGCObjEnemy* pEnemy4 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(700.0f, 500.0f), 50.0f, 0.0f, true, 0.3f, true, EnemyTypes::EEnemyId::EPenguin, rFactoryCreationParams_Type2);
+		 // pEnemy4->SetName("Derek5");
+		 // 
+		 // CGCObjEnemy* pEnemy5 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(800.0f, 550.0f), 100.0f, 5.0f, false, 1.0f, true, EnemyTypes::EEnemyId::EPenguin, rFactoryCreationParams_Type2);
+		 // pEnemy5->SetName("Derek6");
+		 // 
+		 // CGCObjEnemy* pEnemy6 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(900.0f, 100.0f), 500.0f, 0.0f, true, 0.5f, true, EnemyTypes::EEnemyId::EPenguin, rFactoryCreationParams_Type2);
+		 // pEnemy6->SetName("Derek7");
 
 }
 

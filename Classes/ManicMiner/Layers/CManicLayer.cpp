@@ -173,7 +173,7 @@ void CManicLayer::VOnCreate()
 	m_pcGCGroupEnemy = new CGCObjGroupEnemy();
 	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupEnemy);
 
-	m_pcCollectiblesGroup = new CCollectiblesGroup( m_eCollectibleTypeRequired, m_iNumCollectiblesNeeded );
+	m_pcCollectiblesGroup = new CCollectiblesGroup( *this, m_eCollectibleTypeRequired, m_iNumCollectiblesNeeded );
 	CGCObjectManager::ObjectGroupRegister( m_pcCollectiblesGroup );
 	
 	// add "CGCGameLayerPlatformer" splash screen"
@@ -377,6 +377,10 @@ void CManicLayer::VOnDestroy()
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemy);
 	delete m_pcGCGroupEnemy;
 	m_pcGCGroupEnemy = nullptr;
+
+	CGCObjectManager::ObjectGroupUnRegister( m_pcCollectiblesGroup );
+	delete m_pcCollectiblesGroup;
+	m_pcCollectiblesGroup = nullptr;
 
 	
 	IGCGameLayer::VOnDestroy();
