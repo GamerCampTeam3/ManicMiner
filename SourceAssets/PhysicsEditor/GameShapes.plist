@@ -203,7 +203,7 @@
 						<array>
 							<array>	
 								<string>{ -30.000,15.000 }</string>	
-								<string>{ 0.000,-15.000 }</string>	
+								<string>{ -15.000,-15.000 }</string>	
 								<string>{ 15.000,-15.000 }</string>	
 								<string>{ 30.000,15.000 }</string>
 							</array>

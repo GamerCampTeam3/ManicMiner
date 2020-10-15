@@ -10,6 +10,8 @@
 //////////////////////////////////////////////////////////////////////////
 // class deriving from CCLayer that creates our main menu scene
 //////////////////////////////////////////////////////////////////////////
+class CLevelManager; 
+
 class CMenuLayer 
 	: public cocos2d::CCLayer
 {
@@ -28,12 +30,18 @@ public:
 	// the Game Start button is pushed
     void CB_OnGameStartButton( Ref* pSender);
 
-	void CB_OnGameExitButton(Ref* pSender);
+	void CB_OnGameExitButton( Ref* pSender);
 
     // The cocos2d convention is to have the root layer of a scene
 	// be able to create and return a CCScene* (set to autorelease)
 	// which has an instance of itself as a child
-    static cocos2d::Scene* scene();    
+	static cocos2d::Scene* scene( CLevelManager& rcLevelManager );
+
+
+
+	void SetLevelManager( CLevelManager& rcLevelManager );
+private:
+	CLevelManager* m_pcLevelManager;
 };
 
 #endif // __MENUSCENE_H__

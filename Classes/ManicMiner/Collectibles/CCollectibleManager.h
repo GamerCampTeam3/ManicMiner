@@ -2,9 +2,12 @@
 #define _CCOLLECTIBLEMANAGER_H_
 #include <array>
 
+
+#include "GamerCamp/GCObject/GCObjectGroup.h"
 #include "ManicMiner/Structs/SCollectibles.h"
 #include "ManicMiner/Structs/SSwitches.h"
 
+class CCollectibleOLD;
 ///////////////////////////////////////////
 /// Namespaces and Class declaration
 namespace cocos2d
@@ -12,11 +15,11 @@ namespace cocos2d
 	class Vec2;
 }
 
-class CCollectible;
+class CCollectibleOLD;
 class CSwitch;
 ///////////////////////////////////////////
 
-class CCollectibleManager
+class CCollectibleManager : public CGCObjectGroup
 {
 public:
 	// Those values dictates how much total Switch/Collectibles to generate
@@ -39,7 +42,7 @@ private:
 public:
 	// Ctor + Overloaded to take in array of Vector2s with an amount to spawn as well as required collectibles for first level
 	CCollectibleManager();
-	CCollectibleManager(cocos2d::Vec2 spawnPosition[], int numToSpawn, int collectiblesNeeded);
+	CCollectibleManager( cocos2d::Vec2 spawnPosition[], int numToSpawn, int collectiblesNeeded );
 	// Dtor, clears the arrays
 	~CCollectibleManager();
 
@@ -57,12 +60,14 @@ public:
 	void ResetCollectibles();
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	virtual void	VOnGroupResourceAcquire_PostObject	() override;
 
 	// Collision things for Collectibles/Switches
 	void IncrementCollectible();
-	void RemoveCollectible(CCollectible& collectible);
+	void RemoveCollectible(CCollectibleOLD& collectible);
 	void IncrementSwitches();
 	void FlipSwitch(CSwitch& cswitch);
+	void ResetCurrentCollectibles();
 
 	// Checks if level can be completed
 	bool CheckCollectiblesNeeded();

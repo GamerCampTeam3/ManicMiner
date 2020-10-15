@@ -171,7 +171,7 @@ void CGCObjGroupEnemy::CreateEnemies()
 
 		CGCObjEnemy* pEnemy6 = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_UpDown, cocos2d::Vec2(900.0f, 100.0f), 500.0f, 0.0f, true, 0.5f, true, EnemyTypes::EEnemyId::EPenguin, s_cCreationParams_CGCObj_EPenguin);
 		pEnemy6->SetName("E6");
-
+		 
 }
 
 //////////////////////////////////////////////////////////////////////////

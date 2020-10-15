@@ -6,8 +6,8 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCObject/GCObjGroupDefault.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
-#include "ManicMiner/GameInstance/CGameInstance.h"
 #include "MenuScene.h"
+#include "SimpleAudioEngine.h"
 
 
 USING_NS_CC;
@@ -22,6 +22,7 @@ CGCControllerManager*	AppDelegate::sm_pcControllerManager = nullptr;
 //////////////////////////////////////////////////////////////////////////
 
 AppDelegate::AppDelegate()
+	:	m_pcLevelManager ( nullptr )
 {
 }
 
@@ -38,11 +39,21 @@ AppDelegate::~AppDelegate()
 	sm_pcControllerManager = nullptr;
 // GamerCamp Edit
 //////////////////////////////////////////////////////////////////////////
+
+
 //////////////////////////////////////////////////////////////////////////
 // Henrique Edit
+
+	delete m_pcLevelManager;
+	m_pcLevelManager = nullptr;
+
 	// clean up singletons
-	CLevelManager::release();
-	CGameInstance::release();
+
+///////////////////////////////////////////////////////////////////////////
+// SimpleAudioEngine
+	CocosDenshion::SimpleAudioEngine::getInstance()->pauseAllEffects();
+	CocosDenshion::SimpleAudioEngine::end();
+////////////////////////////////////////////////////////////////////////////
 }
 
 
@@ -128,15 +139,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 		sm_pcControllerManager	= new CGCControllerManager();
 		InitialiseControllerManager();
 
-		// create the initial GameScene
-		Scene* pScene = CMenuLayer::scene();
-
 
 	// GamerCamp Edit
 	//////////////////////////////////////////////////////////////////////////
 
-	// run
-    pDirector->runWithScene( pScene );
+		// Henrique edit
+		m_pcLevelManager = new CLevelManager( *pDirector );
 
     return true;
 }
@@ -147,8 +155,8 @@ void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
 
-    // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+	// Pause Audio
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 
@@ -157,6 +165,6 @@ void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
 
-    // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    // Resume Audio
+     CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

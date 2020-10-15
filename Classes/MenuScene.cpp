@@ -3,7 +3,9 @@
 // Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "MenuScene.h"
-#include "ManicMiner/GameInstance/CGameInstance.h"
+
+#include "ManicMiner/AudioHelper/ManicAudio.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
 
 USING_NS_CC;
 
@@ -11,7 +13,7 @@ USING_NS_CC;
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
-Scene* CMenuLayer::scene()
+Scene* CMenuLayer::scene( CLevelManager& rcLevelManager )
 {
     // 'scene' is an autorelease object
     Scene *scene = Scene::create();
@@ -22,11 +24,18 @@ Scene* CMenuLayer::scene()
     // add layer as a child to scene
     scene->addChild(layer);
 
+	// Set ptr to CLevelManager
+	layer->SetLevelManager( rcLevelManager );
+
     // return the scene
     return scene;
 }
 
 
+void CMenuLayer::SetLevelManager( CLevelManager& rcLevelManager )
+{
+	m_pcLevelManager = &rcLevelManager;
+}
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -41,12 +50,12 @@ bool CMenuLayer::init()
     }
 
 	// set to fullscreen
-    static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+    // static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
 
 	// for windowed mode
-    Director::getInstance()->getOpenGLView()->setFrameSize(1920, 1080);
+    Director::getInstance()->getOpenGLView()->setFrameSize(1280, 720);
 	// resolution
-    Director::getInstance()->getOpenGLView()->setDesignResolutionSize(1920, 1080, ResolutionPolicy::EXACT_FIT);
+    Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1280, 720, ResolutionPolicy::EXACT_FIT);
 	
     Size visibleSize	= Director::getInstance()->getVisibleSize();
     Vec2 origin			= Director::getInstance()->getVisibleOrigin();
@@ -96,12 +105,6 @@ bool CMenuLayer::init()
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-    
-
-
-
-	CGameInstance::getInstance()->Init();
-
 
     return true;
 }
@@ -111,8 +114,9 @@ bool CMenuLayer::init()
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
-	CGameInstance::getInstance()->EnterCavern();
-	//Director::getInstance()->replaceScene( TransitionRotoZoom::create( 1.0f, TGCGameLayerSceneCreator< CManicLayer >::CreateScene() ) );
+	PreloadSoundEffect( ESoundName::ESN_KeyCollected );
+	PlaySoundEffect( ESoundName::ESN_KeyCollected );
+	m_pcLevelManager->EnterCavern();
 }
 
 void CMenuLayer::CB_OnGameExitButton(Ref* pSender)

@@ -1,22 +1,26 @@
 #include "CCollectibleManager.h"
-#include "CCollectible.h"
+#include "CCollectibleOLD.h"
 #include "CSwitch.h"
 
+#include "GamerCamp/Core/GCTypes.h"
+#include "GamerCamp/GCObject/GCObject.h"
+#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
 #include "ManicMiner/Structs/SCollectibles.h"
 #include "ManicMiner/Structs/SSwitches.h"
 
 CCollectibleManager::CCollectibleManager()
     : m_iCollected(0)
-    , m_iCollectiblesNeeded(0)
+    , m_iCollectiblesNeeded(4)
     , m_iSwitchesFlipped(0)
     , m_iSwitchedFlippedNeeded(0)
 {
     // Initialize the arrays of struct
     for (int i = 0; i < m_kiMaxCollectiblesToGenerate; i++)
     {
-        m_asCollectibles[i].p_cCollectible = new CCollectible(*this);
+        m_asCollectibles[i].p_cCollectible = new CCollectibleOLD(*this);
         m_asCollectibles[i].p_cCollectible->SetIndex(i);
+        //m_asCollectibles[i].p_cCollectible->SetSpritePosition(cocos2d::Vec2 (500.f, 300.f ));
         m_asCollectibles[i].b_IsActive = false;
     }
     for (int i = 0; i < m_kiMaxSwitchesToGenerate; i++)
@@ -25,6 +29,30 @@ CCollectibleManager::CCollectibleManager()
         m_asSwitches[i].p_cSwitch->SetIndex(i);
         m_asSwitches[i].b_IsActive = false;
     }
+}
+
+
+void CCollectibleManager::VOnGroupResourceAcquire_PostObject()
+{
+		// we do this here because the alternative is to do it for each invader as they're created and it's
+
+	// parent class version
+	CGCObjectGroup::VOnGroupResourceAcquire_PostObject();
+
+	// set up animations for all items
+	const char* pszPlist	= "TexturePacker/Sprites/Egg/Egg.plist";
+
+	// make an animation
+		cocos2d::ValueMap&	rdictPList = GCCocosHelpers::CreateDictionaryFromPlist( pszPlist );
+
+	ForEachObject( [&] ( CGCObject* pObject ) -> bool
+	{
+		CCAssert( ( GetGCTypeIDOf( CCollectibleOLD ) == pObject->GetGCTypeID() ),
+			"CGCObject derived type mismatch!" );
+
+		CGCObjSprite* pItemSprite = (CGCObjSprite*)pObject;
+		return true;
+	} );
 }
 
 // Overloaded Ctor that takes in initial values (for first level?)
@@ -38,7 +66,7 @@ CCollectibleManager::CCollectibleManager(cocos2d::Vec2 spawnPosition[], int numT
     // Takes the values given to the Ctor for the first level
     for (int i = 0; i < numToSpawn; i++)
     {
-        m_asCollectibles[i].p_cCollectible = new CCollectible(*this);
+        m_asCollectibles[i].p_cCollectible = new CCollectibleOLD(*this);
         m_asCollectibles[i].p_cCollectible->SetResetPosition(spawnPosition[i]);
         m_asCollectibles[i].p_cCollectible->SetIndex(i);
         m_asCollectibles[i].b_IsActive = false;
@@ -83,7 +111,6 @@ void CCollectibleManager::GenerateNewCSwitches(int numToSpawn, cocos2d::Vec2 spa
 {
     m_iCollected = 0;
     SetNeededNumofSwitchesFlipped(switchesNeeded);
-
     for (int i = 0; i < numToSpawn; i++)
     {
         m_asSwitches[i].p_cSwitch->SetSpritePosition(spawnPos[i]);
@@ -97,6 +124,7 @@ void CCollectibleManager::SetNeededNumOfCollectibles(int amount)
     m_iCollectiblesNeeded = amount;
 }
 
+
 void CCollectibleManager::SetNeededNumofSwitchesFlipped(int amount)
 {
     m_iSwitchedFlippedNeeded = amount;
@@ -104,13 +132,17 @@ void CCollectibleManager::SetNeededNumofSwitchesFlipped(int amount)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void CCollectibleManager::ResetCurrentCollectibles()
+{
+    m_iCollected = 0;
+}
 
 
 // Removes the collectibles from the screen
 // This is a hacky way to remove them and should be changed
 // TODO: Investigate the ::ObjectKill method
 
-void CCollectibleManager::RemoveCollectible(CCollectible& collectible)
+void CCollectibleManager::RemoveCollectible( CCollectibleOLD& collectible)
 {
     int i = collectible.GetIndex();
     m_asCollectibles[i].b_IsActive = false;
@@ -127,6 +159,7 @@ void CCollectibleManager::FlipSwitch(CSwitch& cswitch)
 // Upon level end, reset every objects, ready to be called by next level
 void CCollectibleManager::ResetCollectibles()
 {
+	if (m_asCollectibles != nullptr)
     for (SCollectibles m_as_collectible : m_asCollectibles)
     {
         m_as_collectible.p_cCollectible->SetVisible(false);
