@@ -11,30 +11,29 @@
 
 #include "GCObjEnemy.h"
 
-// REQUIRED FOR COLLISION HANDLER TO SEE
-#include "GamerCamp/GameSpecific/Items/GCObjItem.h" 
-
 USING_NS_CC;
 
 //////////////////////////////////////////////////////////////////////////
 // GetGCTypeIDOf uses the template in GCTypeID to generate a unique ID for 
 // this type - need this to construct our base type
 
-CGCObjEnemy::CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementRange, float InitialDistanceFromAnchor, bool MovingAwayFromAnchorPoint, float Speed,
-						 bool SpriteIsFlippable, EnemyTypes::EEnemyId EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput)
+
+CGCObjEnemy::CGCObjEnemy(const EMovementAxis EMovementAxisInput, const cocos2d::Vec2& AnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
+	bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId EnemyIdentifierInput,
+	CGCFactoryCreationParams& ParamsInput)
 
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
 	, eMovementAxis(EMovementAxisInput)
 	, eEnemyIdentifier(EnemyIdentifierInput)
-	, cAnchorPoint(AnchorPoint)
-	, fMovementWindowLength(MovementRange)
-	, fSpeed(Speed)
-	, bMovingAWayFromAnchorPoint(MovingAwayFromAnchorPoint)
+	, m_cAnchorPoint(AnchorPoint)
+	, fMovementWindowLength(fMovementRange)
+	, fSpeed(fSpeed)
+	, bMovingAWayFromAnchorPoint(bMovingAwayFromAnchorPoint)
 	, k_bArtDefaultIsEnemyFacingRight(false)
 	, rFactoryCreationParams(ParamsInput)
-	, fInitialDistanceFromAnchor (InitialDistanceFromAnchor)
+	, fInitialDistanceFromAnchor (fInitialDistanceFromAnchor)
 	, bBounceIsLatchedDisabled(false)
-	, bSpriteIsFlippable(SpriteIsFlippable)
+	, bSpriteIsFlippable(bSpriteIsFlippable)
 {
 }
 
@@ -48,22 +47,22 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
-	TotalVelocity = Vec2::ZERO;
+	m_cTotalVelocity = Vec2::ZERO;
 
 	if (EMovementAxis_LeftRight == eMovementAxis)
 	{
 
-		TotalVelocity.x = fSpeed;
+		m_cTotalVelocity.x = fSpeed;
 
-		Vec2 AnchorPointAndOffset = cAnchorPoint;
+		Vec2 AnchorPointAndOffset = m_cAnchorPoint;
 		AnchorPointAndOffset.x += fInitialDistanceFromAnchor;
 		SetResetPosition(AnchorPointAndOffset);
 	}
 	else
 	{
-		TotalVelocity.y = fSpeed;
+		m_cTotalVelocity.y = fSpeed;
 
-		Vec2 AnchorPointAndOffset = cAnchorPoint;
+		Vec2 AnchorPointAndOffset = m_cAnchorPoint;
 		AnchorPointAndOffset.y += fInitialDistanceFromAnchor;
 		SetResetPosition(AnchorPointAndOffset);
 	}
@@ -87,37 +86,40 @@ bool CGCObjEnemy::CheckForDirectionFlip()
 {
 	Vec2 CurrentPosition = GetSpritePosition();
 
+	bool bReturnResult = false;
+
 	if (EMovementAxis_LeftRight == eMovementAxis)
 	{
 		// Test right side boundary limit passed and flip to moving back to start if required.
-		if (bMovingAWayFromAnchorPoint && CurrentPosition.x >= cAnchorPoint.x + fMovementWindowLength)
+		if (bMovingAWayFromAnchorPoint && CurrentPosition.x >= m_cAnchorPoint.x + fMovementWindowLength)
 		{
 			bMovingAWayFromAnchorPoint = false;
-			return true;
+			bReturnResult = true;
 		}
 		// Test left side boundary limit passed and flip to moving away from start if required.
-		if (!bMovingAWayFromAnchorPoint && CurrentPosition.x <= cAnchorPoint.x)
+		if (!bMovingAWayFromAnchorPoint && CurrentPosition.x <= m_cAnchorPoint.x)
 		{
 			bMovingAWayFromAnchorPoint = true;
-			return true;
+			bReturnResult = true;
 		}
 	}
 	else
 	{
 		// Test upper boundary limit passed and flip to moving back to start if required.
-		if (bMovingAWayFromAnchorPoint && CurrentPosition.y >= cAnchorPoint.y + fMovementWindowLength)
+		if (bMovingAWayFromAnchorPoint && CurrentPosition.y >= m_cAnchorPoint.y + fMovementWindowLength)
 		{
 			bMovingAWayFromAnchorPoint = false;
-			return true;
+			bReturnResult = true;
+			
 		}
 		// Test lower boundary limit passed and flip to moving away from start if required.
-		if (!bMovingAWayFromAnchorPoint && CurrentPosition.y <= cAnchorPoint.y)
+		if (!bMovingAWayFromAnchorPoint && CurrentPosition.y <= m_cAnchorPoint.y)
 		{
 			bMovingAWayFromAnchorPoint = true;
-			return true;
+			bReturnResult = true;
 		}
 	}
-	return false;
+	return bReturnResult;
 }
 
 
@@ -129,11 +131,11 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 
 	if (bMovingAWayFromAnchorPoint)
 	{
-		SetVelocity(TotalVelocity);
+		SetVelocity(m_cTotalVelocity);
 	}
 	else
 	{
-		SetVelocity(-TotalVelocity);
+		SetVelocity(-m_cTotalVelocity);
 	}
 	
 	if (CheckForDirectionFlip())
@@ -148,21 +150,14 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 			SetFacingOrientation();
 		}
 	}
-	
+
 }
 //////////////////////////////////////////////////////////////////////////
 // Function to set the facing orientation of the enemy sprite.
 //
 void CGCObjEnemy::SetFacingOrientation()
 {
-	if (k_bArtDefaultIsEnemyFacingRight)
-	{
-		SetFlippedX(!bMovingAWayFromAnchorPoint);
-	}
-	else
-	{
-		SetFlippedX(bMovingAWayFromAnchorPoint);
-	}
+	SetFlippedX((k_bArtDefaultIsEnemyFacingRight && !bMovingAWayFromAnchorPoint) || (!k_bArtDefaultIsEnemyFacingRight && bMovingAWayFromAnchorPoint));
 }
 //////////////////////////////////////////////////////////////////////////
 // Function to flip the enemies current direction of travel when it has collided with an object.
@@ -184,5 +179,6 @@ void CGCObjEnemy::BounceEnemyDirection()
 		}
 		bMovingAWayFromAnchorPoint = !bMovingAWayFromAnchorPoint;
 	}
+	// Latch the flag to stop the enemy constantly flipping during the collisions duration.
 	bBounceIsLatchedDisabled = true;
 }
