@@ -4,6 +4,8 @@
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "ManicMiner/Enemy/GCObjGroupEnemyCentralCavern.h"
 
+class CObjCCGroupPlatform;
+
 class CMLCentralCavern: public CManicLayer
 {
 public:
@@ -15,6 +17,6 @@ public:
 
 	// object groups
 	CGCObjGroupEnemyCentralCavern* m_pcGCGroupEnemyCentralCavern;
-
+	CObjCCGroupPlatform* m_pcGroupPlatformCentralCavern;
 };
 #endif //#ifndef _CMANICLAYER_H_

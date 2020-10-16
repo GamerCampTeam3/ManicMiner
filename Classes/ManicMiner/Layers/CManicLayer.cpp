@@ -139,7 +139,7 @@ void CManicLayer::VOnCreate()
 		"Buttons/Exit/ExitButton_01.png",
 		CC_CALLBACK_1(CManicLayer::CB_OnGameExitButton, this));
 
-	pItemExitGame->setPosition(Vec2(1900.f, 20.f));
+	pItemExitGame->setPosition(Vec2(1900.f, 1060.f));
 
 	Menu* pMenu = Menu::create(pItemExitGame, nullptr);
 	pMenu->setPosition(Vec2::ZERO);
@@ -181,7 +181,7 @@ void CManicLayer::VOnCreate()
 	{
 		m_pcGCSprBackGround = new CGCObjSprite();
 		m_pcGCSprBackGround->CreateSprite( pszPlist_background );
-		m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, visibleSize.height / 2 ) );
+		m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, (visibleSize.height / 2) - 60.f) );
 		m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
 	}
 
@@ -273,8 +273,8 @@ void CManicLayer::VOnCreate()
 	f32	iOffsetX = PTM_RATIO * 2.0f;
 	for ( u32 uLoop = 0; uLoop < 16; ++uLoop )
 	{
-		CGCObjPlatform* pPlatform = new CGCObjPlatform();
-		pPlatform->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO ) ) );
+		//CGCObjPlatform* pPlatform = new CGCObjPlatform();
+		//pPlatform->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO ) ) );
 		
 		CCollectible* pCollectible = new CCollectible( ECollectibleType::Collectible, *m_pcCollectiblesGroup );
 		pCollectible->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO * 2.0f ) ) );
@@ -341,6 +341,8 @@ void CManicLayer::VOnCreate()
 		{
 			EnemyCollidedItem(rcEnemy, rcContact);
 		});
+
+	//Label* pcScoreLabel = Label::create();
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
 
