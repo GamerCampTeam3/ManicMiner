@@ -39,8 +39,7 @@ void CMLCentralCavern::VOnCreate( void )
 
 void CMLCentralCavern::VOnDestroy(void)
 {
-	// Call base class first.
-	CManicLayer::VOnDestroy();
+
 
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemyCentralCavern);
 	delete m_pcGCGroupEnemyCentralCavern;
@@ -49,4 +48,7 @@ void CMLCentralCavern::VOnDestroy(void)
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);
 	delete m_pcGroupPlatformCentralCavern;
 	m_pcGroupPlatformCentralCavern = nullptr;
+
+	// Call base class last
+	CManicLayer::VOnDestroy();
 }
