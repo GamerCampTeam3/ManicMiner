@@ -53,6 +53,7 @@ CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcLevelManager ( nullptr )
 	, m_eGameState		(EGameState::EGS_Looting)
+	, m_bWasResetRequested ( false )
 	, m_pcGCGroupItem( nullptr )
 	, m_pcGCGroupProjectilePlayer( nullptr )
 	, m_pcGCSprBackGround( nullptr )
@@ -96,6 +97,12 @@ void CManicLayer::onEnter()
 
 	// call base class function	to init the keyboard manager
 	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
+}
+
+void CManicLayer::onEnterTransitionDidFinish()
+{
+	IGCGameLayer::onEnterTransitionDidFinish();
+	//VOnDestroy();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -382,10 +389,6 @@ void CManicLayer::VOnDestroy()
 	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupProjectilePlayer );
 	delete m_pcGCGroupProjectilePlayer;
 	m_pcGCGroupProjectilePlayer = nullptr;
-
-	//CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupInvader );
-	//delete m_pcGCGroupInvader;
-	//m_pcGCGroupInvader = nullptr;
 
 	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupItem );
 	delete m_pcGCGroupItem;

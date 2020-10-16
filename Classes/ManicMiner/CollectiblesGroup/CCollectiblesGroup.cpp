@@ -98,7 +98,7 @@ bool CCollectiblesGroup::CheckIfEnoughToOpenExit()
 			return (m_iSwitches == m_iMaxSwitches);
 
 		case ECollectibleTypeRequired::Both:
-
+		default:
 			if ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches))
 			{
 				//m_pcManicLayer->OnEscaped();

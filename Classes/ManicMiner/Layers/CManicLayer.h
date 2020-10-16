@@ -35,8 +35,11 @@ private:
 	
 	// GameState Enum
 	EGameState m_eGameState;
+	
+	// Handling Reset Bool
+	bool m_bWasResetRequested;
 
-	// object groups
+	// Object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
 	CGCObjGroupItem* m_pcGCGroupItem;
 	CGCObjGroupProjectilePlayer* m_pcGCGroupProjectilePlayer;
@@ -51,6 +54,7 @@ private:
 	ECollectibleTypeRequired m_eCollectibleTypeRequired;
 	int m_iNumCollectiblesNeeded;
 	int m_iNumSwitchesNeeded;
+
 
 
 public:
@@ -76,7 +80,8 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 	// CCNode interface...
-	virtual void onEnter();
+	virtual void onEnter() override;
+	virtual void onEnterTransitionDidFinish() override;
 	// CCNode interface...
 	//////////////////////////////////////////////////////////////////////////
 
@@ -158,18 +163,17 @@ public:
 
 		////////////////////////////////////////////////////////////////////////// 
 		// reset handling
-		bool m_bResetWasRequested;
 
 
 
 		void ResetRequestWasHandled()
 		{
-			m_bResetWasRequested = false;
+			m_bWasResetRequested = false;
 		}
 
 		bool ResetWasRequested()
 		{
-			return m_bResetWasRequested;
+			return m_bWasResetRequested;
 		}
 
 		void ResetLevel();
@@ -180,7 +184,7 @@ public:
 	void RequestReset()
 	{
 		//ResetLevel();
-		m_bResetWasRequested = true;
+		m_bWasResetRequested = true;
 	}
 };
 #endif // #ifndef _CMANICLAYER_H_
