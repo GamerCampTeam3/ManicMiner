@@ -45,15 +45,15 @@ void CCollectible::InteractEvent()
 		switch (m_eCollectibleType)
 		{
 			case ECollectibleType::Collectible:
-				collectibleIncrement = m_pcCollectiblesGroup->GetCollectible();
-				m_pcCollectiblesGroup->SetCollectibles( collectibleIncrement );
+
+				m_pcCollectiblesGroup->CollectibleEvent();
 				CGCObjectManager::ObjectKill( this );
 				m_bHasBeenCollected = true;
 				break;
 
 			case ECollectibleType::Switch:
-				collectibleIncrement = m_pcCollectiblesGroup->GetSwitches();
-				m_pcCollectiblesGroup->SetSwitches( collectibleIncrement );
+
+				m_pcCollectiblesGroup->SwitchEvent();
 				SetFlippedX( true );
 				m_bHasBeenCollected = true;
 				break;

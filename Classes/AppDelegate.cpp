@@ -72,7 +72,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setOpenGLView(glview);
 
     // Set the design resolution
-	glview->setDesignResolutionSize( designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER );
+	glview->setDesignResolutionSize( SM_CXSCREEN, SM_CYSCREEN, ResolutionPolicy::NO_BORDER );
 
 	Size frameSize = glview->getFrameSize();
     

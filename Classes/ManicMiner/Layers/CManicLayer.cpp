@@ -281,6 +281,11 @@ void CManicLayer::VOnCreate()
 		CCollectible* pCollectible = new CCollectible( ECollectibleType::Collectible, *m_pcCollectiblesGroup );
 		pCollectible->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.2f) ) );
 	}
+
+
+	CGCObjPlatform* pPlatformX = new CGCObjPlatform();
+	pPlatformX->SetResetPosition( Vec2( 0 + (visibleSize.height * 0.5f), (visibleSize.height * 0.15f) ) );
+	pPlatformX->SetName( "Test" );
 	
 	//////////////////////////////////////////////////////////////////////
 	// Add specific collision handles
@@ -288,24 +293,37 @@ void CManicLayer::VOnCreate()
 	///
 	///
 	///
-	GetCollisionManager().AddCollisionHandler([](CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact) -> void
-	{
-		bool isColliding = rcContact.IsTouching();
+	//GetCollisionManager().AddCollisionHandler([](CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact) -> void
+	//{
+	//	PlatformCollided( rcPlayer, rcPlatform, rcContact );
+	//	//ool isColliding = rcContact.IsTouching();
+	//	//
+	//	//f (isColliding)
+	//	//
+	//	//	Vec2 const rcPlatformPosition	= rcPlatform.GetSpritePosition();
+	//	//	Vec2 const rcPlayerPosition		= rcPlayer.GetSpritePosition();
+	//	//	if ( rcPlayerPosition.y > rcPlatformPosition.y )
+	//	//	{
+	//	//		//rcPlayer.SetDirection(rcPlayer.GetDirection());
+	//	//		rcPlayer.SetCanJump(true);
+	//	//		rcPlayer.SetCanBeControlled(true);
+	//	//	}
+	//	//	else
+	//	//	{
+	//	//		OnEscaped();
+	//	//	}
+	//	//	
+	//	//
+	//
+	//} );
 
-		if (isColliding)
+	
+	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact ) -> void
 		{
-			Vec2 const rcPlatformPosition	= rcPlatform.GetSpritePosition();
-			Vec2 const rcPlayerPosition		= rcPlayer.GetSpritePosition();
-			if ( rcPlayerPosition.y > rcPlatformPosition.y )
-			{
-				//rcPlayer.SetDirection(rcPlayer.GetDirection());
-				rcPlayer.SetCanJump(true);
-				rcPlayer.SetCanBeControlled(true);
-			}
-		}
+			PlatformCollided(rcPlayer, rcPlatform, rcContact);
+		} );
 
-	});
-
+	
 	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
 		{
 			ItemCollected( rcCollectible, rcPlayer, rcContact );
@@ -577,6 +595,29 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 	rcCollectible.InteractEvent();
 }
 
+void CManicLayer::PlatformCollided ( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact )
+{
+	bool isColliding = rcContact.IsTouching();
+	if (isColliding)
+	{
+		Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
+		Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
+		if (rcPlayerPosition.y > rcPlatformPosition.y)
+		{
+			//rcPlayer.SetDirection(rcPlayer.GetDirection());
+			rcPlayer.SetCanJump( true );
+			rcPlayer.SetCanBeControlled( true );
+		}
+		else
+		{
+			if (m_pcCollectiblesGroup->CheckIfEnoughToOpenExit())
+			{
+				OnEscaped();
+			}
+		}
+	}
+}
+
 void CManicLayer::OnDeath()
 {
 	m_pcPlayer->DecrementLives();
@@ -645,5 +686,4 @@ void CManicLayer::ResetLevel()
 	//m_pcCollectiblesGroup->ResetCurrentCollectibles();
 	ResetRequestWasHandled();
 	VOnReset();
-	m_pcPlayer->VOnReset();
 }

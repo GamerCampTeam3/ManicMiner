@@ -43,6 +43,7 @@ private:
 	bool						bInitialyMovingAwayFromAnchorPoint;
 	bool                        bBounceIsLatchedDisabled;
 	bool						bSpriteIsFlippable;
+	bool						m_bHasBeenCollided;
 	const bool					k_bArtDefaultIsEnemyFacingRight;
 	CGCFactoryCreationParams&	rFactoryCreationParams;
 
@@ -67,6 +68,10 @@ public:
 	virtual void VOnResurrected		( void ) override;
 
 	virtual void CGCObjEnemy::VOnUpdate(float fTimeStep) override;
+
+	// Bib Edit
+	const bool GetHasCollided() { return m_bHasBeenCollided; };
+	void SetHasCollided( bool collided ) { m_bHasBeenCollided = collided; };
 	
 	inline  EnemyTypes::EEnemyId GetEnemyIdentifier()
 	{

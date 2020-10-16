@@ -35,6 +35,7 @@ CGCObjEnemy::CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorP
 	, fInitialDistanceFromAnchor (InitialDistanceFromAnchor)
 	, bBounceIsLatchedDisabled(false)
 	, bSpriteIsFlippable(SpriteIsFlippable)
+	, m_bHasBeenCollided(false)
 {
 }
 
@@ -77,6 +78,7 @@ void CGCObjEnemy::VOnResurrected( void )
 {
 	CGCObjSpritePhysics::VOnResurrected();
 	GetPhysicsBody()->SetGravityScale( 0.0f );
+	m_bHasBeenCollided = false;
 }
 
 //////////////////////////////////////////////////////////////////////////

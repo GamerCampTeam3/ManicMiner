@@ -7,6 +7,7 @@
 #include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
 
+
 USING_NS_CC;
 
 
@@ -50,12 +51,12 @@ bool CMenuLayer::init()
     }
 
 	// set to fullscreen
-    // static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+    static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
 
 	// for windowed mode
-    Director::getInstance()->getOpenGLView()->setFrameSize(1280, 720);
+    Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080);
 	// resolution
-    Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1280, 720, ResolutionPolicy::EXACT_FIT);
+    Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT);
 	
     Size visibleSize	= Director::getInstance()->getVisibleSize();
     Vec2 origin			= Director::getInstance()->getVisibleOrigin();
