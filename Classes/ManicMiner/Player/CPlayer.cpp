@@ -138,7 +138,6 @@ void CPlayer::VOnResourceRelease()
 {
 	CGCObjSpritePhysics::VOnResourceRelease();
 	safeDelete( m_pcControllerActionToKeyMap );
-	safeDelete( m_pcManicLayer );
 }
 
 //////////////////////////////////////////////////////////////////////////

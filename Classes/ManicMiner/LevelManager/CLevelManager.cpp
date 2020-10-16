@@ -19,12 +19,12 @@ USING_NS_CC;
 
 
 CLevelManager::CLevelManager( cocos2d::Director& rcDirector )
-	: m_iCurrentLevelIndex	( -1 )
+	: m_iCurrentLevelIndex( 0 )
 {
 	// Create CMenuLayer, assign a pointer to this CLevelManager instance
 	Scene* pScene = CMenuLayer::scene( *this );
 
-	// Run
+	// Run CMenuLayer
 	rcDirector.runWithScene( pScene );
 }
 
@@ -36,50 +36,49 @@ void CLevelManager::Init()
 
 }
 
-void CLevelManager::GoToMainMenu()
-{
-	m_iCurrentLevelIndex = -1;
-	Scene* pScene = CMenuLayer::scene( *this );
-
-	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );
-}
-
 void CLevelManager::GoToNextLevel()
 {
+
+
+	// If beat last level, go to first level
+	if( m_iCurrentLevelIndex == 2 )
+	{
+		m_iCurrentLevelIndex = 0;
+	}
+
 	// Prepare Scene to be created
 	cocos2d::Scene* pScene = nullptr;
 
 	// Select next level
 	// Runs the template function CreateScene(), and assigns scene it to pScene
-
 	switch( m_iCurrentLevelIndex )
 	{
-	case -1:
+	case 0:
 		// CENTRAL CAVERN
 		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
 		break;
-	case 0:
+	case 1:
 		// SECOND LEVEL
 		pScene = TGCGameLayerSceneCreator< CMLTheColdRoom >::CreateScene();
 		break;
-	case 1:
+	default:
 		// BEAT FINAL LEVEL, GO BACK TO FIRST LEVEL
-		// but actually goes to menu
-		GoToMainMenu();
+		// CENTRAL CAVERN
+		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
 		break;
 	}
 
 	// If pScene is not nullptr, means a CManicLayer was created / we are not going into main menu
-	if ( pScene != nullptr )
+	if( pScene != nullptr )
 	{
 		// Get the new CManicLayer ( child of pScene, tag = 0 )
 		auto newManicLayer = static_cast< CManicLayer* >( pScene->getChildByTag( 0 ) );
-		
+
 		// Assign its pointer to this CLevelManager
 		newManicLayer->SetLevelManager( *this );
-		
+
 		// Begin transition
-		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionProgressOutIn::create( 1.0f, pScene ) );
+		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionPageTurn::create( 1.0f, pScene, false ) );
 	}
 
 
@@ -87,9 +86,19 @@ void CLevelManager::GoToNextLevel()
 	m_iCurrentLevelIndex++;
 }
 
+void CLevelManager::GoToMainMenu()
+{
+	m_iCurrentLevelIndex = 0;
+
+	// Create and run CMenuLayer
+	Scene* pScene = CMenuLayer::scene( *this );
+	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );
+}
+
+
 void CLevelManager::EnterCavern()
 {
-	if ( m_iCurrentLevelIndex == -1 )
+	if( m_iCurrentLevelIndex == 0 )
 	{
 		GoToNextLevel();
 	}

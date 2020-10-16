@@ -92,10 +92,9 @@ void CManicLayer::onEnter()
 	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
 }
 
-void CManicLayer::onEnterTransitionDidFinish()
+void CManicLayer::onExit()
 {
-	IGCGameLayer::onEnterTransitionDidFinish();
-	//VOnDestroy();
+	IGCGameLayer::onExit();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -283,8 +282,8 @@ void CManicLayer::VOnDestroy()
 	// clean up anything we allocated in opposite order to creation
 	///////////////////////////////////////////////////////////////////////////
 	///
-	safeDelete( m_pcPlayer );
-	safeDelete( m_pcGCSprBackGround );
+	//safeDelete( m_pcPlayer );
+	//safeDelete( m_pcGCSprBackGround );
 
 	IGCGameLayer::VOnDestroy();
 }

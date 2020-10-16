@@ -15,6 +15,7 @@ public:
 	virtual	void VOnCreate( void )			override;
 	virtual	void VOnDestroy(void)			override;
 
+private:
 	// object groups
 	CGCObjGroupEnemyCentralCavern* m_pcGCGroupEnemyCentralCavern;
 	CObjCCGroupPlatform* m_pcGroupPlatformCentralCavern;

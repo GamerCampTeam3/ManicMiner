@@ -32,9 +32,9 @@ void CMLCentralCavern::VOnCreate( void )
 
 	// Enemies for Central Cavern
 	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
-	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupEnemyCentralCavern);
+	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
 
-	m_pcGCGroupEnemyCentralCavern->SetFormationOrigin(origin);
+	m_pcGCGroupEnemyCentralCavern->SetFormationOrigin( origin );
 
 	// Platforms for Central Cavern
 	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();
@@ -48,6 +48,9 @@ void CMLCentralCavern::VOnCreate( void )
 void CMLCentralCavern::VOnDestroy(void)
 {
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemyCentralCavern);
+	safeDelete( m_pcGCGroupEnemyCentralCavern );
+
+	CGCObjectManager::ObjectGroupUnRegister(m_pcCollectibleGroup);
 	safeDelete( m_pcCollectibleGroup );
 
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);

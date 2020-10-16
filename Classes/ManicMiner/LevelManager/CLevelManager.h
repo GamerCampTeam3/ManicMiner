@@ -25,7 +25,6 @@ public:
 	// Returns current Layer, casted as a CManicLayer
 	CManicLayer& GetCurrentManicLayer();
 private:
-	int m_iCurrentLevelIndex;			// Indicates level
-	//CManicLayer* m_pArrManicLayers[3];	// Array to hold layer info
+	int m_iCurrentLevelIndex;				// Indicates level ( 0 means Menu, 1 means Central Cavern and so on)
 };
 #endif //#ifndef _CLEVELMANAGER_H_
