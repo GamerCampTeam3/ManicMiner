@@ -77,7 +77,7 @@ void CCollectiblesGroup::SetLayer(CManicLayer& cLayer)
 }
 
 
-bool CCollectiblesGroup::CheckIfEnoughToOpenExit()
+void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 {
 	switch (m_eCollectibleTypeRequired)
 	{
@@ -85,25 +85,23 @@ bool CCollectiblesGroup::CheckIfEnoughToOpenExit()
 
 			if (m_iCollectibles == m_iMaxCollectibles)
 			{
-				//m_pcManicLayer->OnEscaped();
+				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
 			}
-			return (m_iCollectibles >= m_iMaxCollectibles);
 
 		case ECollectibleTypeRequired::Switch:
 
 			if (m_iSwitches == m_iMaxSwitches)
 			{
-				//m_pcManicLayer->OnEscaped();
+				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
 			}
-			return (m_iSwitches == m_iMaxSwitches);
 
 		case ECollectibleTypeRequired::Both:
+
 		default:
 			if ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches))
 			{
-				//m_pcManicLayer->OnEscaped();
+				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
 			}
-			return ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches));
 	}
 }
 

@@ -51,7 +51,7 @@ bool CMenuLayer::init()
     }
 
 	// Quick little change to help me change between res
-    bool fullScreenSwitch = true;
+    bool fullScreenSwitch = false;
 
     if (fullScreenSwitch)
     {

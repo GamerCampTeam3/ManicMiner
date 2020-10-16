@@ -13,12 +13,7 @@
 ////////////////////////////////////////////////////////////////////////////
 class CPlatform;														  //
 class CGCObjSprite;														  //										
-class CGCObjGroupPlatform;												  //
-class CGCObjItem;														  //
-class CGCObjGroupItem;													  //
-class CGCObjInvader;													  //
-class CGCObjGroupInvader;												  //
-class CGCObjGroupProjectilePlayer;										  //
+								  //
 class CGCObjEnemy;														  //
 class CGCObjGroupEnemy;													  //
 class CPlayer;															  //
@@ -39,17 +34,11 @@ private:
 	// Handling Reset Bool
 	bool m_bWasResetRequested;
 
-	// Object groups
-	CGCObjGroupPlatform* m_pcGCGroupPlatform;
-	CGCObjGroupItem* m_pcGCGroupItem;
-	CGCObjGroupProjectilePlayer* m_pcGCGroupProjectilePlayer;
-	
 	// backgrounds
 	CGCObjSprite* m_pcGCSprBackGround;
 
 	// Mario
 	CPlayer* m_pcPlayer;
-	CCollectiblesGroup* m_pcCollectiblesGroup;
 
 	ECollectibleTypeRequired m_eCollectibleTypeRequired;
 	int m_iNumCollectiblesNeeded;
@@ -134,7 +123,6 @@ public:
 		// Collision Events
 		////////////////////////////////////////////////////////////////////////////
 		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
-		void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
@@ -186,5 +174,7 @@ public:
 		//ResetLevel();
 		m_bWasResetRequested = true;
 	}
+
+	void SetGameState( EGameState gameState ) { m_eGameState = gameState; }
 };
 #endif // #ifndef _CMANICLAYER_H_
