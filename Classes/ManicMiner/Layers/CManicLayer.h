@@ -11,14 +11,16 @@
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
-class CGCObjSprite;														  //
+class CGCObjSprite;														  //										
 class CGCObjPlatform;													  //
 class CGCObjGroupPlatform;												  //
+class CGCObjItem;														  //
+class CGCObjGroupItem;													  //
+class CGCObjInvader;													  //
 class CGCObjGroupInvader;												  //
+class CGCObjGroupProjectilePlayer;										  //
 class CGCObjEnemy;														  //
 class CGCObjGroupEnemy;													  //
-class CGCObjLander;														  //
-class CGCObjGroupLander;												  //
 class CPlayer;															  //
 class CCollectible;														  //
 class CCollectiblesGroup;												  //
@@ -33,12 +35,15 @@ private:
 	
 	// GameState Enum
 	EGameState m_eGameState;
+	
+	// Handling Reset Bool
+	bool m_bWasResetRequested;
 
-	// object groups
+	// Object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
-	CGCObjGroupEnemy* m_pcGCGroupEnemy;
-	CGCObjGroupLander* m_pcGCGroupLander;
-
+	CGCObjGroupItem* m_pcGCGroupItem;
+	CGCObjGroupProjectilePlayer* m_pcGCGroupProjectilePlayer;
+	
 	// backgrounds
 	CGCObjSprite* m_pcGCSprBackGround;
 
@@ -49,6 +54,7 @@ private:
 	ECollectibleTypeRequired m_eCollectibleTypeRequired;
 	int m_iNumCollectiblesNeeded;
 	int m_iNumSwitchesNeeded;
+
 
 
 public:
@@ -74,7 +80,8 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 	// CCNode interface...
-	virtual void onEnter();
+	virtual void onEnter() override;
+	virtual void onEnterTransitionDidFinish() override;
 	// CCNode interface...
 	//////////////////////////////////////////////////////////////////////////
 
@@ -120,13 +127,14 @@ public:
 	void CB_OnGameExitButton(Ref* pSender);
 
 
-	protected:
+	private:
 
 
 		////////////////////////////////////////////////////////////////////////////
 		// Collision Events
 		////////////////////////////////////////////////////////////////////////////
 		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
+		void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlatformCollided( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
@@ -140,20 +148,32 @@ public:
 		void OnFinishedLooting();
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 		////////////////////////////////////////////////////////////////////////// 
 		// reset handling
-		bool m_bResetWasRequested;
 
 
 
 		void ResetRequestWasHandled()
 		{
-			m_bResetWasRequested = false;
+			m_bWasResetRequested = false;
 		}
 
 		bool ResetWasRequested()
 		{
-			return m_bResetWasRequested;
+			return m_bWasResetRequested;
 		}
 
 		void ResetLevel();
@@ -161,13 +181,10 @@ public:
 public:
 	void OutOfLives();
 	void OnEscaped();
-	EGameState ReturnGameState() { return m_eGameState; };
-	void SetGameState( EGameState gameState ) { m_eGameState = gameState; };
-	
 	void RequestReset()
 	{
 		//ResetLevel();
-		m_bResetWasRequested = true;
+		m_bWasResetRequested = true;
 	}
 };
 #endif // #ifndef _CMANICLAYER_H_

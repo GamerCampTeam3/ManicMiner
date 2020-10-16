@@ -94,8 +94,11 @@
     <Filter Include="Classes\ManicMiner\AudioHelper">
       <UniqueIdentifier>{70aafd66-5716-47f7-a843-8cbffbeff39b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\Helpers">
-      <UniqueIdentifier>{3ec98849-e943-42e6-b444-3cabddece9cd}</UniqueIdentifier>
+    <Filter Include="Classes\ManicMiner\Platforms">
+      <UniqueIdentifier>{85023df8-27db-43c0-a625-94d9aa282337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Platforms\CentralCavern">
+      <UniqueIdentifier>{1eb72431-01ac-44df-8f5e-891fe050a02e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +245,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjLander.cpp">
       <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CPlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\CentralCavern</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,8 +437,14 @@
     <ClInclude Include="..\Classes\ManicMiner\AudioHelper\ManicAudio.h">
       <Filter>Classes\ManicMiner\AudioHelper</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Helpers\Helpers.h">
-      <Filter>Classes\ManicMiner\Helpers</Filter>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\CentralCavern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

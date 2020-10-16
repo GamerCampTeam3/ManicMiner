@@ -11,21 +11,21 @@
 
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
+#include "GamerCamp/GameSpecific/Invaders/GCObjGroupInvader.h"
 #include "GamerCamp/GameSpecific/Invaders/GCObjInvader.h"
 #include "GamerCamp/GameSpecific/Items/GCObjItem.h" 
+#include "GamerCamp/GameSpecific/Items/GCObjGroupItem.h"
 #include "GamerCamp/GameSpecific/Platforms/GCObjGroupPlatform.h"
 #include "GamerCamp/GameSpecific/Platforms/GCObjPlatform.h" 
+#include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
 #include "ManicMiner/Enemy/GCObjGroupEnemy.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
-#include "ManicMiner/Enemy/GCObjGroupLander.h"
-#include "ManicMiner/Enemy/GCObjLander.h"
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
-#include "ManicMiner/Enemy/GCEnemyDataStore.h"
-#include "ManicMiner/Helpers/Helpers.h"
 #include "MenuScene.h"
 #include "../GameInstance/CGameInstance.h"
+#include "ManicMiner/Collectibles/I_Interactible.h"
 #include "../LevelManager/CLevelManager.h"
 
 
@@ -53,8 +53,9 @@ CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcLevelManager ( nullptr )
 	, m_eGameState		(EGameState::EGS_Looting)
-	, m_pcGCGroupEnemy ( nullptr )
-	, m_pcGCGroupLander(nullptr)
+	, m_bWasResetRequested ( false )
+	, m_pcGCGroupItem( nullptr )
+	, m_pcGCGroupProjectilePlayer( nullptr )
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcPlayer( nullptr )
 	, m_pcCollectiblesGroup(nullptr)
@@ -98,7 +99,11 @@ void CManicLayer::onEnter()
 	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
 }
 
-
+void CManicLayer::onEnterTransitionDidFinish()
+{
+	IGCGameLayer::onEnterTransitionDidFinish();
+	//VOnDestroy();
+}
 
 //////////////////////////////////////////////////////////////////////////
 // on create
@@ -134,7 +139,7 @@ void CManicLayer::VOnCreate()
 		"Buttons/Exit/ExitButton_01.png",
 		CC_CALLBACK_1(CManicLayer::CB_OnGameExitButton, this));
 
-	pItemExitGame->setPosition(Vec2(1900.f, 20.f));
+	pItemExitGame->setPosition(Vec2(1900.f, 1060.f));
 
 	Menu* pMenu = Menu::create(pItemExitGame, nullptr);
 	pMenu->setPosition(Vec2::ZERO);
@@ -156,22 +161,27 @@ void CManicLayer::VOnCreate()
 	m_pcGCGroupPlatform = new CGCObjGroupPlatform();
 	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupPlatform );
 
-	m_pcGCGroupEnemy = new CGCObjGroupEnemy();
-	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupEnemy);
+	// create and register the object group for the item objects
+	m_pcGCGroupItem = new CGCObjGroupItem();
+	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupItem );
+
+	//// create and register the object group for the invader objects
+	//m_pcGCGroupInvader = new CGCObjGroupInvader();
+	//CGCObjectManager::ObjectGroupRegister( m_pcGCGroupInvader );
+
+	// create and register the object group for the player projectile objects
+	m_pcGCGroupProjectilePlayer = new CGCObjGroupProjectilePlayer();
+	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupProjectilePlayer );
 
 	m_pcCollectiblesGroup = new CCollectiblesGroup(*this, ECollectibleTypeRequired::Collectible, 4);
 	CGCObjectManager::ObjectGroupRegister( m_pcCollectiblesGroup );
 	
-	m_pcGCGroupLander = new CGCObjGroupLander();
-	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupLander);
-
-
 	// add "CGCGameLayerPlatformer" splash screen"
 	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/background.plist";
 	{
 		m_pcGCSprBackGround = new CGCObjSprite();
 		m_pcGCSprBackGround->CreateSprite( pszPlist_background );
-		m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, visibleSize.height / 2 ) );
+		m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, (visibleSize.height / 2) - 60.f) );
 		m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
 	}
 
@@ -251,9 +261,6 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 	//m_pcGCGroupInvader->SetFormationOrigin( v2ScreenCentre_Pixels + Vec2( -( visibleSize.width * 0.3f ), ( visibleSize.height * 0.25f ) ) );
 
-	m_pcGCGroupEnemy->SetFormationOrigin(origin);
-	m_pcGCGroupLander->SetFormationOrigin(origin);
-
 	///////////////////////////////////////////////////////////////////////////
 	// add platforms & items
 	///////////////////////////////////////////////////////////////////////////
@@ -263,14 +270,14 @@ void CManicLayer::VOnCreate()
 	const u32 uNumRows = 4;
 
 
-	i32	iOffsetX = 60;
-	for (u32 uLoop = 0; uLoop < 50; ++uLoop)
+	f32	iOffsetX = PTM_RATIO * 2.0f;
+	for ( u32 uLoop = 0; uLoop < 16; ++uLoop )
 	{
-		CGCObjPlatform* pPlatform = new CGCObjPlatform();
-		pPlatform->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.1f) ) );
+		//CGCObjPlatform* pPlatform = new CGCObjPlatform();
+		//pPlatform->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO ) ) );
 		
 		CCollectible* pCollectible = new CCollectible( ECollectibleType::Collectible, *m_pcCollectiblesGroup );
-		pCollectible->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.2f) ) );
+		pCollectible->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO * 2.0f ) ) );
 	}
 
 
@@ -281,6 +288,33 @@ void CManicLayer::VOnCreate()
 	//////////////////////////////////////////////////////////////////////
 	// Add specific collision handles
 	//////////////////////////////////////////////////////////////////////
+	///
+	///
+	///
+	//GetCollisionManager().AddCollisionHandler([](CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact) -> void
+	//{
+	//	PlatformCollided( rcPlayer, rcPlatform, rcContact );
+	//	//ool isColliding = rcContact.IsTouching();
+	//	//
+	//	//f (isColliding)
+	//	//
+	//	//	Vec2 const rcPlatformPosition	= rcPlatform.GetSpritePosition();
+	//	//	Vec2 const rcPlayerPosition		= rcPlayer.GetSpritePosition();
+	//	//	if ( rcPlayerPosition.y > rcPlatformPosition.y )
+	//	//	{
+	//	//		//rcPlayer.SetDirection(rcPlayer.GetDirection());
+	//	//		rcPlayer.SetCanJump(true);
+	//	//		rcPlayer.SetCanBeControlled(true);
+	//	//	}
+	//	//	else
+	//	//	{
+	//	//		OnEscaped();
+	//	//	}
+	//	//	
+	//	//
+	//
+	//} );
+
 	
 	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact ) -> void
 		{
@@ -293,12 +327,22 @@ void CManicLayer::VOnCreate()
 			ItemCollected( rcCollectible, rcPlayer, rcContact );
 		} );
 
+	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact ) -> void
+		{
+			PlayerCollidedInvader( rcPlayer, rcInvader, rcContact );
+		} );
 
 	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
 		});
 	
+	GetCollisionManager().AddCollisionHandler([&](CGCObjItem& rcItem, CGCObjEnemy& rcEnemy, const b2Contact& rcContact) -> void
+		{
+			EnemyCollidedItem(rcEnemy, rcContact);
+		});
+
+	//Label* pcScoreLabel = Label::create();
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
 
@@ -329,23 +373,33 @@ void CManicLayer::VOnDestroy()
 {
 	///////////////////////////////////////////////////////////////////////////
 	// clean up anything we allocated in opposite order to creation
-	///////////////////////////////////////////////////////////////////////////
-	safeDelete( m_pcPlayer );
+	///////////////////////////////////////////////////////////////////////////	
+	delete m_pcPlayer;
+	m_pcPlayer = nullptr;
 
-	safeDelete( m_pcGCSprBackGround );
+	delete m_pcGCSprBackGround;
+	m_pcGCSprBackGround = nullptr;
+
+	///////////////////////////////////////////////////////////////////////////
+	// N.B. because object groups must register manually, 
+	// we also unregister them manually
+	///////////////////////////////////////////////////////////////////////////
 	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupPlatform );
-	
-	safeDelete( m_pcGCGroupPlatform );
-	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupEnemy );
-	
-	safeDelete( m_pcGCGroupEnemy );
-	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupLander );
-	
-	safeDelete( m_pcGCGroupLander );
+	delete m_pcGCGroupPlatform;
+	m_pcGCGroupPlatform = nullptr;
+
+	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupProjectilePlayer );
+	delete m_pcGCGroupProjectilePlayer;
+	m_pcGCGroupProjectilePlayer = nullptr;
+
+	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupItem );
+	delete m_pcGCGroupItem;
+	m_pcGCGroupItem = nullptr;
+
 	CGCObjectManager::ObjectGroupUnRegister( m_pcCollectiblesGroup );
-	
-	safeDelete( m_pcCollectiblesGroup );
-	
+	delete m_pcCollectiblesGroup;
+	m_pcCollectiblesGroup = nullptr;
+
 	IGCGameLayer::VOnDestroy();
 }
 
@@ -394,6 +448,22 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 		return;
 	}
 
+	// ignore contact between player projectile and item for collision resolution purposes
+	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )
+	{
+		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CGCObjProjectilePlayer ) )
+			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CGCObjItem ) ) )
+			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CGCObjItem ) )
+				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CGCObjProjectilePlayer ) ) ) )
+		{
+			// ignore the collision!
+			pB2Contact->SetEnabled( false );
+
+			//
+			// insert logic relating to this collision here
+			//
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -477,7 +547,10 @@ void CManicLayer::HandleCollisions()
 				CGCObjInvader* pKillMe = ( pInvaderA ? pInvaderA : pInvaderB );
 				GCTypeID		tidNotInvader = ( pInvaderA ? pGcSprPhysB->GetGCTypeID() : pGcSprPhysA->GetGCTypeID() );
 
-
+				if( GetGCTypeIDOf( CGCObjProjectilePlayer ) == tidNotInvader )
+				{
+					CGCObjectManager::ObjectKill( pKillMe );
+				}
 			}
 		}
 	}
@@ -487,11 +560,17 @@ void CManicLayer::HandleCollisions()
 // Object Specific Collision Handles ///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 
+// Player + Enemy
+void CManicLayer::PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact )
+{
+	OnDeath();
+}
 
 // Player + Enemy
 void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
 {
 	rcPlayer.TakeDamage();
+	//OnDeath();
 }
 
 
@@ -510,7 +589,6 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 void CManicLayer::PlatformCollided ( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact )
 {
 	bool isColliding = rcContact.IsTouching();
-	
 	if (isColliding)
 	{
 		Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
@@ -523,7 +601,7 @@ void CManicLayer::PlatformCollided ( CPlayer& rcPlayer, CGCObjPlatform& rcPlatfo
 		}
 		else
 		{
-			if (m_eGameState == EGameState::EGS_Escaping)
+			if (m_pcCollectiblesGroup->CheckIfEnoughToOpenExit())
 			{
 				OnEscaped();
 			}
@@ -596,6 +674,7 @@ void CManicLayer::CB_OnGameExitButton(Ref* pSender)
 
 void CManicLayer::ResetLevel()
 {
+	//m_pcCollectiblesGroup->ResetCurrentCollectibles();
 	ResetRequestWasHandled();
 	VOnReset();
 }

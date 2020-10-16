@@ -16,11 +16,10 @@
 
 
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
-
-#include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 
-
+//////////////////////////////////////////////////////////////////////////
+// using
 using namespace cocos2d;
 
 
@@ -78,7 +77,7 @@ void CCollectiblesGroup::SetLayer(CManicLayer& cLayer)
 }
 
 
-void CCollectiblesGroup::CheckIfEnoughToOpenExit()
+bool CCollectiblesGroup::CheckIfEnoughToOpenExit()
 {
 	switch (m_eCollectibleTypeRequired)
 	{
@@ -86,26 +85,36 @@ void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 
 			if (m_iCollectibles == m_iMaxCollectibles)
 			{
-				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
+				//m_pcManicLayer->OnEscaped();
 			}
+			return (m_iCollectibles >= m_iMaxCollectibles);
 
 		case ECollectibleTypeRequired::Switch:
 
 			if (m_iSwitches == m_iMaxSwitches)
 			{
-				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
+				//m_pcManicLayer->OnEscaped();
 			}
+			return (m_iSwitches == m_iMaxSwitches);
 
 		case ECollectibleTypeRequired::Both:
-
-			if ((m_iCollectibles >= m_iMaxCollectibles) && (m_iSwitches >= m_iMaxSwitches))
+		default:
+			if ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches))
 			{
-				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
+				//m_pcManicLayer->OnEscaped();
 			}
+			return ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches));
 	}
 }
 
 
+
+//////////////////////////////////////////////////////////////////////////
+//
+//////////////////////////////////////////////////////////////////////////
+// virtual
+CCollectiblesGroup::~CCollectiblesGroup()
+{}
 
 
 
@@ -119,25 +128,39 @@ void CCollectiblesGroup::CollectibleEvent()
 void CCollectiblesGroup::SwitchEvent()
 {
 	m_iSwitches++;
-	CheckIfEnoughToOpenExit();	
+	CheckIfEnoughToOpenExit();
+	
 }
 
 
 
 
 //////////////////////////////////////////////////////////////////////////
-// virtual
+// only handle items
 //////////////////////////////////////////////////////////////////////////
+//virtual 
 bool CCollectiblesGroup::VHandlesThisTypeId( GCTypeID idQueryType )
 {
 	return(GetGCTypeIDOf( CCollectible ) == idQueryType);
 }
 
+
+
+//////////////////////////////////////////////////////////////////////////
+// must return the typeid of the CGCObjectGroup derived class
+//////////////////////////////////////////////////////////////////////////
+//virtual 
 GCTypeID CCollectiblesGroup::VGetTypeId( void )
 {
 	return GetGCTypeIDOf( CCollectiblesGroup );
 }
 
+
+
+//////////////////////////////////////////////////////////////////////////
+//
+//////////////////////////////////////////////////////////////////////////
+//virtual 
 void CCollectiblesGroup::VOnGroupResourceAcquire_PostObject( void )
 {
 	// parent class version
@@ -166,16 +189,20 @@ void CCollectiblesGroup::VOnGroupResourceAcquire_PostObject( void )
 }
 
 
+//////////////////////////////////////////////////////////////////////////
+//
+//////////////////////////////////////////////////////////////////////////
+//virtual 
 void CCollectiblesGroup::VOnGroupResourceRelease( void )
 {
 	// n.b. this must happen first, as will fail if objects destroyed before 
 	CGCObjectGroup::VOnGroupResourceRelease();
 	DestroyItems();
 }
+
+
 //////////////////////////////////////////////////////////////////////////
-
-
-
+//
 //////////////////////////////////////////////////////////////////////////
 void CCollectiblesGroup::DestroyItems( void )
 {
@@ -188,9 +215,3 @@ void CCollectiblesGroup::DestroyItems( void )
 	} );
 }
 
-
-
-CCollectiblesGroup::~CCollectiblesGroup()
-{
-	safeDelete( m_pcManicLayer );
-}

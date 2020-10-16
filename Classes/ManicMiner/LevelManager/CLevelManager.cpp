@@ -36,7 +36,7 @@ void CLevelManager::GoToMainMenu()
 	m_iCurrentLevelIndex = -1;
 	Scene* pScene = CMenuLayer::scene( *this );
 
-	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, pScene ) );
+	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );
 }
 
 void CLevelManager::GoToNextLevel()
@@ -74,7 +74,7 @@ void CLevelManager::GoToNextLevel()
 		newManicLayer->SetLevelManager( *this );
 		
 		// Begin transition
-		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionRotoZoom::create( 1.0f, pScene ) );
+		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionProgressOutIn::create( 1.0f, pScene ) );
 	}
 
 

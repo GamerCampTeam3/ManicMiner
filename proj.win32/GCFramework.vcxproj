@@ -188,6 +188,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupLander.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjLander.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp">
@@ -199,6 +200,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h" />
     <ClCompile Include="..\Classes\MenuScene.cpp" />
@@ -248,6 +251,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupLander.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjLander.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleType.h" />
@@ -265,6 +269,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SSwitches.h" />
