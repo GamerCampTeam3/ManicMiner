@@ -34,6 +34,9 @@ void CMLCentralCavern::VOnCreate( void )
 
 void CMLCentralCavern::VOnDestroy(void)
 {
+	// Call base class first.
+	CManicLayer::VOnDestroy();
+
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemyCentralCavern);
 	delete m_pcGCGroupEnemyCentralCavern;
 	m_pcGCGroupEnemyCentralCavern = nullptr;
