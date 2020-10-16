@@ -33,7 +33,7 @@ public:
 	void SetLayer( CManicLayer& cLayer );
 	void CollectibleEvent();
 	void SwitchEvent();
-	void CheckIfEnoughToOpenExit();
+	bool CheckIfEnoughToOpenExit();
 
 	void SetRequiredType( ECollectibleTypeRequired collectibleRequired )	{ m_eCollectibleTypeRequired = collectibleRequired; }
 	
