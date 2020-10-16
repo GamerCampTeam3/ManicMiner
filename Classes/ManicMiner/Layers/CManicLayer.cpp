@@ -20,12 +20,9 @@
 #include "GamerCamp/GameSpecific/Player/GCObjGroupProjectilePlayer.h"
 #include "ManicMiner/Enemy/GCObjGroupEnemy.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
-#include "ManicMiner/Enemy/GCObjGroupLander.h"
-#include "ManicMiner/Enemy/GCObjLander.h"
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
-#include "ManicMiner/Enemy/GCEnemyDataStore.h"
 #include "MenuScene.h"
 #include "../GameInstance/CGameInstance.h"
 #include "ManicMiner/Collectibles/I_Interactible.h"
@@ -58,8 +55,6 @@ CManicLayer::CManicLayer()
 	, m_eGameState		(EGameState::EGS_Looting)
 	, m_pcGCGroupItem( nullptr )
 	, m_pcGCGroupProjectilePlayer( nullptr )
-	, m_pcGCGroupEnemy ( nullptr )
-	, m_pcGCGroupLander(nullptr)
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcPlayer( nullptr )
 	, m_pcCollectiblesGroup(nullptr)
@@ -171,16 +166,9 @@ void CManicLayer::VOnCreate()
 	m_pcGCGroupProjectilePlayer = new CGCObjGroupProjectilePlayer();
 	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupProjectilePlayer );
 
-	m_pcGCGroupEnemy = new CGCObjGroupEnemy();
-	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupEnemy);
-
 	m_pcCollectiblesGroup = new CCollectiblesGroup(*this, ECollectibleTypeRequired::Collectible, 4);
 	CGCObjectManager::ObjectGroupRegister( m_pcCollectiblesGroup );
 	
-	m_pcGCGroupLander = new CGCObjGroupLander();
-	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupLander);
-
-
 	// add "CGCGameLayerPlatformer" splash screen"
 	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/background.plist";
 	{
@@ -265,9 +253,6 @@ void CManicLayer::VOnCreate()
 	// N.B. invaders are added by the invader object group
 	///////////////////////////////////////////////////////////////////////////
 	//m_pcGCGroupInvader->SetFormationOrigin( v2ScreenCentre_Pixels + Vec2( -( visibleSize.width * 0.3f ), ( visibleSize.height * 0.25f ) ) );
-
-	m_pcGCGroupEnemy->SetFormationOrigin(origin);
-	m_pcGCGroupLander->SetFormationOrigin(origin);
 
 	///////////////////////////////////////////////////////////////////////////
 	// add platforms & items
@@ -405,14 +390,6 @@ void CManicLayer::VOnDestroy()
 	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupItem );
 	delete m_pcGCGroupItem;
 	m_pcGCGroupItem = nullptr;
-
-	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemy);
-	delete m_pcGCGroupEnemy;
-	m_pcGCGroupEnemy = nullptr;
-
-	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupLander);
-	delete m_pcGCGroupLander;
-	m_pcGCGroupLander = nullptr;
 
 	CGCObjectManager::ObjectGroupUnRegister( m_pcCollectiblesGroup );
 	delete m_pcCollectiblesGroup;
