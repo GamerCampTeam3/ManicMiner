@@ -11,14 +11,10 @@
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
-class CGCObjSprite;														  //										
+class CGCObjSprite;														  //
 class CGCObjPlatform;													  //
 class CGCObjGroupPlatform;												  //
-class CGCObjItem;														  //
-class CGCObjGroupItem;													  //
-class CGCObjInvader;													  //
 class CGCObjGroupInvader;												  //
-class CGCObjGroupProjectilePlayer;										  //
 class CGCObjEnemy;														  //
 class CGCObjGroupEnemy;													  //
 class CGCObjLander;														  //
@@ -40,8 +36,6 @@ private:
 
 	// object groups
 	CGCObjGroupPlatform* m_pcGCGroupPlatform;
-	CGCObjGroupItem* m_pcGCGroupItem;
-	CGCObjGroupProjectilePlayer* m_pcGCGroupProjectilePlayer;
 	CGCObjGroupEnemy* m_pcGCGroupEnemy;
 	CGCObjGroupLander* m_pcGCGroupLander;
 
@@ -126,14 +120,13 @@ public:
 	void CB_OnGameExitButton(Ref* pSender);
 
 
-	private:
+	protected:
 
 
 		////////////////////////////////////////////////////////////////////////////
 		// Collision Events
 		////////////////////////////////////////////////////////////////////////////
 		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
-		void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlatformCollided( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
@@ -145,19 +138,6 @@ public:
 		////////////////////////////////////////////////////////////////////////////
 		void OnDeath();
 		void OnFinishedLooting();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 		////////////////////////////////////////////////////////////////////////// 
@@ -181,6 +161,9 @@ public:
 public:
 	void OutOfLives();
 	void OnEscaped();
+	EGameState ReturnGameState() { return m_eGameState; };
+	void SetGameState( EGameState gameState ) { m_eGameState = gameState; };
+	
 	void RequestReset()
 	{
 		//ResetLevel();
