@@ -100,6 +100,9 @@
     <Filter Include="Classes\ManicMiner\Platforms\CentralCavern">
       <UniqueIdentifier>{1eb72431-01ac-44df-8f5e-891fe050a02e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Helpers">
+      <UniqueIdentifier>{f63112af-5a09-41c1-a217-c690a8984415}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h">
       <Filter>Classes\ManicMiner\Platforms\CentralCavern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Helpers\Helpers.h">
+      <Filter>Classes\ManicMiner\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
