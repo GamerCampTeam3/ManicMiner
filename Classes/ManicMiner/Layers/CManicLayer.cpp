@@ -278,14 +278,14 @@ void CManicLayer::VOnCreate()
 	const u32 uNumRows = 4;
 
 
-	i32	iOffsetX = 60;
-	for (u32 uLoop = 0; uLoop < 50; ++uLoop)
+	f32	iOffsetX = PTM_RATIO * 2.0f;
+	for ( u32 uLoop = 0; uLoop < 16; ++uLoop )
 	{
 		CGCObjPlatform* pPlatform = new CGCObjPlatform();
-		pPlatform->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.1f) ) );
+		pPlatform->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO ) ) );
 		
 		CCollectible* pCollectible = new CCollectible( ECollectibleType::Collectible, *m_pcCollectiblesGroup );
-		pCollectible->SetResetPosition( Vec2( 0 + (iOffsetX * uLoop), (visibleSize.height * 0.2f) ) );
+		pCollectible->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO * 2.0f ) ) );
 	}
 
 

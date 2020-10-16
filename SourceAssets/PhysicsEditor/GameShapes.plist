@@ -202,10 +202,16 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -30.000,15.000 }</string>	
-								<string>{ -15.000,-15.000 }</string>	
-								<string>{ 15.000,-15.000 }</string>	
-								<string>{ 30.000,15.000 }</string>
+								<string>{ 35.000,-30.000 }</string>	
+								<string>{ 51.690,10.986 }</string>	
+								<string>{ -60.000,30.000 }</string>	
+								<string>{ -60.000,8.000 }</string>	
+								<string>{ -35.000,-30.000 }</string>
+							</array>
+							<array>	
+								<string>{ 60.000,30.000 }</string>	
+								<string>{ -60.000,30.000 }</string>	
+								<string>{ 51.690,10.986 }</string>
 							</array>
 						</array>
                     </dict>
