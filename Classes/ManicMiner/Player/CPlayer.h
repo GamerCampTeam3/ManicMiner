@@ -29,8 +29,8 @@ class CPlayer
 private:
 
 	// Constant values
-	// const int	     m_kiStartingLives = 3;      // The starting life of the player, changing this will apply it to m_iLives on Construction
-	const float			m_kfGravitionalPull = 30.0f;    // The gravitational force that affects the player for jumping purposes
+	// const int	    m_kiStartingLives = 3;      // The starting life of the player, changing this will apply it to m_iLives on Construction
+	const float			m_kfGravitionalPull = 100.0f;    // The gravitational force that affects the player for jumping purposes
 
 	// Our Movement Related variables
 	EPlayerDirection	m_ePlayerDirection;			 // This stores the current direction the player is at

@@ -82,12 +82,27 @@ bool CCollectiblesGroup::CheckIfEnoughToOpenExit()
 	switch (m_eCollectibleTypeRequired)
 	{
 		case ECollectibleTypeRequired::Collectible:
-			return (m_iCollectibles == m_iMaxCollectibles);
+
+			if (m_iCollectibles == m_iMaxCollectibles)
+			{
+				//m_pcManicLayer->OnEscaped();
+			}
+			return (m_iCollectibles >= m_iMaxCollectibles);
 
 		case ECollectibleTypeRequired::Switch:
+
+			if (m_iSwitches == m_iMaxSwitches)
+			{
+				//m_pcManicLayer->OnEscaped();
+			}
 			return (m_iSwitches == m_iMaxSwitches);
 
 		case ECollectibleTypeRequired::Both:
+
+			if ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches))
+			{
+				//m_pcManicLayer->OnEscaped();
+			}
 			return ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches));
 	}
 }
@@ -106,12 +121,15 @@ CCollectiblesGroup::~CCollectiblesGroup()
 void CCollectiblesGroup::CollectibleEvent()
 {
 	m_iCollectibles++;
+	CheckIfEnoughToOpenExit();
 }
 
 
 void CCollectiblesGroup::SwitchEvent()
 {
 	m_iSwitches++;
+	CheckIfEnoughToOpenExit();
+	
 }
 
 

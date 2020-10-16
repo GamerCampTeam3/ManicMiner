@@ -34,10 +34,10 @@ CPlayer::CPlayer()
 	, m_v2Movement( 0.0f, 0.0f )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
-	, m_fJumpHeight( -2000.0f )
-	, m_pcControllerActionToKeyMap( nullptr )
+	, m_fJumpHeight( 300.0f )
 	, m_pcManicLayer(nullptr)
 	, isalive(true)
+	, m_pcControllerActionToKeyMap( nullptr )
 {
 
 }
@@ -54,9 +54,10 @@ CPlayer::CPlayer( CManicLayer& cLayer, cocos2d::Vec2 startingPos )
 	, m_v2Movement( 0.0f, 0.0f )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
-	, m_pcControllerActionToKeyMap( nullptr )
+	, m_fJumpHeight( 300.0f )
 	, m_pcManicLayer( &cLayer )
 	, isalive( true )
+	, m_pcControllerActionToKeyMap( nullptr )
 {
 	SetResetPosition( startingPos );
 }
@@ -71,9 +72,10 @@ CPlayer::CPlayer( CManicLayer& cLayer, cocos2d::Vec2 startingPos, int startingLi
 	, m_v2Movement( 0.0f, 0.0f )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
-	, m_pcControllerActionToKeyMap( nullptr )
+	, m_fJumpHeight( 300.0f )
 	, m_pcManicLayer( &cLayer )
 	, isalive( true )
+	, m_pcControllerActionToKeyMap( nullptr )
 {
 	SetResetPosition( startingPos );
 }
@@ -146,9 +148,11 @@ void CPlayer::VOnResourceRelease()
 
 void CPlayer::TakeDamage()
 {
-	m_iLives--;
+
 	if (isalive)
 	{
+		m_iLives--;
+		
 		if (m_iLives > 0)
 		{
 			VOnReset();
@@ -162,16 +166,6 @@ void CPlayer::TakeDamage()
 		isalive = false;
 
 	}
-	//if (CheckIfOutOfLives())
-	//{
-	//	Death();
-	//	m_pcManicLayer->RequestReset();
-	//}
-	//
-	//else
-	//{
-	//	m_pcManicLayer->OutOfLives();
-	//}
 }
 
 bool CPlayer::CheckIfOutOfLives()
@@ -215,6 +209,7 @@ void CPlayer::KeyboardInput()
 		{
 			m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
 			m_bCanJump = false;
+			CCLOG( "jump" );
 		}
 
 
@@ -313,16 +308,19 @@ void CPlayer::UpdateMovement( f32 fTimeStep )
 			if (m_eLastPlayerDirection == EPlayerDirection::EPD_Left)
 			{
 				JumpEvent( m_fMovementSpeed, m_fJumpHeight );
+				CCLOG( "Movement: Jump Left" );
 			}
 
 			else if (m_eLastPlayerDirection == EPlayerDirection::EPD_Right)
 			{
 				JumpEvent( abs( m_fMovementSpeed ), m_fJumpHeight );
+				CCLOG( "Movement: Jump Right" );
 			}
 
 			else
 			{
 				JumpEvent( 0.f, m_fJumpHeight );
+				CCLOG( "Movement: Jump Static" );
 			}
 			break;
 
@@ -338,7 +336,7 @@ void CPlayer::UpdateMovement( f32 fTimeStep )
 
 void CPlayer::JumpEvent( float x, float y )
 {
-	const Vec2 v2Jump( x, y );
+	Vec2 v2Jump( x, y );
 	m_v2Jump = v2Jump;
 	ApplyForceToCenter( m_v2Jump );
 	m_ePlayerDirection = EPlayerDirection::EPD_Falling;

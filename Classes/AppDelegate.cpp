@@ -72,7 +72,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setOpenGLView(glview);
 
     // Set the design resolution
-	glview->setDesignResolutionSize( designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER );
+	glview->setDesignResolutionSize( SM_CXSCREEN, SM_CYSCREEN, ResolutionPolicy::NO_BORDER );
 
 	Size frameSize = glview->getFrameSize();
     
@@ -156,7 +156,7 @@ void AppDelegate::applicationDidEnterBackground()
     Director::getInstance()->stopAnimation();
 
 	// Pause Audio
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+	CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
 
 
@@ -166,5 +166,5 @@ void AppDelegate::applicationWillEnterForeground()
     Director::getInstance()->startAnimation();
 
     // Resume Audio
-     CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+     CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }

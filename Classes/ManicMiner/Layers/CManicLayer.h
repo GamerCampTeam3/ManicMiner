@@ -131,6 +131,7 @@ public:
 		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
+		void PlatformCollided( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
 
 
@@ -140,7 +141,7 @@ public:
 		////////////////////////////////////////////////////////////////////////////
 		void OnDeath();
 		void OnFinishedLooting();
-		void OnEscaped();
+
 
 
 
@@ -175,7 +176,7 @@ public:
 
 public:
 	void OutOfLives();
-	
+	void OnEscaped();
 	void RequestReset()
 	{
 		//ResetLevel();
