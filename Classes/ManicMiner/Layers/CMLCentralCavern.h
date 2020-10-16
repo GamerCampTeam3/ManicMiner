@@ -18,5 +18,6 @@ public:
 	// object groups
 	CGCObjGroupEnemyCentralCavern* m_pcGCGroupEnemyCentralCavern;
 	CObjCCGroupPlatform* m_pcGroupPlatformCentralCavern;
+	CCollectiblesGroup* m_pcCollectibleGroup;
 };
 #endif //#ifndef _CMANICLAYER_H_

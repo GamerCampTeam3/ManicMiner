@@ -33,7 +33,7 @@ CPlayer::CPlayer()
 	, m_v2Movement						( 0.0f, 0.0f )
 	, m_v2Jump							( 0.0f, 0.0f )
 	, m_fMovementSpeed					( -4.f )
-	, m_fJumpHeight						( 30.0f )
+	, m_fJumpHeight						( 200.0f )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcManicLayer					( nullptr )
@@ -55,7 +55,7 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
 	, m_v2Movement						( 0.0f, 0.0f )
 	, m_v2Jump							( 0.0f, 0.0f )
 	, m_fMovementSpeed					( -4.f )
-	, m_fJumpHeight						( 30.0f )
+	, m_fJumpHeight						( 200.0f )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcManicLayer					( &cLayer )
@@ -77,7 +77,7 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos, const i
 	, m_v2Movement						( 0.0f, 0.0f )
 	, m_v2Jump							( 0.0f, 0.0f )
 	, m_fMovementSpeed					( -4.f )
-	, m_fJumpHeight						( 30.0f )
+	, m_fJumpHeight						( 200.0f )
 	, m_iMaxLives						( startingLives )
 	, m_iLives							( m_iMaxLives )
 	, m_pcManicLayer					( &cLayer )
@@ -292,6 +292,7 @@ void CPlayer::UpdateMovement( f32 fTimeStep )
 		case EPlayerDirection::EPD_Falling:
 			m_bCanJump = false;
 			m_bCanBeControlled = false;
+			GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 			break;
 	}
 }

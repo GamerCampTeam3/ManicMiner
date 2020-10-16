@@ -29,7 +29,7 @@ class CPlayer
 private:
 
 	// Constant values
-	const float								m_kfGravitionalPull = 100.0f;   // The gravitational force that affects the player for jumping purposes
+	const float								m_kfGravitionalPull = 20.0f;   // The gravitational force that affects the player for jumping purposes
 
 	// Our Movement Related variables
 	EPlayerDirection						m_ePlayerDirection;				// This stores the current direction the player is at
