@@ -2,14 +2,19 @@
 
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
-#include "ManicMiner/Layers/CManicLayer.h"
-#include "ManicMiner/Layers/CTestLayer.h"
-
-#include "MenuScene.h"
-#include "../Layers/CMLCentralCavern.h"
-#include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-
 #include "cocos2d/cocos/base/CCDirector.h"
+
+// Include Menu Scene
+#include "MenuScene.h"
+
+// Include ManicLayers
+// Super Class
+#include "ManicMiner/Layers/CManicLayer.h"
+
+// Actual levels
+#include "ManicMiner/Layers/CMLCentralCavern.h"
+#include "ManicMiner/Layers/CMLTheColdRoom.h"
+
 USING_NS_CC;
 
 
@@ -55,7 +60,7 @@ void CLevelManager::GoToNextLevel()
 		break;
 	case 0:
 		// SECOND LEVEL
-		pScene = TGCGameLayerSceneCreator< CManicLayer >::CreateScene();
+		pScene = TGCGameLayerSceneCreator< CMLTheColdRoom >::CreateScene();
 		break;
 	case 1:
 		// BEAT FINAL LEVEL, GO BACK TO FIRST LEVEL

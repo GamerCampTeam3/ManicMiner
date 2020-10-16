@@ -1,17 +1,16 @@
-#include "CMLCentralCavern.h"
+#include "CMLTheColdRoom.h"
 #include "ManicMiner/Player/CPlayer.h"
-#include "ManicMiner/Enemy/GCObjGroupEnemyCentralCavern.h"
 #include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
 
-CMLCentralCavern::CMLCentralCavern( )
+CMLTheColdRoom::CMLTheColdRoom( )
 	: CManicLayer( )
 	, m_pcGCGroupEnemyCentralCavern(nullptr)
 {}
 
-CMLCentralCavern::~CMLCentralCavern()
+CMLTheColdRoom::~CMLTheColdRoom()
 {}
 
-void CMLCentralCavern::VOnCreate( void )
+void CMLTheColdRoom::VOnCreate( void )
 {
 	CManicLayer::VOnCreate();
 
@@ -25,24 +24,13 @@ void CMLCentralCavern::VOnCreate( void )
 	// Edit Custom Layout
 	GetPlayer().SetResetPosition( v2NewStart );
 
-
-	// Enemies for Central Cavern
-	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
-	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupEnemyCentralCavern);
-
-	m_pcGCGroupEnemyCentralCavern->SetFormationOrigin(origin);
-
 	// Platforms for Central Cavern
 	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();
 	CGCObjectManager::ObjectGroupRegister(m_pcGroupPlatformCentralCavern);
 }
 
-void CMLCentralCavern::VOnDestroy(void)
+void CMLTheColdRoom::VOnDestroy(void)
 {
-	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemyCentralCavern);
-	delete m_pcGCGroupEnemyCentralCavern;
-	m_pcGCGroupEnemyCentralCavern = nullptr;
-
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);
 	delete m_pcGroupPlatformCentralCavern;
 	m_pcGroupPlatformCentralCavern = nullptr;

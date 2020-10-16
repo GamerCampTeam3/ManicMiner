@@ -11,28 +11,28 @@
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
+class CGCObjEnemy;
 class CPlatform;														  //
-class CGCObjSprite;														  //										
-								  //
-class CGCObjEnemy;														  //
-class CGCObjGroupEnemy;													  //
 class CPlayer;															  //
 class CCollectible;														  //
 class CCollectiblesGroup;												  //
 class CLevelManager;													  //
 ////////////////////////////////////////////////////////////////////////////
 
-class CManicLayer : public IGCGameLayer, public b2ContactListener
+class CManicLayer: public IGCGameLayer, public b2ContactListener
 {
 private:
 	// Reference to the GameInstance
 	CLevelManager* m_pcLevelManager;
-	
+
 	// GameState Enum
 	EGameState m_eGameState;
-	
+
 	// Handling Reset Bool
 	bool m_bWasResetRequested;
+
+	// Handling Going to Next Level
+	bool m_bWasNextLevelRequested;
 
 	// backgrounds
 	CGCObjSprite* m_pcGCSprBackGround;
@@ -58,7 +58,7 @@ public:
 		EPA_Right,
 		EPA_Jump
 	};
-	
+
 	// player actions 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -111,30 +111,27 @@ public:
 	////////////////////////////////////////////////////////////////////////////
 	// Button
 	////////////////////////////////////////////////////////////////////////////
-	void CB_OnGameExitButton(Ref* pSender);
+	void CB_OnGameExitButton( Ref* pSender );
 
 
-	private:
+private:
 
 
-		////////////////////////////////////////////////////////////////////////////
-		// Collision Events
-		////////////////////////////////////////////////////////////////////////////
-		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
-		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
-		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
-		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
-
-
-
-		////////////////////////////////////////////////////////////////////////////
-		// General Game Logic
-		////////////////////////////////////////////////////////////////////////////
-		void OnDeath();
-		void OnFinishedLooting();
+	////////////////////////////////////////////////////////////////////////////
+	// Collision Events
+	////////////////////////////////////////////////////////////////////////////
+	void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
+	void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
+	void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
+	void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
 
 
 
+	////////////////////////////////////////////////////////////////////////////
+	// General Game Logic
+	////////////////////////////////////////////////////////////////////////////
+	void OnDeath();
+	void OnFinishedLooting();
 
 
 
@@ -147,22 +144,35 @@ public:
 
 
 
-		////////////////////////////////////////////////////////////////////////// 
-		// reset handling
 
 
 
-		void ResetRequestWasHandled()
-		{
-			m_bWasResetRequested = false;
-		}
+	////////////////////////////////////////////////////////////////////////// 
+	// reset handling
 
-		bool ResetWasRequested()
-		{
-			return m_bWasResetRequested;
-		}
 
-		void ResetLevel();
+
+	void ResetRequestWasHandled()
+	{
+		m_bWasResetRequested = false;
+	}
+
+	bool GetWasResetRequested()
+	{
+		return m_bWasResetRequested;
+	}
+
+	void ResetLevel();
+
+	////////////////////////////////////////////////////////////////////////////
+	// Go to next level handling
+
+	bool GetWasNextLevelRequested()
+	{
+		return m_bWasNextLevelRequested;
+	}
+	void RequestNextLevel();
+
 
 public:
 	void OutOfLives();
@@ -171,8 +181,8 @@ public:
 	{
 		//ResetLevel();
 		m_bWasResetRequested = true;
-	}
-
+	}	
+	
 	void SetGameState( EGameState gameState ) { m_eGameState = gameState; }
 };
 #endif // #ifndef _CMANICLAYER_H_
