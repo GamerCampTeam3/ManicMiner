@@ -50,13 +50,26 @@ bool CMenuLayer::init()
         return false;
     }
 
-	// set to fullscreen
-    static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+	// Quick little change to help me change between res
+    bool fullScreenSwitch = true;
 
-	// for windowed mode
-    Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080);
-	// resolution
-    Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT);
+    if (fullScreenSwitch)
+    {
+        // set to fullscreen
+        static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+
+        // for windowed mode
+        Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+        // resolution
+        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
+    }
+    else
+    {
+        // for windowed mode
+        Director::getInstance()->getOpenGLView()->setFrameSize( 1280, 720 );
+        // resolution
+        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1280, 720, ResolutionPolicy::EXACT_FIT );
+    }
 	
     Size visibleSize	= Director::getInstance()->getVisibleSize();
     Vec2 origin			= Director::getInstance()->getVisibleOrigin();

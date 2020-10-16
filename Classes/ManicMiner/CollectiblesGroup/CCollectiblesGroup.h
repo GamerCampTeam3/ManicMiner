@@ -21,7 +21,7 @@ class CCollectiblesGroup
 	int m_iMaxSwitches;
 
 	ECollectibleTypeRequired m_eCollectibleTypeRequired;
-	CManicLayer* m_pcManicLayer;
+	CManicLayer*			 m_pcManicLayer;
 
 public:
 	CCollectiblesGroup();
@@ -33,15 +33,15 @@ public:
 	void SetLayer( CManicLayer& cLayer );
 	void CollectibleEvent();
 	void SwitchEvent();
-	bool CheckIfEnoughToOpenExit();
+	void CheckIfEnoughToOpenExit();
 
-	void SetRequiredType( ECollectibleTypeRequired collectibleRequired ) { m_eCollectibleTypeRequired = collectibleRequired; };
+	void SetRequiredType( ECollectibleTypeRequired collectibleRequired )	{ m_eCollectibleTypeRequired = collectibleRequired; }
 	
-	int GetCollectible() { return m_iCollectibles; };
-	void SetCollectibles( int collectibles ) { m_iCollectibles = collectibles; };
+	int  GetCollectible()													{ return m_iCollectibles; }
+	void SetCollectibles( int collectibles )								{ m_iCollectibles = collectibles; }
 	
-	int GetSwitches() { return m_iSwitches; };
-	void SetSwitches( int switches ) { m_iSwitches = switches; };
+	int  GetSwitches ()														{ return m_iSwitches; }
+	void SetSwitches( int switches )										{ m_iSwitches = switches; }
 	
 	//////////////////////////////////////////////////////////////////////////
 	// overrides for CGCObjectGroup public interface

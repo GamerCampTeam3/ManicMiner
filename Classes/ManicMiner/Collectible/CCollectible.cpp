@@ -7,13 +7,14 @@
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
+#include "ManicMiner/Helpers/Helpers.h"
 
 USING_NS_CC;
 
 //////////////////////////////////////////////////////////////////////////
 // 
 //////////////////////////////////////////////////////////////////////////
-IN_CPP_CREATION_PARAMS_DECLARE( CGCObjItem, "TexturePacker/Sprites/Coin/Coin.plist", "coin", b2_dynamicBody, true );
+IN_CPP_CREATION_PARAMS_DECLARE( CGCObjItem, "TexturePacker/Sprites/Coin/Coin.plist", "coin", b2_staticBody, true );
 //virtual 
 void CCollectible::VOnResourceAcquire( void )
 {
@@ -38,8 +39,6 @@ void CCollectible::VOnReset()
 
 void CCollectible::InteractEvent()
 {
-	int collectibleIncrement;
-	
 	if (!m_bHasBeenCollected)
 	{
 		switch (m_eCollectibleType)
@@ -59,6 +58,11 @@ void CCollectible::InteractEvent()
 				break;
 		}
 	}
+}
+
+CCollectible::~CCollectible()
+{
+	safeDelete( m_pcCollectiblesGroup );
 }
 
 
