@@ -94,7 +94,7 @@ void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire()
 void CGCObjGroupEnemyCentralCavern::CreateEnemies()
 {
 	// Central Cavern requires only one enemy.
-	CGCObjEnemy* pEnemy = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(480.0f,480.0f), 480.0f, 0.0f, true, 1.0f, true, EnemyTypes::EEnemyId::EDuck, s_cCreationParams_CGCObj_EDuck);
+	CGCObjEnemy* pEnemy = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(510.0f,450.0f), 480.0f, 0.0f, true, 1.0f, true, EnemyTypes::EEnemyId::EDuck, s_cCreationParams_CGCObj_EDuck);
 	pEnemy->SetName("E1");
  
 }
