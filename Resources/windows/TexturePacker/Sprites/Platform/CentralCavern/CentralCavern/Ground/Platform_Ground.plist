@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Background.png</key>
+            <key>CN_Platform_Ground.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{1920,960}</string>
+                <string>{1800,60}</string>
                 <key>spriteSourceSize</key>
-                <string>{1920,960}</string>
+                <string>{1800,60}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{1920,960}}</string>
+                <string>{{1,1},{1800,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -29,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>background.png</string>
+            <string>CN_Platform_Ground.png</string>
             <key>size</key>
-            <string>{1922,962}</string>
+            <string>{1802,62}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c00a38342b08cfae8bb6f0f0bf521e65:321f0b1b0586d5bf55f1d98a09d0b4a3:0efa5fec0be417390841f237bfdb917e$</string>
+            <string>$TexturePacker:SmartUpdate:0c0a8f3f84f9b2209f283ff495b5fd3f:e240fa20a9f13187f17f5517de185c0d:ab2576ec1a6d129792d8ba0e33ac65d3$</string>
             <key>textureFileName</key>
-            <string>background.png</string>
+            <string>CN_Platform_Ground.png</string>
         </dict>
     </dict>
 </plist>
