@@ -21,6 +21,8 @@ class CGCObjGroupInvader;												  //
 class CGCObjGroupProjectilePlayer;										  //
 class CGCObjEnemy;														  //
 class CGCObjGroupEnemy;													  //
+class CGCObjLander;														  //
+class CGCObjGroupLander;												  //
 class CPlayer;															  //
 class CCollectible;														  //
 class CCollectiblesGroup;												  //
@@ -41,6 +43,7 @@ private:
 	CGCObjGroupItem* m_pcGCGroupItem;
 	CGCObjGroupProjectilePlayer* m_pcGCGroupProjectilePlayer;
 	CGCObjGroupEnemy* m_pcGCGroupEnemy;
+	CGCObjGroupLander* m_pcGCGroupLander;
 
 	// backgrounds
 	CGCObjSprite* m_pcGCSprBackGround;

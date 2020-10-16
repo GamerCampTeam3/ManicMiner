@@ -34,8 +34,8 @@ private:
 
 	EMovementAxis				eMovementAxis;
 	EnemyTypes::EEnemyId	    eEnemyIdentifier;
-	cocos2d::Vec2				cAnchorPoint;
-	cocos2d::Vec2				TotalVelocity;
+	cocos2d::Vec2				m_cAnchorPoint;
+	cocos2d::Vec2				m_cTotalVelocity;
 	float						fSpeed;
 	float						fInitialDistanceFromAnchor;
 	float						fMovementWindowLength;
@@ -52,9 +52,12 @@ private:
 		
 public:
 
-	CGCObjEnemy(EMovementAxis EMovementAxisInput, cocos2d::Vec2 AnchorPoint, float MovementRange, float InitialDistanceFromAnchor, bool MovingAwayFromAnchorPoint, float Speed, bool SpriteIsFlippable, 
-		EnemyTypes::EEnemyId EnemyIdentifierInput, CGCFactoryCreationParams& ParamsInput);
-	
+
+
+	CGCObjEnemy(const EMovementAxis EMovementAxisInput, const cocos2d::Vec2& AnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
+		bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId EnemyIdentifierInput,
+		CGCFactoryCreationParams& ParamsInput);
+
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
 	// this class to delete derived types.
