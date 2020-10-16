@@ -55,8 +55,6 @@ private:
 	int m_iNumCollectiblesNeeded;
 	int m_iNumSwitchesNeeded;
 
-
-
 public:
 	CManicLayer( void );
 	virtual ~CManicLayer( void );
