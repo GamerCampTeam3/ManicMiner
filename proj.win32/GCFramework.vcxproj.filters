@@ -240,6 +240,9 @@
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjLander.cpp">
       <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -421,6 +424,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\AudioHelper\ManicAudio.h">
       <Filter>Classes\ManicMiner\AudioHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
