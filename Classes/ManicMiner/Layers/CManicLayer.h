@@ -11,8 +11,8 @@
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
+class CPlatform;														  //
 class CGCObjSprite;														  //										
-class CGCObjPlatform;													  //
 class CGCObjGroupPlatform;												  //
 class CGCObjItem;														  //
 class CGCObjGroupItem;													  //
@@ -136,7 +136,7 @@ public:
 		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlayerCollidedInvader( CPlayer& rcPlayer, CGCObjInvader& rcInvader, const b2Contact& rcContact );
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
-		void PlatformCollided( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact );
+		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
 
 

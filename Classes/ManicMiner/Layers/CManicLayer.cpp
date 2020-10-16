@@ -27,6 +27,7 @@
 #include "../GameInstance/CGameInstance.h"
 #include "ManicMiner/Collectibles/I_Interactible.h"
 #include "../LevelManager/CLevelManager.h"
+#include "../Platforms/CPlatform.h"
 
 
 USING_NS_CC;
@@ -158,8 +159,8 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 
 	// create and register the object group for the platform objects
-	m_pcGCGroupPlatform = new CGCObjGroupPlatform();
-	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupPlatform );
+	//m_pcGCGroupPlatform = new CGCObjGroupPlatform();
+	//CGCObjectManager::ObjectGroupRegister( m_pcGCGroupPlatform );
 
 	// create and register the object group for the item objects
 	m_pcGCGroupItem = new CGCObjGroupItem();
@@ -170,8 +171,8 @@ void CManicLayer::VOnCreate()
 	//CGCObjectManager::ObjectGroupRegister( m_pcGCGroupInvader );
 
 	// create and register the object group for the player projectile objects
-	m_pcGCGroupProjectilePlayer = new CGCObjGroupProjectilePlayer();
-	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupProjectilePlayer );
+	//m_pcGCGroupProjectilePlayer = new CGCObjGroupProjectilePlayer();
+	//CGCObjectManager::ObjectGroupRegister( m_pcGCGroupProjectilePlayer );
 
 	m_pcCollectiblesGroup = new CCollectiblesGroup(*this, ECollectibleTypeRequired::Collectible, 4);
 	CGCObjectManager::ObjectGroupRegister( m_pcCollectiblesGroup );
@@ -266,24 +267,24 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 	// CGCObjGroupItem & CGCObjGroupPlatform clean up all contained objects during VOnGroupResourceRelease(), so we can be 
 	// very laissez faire about creating items & platforms
-	const u32 uNumColumns = 3;
-	const u32 uNumRows = 4;
+	//const u32 uNumColumns = 3;
+	//const u32 uNumRows = 4;
 
 
-	f32	iOffsetX = PTM_RATIO * 2.0f;
-	for ( u32 uLoop = 0; uLoop < 16; ++uLoop )
-	{
-		//CGCObjPlatform* pPlatform = new CGCObjPlatform();
-		//pPlatform->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO ) ) );
-		
-		CCollectible* pCollectible = new CCollectible( ECollectibleType::Collectible, *m_pcCollectiblesGroup );
-		pCollectible->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO * 2.0f ) ) );
-	}
+	//f32	iOffsetX = PTM_RATIO * 2.0f;
+	//for ( u32 uLoop = 0; uLoop < 16; ++uLoop )
+	//{
+	//	//CGCObjPlatform* pPlatform = new CGCObjPlatform();
+	//	//pPlatform->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO ) ) );
+	//	
+	//	CCollectible* pCollectible = new CCollectible( ECollectibleType::Collectible, *m_pcCollectiblesGroup );
+	//	pCollectible->SetResetPosition( Vec2( ( iOffsetX * 0.5f ) + (iOffsetX * uLoop), ( PTM_RATIO * 2.0f ) ) );
+	//}
 
 
-	CGCObjPlatform* pPlatformX = new CGCObjPlatform();
-	pPlatformX->SetResetPosition( Vec2( 0 + (visibleSize.height * 0.5f), (visibleSize.height * 0.15f) ) );
-	pPlatformX->SetName( "Test" );
+	//CGCObjPlatform* pPlatformX = new CGCObjPlatform();
+	//pPlatformX->SetResetPosition( Vec2( 0 + (visibleSize.height * 0.5f), (visibleSize.height * 0.15f) ) );
+	//pPlatformX->SetName( "Test" );
 	
 	//////////////////////////////////////////////////////////////////////
 	// Add specific collision handles
@@ -316,7 +317,7 @@ void CManicLayer::VOnCreate()
 	//} );
 
 	
-	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact ) -> void
+	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact ) -> void
 		{
 			PlatformCollided(rcPlayer, rcPlatform, rcContact);
 		} );
@@ -384,13 +385,13 @@ void CManicLayer::VOnDestroy()
 	// N.B. because object groups must register manually, 
 	// we also unregister them manually
 	///////////////////////////////////////////////////////////////////////////
-	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupPlatform );
-	delete m_pcGCGroupPlatform;
-	m_pcGCGroupPlatform = nullptr;
+	//CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupPlatform );
+	//delete m_pcGCGroupPlatform;
+	//m_pcGCGroupPlatform = nullptr;
 
-	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupProjectilePlayer );
-	delete m_pcGCGroupProjectilePlayer;
-	m_pcGCGroupProjectilePlayer = nullptr;
+	//CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupProjectilePlayer );
+	//delete m_pcGCGroupProjectilePlayer;
+	//m_pcGCGroupProjectilePlayer = nullptr;
 
 	CGCObjectManager::ObjectGroupUnRegister( m_pcGCGroupItem );
 	delete m_pcGCGroupItem;
@@ -586,7 +587,7 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 	rcCollectible.InteractEvent();
 }
 
-void CManicLayer::PlatformCollided ( CPlayer& rcPlayer, CGCObjPlatform& rcPlatform, const b2Contact& rcContact )
+void CManicLayer::PlatformCollided ( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact )
 {
 	bool isColliding = rcContact.IsTouching();
 	if (isColliding)
