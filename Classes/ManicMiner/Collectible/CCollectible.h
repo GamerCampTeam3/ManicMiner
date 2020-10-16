@@ -22,6 +22,7 @@ public:
 	{}
 
 	CCollectible( ECollectibleType eType, CCollectiblesGroup &collectibleGroup );
+	~CCollectible();
 
 	virtual void VOnResourceAcquire( void ) override;
 	virtual void VOnReset() override;

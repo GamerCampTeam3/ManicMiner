@@ -29,111 +29,91 @@ class CPlayer
 private:
 
 	// Constant values
-	// const int	    m_kiStartingLives = 3;      // The starting life of the player, changing this will apply it to m_iLives on Construction
-	const float			m_kfGravitionalPull = 100.0f;    // The gravitational force that affects the player for jumping purposes
+	const float								m_kfGravitionalPull = 100.0f;   // The gravitational force that affects the player for jumping purposes
 
 	// Our Movement Related variables
-	EPlayerDirection	m_ePlayerDirection;			 // This stores the current direction the player is at
-	EPlayerDirection	m_eLastPlayerDirection;		 // This stores the last direction of the player, used for the jump lock
+	EPlayerDirection						m_ePlayerDirection;				// This stores the current direction the player is at
+	EPlayerDirection						m_eLastPlayerDirection;			// This stores the last direction of the player, used for the jump lock
 
-	bool				m_bCanJump;					 // This regulates the player's ability to jump again
-	bool				m_bCanBeControlled;			 // This disables input of the X-axis directional movement of the player while jumping (or on a conveyor belt)
-	bool				m_bIsOnLadder;
+	bool									m_bCanJump;						// This regulates the player's ability to jump again
+	bool									m_bCanBeControlled;				// This disables input of the X-axis directional movement of the player while jumping (or on a conveyor belt)
+	bool									m_bIsOnLadder;
+	bool									m_bIsAlive;
 
-	cocos2d::Vec2		m_v2Movement;				 // Used to move the player
-	cocos2d::Vec2		m_v2Jump;					 // Used for the jump
-	float				m_fMovementSpeed;
-	float				m_fJumpHeight;
+	cocos2d::Vec2							m_v2Movement;					// Used to move the player
+	cocos2d::Vec2							m_v2Jump;						// Used for the jump
+	float									m_fMovementSpeed;
+	float									m_fJumpHeight;
 
-	// Other values
-	int					m_iMaxLives;
-    int					m_iLives;					 // The current life of the player
-	CManicLayer*		m_pcManicLayer;
-	bool isalive;
+	// Life logic
+	int										m_iMaxLives;					// The maximum life of the player
+    int										m_iLives;						// The current life of the player
 
-
-	// The controller
-	TGCActionToKeyMap< EPlayerActions >* m_pcControllerActionToKeyMap;
+	// Pointers
+	CManicLayer*							m_pcManicLayer;
+	TGCActionToKeyMap< EPlayerActions >*	m_pcControllerActionToKeyMap;
 
 public:
 	CPlayer();
-	CPlayer( CManicLayer &cLayer, cocos2d::Vec2 startingPos);
-	CPlayer( CManicLayer &cLayer, cocos2d::Vec2 startingPos, int startingLives);
+	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos);
+	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos,const int startingLives);
 
-	//////////////////////////////////////////////////////////////////////////
-	// we need a virtual destructor since delete will be called on pointers of 
-	// this class to delete derived types.
-	virtual ~CPlayer()
-	{}
+	virtual ~CPlayer()	{}
 
 
 	//////////////////////////////////////////////////////////////////////////
 	// overridden virtuals from the game object interface
-
-		// This will be called exactly once for each CGCObject derived class instance 
-		// registered with CGCObjectManager as soon as the TGB level file has stopped 
-		// loading- it is an "explicit constructor".
+	//////////////////////////////////////////////////////////////////////////
+	// This will be called exactly once for each CGCObject derived class instance 
+	// registered with CGCObjectManager as soon as the TGB level file has stopped 
+	// loading- it is an "explicit constructor".
 	virtual void VOnResourceAcquire(void);
-
-	// OnReset is called for each CGCObject derived class when CGCObjectManager is 
-	// reset
 	virtual void VOnReset(void);
-
-	// OnUpdate is called for each CGCObject derived class when CGCObjectManager is 
-	// updated in t2dSCeneGraph onProcessTick()
 	virtual void VOnUpdate(f32 fTimeStep);
-
-	// called immediately before the managing object group releases its own assets
 	virtual void VOnResourceRelease(void);
+	//////////////////////////////////////////////////////////////////////////
 
 
-	// updates the movement of the CCSprite
-	void UpdateMovement(f32 fTimeStep);
+	// Update and movement functions
+	void UpdateMovement			(f32 fTimeStep);
+	void KeyboardInput			();
+	void ApplyDirectionChange	( const EPlayerDirection newDirection, const float xOffSet, const float yOffSet);
+	void JumpEvent				( const float x, const float y );
 
-	void KeyboardInput();
-
-	void ApplyDirectionChange(EPlayerDirection newDirection, float xOffSet, float yOffSet);
-
+	// Damage / Death logic
 	void TakeDamage();
 
-	bool CheckIfOutOfLives();
-
-	void Death();
-
-	void SetGravity();
-
-
 	//Getters and setters
-	//For platform collisions:: CanJump bool
-	bool GetCanJump() const { return m_bCanJump; }
-	void SetCanJump(bool canJump) { m_bCanJump = canJump; };
-	bool GetCanBeControlled() const { return m_bCanBeControlled; };
-	void SetCanBeControlled(bool canControl) { m_bCanBeControlled = canControl; };
-	void JumpEvent(float x, float y);
+	bool GetCanJump			() const			{ return m_bCanJump; }
+	void SetCanJump			(bool canJump)		{ m_bCanJump = canJump; }
+	bool GetCanBeControlled	() const			{ return m_bCanBeControlled; }
+	void SetCanBeControlled	(bool canControl)	{ m_bCanBeControlled = canControl; }
+
 	
 
 	// For GameState related things:: Player lives
 	// Additionally included pre-made increment/decrement functions
-	int GetLives() const { return m_iLives; };
-	void SetLives(int lives) { m_iLives = lives; };
-	int GetMaxLives() const { return m_iMaxLives; };
+	int	 GetLives		() const	{ return m_iLives; }
+	void SetLives		(int lives) { m_iLives = lives; }
+	int  GetMaxLives	() const	{ return m_iMaxLives; }
 
-	void IncrementLives() { m_iLives++; };
-	void DecrementLives() { m_iLives--; };
+	void IncrementLives	()			{ m_iLives++; }
+	void DecrementLives	()			{ m_iLives--; }
 
 
-	// Returns the current movement direction of the player
-	EPlayerDirection GetDirection() { return m_eLastPlayerDirection; };
+
 
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
 	// If you need this for conveyor belts, please use ConveyorBeltMovement.
-	void SetDirection(EPlayerDirection lastDirection) { m_ePlayerDirection = lastDirection; };
+	void SetDirection			(EPlayerDirection lastDirection){ m_ePlayerDirection = lastDirection; }
 
-	void ConveyorBeltMovement(EPlayerDirection xAxisLock) { m_ePlayerDirection = xAxisLock; m_bCanBeControlled = false; };
-	void EndConveyorBeltMovement() { m_bCanBeControlled = true; };
+	void ConveyorBeltMovement	(EPlayerDirection xAxisLock)	{ m_ePlayerDirection = xAxisLock; m_bCanBeControlled = false; }
+	void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }
 
-	void MountedLadder(EPlayerDirection yAxisLock) { m_ePlayerDirection = yAxisLock; m_bIsOnLadder = true; };
-	void UnMountedLadder() { m_bIsOnLadder = false; };
+	void MountedLadder			(EPlayerDirection yAxisLock)	{ m_ePlayerDirection = yAxisLock; m_bIsOnLadder = true; }
+	void UnMountedLadder		()								{ m_bIsOnLadder = false; }
 
+	// Returns the current movement direction of the player
+	EPlayerDirection GetDirection() { return m_eLastPlayerDirection; };
 };
 #endif // #ifndef _CPLAYER_H_

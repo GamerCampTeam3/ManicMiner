@@ -262,6 +262,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\GameState\EGameState.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Helpers\Helpers.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h">
