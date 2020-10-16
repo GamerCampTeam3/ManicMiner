@@ -34,10 +34,10 @@ CPlayer::CPlayer()
 	, m_v2Movement( 0.0f, 0.0f )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
-	, m_fJumpHeight( 3000.0f )
+	, m_fJumpHeight( 300.0f )
 	, m_pcManicLayer(nullptr)
-	, m_pcControllerActionToKeyMap( nullptr )
 	, isalive(true)
+	, m_pcControllerActionToKeyMap( nullptr )
 {
 
 }
@@ -54,9 +54,10 @@ CPlayer::CPlayer( CManicLayer& cLayer, cocos2d::Vec2 startingPos )
 	, m_v2Movement( 0.0f, 0.0f )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
-	, m_pcControllerActionToKeyMap( nullptr )
+	, m_fJumpHeight( 300.0f )
 	, m_pcManicLayer( &cLayer )
 	, isalive( true )
+	, m_pcControllerActionToKeyMap( nullptr )
 {
 	SetResetPosition( startingPos );
 }
@@ -71,9 +72,10 @@ CPlayer::CPlayer( CManicLayer& cLayer, cocos2d::Vec2 startingPos, int startingLi
 	, m_v2Movement( 0.0f, 0.0f )
 	, m_v2Jump( 0.0f, 0.0f )
 	, m_fMovementSpeed( -4.f )
-	, m_pcControllerActionToKeyMap( nullptr )
+	, m_fJumpHeight( 300.0f )
 	, m_pcManicLayer( &cLayer )
 	, isalive( true )
+	, m_pcControllerActionToKeyMap( nullptr )
 {
 	SetResetPosition( startingPos );
 }
@@ -164,16 +166,6 @@ void CPlayer::TakeDamage()
 		isalive = false;
 
 	}
-	//if (CheckIfOutOfLives())
-	//{
-	//	Death();
-	//	m_pcManicLayer->RequestReset();
-	//}
-	//
-	//else
-	//{
-	//	m_pcManicLayer->OutOfLives();
-	//}
 }
 
 bool CPlayer::CheckIfOutOfLives()
