@@ -88,7 +88,7 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos, const i
 //////////////////////////////////////////////////////////////////////////
 // //virtual 
 //////////////////////////////////////////////////////////////////////////
-IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/Mario/mario.plist", "mario", b2_dynamicBody, true );
+IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/TempCharacter.plist", "TempCharacter", b2_dynamicBody, true );
 void CPlayer::VOnResourceAcquire()
 {
 	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CPlayer );
@@ -98,8 +98,8 @@ void CPlayer::VOnResourceAcquire()
 	const char* pszAnim_marioJog = "Jog";
 
 	// animate!
-	ValueMap dicPList = GCCocosHelpers::CreateDictionaryFromPlist( GetFactoryCreationParams()->strPlistFile );
-	RunAction( GCCocosHelpers::CreateAnimationActionLoop( GCCocosHelpers::CreateAnimation( dicPList, pszAnim_marioJog ) ) );
+	//ValueMap dicPList = GCCocosHelpers::CreateDictionaryFromPlist( GetFactoryCreationParams()->strPlistFile );
+	//RunAction( GCCocosHelpers::CreateAnimationActionLoop( GCCocosHelpers::CreateAnimation( dicPList, pszAnim_marioJog ) ) );
 
 
 	// because we're just storing a vanilla pointer we must call delete on it in VOnResourceRelease or leak memory 
