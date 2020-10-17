@@ -274,6 +274,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
+    <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SSwitches.h" />
     <ClInclude Include="..\Classes\MenuScene.h" />

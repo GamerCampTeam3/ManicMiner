@@ -109,6 +109,9 @@
     <Filter Include="Classes\ManicMiner\Layers\1">
       <UniqueIdentifier>{9c47d203-2247-45d9-a5f3-a921c55397a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\ResolutionHelper">
+      <UniqueIdentifier>{fa2d7355-c2eb-4796-bf4c-2786e519e764}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -463,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.h">
       <Filter>Classes\ManicMiner\Layers\1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h">
+      <Filter>Classes\ManicMiner\ResolutionHelper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
