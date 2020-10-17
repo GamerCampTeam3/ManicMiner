@@ -470,6 +470,9 @@
     <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h">
       <Filter>Classes\ManicMiner\ResolutionHelper</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerActions.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

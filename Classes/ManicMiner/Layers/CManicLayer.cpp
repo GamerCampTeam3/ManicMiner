@@ -333,6 +333,70 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 		return;
 	}
 
+
+
+
+
+	// Henrique
+	// CHECK FOR PLATORM AND PLAYER COLLISION
+	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )
+	{
+		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
+			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) ) )
+			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
+			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )
+		{
+
+			// Get player fixture
+			b2Fixture* b2PlayerFixture = pB2Contact->GetFixtureA();
+
+			if( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
+			{
+				b2PlayerFixture = pB2Contact->GetFixtureB();
+			}
+
+
+			// Compare bottom of player with top of platform
+			float PlayerFoot = m_pcPlayer->GetBoundingBox().getMinY();
+			
+			float platformTop = 0.0f;
+			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
+			{
+				platformTop = pGcSprPhysA->GetBoundingBox().getMaxY();
+			}
+			else
+			{
+				platformTop = pGcSprPhysB->GetBoundingBox().getMaxY();
+			}
+
+
+			if( m_pcPlayer->IsInMidAir() )
+			{
+				// If going upwards, always ignore collision
+				if( m_pcPlayer->GetVelocity().y > 0.0f )
+				{
+					pB2Contact->SetEnabled( false );
+				}
+				else
+				{
+					//if( platformTop < PlayerFoot )
+					//{
+					//	m_pcPlayer->LandedOnWalkablePlatform();
+					//}
+					//else
+					//{
+					//	pB2Contact->SetEnabled( false );
+					//}
+					m_pcPlayer->LandedOnWalkablePlatform();
+
+				}
+			}
+		}
+	}
+
+
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -411,7 +475,7 @@ void CManicLayer::HandleCollisions()
 // Player + Enemy
 void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
 {
-	rcPlayer.TakeDamage();
+	OnDeath();
 }
 
 
@@ -432,28 +496,27 @@ void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, co
 	bool isColliding = rcContact.IsTouching();
 	if( isColliding )
 	{
-		Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
-		Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
-		if( rcPlayerPosition.y > rcPlatformPosition.y )
-		{
-			rcPlayer.SetCanJump( true );
-			rcPlayer.SetCanBeControlled( true );
-		}
-		else
-		{
-			if( m_eGameState == EGameState::EGS_Escaping )
-			{
-				OnEscaped();
-			}
-		}
+		//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
+		//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
+		//if( rcPlayerPosition.y > rcPlatformPosition.y )
+		//{
+
+		//}
+		//else
+		//{
+		//	if( m_eGameState == EGameState::EGS_Escaping )
+		//	{
+		//		OnEscaped();
+		//	}
+		//}
 	}
 }
 
 void CManicLayer::OnDeath()
 {
-	m_pcPlayer->DecrementLives();
+	m_pcPlayer->Die();
 
-	if( m_pcPlayer->GetLives() < 0 )
+	if( m_pcPlayer->GetLives() > 0 )
 	{
 		RequestReset();
 	}

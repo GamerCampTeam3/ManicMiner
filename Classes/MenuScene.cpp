@@ -128,8 +128,8 @@ bool CMenuLayer::init()
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
-	PreloadSoundEffect( ESoundName::ESN_KeyCollected );
-	PlaySoundEffect( ESoundName::ESN_KeyCollected );
+	//PreloadSoundEffect( ESoundName::ESN_KeyCollected );
+	//PlaySoundEffect( ESoundName::ESN_KeyCollected );
 	m_pcLevelManager->EnterCavern();
 }
 

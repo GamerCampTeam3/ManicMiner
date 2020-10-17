@@ -59,8 +59,6 @@ public:
 		EPA_Jump
 	};
 
-	// player actions 
-	//////////////////////////////////////////////////////////////////////////
 
 	// called from VOnUpdate
 	void HandleCollisions( void );

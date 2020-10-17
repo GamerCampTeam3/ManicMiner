@@ -6,6 +6,8 @@
 #endif
 
 #include "ManicMiner/Enums/EPlayerMovement.h"
+//#include "ManicMiner/Enums/EPlayerActions.h"
+
 
 //////////////////////////////////////////////////////////////////////////
 // forward declare
@@ -15,7 +17,7 @@ class CManicLayer;
 template< typename TActionType > class TGCActionToKeyMap;
 
 // enum of user defined input actions the class
-enum EPlayerActions
+enum  EPlayerActions
 {
 	EPA_AxisMove_X,
 	EPA_AxisMove_Y,
@@ -29,7 +31,8 @@ class CPlayer
 private:
 
 	// Constant values
-	const float								m_kfGravitionalPull = 20.0f;   // The gravitational force that affects the player for jumping purposes
+	/// Henrique note: this value isnt changing anything
+	const float								m_kfGravitionalPull = 8.0f;   // The gravitational force that affects the player for jumping purposes
 
 	// Our Movement Related variables
 	EPlayerDirection						m_ePlayerDirection;				// This stores the current direction the player is at
@@ -38,12 +41,12 @@ private:
 	bool									m_bCanJump;						// This regulates the player's ability to jump again
 	bool									m_bCanBeControlled;				// This disables input of the X-axis directional movement of the player while jumping (or on a conveyor belt)
 	bool									m_bIsOnLadder;
+	bool									m_bIsGrounded;					// Is walking on platform?
 	bool									m_bIsAlive;
 
-	cocos2d::Vec2							m_v2Movement;					// Used to move the player
-	cocos2d::Vec2							m_v2Jump;						// Used for the jump
 	float									m_fMovementSpeed;
-	float									m_fJumpHeight;
+	float									m_fJumpForce;
+	cocos2d::Vec2							m_v2Movement;					// Used to move the player
 
 	// Life logic
 	int										m_iMaxLives;					// The maximum life of the player
@@ -75,13 +78,13 @@ public:
 
 
 	// Update and movement functions
-	void UpdateMovement			(f32 fTimeStep);
+	void UpdateMovement			();
 	void KeyboardInput			();
-	void ApplyDirectionChange	( const EPlayerDirection newDirection, const float xOffSet, const float yOffSet);
-	void JumpEvent				( const float x, const float y );
+	void ApplyDirectionChange	( EPlayerDirection eNewDirection, float fHorizontalVelocity, float fVerticalVelocity );
+	void JumpEvent				();
 
 	// Damage / Death logic
-	void TakeDamage();
+	void Die();
 
 	//Getters and setters
 	bool GetCanJump			() const			{ return m_bCanJump; }
@@ -96,16 +99,21 @@ public:
 	int	 GetLives		() const	{ return m_iLives; }
 	void SetLives		(int lives) { m_iLives = lives; }
 	int  GetMaxLives	() const	{ return m_iMaxLives; }
+	bool GetIsAlive		()			{ return m_bIsAlive; }
 
 	void IncrementLives	()			{ m_iLives++; }
 	void DecrementLives	()			{ m_iLives--; }
-
-
+	bool IsInMidAir()				{ return (m_ePlayerDirection == EPlayerDirection::EPD_Jumping && !m_bIsGrounded); }
 
 
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
 	// If you need this for conveyor belts, please use ConveyorBeltMovement.
 	void SetDirection			(EPlayerDirection lastDirection){ m_ePlayerDirection = lastDirection; }
+
+	// Called when landing on top of a platform surface, enables player control and movement
+	void LandedOnWalkablePlatform();
+
+
 
 	void ConveyorBeltMovement	(EPlayerDirection xAxisLock)	{ m_ePlayerDirection = xAxisLock; m_bCanBeControlled = false; }
 	void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }
@@ -114,6 +122,6 @@ public:
 	void UnMountedLadder		()								{ m_bIsOnLadder = false; }
 
 	// Returns the current movement direction of the player
-	EPlayerDirection GetDirection() { return m_eLastPlayerDirection; };
+	EPlayerDirection GetDirection() { return m_ePlayerDirection; };
 };
 #endif // #ifndef _CPLAYER_H_
