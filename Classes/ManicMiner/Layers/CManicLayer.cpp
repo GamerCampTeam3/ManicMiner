@@ -287,7 +287,7 @@ void CManicLayer::VOnDestroy()
 
 	IGCGameLayer::VOnDestroy();
 }
-
+/// Sensor bits will go here
 ///////////////////////////////////////////////////////////////////////////////
 // begin contact
 // insert any logic that relies on detecting the first frame where a 
@@ -297,6 +297,7 @@ void CManicLayer::VOnDestroy()
 void CManicLayer::BeginContact( b2Contact* pB2Contact )
 {}
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // end contact
 // insert any logic that relies on detecting the last frame where a 
@@ -305,6 +306,10 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 //virtual 
 void CManicLayer::EndContact( b2Contact* pB2Contact )
 {}
+// If not jumping > then falling
+// Collisions off
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // pre solve
@@ -417,6 +422,7 @@ void CManicLayer::PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImp
 // e.g. for gamplay reasons like jumping up through a platform
 // 
 ///////////////////////////////////////////////////////////////////////////////
+///
 void CManicLayer::HandleCollisions()
 {
 	// check for collisions
@@ -446,7 +452,7 @@ void CManicLayer::HandleCollisions()
 		// 
 		// Mario has a fixture that is a sensor with id 'bottom_left' 
 		// and this is what we're checking for :)
-		const std::string* pstrCheckMe = cocos2d::GB2ShapeCache::getFixtureIdText( pFixtureA );
+		const std::string*  pstrCheckMe = cocos2d::GB2ShapeCache::getFixtureIdText( pFixtureA );
 		bool				bNameMatches = ( 0 == pstrCheckMe->compare( "bottom_left" ) );
 		bool				bIsASensor = pFixtureA->IsSensor();
 
@@ -466,6 +472,8 @@ void CManicLayer::HandleCollisions()
 		}
 	}
 }
+
+// GetPhysicsBody()->GetFixtureList()->IsSensor();
 
 ////////////////////////////////////////////////////////////////////////////
 // Object Specific Collision Handles ///////////////////////////////////////
@@ -499,13 +507,17 @@ void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, co
 		if (rcPlatform.GetPlatformType() == EPT_Moving)
 		{
 			rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
+			rcPlayer.SetCanBeControlled( false );
+			CCLOG( "Moving" );
 		}
 
 		else
 		{
-			rcPlayer.EndConveyorBeltMovement();
-		}
 
+			rcPlayer.SetCanBeControlled( true );
+			CCLOG( "not moving" );
+
+		}
 
 		//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
 		//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
