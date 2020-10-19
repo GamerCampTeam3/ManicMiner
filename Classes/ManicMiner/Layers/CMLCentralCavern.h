@@ -3,6 +3,7 @@
 
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
+#include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
 
 class CObjCCGroupPlatform;
 
@@ -18,6 +19,7 @@ public:
 private:
 	// object groups
 	CGCObjGroupEnemyCentralCavern* m_pcGCGroupEnemyCentralCavern;
+	CGCObjGroupHazardCentralCavern* m_pcGCGroupHazardCentralCavern;
 	CObjCCGroupPlatform* m_pcGroupPlatformCentralCavern;
 	CCollectiblesGroup* m_pcCollectibleGroup;
 };

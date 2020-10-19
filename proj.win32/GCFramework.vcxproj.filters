@@ -118,6 +118,12 @@
     <Filter Include="Classes\ManicMiner\ResolutionHelper">
       <UniqueIdentifier>{fa2d7355-c2eb-4796-bf4c-2786e519e764}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Hazards">
+      <UniqueIdentifier>{b1c3a6e2-20e8-43d0-85fe-c0ee6c8140d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Hazards\CentralCavern">
+      <UniqueIdentifier>{6f8450d9-edd1-4582-a165-de5caa5c66a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -275,6 +281,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.cpp">
       <Filter>Classes\ManicMiner\Layers\1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Hazards\CentralCavern\GCObjGroupHazardCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\Hazards\CentralCavern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Hazards\GCObjGroupHazard.cpp">
+      <Filter>Classes\ManicMiner\Hazards</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Hazards\GCObjHazard.cpp">
+      <Filter>Classes\ManicMiner\Hazards</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +493,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerActions.h">
       <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\EHazardTypes.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Hazards\CentralCavern\GCObjGroupHazardCentralCavern.h">
+      <Filter>Classes\ManicMiner\Hazards\CentralCavern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Hazards\GCObjGroupHazard.h">
+      <Filter>Classes\ManicMiner\Hazards</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Hazards\GCObjHazard.h">
+      <Filter>Classes\ManicMiner\Hazards</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

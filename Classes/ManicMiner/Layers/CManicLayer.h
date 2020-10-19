@@ -11,7 +11,8 @@
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
-class CGCObjEnemy;
+class CGCObjEnemy;														  //
+class CGCObjHazard;														  //
 class CPlatform;														  //
 class CPlayer;															  //
 class CCollectible;														  //
@@ -120,6 +121,7 @@ private:
 		////////////////////////////////////////////////////////////////////////////
 		void EnemyCollidedPlatform( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
+		void PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact);
 		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
 
