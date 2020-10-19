@@ -28,9 +28,7 @@ void CMLTheColdRoom::VOnCreate( void )
 	// Enemies for Central Cavern
 	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
 	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
-
-	m_pcGCGroupEnemyCentralCavern->SetFormationOrigin( origin );
-
+		
 	// Platforms for Central Cavern
 	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();
 	CGCObjectManager::ObjectGroupRegister( m_pcGroupPlatformCentralCavern );
