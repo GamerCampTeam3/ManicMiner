@@ -72,53 +72,53 @@ void CObjCCGroupPlatform::VOnGroupResourceRelease()
 
 void CObjCCGroupPlatform::CreatePlatforms()
 {
-	CPlatform* pcGroundPlatform = new CPlatform(s_cCreationParams_Platform_Ground, cocos2d::Vec2(960.f,30.f));
+	CPlatform* pcGroundPlatform = new CPlatform(s_cCreationParams_Platform_Ground, cocos2d::Vec2(960.f,30.f), EPlatformType::EPT_Regular);
 
-	CPlatform* pcPlatform1st = new CPlatform(s_cCreationParams_Platform_15x1, cocos2d::Vec2(750.f, 150.f));
+	CPlatform* pcPlatform1st = new CPlatform(s_cCreationParams_Platform_15x1, cocos2d::Vec2(750.f, 150.f), EPlatformType::EPT_Regular );
 
-	CPlatform* pcWallLeft = new CPlatform(s_cCreationParams_Platform_Brick_1x16, cocos2d::Vec2(30.f, 480.f));
+	CPlatform* pcWallLeft = new CPlatform(s_cCreationParams_Platform_Brick_1x16, cocos2d::Vec2(30.f, 480.f), EPlatformType::EPT_Regular );
 
-	CPlatform* pcWallRight = new CPlatform(s_cCreationParams_Platform_Brick_1x16, cocos2d::Vec2(1890.f, 480.f));
+	CPlatform* pcWallRight = new CPlatform(s_cCreationParams_Platform_Brick_1x16, cocos2d::Vec2(1890.f, 480.f), EPlatformType::EPT_Regular );
 
-	CPlatform* pcBrickPlatform1st = new CPlatform(s_cCreationParams_Platform_Brick_3x1, cocos2d::Vec2(1290.f, 210.f));
+	CPlatform* pcBrickPlatform1st = new CPlatform(s_cCreationParams_Platform_Brick_3x1, cocos2d::Vec2(1290.f, 210.f), EPlatformType::EPT_Regular );
 
         // crumbling platform
-	CPlatform* pcCrumblingPlatform1st = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1410.f, 210.f));
-	CPlatform* pcCrumblingPlatform2nd = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1470.f, 210.f));
-	CPlatform* pcCrumblingPlatform3rd = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1530.f, 210.f));
-	CPlatform* pcCrumblingPlatform4th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1590.f, 210.f));
-	CPlatform* pcCrumblingPlatform5th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1650.f, 210.f));
+	CPlatform* pcCrumblingPlatform1st = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1410.f, 210.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform2nd = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1470.f, 210.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform3rd = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1530.f, 210.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform4th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1590.f, 210.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform5th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1650.f, 210.f), EPlatformType::EPT_Crumbling );
 
-	CPlatform* pcPlatformRegular2nd = new CPlatform(s_cCreationParams_Platform_3x1, cocos2d::Vec2(1770.f, 210.0f));
+	CPlatform* pcPlatformRegular2nd = new CPlatform(s_cCreationParams_Platform_3x1, cocos2d::Vec2(1770.f, 210.0f), EPlatformType::EPT_Regular );
 
-	CPlatform* pcPlatformRegular3rd = new CPlatform(s_cCreationParams_Platform_2x1, cocos2d::Vec2(1800.f, 330.f));
+	CPlatform* pcPlatformRegular3rd = new CPlatform(s_cCreationParams_Platform_2x1, cocos2d::Vec2(1800.f, 330.f), EPlatformType::EPT_Regular );
 
         // moving platform
-	CPlatform* pcPlatformMoving1st = new CPlatform(s_cCreationParams_Platform_Moving_20x1, cocos2d::Vec2(1080.f, 390.f));
+	CPlatform* pcPlatformMoving1st = new CPlatform(s_cCreationParams_Platform_Moving_20x1, cocos2d::Vec2(1080.f, 390.f), EPlatformType::EPT_Moving );
 
-	CPlatform* pcPlatformBrick2nd = new CPlatform(s_cCreationParams_Platform_Brick_3x1, cocos2d::Vec2(1110.f, 450.f));
+	CPlatform* pcPlatformBrick2nd = new CPlatform(s_cCreationParams_Platform_Brick_3x1, cocos2d::Vec2(1110.f, 450.f), EPlatformType::EPT_Moving );
 
-	CPlatform* pcPlatformRegular4th = new CPlatform(s_cCreationParams_Platform_4x1, cocos2d::Vec2(180.f, 390.f));
+	CPlatform* pcPlatformRegular4th = new CPlatform(s_cCreationParams_Platform_4x1, cocos2d::Vec2(180.f, 390.f), EPlatformType::EPT_Moving );
 
-	CPlatform* pcPlatformRegular5th = new CPlatform(s_cCreationParams_Platform_3x1, cocos2d::Vec2(150.f, 510.f));
+	CPlatform* pcPlatformRegular5th = new CPlatform(s_cCreationParams_Platform_3x1, cocos2d::Vec2(150.f, 510.f), EPlatformType::EPT_Moving );
 
-	CPlatform* pcPlatformRegular6th = new CPlatform(s_cCreationParams_Platform_13x1, cocos2d::Vec2(450.f, 630.f));
-
-        // crumbling platform
-	CPlatform* pcCrumblingPlatform6th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(870.f, 630.f));
-	CPlatform* pcCrumblingPlatform7th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(930.f, 630.f));
-	CPlatform* pcCrumblingPlatform8th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(990.f, 630.f));
-	CPlatform* pcCrumblingPlatform9th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1050.f, 630.f));
-
-	CPlatform* pcPlatformRegular7th = new CPlatform(s_cCreationParams_Platform_1x1, cocos2d::Vec2(1110.f, 630.f));
+	CPlatform* pcPlatformRegular6th = new CPlatform(s_cCreationParams_Platform_13x1, cocos2d::Vec2(450.f, 630.f), EPlatformType::EPT_Moving );
 
         // crumbling platform
-	CPlatform* pcCrumblingPlatform10th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1170.f, 630.f));
-	CPlatform* pcCrumblingPlatform11th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1230.f, 630.f));
-	CPlatform* pcCrumblingPlatform12th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1290.f, 630.f));
-	CPlatform* pcCrumblingPlatform13th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1350.f, 630.f));
+	CPlatform* pcCrumblingPlatform6th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(870.f, 630.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform7th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(930.f, 630.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform8th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(990.f, 630.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform9th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1050.f, 630.f), EPlatformType::EPT_Crumbling );
 
-	CPlatform* pcPlatformRegular8th = new CPlatform(s_cCreationParams_Platform_8x1, cocos2d::Vec2(1620.f, 630.f));
+	CPlatform* pcPlatformRegular7th = new CPlatform(s_cCreationParams_Platform_1x1, cocos2d::Vec2(1110.f, 630.f), EPlatformType::EPT_Regular );
+
+        // crumbling platform
+	CPlatform* pcCrumblingPlatform10th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1170.f, 630.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform11th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1230.f, 630.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform12th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1290.f, 630.f), EPlatformType::EPT_Crumbling );
+	CPlatform* pcCrumblingPlatform13th = new CPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1350.f, 630.f), EPlatformType::EPT_Crumbling );
+																							
+	CPlatform* pcPlatformRegular8th = new CPlatform(s_cCreationParams_Platform_8x1, cocos2d::Vec2(1620.f, 630.f), EPlatformType::EPT_Regular );
 }
 
 void CObjCCGroupPlatform::DestroyPlatforms()

@@ -31,15 +31,19 @@ class CPlatform :
     public CGCObjSpritePhysics
 {
 public:
-	CPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition);
+	CPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType);
 
 	void VOnResourceAcquire() override;
+
+	EPlatformType GetPlatformType() { return m_ePlatformType; };
 
 private:
 
 	CGCFactoryCreationParams& m_FactoryCreationParams;
 
 	cocos2d::Vec2 m_v2ResetPosition;
+
+	EPlatformType m_ePlatformType;
 };
 
 #endif

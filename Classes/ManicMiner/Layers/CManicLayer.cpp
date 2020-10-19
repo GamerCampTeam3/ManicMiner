@@ -493,9 +493,20 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 
 void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact )
 {
-	bool isColliding = rcContact.IsTouching();
+	const bool isColliding = rcContact.IsTouching();
 	if( isColliding )
 	{
+		if (rcPlatform.GetPlatformType() == EPT_Moving)
+		{
+			rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
+		}
+
+		else
+		{
+			rcPlayer.EndConveyorBeltMovement();
+		}
+
+
 		//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
 		//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
 		//if( rcPlayerPosition.y > rcPlatformPosition.y )
