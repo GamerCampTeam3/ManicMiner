@@ -15,7 +15,7 @@ USING_NS_CC;
 
 
 // action map arrays must match in length - in the templated controller class we use they map from the user define enum to cocos2d::Controller::Key 
-static EPlayerActions			s_aePlayerActions[] = { EPA_AxisMove_X,								EPA_AxisMove_Y,								EPA_Jump };
+static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,								EPlayerActions::EPA_AxisMove_Y,								EPlayerActions::EPA_Jump };
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
 
 
@@ -30,10 +30,9 @@ CPlayer::CPlayer()
 	, m_bCanBeControlled				( true )
 	, m_bIsOnLadder						( false )
 	, m_bIsAlive						( true )
-	, m_v2Movement						( 0.0f, 0.0f )
-	, m_v2Jump							( 0.0f, 0.0f )
 	, m_fMovementSpeed					( -4.f )
-	, m_fJumpHeight						( 30.0f )
+	, m_fJumpForce						( 10.0f )
+	, m_v2Movement						( 0.0f, 0.0f )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcManicLayer					( nullptr )
@@ -51,11 +50,11 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
 	, m_bCanJump						( true )
 	, m_bCanBeControlled				( true )
 	, m_bIsOnLadder						( false )
+	, m_bIsGrounded						( false )
 	, m_bIsAlive						( true )
 	, m_v2Movement						( 0.0f, 0.0f )
-	, m_v2Jump							( 0.0f, 0.0f )
 	, m_fMovementSpeed					( -4.f )
-	, m_fJumpHeight						( 30.0f )
+	, m_fJumpForce						( 8.0f )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcManicLayer					( &cLayer )
@@ -75,9 +74,8 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos, const i
 	, m_bIsOnLadder						( false )
 	, m_bIsAlive						( true )
 	, m_v2Movement						( 0.0f, 0.0f )
-	, m_v2Jump							( 0.0f, 0.0f )
 	, m_fMovementSpeed					( -4.f )
-	, m_fJumpHeight						( 30.0f )
+	, m_fJumpForce						( 10.0f )
 	, m_iMaxLives						( startingLives )
 	, m_iLives							( m_iMaxLives )
 	, m_pcManicLayer					( &cLayer )
@@ -90,7 +88,7 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos, const i
 //////////////////////////////////////////////////////////////////////////
 // //virtual 
 //////////////////////////////////////////////////////////////////////////
-IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/Mario/mario.plist", "mario", b2_dynamicBody, true );
+IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/TempCharacter.plist", "TempCharacter", b2_dynamicBody, true );
 void CPlayer::VOnResourceAcquire()
 {
 	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CPlayer );
@@ -100,8 +98,8 @@ void CPlayer::VOnResourceAcquire()
 	const char* pszAnim_marioJog = "Jog";
 
 	// animate!
-	ValueMap dicPList = GCCocosHelpers::CreateDictionaryFromPlist( GetFactoryCreationParams()->strPlistFile );
-	RunAction( GCCocosHelpers::CreateAnimationActionLoop( GCCocosHelpers::CreateAnimation( dicPList, pszAnim_marioJog ) ) );
+	//ValueMap dicPList = GCCocosHelpers::CreateDictionaryFromPlist( GetFactoryCreationParams()->strPlistFile );
+	//RunAction( GCCocosHelpers::CreateAnimationActionLoop( GCCocosHelpers::CreateAnimation( dicPList, pszAnim_marioJog ) ) );
 
 
 	// because we're just storing a vanilla pointer we must call delete on it in VOnResourceRelease or leak memory 
@@ -120,7 +118,10 @@ void CPlayer::VOnReset()
 	SetFlippedX			( false );
 	SetFlippedY			( false );
 	ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+	
 	m_bIsAlive = true;	
+	m_bCanJump = true;
+	m_bCanBeControlled = true;
 
 	// reset
 	if (GetPhysicsBody())
@@ -138,7 +139,6 @@ void CPlayer::VOnResourceRelease()
 {
 	CGCObjSpritePhysics::VOnResourceRelease();
 	safeDelete( m_pcControllerActionToKeyMap );
-	safeDelete( m_pcManicLayer );
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -146,27 +146,29 @@ void CPlayer::VOnResourceRelease()
 /// First checks if it can take damage to avoid multi function calls during frame
 /// Then reduces lives and checks if it should reset or die accordingly
 //////////////////////////////////////////////////////////////////////////
-void CPlayer::TakeDamage()
+void CPlayer::Die()
 {
-
-	if (m_bIsAlive )
+	if ( m_bIsAlive )
 	{
 		m_iLives--;
-		
-		if (m_iLives > 0)
-		{
-			VOnReset();
-			m_pcManicLayer->RequestReset();
-		}
-
-		if (m_iLives == 0)
-		{
-			m_pcManicLayer->OutOfLives();
-		}
 		m_bIsAlive = false;
 	}
 }
 
+void CPlayer::LandedOnWalkablePlatform()
+{
+	if( GetVelocity().y < 0.0f )
+	{
+		CCLOG( "Landed" );
+		m_bCanJump = true;
+		m_bCanBeControlled = true;
+		m_bIsGrounded = true;
+
+
+
+		//ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+	}
+}
 
 //////////////////////////////////////////////////////////////////////////
 // 
@@ -175,7 +177,7 @@ void CPlayer::TakeDamage()
 void CPlayer::VOnUpdate( f32 fTimeStep )
 {
 	KeyboardInput();
-	UpdateMovement( fTimeStep );
+	//UpdateMovement( fTimeStep );
 }
 
 
@@ -185,132 +187,123 @@ void CPlayer::KeyboardInput()
 	const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
 	TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, (*m_pcControllerActionToKeyMap) );
 	
-	if (m_bCanJump)
+	if ( m_bCanJump && GetVelocity().y == 0.0f)
 	{
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// JUMP																							//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
 		if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump )))
 		{
-			m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
-			m_bCanJump = false;
-			CCLOG( "jump" );
+			CCLOG( "jump input received" );
+			JumpEvent();
 		}
 
-
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// LEFT																							//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
 		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Left )))
 		{
-			if (m_bCanBeControlled)
-			{
-				ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, 0.0f );
+			if ( m_bCanBeControlled && !IsInMidAir())
+			{				
+				ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, GetVelocity().y );
 			}
 		}
 
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// RIGHT																						//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
 		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Right )))
 		{
-			if (m_bCanBeControlled)
+			if( m_bCanBeControlled && !IsInMidAir() )
 			{
-				ApplyDirectionChange( EPlayerDirection::EPD_Right, abs( m_fMovementSpeed ), 0.0f );
+				ApplyDirectionChange( EPlayerDirection::EPD_Right, abs( m_fMovementSpeed ), GetVelocity().y );
 			}
 		}
 
-		else if (pKeyManager->ActionIsPressed( CManicLayer::EPA_Up ))
-		{
-			if (m_bIsOnLadder)
-			{
-				ApplyDirectionChange( EPlayerDirection::EPD_Up, 0.0f, abs( m_fMovementSpeed ) );
-			}
-		}
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// LADDER SPECIFIC																				//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		//else if( m_bIsOnLadder )
+		//{
+		//	if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Up ) )
+		//	{
+		//		ApplyDirectionChange( EPlayerDirection::EPD_Up, 0.0f, abs( m_fMovementSpeed ) );
+		//	}
+		//	else if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Down ) )
+		//	{
+		//		ApplyDirectionChange( EPlayerDirection::EPD_Down, 0.0f, m_fMovementSpeed );
+		//	}
+		//}
 
-		else if (pKeyManager->ActionIsPressed( CManicLayer::EPA_Down ))
-		{
-			if (m_bIsOnLadder)
-			{
-				ApplyDirectionChange( EPlayerDirection::EPD_Down, 0.0f, m_fMovementSpeed );
-			}
-		}
-
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// STATIC																						//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
 		else
 		{
-			ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+			if( m_bCanBeControlled && !IsInMidAir() )
+			{
+				ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+			}
 		}
 	}
+
 }
-
-
 
 //////////////////////////////////////////////////////////////////////////
 ///	 Switch case used for the player movement
-void CPlayer::UpdateMovement( f32 fTimeStep )
+void CPlayer::UpdateMovement( )
 {
-
+	SetVelocity( m_v2Movement );
 	switch (m_ePlayerDirection)
 	{
-		case EPlayerDirection::EPD_Static:
-			//
-			SetVelocity( m_v2Movement );
-			break;
-
 		case EPlayerDirection::EPD_Right:
 			SetFlippedX( true );
-			SetVelocity( m_v2Movement );
 			break;
 
 		case EPlayerDirection::EPD_Left:
 			SetFlippedX( false );
-			SetVelocity( m_v2Movement );
-			break;
-
-		case EPlayerDirection::EPD_Up:
-			SetVelocity( m_v2Movement );
-			break;
-
-		case EPlayerDirection::EPD_Down:
-			SetVelocity( m_v2Movement );
-			break;
-
-			///	Jump Case
-			/// The logic is simple here, essentially locks the jump to 3 things:
-			/// Static: If no movement, will just be a static jump
-			/// Left Lock: If player was moving to the left, the jump will be locked to the Left
-			/// Right Lock: If player was moving to the right, the jump will be locked to the Right
-
-		case EPlayerDirection::EPD_Jumping:
-			if (m_eLastPlayerDirection == EPlayerDirection::EPD_Left)
-			{
-				JumpEvent( 0.1f, m_fJumpHeight );
-			}
-
-			else if (m_eLastPlayerDirection == EPlayerDirection::EPD_Right)
-			{
-				JumpEvent( 0.1f, m_fJumpHeight );
-			}
-
-			else
-			{
-				JumpEvent( 0.f, m_fJumpHeight );
-			}
-			break;
-
-		case EPlayerDirection::EPD_Falling:
-			m_bCanJump = false;
-			m_bCanBeControlled = false;
 			break;
 	}
 }
 
 
 // Movement Functions called by Input/Jump
-void CPlayer::JumpEvent(const float x, const float y )
+void CPlayer::JumpEvent()
 {
-	const Vec2 v2Jump( x, y );
-	m_v2Jump = v2Jump;
-	ApplyForceToCenter( m_v2Jump );
-	m_ePlayerDirection = EPlayerDirection::EPD_Falling;
+	SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpForce ) );
+	m_eLastPlayerDirection = m_ePlayerDirection;
+	m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
+
+	m_bCanJump = false;
+	m_bIsGrounded = false;
 }
 
 
-void CPlayer::ApplyDirectionChange( EPlayerDirection newDirection, float xOffSet, float yOffSet )
+void CPlayer::ApplyDirectionChange( EPlayerDirection eNewDirection, float fHorizontalVelocity, float fVerticalVelocity )
 {
-	const Vec2 v2Movement( xOffSet, yOffSet );
-	m_v2Movement = v2Movement;
-	m_ePlayerDirection = newDirection;
-	m_eLastPlayerDirection = m_ePlayerDirection;
+	// If changing direction
+	if( eNewDirection != m_ePlayerDirection )
+	{
+		switch( eNewDirection )
+		{
+		case EPlayerDirection::EPD_Static:
+			CCLOG( "static" );
+			break;
+		case EPlayerDirection::EPD_Right:
+			CCLOG( "right" );
+			break;
+		case EPlayerDirection::EPD_Left:
+			CCLOG( "left" );
+			break;
+		}
+
+		// Change velocity
+		const Vec2 v2NewVelocity( fHorizontalVelocity, fVerticalVelocity );
+		m_v2Movement = v2NewVelocity;
+
+		m_ePlayerDirection = eNewDirection;
+		m_eLastPlayerDirection = m_ePlayerDirection;
+		
+		UpdateMovement();
+	}
 }

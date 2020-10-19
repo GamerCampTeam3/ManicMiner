@@ -196,6 +196,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -257,6 +258,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleType.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleTypeRequired.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerActions.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerMovement.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -265,6 +267,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Helpers\Helpers.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
@@ -272,6 +275,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
+    <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SSwitches.h" />
     <ClInclude Include="..\Classes\MenuScene.h" />

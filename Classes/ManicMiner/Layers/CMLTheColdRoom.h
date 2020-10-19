@@ -1,16 +1,16 @@
-#ifndef _CMLCENTRALCAVERN_H_
-#define _CMLCENTRALCAVERN_H_
+#ifndef _CMLTHECOLDROOM_H_
+#define _CMLTHECOLDROOM_H_
 
 #include "ManicMiner/Layers/CManicLayer.h"
-#include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
+#include "ManicMiner/Enemy/GCObjGroupEnemyCentralCavern.h"
 
 class CObjCCGroupPlatform;
 
-class CMLCentralCavern: public CManicLayer
+class CMLTheColdRoom: public CManicLayer
 {
 public:
-	CMLCentralCavern();
-	virtual ~CMLCentralCavern();
+	CMLTheColdRoom();
+	virtual ~CMLTheColdRoom();
 
 	virtual	void VOnCreate( void )			override;
 	virtual	void VOnDestroy(void)			override;
@@ -19,6 +19,5 @@ private:
 	// object groups
 	CGCObjGroupEnemyCentralCavern* m_pcGCGroupEnemyCentralCavern;
 	CObjCCGroupPlatform* m_pcGroupPlatformCentralCavern;
-	CCollectiblesGroup* m_pcCollectibleGroup;
 };
-#endif //#ifndef _CMANICLAYER_H_
+#endif //#ifndef _CMLTHECOLDROOM_H_

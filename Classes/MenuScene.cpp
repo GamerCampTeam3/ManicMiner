@@ -51,7 +51,7 @@ bool CMenuLayer::init()
     }
 
 	// Quick little change to help me change between res
-    bool fullScreenSwitch = false;
+    bool fullScreenSwitch = true;
 
     if (fullScreenSwitch)
     {
@@ -128,8 +128,8 @@ bool CMenuLayer::init()
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
-	PreloadSoundEffect( ESoundName::ESN_KeyCollected );
-	PlaySoundEffect( ESoundName::ESN_KeyCollected );
+	//PreloadSoundEffect( ESoundName::ESN_KeyCollected );
+	//PlaySoundEffect( ESoundName::ESN_KeyCollected );
 	m_pcLevelManager->EnterCavern();
 }
 

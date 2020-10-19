@@ -109,6 +109,15 @@
     <Filter Include="Classes\ManicMiner\Enemy\SkylabLandingBay">
       <UniqueIdentifier>{77bfe9b1-1989-4128-909f-40edcca8f813}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\0">
+      <UniqueIdentifier>{9a7f17bb-1bec-413e-8423-54e9b1c9797d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\1">
+      <UniqueIdentifier>{9c47d203-2247-45d9-a5f3-a921c55397a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\ResolutionHelper">
+      <UniqueIdentifier>{fa2d7355-c2eb-4796-bf4c-2786e519e764}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -216,9 +225,6 @@
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp">
       <Filter>Classes\ManicMiner\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp">
-      <Filter>Classes\ManicMiner\Layers</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp">
       <Filter>Classes\ManicMiner\AirManager</Filter>
     </ClCompile>
@@ -263,6 +269,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.cpp">
       <Filter>Classes\ManicMiner\Enemy\SkylabLandingBay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\Layers\0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.cpp">
+      <Filter>Classes\ManicMiner\Layers\1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -383,9 +395,6 @@
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h">
       <Filter>Classes\ManicMiner\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h">
-      <Filter>Classes\ManicMiner\Layers</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h">
       <Filter>Classes\ManicMiner\AirManager</Filter>
     </ClInclude>
@@ -457,6 +466,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.h">
       <Filter>Classes\ManicMiner\Enemy\SkylabLandingBay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h">
+      <Filter>Classes\ManicMiner\Layers\0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.h">
+      <Filter>Classes\ManicMiner\Layers\1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h">
+      <Filter>Classes\ManicMiner\ResolutionHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerActions.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

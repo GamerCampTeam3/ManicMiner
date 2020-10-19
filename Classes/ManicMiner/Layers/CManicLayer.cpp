@@ -46,12 +46,13 @@ USING_NS_CC;
 ///////////////////////////////////////////////////////////////////////////////
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
-	, m_pcLevelManager ( nullptr )
-	, m_eGameState		(EGameState::EGS_Looting)
-	, m_bWasResetRequested ( false )
+	, m_pcLevelManager( nullptr )
+	, m_eGameState( EGameState::EGS_Looting )
+	, m_bWasResetRequested( false )
+	, m_bWasNextLevelRequested( false )
 	, m_pcGCSprBackGround( nullptr )
 	, m_pcPlayer( nullptr )
-	, m_eCollectibleTypeRequired(ECollectibleTypeRequired::Collectible)
+	, m_eCollectibleTypeRequired( ECollectibleTypeRequired::Collectible )
 	, m_iNumCollectiblesNeeded( 4 )
 {
 
@@ -91,10 +92,9 @@ void CManicLayer::onEnter()
 	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
 }
 
-void CManicLayer::onEnterTransitionDidFinish()
+void CManicLayer::onExit()
 {
-	IGCGameLayer::onEnterTransitionDidFinish();
-	//VOnDestroy();
+	IGCGameLayer::onExit();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -120,25 +120,25 @@ void CManicLayer::VOnCreate()
 	// create the default object group
 	IGCGameLayer::VOnCreate();
 
-	Director::getInstance()->getOpenGLView()->setFrameSize(1920, 1080);
-	Director::getInstance()->getOpenGLView()->setDesignResolutionSize(1920, 1080, ResolutionPolicy::EXACT_FIT);
-	
+	Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+	Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
+
 	///////////////////////////////////////////////////////////////////////////
 	/// Exit Button
 
 	MenuItemImage* pItemExitGame = MenuItemImage::create(
 		"Buttons/Exit/ExitButton_01.png",
 		"Buttons/Exit/ExitButton_01.png",
-		CC_CALLBACK_1(CManicLayer::CB_OnGameExitButton, this));
+		CC_CALLBACK_1( CManicLayer::CB_OnGameExitButton, this ) );
 
-	pItemExitGame->setPosition(Vec2(1900.f, 1060.f));
+	pItemExitGame->setPosition( Vec2( 1900.f, 1060.f ) );
 
-	Menu* pMenu = Menu::create(pItemExitGame, nullptr);
-	pMenu->setPosition(Vec2::ZERO);
-	this->addChild(pMenu, 4);
+	Menu* pMenu = Menu::create( pItemExitGame, nullptr );
+	pMenu->setPosition( Vec2::ZERO );
+	this->addChild( pMenu, 4 );
 	///
 	///////////////////////////////////////////////////////////////////////////
-	
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// custom object groups
@@ -148,13 +148,13 @@ void CManicLayer::VOnCreate()
 	// in the CGCObjectManager interface to check the 
 	// types of objects that the group handles
 	///////////////////////////////////////////////////////////////////////////
-		
+
 	// add "CGCGameLayerPlatformer" splash screen"
 	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/background.plist";
 	{
 		m_pcGCSprBackGround = new CGCObjSprite();
 		m_pcGCSprBackGround->CreateSprite( pszPlist_background );
-		m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, (visibleSize.height / 2) - 60.f) );
+		m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, ( visibleSize.height / 2 ) - 60.f ) );
 		m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
 	}
 
@@ -181,7 +181,7 @@ void CManicLayer::VOnCreate()
 
 	b2Vec2	b2v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
 	Vec2	v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
-	Vec2	v2ScreenCentre_Offset((origin.x + (visibleSize.width * 0.5f)), (origin.y + (visibleSize.height * 0.4f)));
+	Vec2	v2ScreenCentre_Offset( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.4f ) ) );
 
 
 
@@ -221,27 +221,27 @@ void CManicLayer::VOnCreate()
 
 	// starting position
 	const Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
-	
+
 	// create player object
-	m_pcPlayer = new CPlayer(*this, v2MarioStartPos);
-	
-	
-	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact ) -> void
+	m_pcPlayer = new CPlayer( *this, v2MarioStartPos );
+
+
+	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact ) -> void
 		{
-			PlatformCollided(rcPlayer, rcPlatform, rcContact);
+			PlatformCollided( rcPlayer, rcPlatform, rcContact );
 		} );
 
-	
-	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
+
+	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
 		{
 			ItemCollected( rcCollectible, rcPlayer, rcContact );
 		} );
 
-	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact) -> void
+	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact ) -> void
 		{
 			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
-		});
-	
+		} );
+
 	//Label* pcScoreLabel = Label::create();
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
@@ -257,11 +257,18 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 	// this shows how to iterate and respond to the box2d collision info
 	HandleCollisions();
 
-	// Reset level request
-	if (ResetWasRequested())
+	// Reset level request ( and not going to next level )
+	if( GetWasResetRequested() && !GetWasNextLevelRequested() )
 	{
 		ResetLevel();
-		CCLOG( "Reset" );
+		CCLOG( "Level Got Reset" );
+	}
+
+	// Go to next level if requested
+	if( GetWasNextLevelRequested() )
+	{
+		m_bWasNextLevelRequested = false;
+		m_pcLevelManager->GoToNextLevel();
 	}
 }
 
@@ -275,8 +282,8 @@ void CManicLayer::VOnDestroy()
 	// clean up anything we allocated in opposite order to creation
 	///////////////////////////////////////////////////////////////////////////
 	///
-	safeDelete( m_pcPlayer );
-	safeDelete( m_pcGCSprBackGround );
+	//safeDelete( m_pcPlayer );
+	//safeDelete( m_pcGCSprBackGround );
 
 	IGCGameLayer::VOnDestroy();
 }
@@ -325,6 +332,70 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 	{
 		return;
 	}
+
+
+
+
+
+	// Henrique
+	// CHECK FOR PLATORM AND PLAYER COLLISION
+	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )
+	{
+		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
+			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) ) )
+			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
+			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )
+		{
+
+			// Get player fixture
+			b2Fixture* b2PlayerFixture = pB2Contact->GetFixtureA();
+
+			if( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
+			{
+				b2PlayerFixture = pB2Contact->GetFixtureB();
+			}
+
+
+			// Compare bottom of player with top of platform
+			float PlayerFoot = m_pcPlayer->GetBoundingBox().getMinY();
+			
+			float platformTop = 0.0f;
+			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
+			{
+				platformTop = pGcSprPhysA->GetBoundingBox().getMaxY();
+			}
+			else
+			{
+				platformTop = pGcSprPhysB->GetBoundingBox().getMaxY();
+			}
+
+
+			if( m_pcPlayer->IsInMidAir() )
+			{
+				// If going upwards, always ignore collision
+				if( m_pcPlayer->GetVelocity().y > 0.0f )
+				{
+					pB2Contact->SetEnabled( false );
+				}
+				else
+				{
+					//if( platformTop < PlayerFoot )
+					//{
+					//	m_pcPlayer->LandedOnWalkablePlatform();
+					//}
+					//else
+					//{
+					//	pB2Contact->SetEnabled( false );
+					//}
+					m_pcPlayer->LandedOnWalkablePlatform();
+
+				}
+			}
+		}
+	}
+
+
+
 
 }
 
@@ -404,13 +475,13 @@ void CManicLayer::HandleCollisions()
 // Player + Enemy
 void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
 {
-	rcPlayer.TakeDamage();
+	OnDeath();
 }
 
 
 void CManicLayer::EnemyCollidedPlatform(CGCObjEnemy& rcEnemy, const b2Contact& rcContact)
 {
-	rcEnemy.BounceEnemyDirection();	
+	rcEnemy.BounceEnemyDirection();
 }
 
 
@@ -420,37 +491,36 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 	rcCollectible.InteractEvent();
 }
 
-void CManicLayer::PlatformCollided ( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact )
+void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact )
 {
 	bool isColliding = rcContact.IsTouching();
-	if (isColliding)
+	if( isColliding )
 	{
-		Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
-		Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
-		if (rcPlayerPosition.y > rcPlatformPosition.y)
-		{
-			rcPlayer.SetCanJump( true );
-			rcPlayer.SetCanBeControlled( true );
-		}
-		else
-		{
-			if (m_eGameState == EGameState::EGS_Escaping)
-			{
-				OnEscaped();
-			}
-		}
+		//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
+		//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
+		//if( rcPlayerPosition.y > rcPlatformPosition.y )
+		//{
+
+		//}
+		//else
+		//{
+		//	if( m_eGameState == EGameState::EGS_Escaping )
+		//	{
+		//		OnEscaped();
+		//	}
+		//}
 	}
 }
 
 void CManicLayer::OnDeath()
 {
-	m_pcPlayer->DecrementLives();
+	m_pcPlayer->Die();
 
-	if (m_pcPlayer->GetLives() < 0 )
+	if( m_pcPlayer->GetLives() > 0 )
 	{
 		RequestReset();
 	}
-	else  
+	else
 	{
 		OutOfLives();
 	}
@@ -475,7 +545,7 @@ void CManicLayer::OnEscaped()
 	m_eGameState = EGameState::EGS_Victory;
 	// Run Time animation and points and stuff
 	// when that ends, call this line:
-	m_pcLevelManager->GoToNextLevel();
+	RequestNextLevel();
 }
 
 void CManicLayer::OutOfLives()
@@ -498,15 +568,19 @@ void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )
 	m_pcLevelManager = &rcLevelManager;
 }
 
-void CManicLayer::CB_OnGameExitButton(Ref* pSender)
+void CManicLayer::CB_OnGameExitButton( Ref* pSender )
 {
 	// add code to release anything that needs to be released before exiting the game
-
-	exit(0);
+	RequestNextLevel();
 }
 
 void CManicLayer::ResetLevel()
 {
 	ResetRequestWasHandled();
 	VOnReset();
+}
+
+void CManicLayer::RequestNextLevel()
+{
+	m_bWasNextLevelRequested = true;
 }
