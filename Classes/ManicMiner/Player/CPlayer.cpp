@@ -110,27 +110,26 @@ void CPlayer::VOnResourceAcquire()
 	m_pcControllerActionToKeyMap = TCreateActionToKeyMap( s_aePlayerActions, s_aeKeys );
 }
 
-void CPlayer::VOnReset()
+void CPlayer::VOnResurrected( void )
 {
-	CGCObjSpritePhysics::VOnReset();
+	CGCObjSpritePhysics::VOnResurrected();
 
 	// reset velocity and flip state
-	SetFlippedX			( false );
-	SetFlippedY			( false );
-	ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
-	
-	m_bIsAlive = true;	
+	SetFlippedX( false );
+	SetFlippedY( false );
+
+	m_bIsAlive = true;
 	m_bCanJump = true;
 	m_bCanBeControlled = true;
 
 	// reset
-	if (GetPhysicsBody())
+	if( GetPhysicsBody() )
 	{
 		Vec2 v2SpritePos = GetSpritePosition();
-		GetPhysicsBody()->SetLinearVelocity	( b2Vec2( 0.0f, 0.0f ) );
-		GetPhysicsBody()->SetTransform		( IGCGameLayer::B2dPixelsToWorld( b2Vec2( v2SpritePos.x, v2SpritePos.y ) ), 0.0f );
-		GetPhysicsBody()->SetFixedRotation	( true );
-		GetPhysicsBody()->SetGravityScale	( m_kfGravitionalPull );
+		ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+		GetPhysicsBody()->SetTransform( IGCGameLayer::B2dPixelsToWorld( b2Vec2( v2SpritePos.x, v2SpritePos.y ) ), 0.0f );
+		GetPhysicsBody()->SetFixedRotation( true );
+		//GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 	}
 }
 //////////////////////////////////////////////////////////////////////////
