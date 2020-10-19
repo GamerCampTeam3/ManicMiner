@@ -13,6 +13,7 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 
 #include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
@@ -241,6 +242,17 @@ void CManicLayer::VOnCreate()
 		{
 			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
 		} );
+
+	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact) -> void
+		{
+			PlayerCollidedHazard(rcPlayer, rcHazard, rcContact);
+		});
+
+
+
+
+
+
 
 	//Label* pcScoreLabel = Label::create();
 
@@ -477,6 +489,13 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 {
 	OnDeath();
 }
+
+// Player + Hazard
+void CManicLayer::PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact)
+{
+	OnDeath();
+}
+
 
 
 void CManicLayer::EnemyCollidedPlatform(CGCObjEnemy& rcEnemy, const b2Contact& rcContact)

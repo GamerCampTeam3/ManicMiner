@@ -2,12 +2,14 @@
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
+#include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
 
 CMLCentralCavern::CMLCentralCavern( )
 	: CManicLayer( )
 	, m_pcGCGroupEnemyCentralCavern(nullptr)
+	, m_pcGCGroupHazardCentralCavern(nullptr)
 	, m_pcCollectibleGroup(nullptr)
 {}
 
@@ -33,6 +35,10 @@ void CMLCentralCavern::VOnCreate( void )
 	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
 	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
 
+	// Hazards for Central Cavern
+	m_pcGCGroupHazardCentralCavern = new CGCObjGroupHazardCentralCavern();
+	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupHazardCentralCavern);
+
 	// Platforms for Central Cavern
 	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();
 	CGCObjectManager::ObjectGroupRegister(m_pcGroupPlatformCentralCavern);
@@ -46,6 +52,9 @@ void CMLCentralCavern::VOnDestroy(void)
 {
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemyCentralCavern);
 	safeDelete( m_pcGCGroupEnemyCentralCavern );
+
+	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupHazardCentralCavern);
+	safeDelete(m_pcGCGroupHazardCentralCavern);
 
 	CGCObjectManager::ObjectGroupUnRegister(m_pcCollectibleGroup);
 	safeDelete( m_pcCollectibleGroup );
