@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>CN_Platform_Crumbling_1x1.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{60,60}</string>
+                <key>spriteSourceSize</key>
+                <string>{60,60}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{60,60}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>CN_Platform_Crumbling_1x1.png</string>
+            <key>size</key>
+            <string>{62,62}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:e1991999b9d907b17461aeeb5f13b0bb:e874cb47c95f552b59b2ec2e3cbcafa3:d67b179265fda25b1c903969a56a167b$</string>
+            <key>textureFileName</key>
+            <string>CN_Platform_Crumbling_1x1.png</string>
+        </dict>
+    </dict>
+</plist>

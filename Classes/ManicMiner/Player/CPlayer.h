@@ -71,7 +71,7 @@ public:
 	// registered with CGCObjectManager as soon as the TGB level file has stopped 
 	// loading- it is an "explicit constructor".
 	virtual void VOnResourceAcquire(void);
-	virtual void VOnReset(void);
+	virtual void VOnResurrected(void) override;
 	virtual void VOnUpdate(f32 fTimeStep);
 	virtual void VOnResourceRelease(void);
 	//////////////////////////////////////////////////////////////////////////
