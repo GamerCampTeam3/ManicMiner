@@ -1,27 +1,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // (C) Gamer Camp / Dave O'Dwyer October 2020
-// Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <memory.h>
-
-#include "GamerCamp/GCObject/GCObjectManager.h"
 
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-
 #include "GCObjEnemy.h"
 
 USING_NS_CC;
 
-//////////////////////////////////////////////////////////////////////////
-// GetGCTypeIDOf uses the template in GCTypeID to generate a unique ID for 
-// this type - need this to construct our base type
-
-
 CGCObjEnemy::CGCObjEnemy(const EMovementAxis EMovementAxisInput, const cocos2d::Vec2& AnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
 	bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId EnemyIdentifierInput,
 	CGCFactoryCreationParams& ParamsInput)
-
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
 	, eMovementAxis(EMovementAxisInput)
 	, eEnemyIdentifier(EnemyIdentifierInput)
@@ -37,7 +25,9 @@ CGCObjEnemy::CGCObjEnemy(const EMovementAxis EMovementAxisInput, const cocos2d::
 {
 }
 
-//IN_CPP_CREATION_PARAMS_DECLARE( CGCObjEnemy, "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist", "koopa", b2_dynamicBody, true );
+//////////////////////////////////////////////////////////////////////////
+// This function initialises an enemies direction of velocity, 
+//////////////////////////////////////////////////////////////////////////
 //virtual 
 void CGCObjEnemy::VOnResourceAcquire( void )
 {
@@ -49,23 +39,19 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 	m_cTotalVelocity = Vec2::ZERO;
 
+	Vec2 AnchorPointAndOffset = m_cAnchorPoint;
 	if (EMovementAxis_LeftRight == eMovementAxis)
 	{
-
 		m_cTotalVelocity.x = fSpeed;
-
-		Vec2 AnchorPointAndOffset = m_cAnchorPoint;
 		AnchorPointAndOffset.x += fInitialDistanceFromAnchor;
-		SetResetPosition(AnchorPointAndOffset);
 	}
 	else
 	{
 		m_cTotalVelocity.y = fSpeed;
-
-		Vec2 AnchorPointAndOffset = m_cAnchorPoint;
 		AnchorPointAndOffset.y += fInitialDistanceFromAnchor;
-		SetResetPosition(AnchorPointAndOffset);
 	}
+
+	SetResetPosition(AnchorPointAndOffset);
 
 	SetFacingOrientation();
 }
@@ -79,52 +65,47 @@ void CGCObjEnemy::VOnResurrected( void )
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Function to check the boundaries of the enemy movement window to detect a direction flip.
-// Returns true if a directional flip was perfomed.
-//
-bool CGCObjEnemy::CheckForDirectionFlip()
+//virtual function
+bool CGCObjEnemy::CheckForBoundaryReached(const float fCurrentPosition, const float fAnchorPoint, const float fMovementWindowLength)
 {
-	Vec2 CurrentPosition = GetSpritePosition();
-
 	bool bReturnResult = false;
 
-	if (EMovementAxis_LeftRight == eMovementAxis)
+	// Test right or upper side boundary limit passed and flip to moving back to start if required.
+	if (bMovingAWayFromAnchorPoint && (fCurrentPosition >= fAnchorPoint + fMovementWindowLength))
 	{
-		// Test right side boundary limit passed and flip to moving back to start if required.
-		if (bMovingAWayFromAnchorPoint && CurrentPosition.x >= m_cAnchorPoint.x + fMovementWindowLength)
-		{
-			bMovingAWayFromAnchorPoint = false;
-			bReturnResult = true;
-		}
-		// Test left side boundary limit passed and flip to moving away from start if required.
-		if (!bMovingAWayFromAnchorPoint && CurrentPosition.x <= m_cAnchorPoint.x)
-		{
-			bMovingAWayFromAnchorPoint = true;
-			bReturnResult = true;
-		}
+		bMovingAWayFromAnchorPoint = false;
+		bReturnResult = true;
 	}
-	else
+	// Test left or lower side boundary limit passed and flip to moving away from start if required.
+	else if (!bMovingAWayFromAnchorPoint && (fCurrentPosition <= fAnchorPoint))
 	{
-		// Test upper boundary limit passed and flip to moving back to start if required.
-		if (bMovingAWayFromAnchorPoint && CurrentPosition.y >= m_cAnchorPoint.y + fMovementWindowLength)
-		{
-			bMovingAWayFromAnchorPoint = false;
-			bReturnResult = true;
-			
-		}
-		// Test lower boundary limit passed and flip to moving away from start if required.
-		if (!bMovingAWayFromAnchorPoint && CurrentPosition.y <= m_cAnchorPoint.y)
-		{
-			bMovingAWayFromAnchorPoint = true;
-			bReturnResult = true;
-		}
+		bMovingAWayFromAnchorPoint = true;
+		bReturnResult = true;
 	}
 	return bReturnResult;
 }
 
 
 //////////////////////////////////////////////////////////////////////////
+// Function to check the boundaries of the enemy movement window to detect a directional flip.
+// Returns true if a directional flip was perfomed.
+//
+bool CGCObjEnemy::CheckForDirectionFlip()
+{
+	Vec2 CurrentPosition = GetSpritePosition();
+	if (EMovementAxis_LeftRight == eMovementAxis)
+	{
+		return CheckForBoundaryReached(CurrentPosition.x, m_cAnchorPoint.x, fMovementWindowLength);
+	}
+	else
+	{
+		return CheckForBoundaryReached(CurrentPosition.y, m_cAnchorPoint.y, fMovementWindowLength);
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
 //virtual function
+
 void CGCObjEnemy::VOnUpdate(float fTimeStep)
 {
 	CGCObject::VOnUpdate(fTimeStep);
@@ -140,9 +121,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 	
 	if (CheckForDirectionFlip())
 	{
-
 		bBounceIsLatchedDisabled = false;
-
         // if the Enemy's direction has just flipped then need to change the facing orientation
 		// for left/right orientation Enemy's.
 		if (EMovementAxis_LeftRight == eMovementAxis && bSpriteIsFlippable)
@@ -150,8 +129,8 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 			SetFacingOrientation();
 		}
 	}
-
 }
+
 //////////////////////////////////////////////////////////////////////////
 // Function to set the facing orientation of the enemy sprite.
 //

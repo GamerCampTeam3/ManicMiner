@@ -1,35 +1,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // (C) Gamer Camp / Dave O'Dwyer October 2020
-// Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <string.h>
-
 #include "ManicMiner/Enemy/GCObjGroupEnemy.h"
-#include "GamerCamp/GCObject/GCObjectManager.h"
-#include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-#include "GamerCamp/Core/GCTypes.h"
-#include "GamerCamp/GCObject/GCObject.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
-#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-#include "ManicMiner/Enemy/GCEnemyDataStore.h"
-
-// Static Creation Params lifted out of GCObjEnemy to here to allow GCObjEnemy to be a class which can represent differnt Enemy sprites/animations/physics.
-//static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist", "koopa", b2_dynamicBody, true);
-
-//////////////////////////////////////////////////////////////////////////
-// using
-using namespace cocos2d;
 
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
 CGCObjGroupEnemy::CGCObjGroupEnemy()
 {
-	m_v2FormationOrigin = Vec2::ZERO;
-
-	c_pcGCEnemyDataStore = new CGCEnemyDataStore();
-
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -37,18 +17,12 @@ CGCObjGroupEnemy::CGCObjGroupEnemy()
 //////////////////////////////////////////////////////////////////////////
 // virtual
 CGCObjGroupEnemy::~CGCObjGroupEnemy()
-{}
-
-//////////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////////
-void CGCObjGroupEnemy::SetFormationOrigin( Vec2 v2FormationOrigin )
 {
-	m_v2FormationOrigin = v2FormationOrigin;
 }
 
 //////////////////////////////////////////////////////////////////////////
-// only handle invaders
+// Fucntion to query the class with a GCTypeID, returning true/false depending
+// on if the class handles the GCTypeID.
 //////////////////////////////////////////////////////////////////////////
 //virtual 
 bool CGCObjGroupEnemy::VHandlesThisTypeId( GCTypeID idQueryType )
@@ -57,60 +31,49 @@ bool CGCObjGroupEnemy::VHandlesThisTypeId( GCTypeID idQueryType )
 }
 
 //////////////////////////////////////////////////////////////////////////
-// must return the typeid of the CGCObjectGroup derived class
-//////////////////////////////////////////////////////////////////////////
-//virtual 
-GCTypeID CGCObjGroupEnemy::VGetTypeId()
-{
-	return GetGCTypeIDOf( CGCObjGroupEnemy );
-}
-
-//////////////////////////////////////////////////////////////////////////
-//
+// Base class virtual function.
 //////////////////////////////////////////////////////////////////////////
 //virtual 
 void CGCObjGroupEnemy::VOnGroupResourceAcquire()
 {
-	// parent class version
+	// call parent class version
 	CGCObjectGroup::VOnGroupResourceAcquire();
 }
 
 //////////////////////////////////////////////////////////////////////////
-//
+// Base class virtual function.
 //////////////////////////////////////////////////////////////////////////
 //virtual 
 void CGCObjGroupEnemy::VOnGroupResourceAcquire_PostObject()
 {
-	// parent class version
+	// call parent class version
 	CGCObjectGroup::VOnGroupResourceAcquire_PostObject();
-
 }
 
 //////////////////////////////////////////////////////////////////////////
-//
+// Base class function to release the resource this group manages.
 //////////////////////////////////////////////////////////////////////////
 //virtual 
 void CGCObjGroupEnemy::VOnGroupResourceRelease()
 {
-	// N.B. need to do this first as it clears internal lists
+
+	// call parent class version
 	CGCObjectGroup::VOnGroupResourceRelease();
 
 	DestroyEnemies();
+
 }
 
-
 //////////////////////////////////////////////////////////////////////////
-//
+// Function to iterate the array of registerd CGCObjects, calling the supplied
+// function then deleting them.
 //////////////////////////////////////////////////////////////////////////
 void CGCObjGroupEnemy::DestroyEnemies()
 {
-	// this iterates the array of registered CGCObjects 
-	// calling the supplied functor then deleting them
-
+	
 	DestroyObjectsReverseOrder([&](CGCObject* pObject)
 		{
 			// do nothing - DestroyObjectsReverseOrder calls delete!
 			GCASSERT(GetGCTypeIDOf(CGCObjEnemy) == pObject->GetGCTypeID(), "wrong type!");
-
 		});
 }

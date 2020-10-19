@@ -43,6 +43,8 @@ public:
 	virtual void VOnResurrected		( void ) override;
 
 	virtual void CGCObjLander::VOnUpdate(float fTimeStep) override;
-	
+
+
+
 };
 #endif // #ifndef _GCOBJENEMY_H_

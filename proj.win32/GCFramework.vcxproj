@@ -184,13 +184,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitch.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Collectible\CCollectible.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\CentralCavern\GCObjGroupEnemyCentralCavern.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupLander.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjLander.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjGroupLander.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -248,13 +248,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\CSwitch.h" />
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\I_Interactible.h" />
     <ClInclude Include="..\Classes\ManicMiner\Collectible\CCollectible.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\CentralCavern\GCObjGroupEnemyCentralCavern.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupLander.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjLander.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjGroupLander.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleType.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleTypeRequired.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h" />

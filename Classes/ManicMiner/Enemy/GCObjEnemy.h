@@ -1,37 +1,41 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // (C) Gamer Camp / Dave O'Dwyer October 2020
-// Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef _GCOBJENEMY_H_
 #define _GCOBJENEMY_H_
 
-#ifndef _GCOBJSPRITEPHYSICS_H_
-	#include "../../GCCocosInterface/GCObjSpritePhysics.h"
-#endif
-
-#include <string>
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "ManicMiner/Enums/EEnemyTypes.h"
 
-namespace cocos2d
-{
-	class Sprite;
-	class Animation;
-	class ActionInterval;
-}
+
+//////////////////////////////////////////////////////////////////////////
+//  This class provides the lowest sub class of the enemy inheritance heirarchy.
+//  Its purpose is to define the functionality an enemy would require with regards to
+//  velocity, direction flipping, horizontal/vertical axis alignment, bouncing on 
+//  platform collision etc.
+// 
+// Future improvements:
+// This class could be sub classed into separate classes for Horizontal/Vertical enemy types.
+// The advantage of this would be no need to be testing the enum input EMovementAxis
+// at several points in the code, ie. the EMovementAxis input into the constructor would
+// be removed as not required.
+// There could also be a sub class for the collision bouncing functionality as this
+// is only required for one enemy in one specific level.
+// 
+// I have decided to delay the above re-factoring until Module 2 and instead focus on 
+// achieving proof of concept.
+//
+//////////////////////////////////////////////////////////////////////////
 
 class CGCObjEnemy
 : public CGCObjSpritePhysics
 {
-
 public:
-
-	void BounceEnemyDirection();
-	
 	enum EMovementAxis { EMovementAxis_UpDown, EMovementAxis_LeftRight };
 
-private:
+	void BounceEnemyDirection();
 
+private:
 	EMovementAxis				eMovementAxis;
 	EnemyTypes::EEnemyId	    eEnemyIdentifier;
 	cocos2d::Vec2				m_cAnchorPoint;
@@ -47,12 +51,12 @@ private:
 	const bool					k_bArtDefaultIsEnemyFacingRight;
 	CGCFactoryCreationParams&	rFactoryCreationParams;
 
-	bool CGCObjEnemy::CheckForDirectionFlip();
-	void CGCObjEnemy::SetFacingOrientation();
+	bool CheckForBoundaryReached(const float fCurrentPosition, const float fAnchorPoint, const float fMovementWindowLength);
+
+	bool CheckForDirectionFlip	();
+	void SetFacingOrientation	();
 		
 public:
-
-
 
 	CGCObjEnemy(const EMovementAxis EMovementAxisInput, const cocos2d::Vec2& AnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
 		bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId EnemyIdentifierInput,
@@ -67,10 +71,11 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	// overridden virtuals from the game object interface
 	virtual void VOnResourceAcquire	( void ) override;
-
 	virtual void VOnResurrected		( void ) override;
+	virtual void VOnUpdate			(float fTimeStep) override;
 
-	virtual void CGCObjEnemy::VOnUpdate(float fTimeStep) override;
+
+	
 
 	// Bib Edit
 	const bool GetHasCollided() { return m_bHasBeenCollided; };
