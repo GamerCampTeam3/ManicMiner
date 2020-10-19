@@ -408,7 +408,7 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 }
 
 
-void CManicLayer::EnemyCollidedItem(CGCObjEnemy& rcEnemy, const b2Contact& rcContact)
+void CManicLayer::EnemyCollidedPlatform(CGCObjEnemy& rcEnemy, const b2Contact& rcContact)
 {
 	rcEnemy.BounceEnemyDirection();	
 }

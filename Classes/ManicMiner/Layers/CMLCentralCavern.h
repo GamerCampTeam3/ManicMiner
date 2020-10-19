@@ -2,7 +2,7 @@
 #define _CMLCENTRALCAVERN_H_
 
 #include "ManicMiner/Layers/CManicLayer.h"
-#include "ManicMiner/Enemy/GCObjGroupEnemyCentralCavern.h"
+#include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 
 class CObjCCGroupPlatform;
 

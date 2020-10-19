@@ -120,7 +120,7 @@ public:
 		////////////////////////////////////////////////////////////////////////////
 		// Collision Events
 		////////////////////////////////////////////////////////////////////////////
-		void EnemyCollidedItem( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
+		void EnemyCollidedPlatform( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );

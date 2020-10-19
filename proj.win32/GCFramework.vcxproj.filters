@@ -103,6 +103,12 @@
     <Filter Include="Classes\ManicMiner\Helpers">
       <UniqueIdentifier>{f63112af-5a09-41c1-a217-c690a8984415}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Enemy\CentralCavern">
+      <UniqueIdentifier>{0b77033f-b8bd-49a5-974d-1cbc71417960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Enemy\SkylabLandingBay">
+      <UniqueIdentifier>{77bfe9b1-1989-4128-909f-40edcca8f813}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -243,20 +249,20 @@
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleOLD.cpp">
       <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupLander.cpp">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjLander.cpp">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.cpp">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms\CentralCavern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\CentralCavern\GCObjGroupEnemyCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\Enemy\CentralCavern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjGroupLander.cpp">
+      <Filter>Classes\ManicMiner\Enemy\SkylabLandingBay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.cpp">
+      <Filter>Classes\ManicMiner\Enemy\SkylabLandingBay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,12 +422,6 @@
     <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h">
       <Filter>Classes\ManicMiner\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupLander.h">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjLander.h">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CCollectiblesGroup.h">
       <Filter>Classes\ManicMiner\CollectiblesGroup</Filter>
     </ClInclude>
@@ -440,9 +440,6 @@
     <ClInclude Include="..\Classes\ManicMiner\AudioHelper\ManicAudio.h">
       <Filter>Classes\ManicMiner\AudioHelper</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemyCentralCavern.h">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CPlatform.h">
       <Filter>Classes\ManicMiner\Platforms</Filter>
     </ClInclude>
@@ -451,6 +448,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Helpers\Helpers.h">
       <Filter>Classes\ManicMiner\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\CentralCavern\GCObjGroupEnemyCentralCavern.h">
+      <Filter>Classes\ManicMiner\Enemy\CentralCavern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjGroupLander.h">
+      <Filter>Classes\ManicMiner\Enemy\SkylabLandingBay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.h">
+      <Filter>Classes\ManicMiner\Enemy\SkylabLandingBay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #include "CMLCentralCavern.h"
 #include "ManicMiner/Player/CPlayer.h"
-#include "ManicMiner/Enemy/GCObjGroupEnemyCentralCavern.h"
+#include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 #include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
 
 CMLCentralCavern::CMLCentralCavern( )
@@ -30,8 +30,6 @@ void CMLCentralCavern::VOnCreate( void )
 	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
 	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupEnemyCentralCavern);
 
-	m_pcGCGroupEnemyCentralCavern->SetFormationOrigin(origin);
-
 	// Platforms for Central Cavern
 	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();
 	CGCObjectManager::ObjectGroupRegister(m_pcGroupPlatformCentralCavern);
@@ -39,8 +37,7 @@ void CMLCentralCavern::VOnCreate( void )
 
 void CMLCentralCavern::VOnDestroy(void)
 {
-
-
+	
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemyCentralCavern);
 	delete m_pcGCGroupEnemyCentralCavern;
 	m_pcGCGroupEnemyCentralCavern = nullptr;
