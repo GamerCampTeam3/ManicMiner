@@ -155,7 +155,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GamerCamp\Debug\GLES-Render.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\GameController\GCController.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\GameController\GCControllerManager.cpp" />
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\GCGameLayerPlatformer.cpp" />
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\GCGameLayerPlatformer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjGroupInvader.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjInvader.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjGroupItem.cpp" />
@@ -219,7 +221,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\GamerCamp\Debug\GLES-Render.h" />
     <ClInclude Include="..\Classes\GamerCamp\GameController\GCController.h" />
     <ClInclude Include="..\Classes\GamerCamp\GameController\GCControllerManager.h" />
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\GCGameLayerPlatformer.h" />
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\GCGameLayerPlatformer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjGroupInvader.h" />
     <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjInvader.h" />
     <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjGroupItem.h" />

@@ -32,7 +32,7 @@ private:
 
 	// Constant values
 	/// Henrique note: this value isnt changing anything
-	const float								m_kfGravitionalPull = 8.0f;   // The gravitational force that affects the player for jumping purposes
+	const float								m_kfGravitionalPull;   // The gravitational force that affects the player for jumping purposes
 
 	// Our Movement Related variables
 	EPlayerDirection						m_ePlayerDirection;				// This stores the current direction the player is at
@@ -45,7 +45,7 @@ private:
 	bool									m_bIsAlive;
 
 	float									m_fMovementSpeed;
-	float									m_fJumpForce;
+	float									m_fJumpSpeed;
 	cocos2d::Vec2							m_v2Movement;					// Used to move the player
 
 	// Life logic
@@ -57,9 +57,9 @@ private:
 	TGCActionToKeyMap< EPlayerActions >*	m_pcControllerActionToKeyMap;
 
 public:
-	CPlayer();
+	//CPlayer();
 	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos);
-	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos,const int startingLives);
+	//CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos,const int startingLives);
 
 	virtual ~CPlayer()	{}
 

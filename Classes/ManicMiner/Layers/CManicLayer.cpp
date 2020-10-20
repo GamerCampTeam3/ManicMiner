@@ -520,38 +520,38 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 
 void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact )
 {
-	const bool isColliding = rcContact.IsTouching();
-	if( isColliding )
-	{
-		if (rcPlatform.GetPlatformType() == EPT_Moving)
-		{
-			rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
-			rcPlayer.SetCanBeControlled( false );
-			CCLOG( "Moving" );
-		}
+	//const bool isColliding = rcContact.IsTouching();
+	//if( isColliding )
+	//{
+	//	if (rcPlatform.GetPlatformType() == EPT_Moving)
+	//	{
+	//		rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
+	//		rcPlayer.SetCanBeControlled( false );
+	//		CCLOG( "Moving" );
+	//	}
 
-		else
-		{
+	//	else
+	//	{
 
-			rcPlayer.SetCanBeControlled( true );
-			CCLOG( "not moving" );
+	//		rcPlayer.SetCanBeControlled( true );
+	//		CCLOG( "not moving" );
 
-		}
+	//	}
 
-		//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
-		//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
-		//if( rcPlayerPosition.y > rcPlatformPosition.y )
-		//{
+	//	//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
+	//	//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
+	//	//if( rcPlayerPosition.y > rcPlatformPosition.y )
+	//	//{
 
+	//	//}
+	//	//else
+	//	//{
+	//	//	if( m_eGameState == EGameState::EGS_Escaping )
+	//	//	{
+	//	//		OnEscaped();
+	//	//	}
 		//}
-		//else
-		//{
-		//	if( m_eGameState == EGameState::EGS_Escaping )
-		//	{
-		//		OnEscaped();
-		//	}
-		//}
-	}
+	//}
 }
 
 void CManicLayer::OnDeath()

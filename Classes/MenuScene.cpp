@@ -53,21 +53,19 @@ bool CMenuLayer::init()
 	// Quick little change to help me change between res
     const bool fullScreenSwitch = true;
 
-    if (fullScreenSwitch)
+    if ( fullScreenSwitch )
     {
-        // set to fullscreen
-        static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+        // Stretch to fullscreen
+        static_cast< GLViewImpl* >( cocos2d::Director::getInstance()->getOpenGLView() )->setFullscreen();
 
-        // for windowed mode
+        // Set resolution
         Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
-        // resolution
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
     }
     else
     {
-        // for windowed mode
-        Director::getInstance()->getOpenGLView()->setFrameSize( 1280, 720 );
-        // resolution
+		// Set resolution
+		Director::getInstance()->getOpenGLView()->setFrameSize( 1280, 720 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1280, 720, ResolutionPolicy::EXACT_FIT );
     }
 	

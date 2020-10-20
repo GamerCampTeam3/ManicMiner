@@ -18,33 +18,32 @@ USING_NS_CC;
 static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,								EPlayerActions::EPA_AxisMove_Y,								EPlayerActions::EPA_Jump };
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
 
-
-
 //////////////////////////////////////////////////////////////////////////
 /// Base constructor that initializes player with typical values
-CPlayer::CPlayer()
-	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
-	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
-	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
-	, m_bCanJump						( true )
-	, m_bCanBeControlled				( true )
-	, m_bIsOnLadder						( false )
-	, m_bIsAlive						( true )
-	, m_fMovementSpeed					( -4.f )
-	, m_fJumpForce						( 10.0f )
-	, m_v2Movement						( 0.0f, 0.0f )
-	, m_iMaxLives						( 3 )
-	, m_iLives							( m_iMaxLives )
-	, m_pcManicLayer					( nullptr )
-	, m_pcControllerActionToKeyMap		( nullptr )
-{
-
-}
+//CPlayer::CPlayer()
+//	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
+//	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
+//	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
+//	, m_bCanJump						( true )
+//	, m_bCanBeControlled				( true )
+//	, m_bIsOnLadder						( false )
+//	, m_bIsAlive						( true )
+//	, m_fMovementSpeed					( -4.f )
+//	, m_fJumpForce						( 10.0f )
+//	, m_v2Movement						( 0.0f, 0.0f )
+//	, m_iMaxLives						( 3 )
+//	, m_iLives							( m_iMaxLives )
+//	, m_pcManicLayer					( nullptr )
+//	, m_pcControllerActionToKeyMap		( nullptr )
+//{
+//
+//}
 
 //////////////////////////////////////////////////////////////////////////
 /// Overloaded constructor that takes in a reference to the layer and Vec2
 CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
+	, m_kfGravitionalPull				( 2.3f )
 	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
 	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
 	, m_bCanJump						( true )
@@ -54,7 +53,7 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
 	, m_bIsAlive						( true )
 	, m_v2Movement						( 0.0f, 0.0f )
 	, m_fMovementSpeed					( -4.f )
-	, m_fJumpForce						( 8.0f )
+	, m_fJumpSpeed						( 10.6f )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcManicLayer					( &cLayer )
@@ -63,27 +62,27 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
 	SetResetPosition( startingPos );
 }
 
-//////////////////////////////////////////////////////////////////////////
-/// Overloaded constructor that takes in a reference to the layer, V2 and lives
-CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos, const int startingLives )
-	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
-	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
-	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
-	, m_bCanJump						( true )
-	, m_bCanBeControlled				( true )
-	, m_bIsOnLadder						( false )
-	, m_bIsAlive						( true )
-	, m_v2Movement						( 0.0f, 0.0f )
-	, m_fMovementSpeed					( -4.f )
-	, m_fJumpForce						( 10.0f )
-	, m_iMaxLives						( startingLives )
-	, m_iLives							( m_iMaxLives )
-	, m_pcManicLayer					( &cLayer )
-	, m_pcControllerActionToKeyMap		( nullptr )
-{
-	SetResetPosition( startingPos );
-}
-
+////////////////////////////////////////////////////////////////////////////
+///// Overloaded constructor that takes in a reference to the layer, V2 and lives
+//CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos, const int startingLives )
+//	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
+//	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
+//	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
+//	, m_bCanJump						( true )
+//	, m_bCanBeControlled				( true )
+//	, m_bIsOnLadder						( false )
+//	, m_bIsAlive						( true )
+//	, m_v2Movement						( 0.0f, 0.0f )
+//	, m_fMovementSpeed					( -4.f )
+//	, m_fJumpForce						( 10.0f )
+//	, m_iMaxLives						( startingLives )
+//	, m_iLives							( m_iMaxLives )
+//	, m_pcManicLayer					( &cLayer )
+//	, m_pcControllerActionToKeyMap		( nullptr )
+//{
+//	SetResetPosition( startingPos );
+//}
+//
 
 //////////////////////////////////////////////////////////////////////////
 // //virtual 
@@ -129,7 +128,7 @@ void CPlayer::VOnResurrected( void )
 		ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
 		GetPhysicsBody()->SetTransform( IGCGameLayer::B2dPixelsToWorld( b2Vec2( v2SpritePos.x, v2SpritePos.y ) ), 0.0f );
 		GetPhysicsBody()->SetFixedRotation( true );
-		//GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
+		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 	}
 }
 //////////////////////////////////////////////////////////////////////////
@@ -186,7 +185,7 @@ void CPlayer::KeyboardInput()
 	const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
 	TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, (*m_pcControllerActionToKeyMap) );
 	
-	if ( m_bCanJump && GetVelocity().y == 0.0f)
+	if ( m_bCanJump)
 	{
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// JUMP																							//
@@ -291,7 +290,7 @@ void CPlayer::ConveyorBeltMovement(EPlayerDirection xAxisLock)
 // Movement Functions called by Input/Jump
 void CPlayer::JumpEvent()
 {
-	SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpForce ) );
+	SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpSpeed ) );
 	m_eLastPlayerDirection = m_ePlayerDirection;
 	m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
 
