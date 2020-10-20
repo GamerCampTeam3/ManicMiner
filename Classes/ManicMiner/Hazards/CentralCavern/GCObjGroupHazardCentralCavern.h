@@ -17,12 +17,10 @@ class CGCObjGroupHazardCentralCavern
 public:
 	CGCObjGroupHazardCentralCavern();		
 	virtual ~CGCObjGroupHazardCentralCavern();
-
-	virtual void VOnGroupResourceAcquire_PostObject() override;
+		
 	virtual void VOnGroupResourceAcquire() override;
 
 	virtual GCTypeID VGetTypeId() override;
-
 
 };
 #endif
