@@ -161,6 +161,7 @@ void CPlayer::LandedOnWalkablePlatform()
 		m_bCanJump = true;
 		m_bCanBeControlled = true;
 		m_bIsGrounded = true;
+		m_ePlayerDirection = EPlayerDirection::EPD_Static;
 
 
 

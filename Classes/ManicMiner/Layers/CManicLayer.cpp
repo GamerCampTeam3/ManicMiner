@@ -307,7 +307,46 @@ void CManicLayer::VOnDestroy()
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
 void CManicLayer::BeginContact( b2Contact* pB2Contact )
-{}
+{
+
+	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
+	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
+
+	const b2Body* pBodyA = pFixtureA->GetBody();
+	const b2Body* pBodyB = pFixtureB->GetBody();
+
+	CGCObjSpritePhysics* pGcSprPhysA = (CGCObjSpritePhysics*)pBodyA->GetUserData();
+	// if( this is not a GC object )
+	if (pGcSprPhysA == nullptr)
+	{
+		return;
+	}
+
+	CGCObjSpritePhysics* pGcSprPhysB = (CGCObjSpritePhysics*)pBodyB->GetUserData();
+	// if( this is not a GC object )
+	if (pGcSprPhysB == nullptr)
+	{
+		return;
+	}
+
+
+
+
+
+	// Henrique
+	// CHECK FOR PLATORM AND PLAYER COLLISION
+	if (pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID())
+	{
+		if (((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))
+			&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform )))
+			|| ((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ))
+				&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))))
+		{
+			CCLOG( "begin contact" );
+		}
+
+	}
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -317,7 +356,9 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
 void CManicLayer::EndContact( b2Contact* pB2Contact )
-{}
+{
+
+}
 // If not jumping > then falling
 // Collisions off
 
@@ -520,38 +561,36 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 
 void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact )
 {
-	//const bool isColliding = rcContact.IsTouching();
-	//if( isColliding )
-	//{
-	//	if (rcPlatform.GetPlatformType() == EPT_Moving)
-	//	{
-	//		rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
-	//		rcPlayer.SetCanBeControlled( false );
-	//		CCLOG( "Moving" );
-	//	}
+	const bool isColliding = rcContact.IsTouching();
+	if( isColliding )
+	{
+		if (rcPlatform.GetPlatformType() == EPT_Moving)
+		{
+			rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
+			rcPlayer.SetCanBeControlled( false );
+		}
 
-	//	else
-	//	{
+		else
+		{
 
-	//		rcPlayer.SetCanBeControlled( true );
-	//		CCLOG( "not moving" );
+			rcPlayer.SetCanBeControlled( true );
 
-	//	}
+		}
 
-	//	//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
-	//	//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
-	//	//if( rcPlayerPosition.y > rcPlatformPosition.y )
-	//	//{
+		//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
+		//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
+		//if( rcPlayerPosition.y > rcPlatformPosition.y )
+		//{
 
-	//	//}
-	//	//else
-	//	//{
-	//	//	if( m_eGameState == EGameState::EGS_Escaping )
-	//	//	{
-	//	//		OnEscaped();
-	//	//	}
 		//}
-	//}
+		//else
+		//{
+		//	if( m_eGameState == EGameState::EGS_Escaping )
+		//	{
+		//		OnEscaped();
+		//	}
+		//}
+	}
 }
 
 void CManicLayer::OnDeath()
