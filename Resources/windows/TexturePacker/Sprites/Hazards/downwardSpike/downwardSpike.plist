@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>background.png</key>
+            <key>downwardSpike.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,0},{1920,1080}}</string>
+                <string>{{2,2},{60,60}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{1920,1080}}</string>
+                <string>{{0,0},{60,60}}</string>
                 <key>sourceSize</key>
-                <string>{1920,1080}</string>
+                <string>{60,60}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -27,13 +27,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>background.png</string>
+            <string>downwardSpike.png</string>
             <key>size</key>
-            <string>{2048,2048}</string>
+            <string>{64,64}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:434fb0ea9418082c2c82b29f60bf729e:dd5dba058af67db0767d93d88aafe3bd:0efa5fec0be417390841f237bfdb917e$</string>
+            <string>$TexturePacker:SmartUpdate:770dca0ca0987c059bc88db2a0ac4f5d:b39e084e4c1bb0ae23ea1738cf915308:658720f171ad10160ace2306ea418876$</string>
             <key>textureFileName</key>
-            <string>background.png</string>
+            <string>downwardSpike.png</string>
         </dict>
     </dict>
 </plist>
