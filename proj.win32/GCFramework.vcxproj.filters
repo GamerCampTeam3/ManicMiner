@@ -124,6 +124,9 @@
     <Filter Include="Classes\ManicMiner\Hazards\CentralCavern">
       <UniqueIdentifier>{6f8450d9-edd1-4582-a165-de5caa5c66a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\CollectiblesGroup\CentralCavern">
+      <UniqueIdentifier>{b303e3ca-1fbd-430f-95fd-8fde748acb30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -290,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Hazards\GCObjHazard.cpp">
       <Filter>Classes\ManicMiner\Hazards</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Hazards\GCObjHazard.h">
       <Filter>Classes\ManicMiner\Hazards</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h">
+      <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

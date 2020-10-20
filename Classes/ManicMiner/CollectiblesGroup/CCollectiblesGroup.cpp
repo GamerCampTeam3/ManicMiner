@@ -23,6 +23,10 @@
 using namespace cocos2d;
 
 
+// IN_CPP_CREATION_PARAMS_DECLARE( CGCObjItem, "TexturePacker/Sprites/Coin/Coin.plist", "coin", b2_staticBody, true );
+
+// static CGCFactoryCreationParams s_cCreationParamsKey( "coin", "TexturePacker/Sprites/Coin/Coin.plist", "coin", b2_staticBody, true );
+
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -77,6 +81,12 @@ void CCollectiblesGroup::SetLayer(CManicLayer& cLayer)
 }
 
 
+void CCollectiblesGroup::GenerateCollectibles()
+{
+	
+}
+
+
 void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 {
 	switch (m_eCollectibleTypeRequired)
@@ -95,8 +105,6 @@ void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 			break;
 
 		case ECollectibleTypeRequired::Both:
-
-		default:
 			if ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches))
 			{
 				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
@@ -152,6 +160,11 @@ GCTypeID CCollectiblesGroup::VGetTypeId( void )
 	return GetGCTypeIDOf( CCollectiblesGroup );
 }
 
+void CCollectiblesGroup::VOnGroupResourceAcquire()
+{
+	CGCObjectGroup::VOnGroupResourceAcquire();
+	GenerateCollectibles();
+}
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -160,29 +173,31 @@ GCTypeID CCollectiblesGroup::VGetTypeId( void )
 //virtual 
 void CCollectiblesGroup::VOnGroupResourceAcquire_PostObject( void )
 {
-	// parent class version
+
 	CGCObjectGroup::VOnGroupResourceAcquire_PostObject();
-
-	// set up animations for all items
-	const char* pszPlist_Coin = "TexturePacker/Sprites/Coin/Coin.plist";
-	const char* pszAnim_Coin_Rotate = "Rotate";
-	// To add different animations here
-
-	// make an animation
-	// N.B. pdictPList is returned autoreleased - will clean itself at end of frame if not retained
-	ValueMap& rdicPList = GCCocosHelpers::CreateDictionaryFromPlist( pszPlist_Coin );
-	Animation* pAnimation = GCCocosHelpers::CreateAnimation( rdicPList, pszAnim_Coin_Rotate );
-
-	ForEachObject( [&]( CGCObject* pcItemAsObject ) -> bool
-	{
-		// this check is essentially redundant, but they say assumption is the mother of all something or others...
-		CCAssert( (GetGCTypeIDOf( CCollectible ) == pcItemAsObject->GetGCTypeID()),
-			"CGCObject derived type mismatch!" );
-
-		CGCObjSprite* pItemSprite = (CGCObjSprite*)pcItemAsObject;
-		pItemSprite->RunAction( GCCocosHelpers::CreateAnimationActionLoop( pAnimation ) );
-		return true;
-	} );
+	//// parent class version
+	//CGCObjectGroup::VOnGroupResourceAcquire_PostObject();
+	//
+	//// set up animations for all items
+	//const char* pszPlist_Coin = "TexturePacker/Sprites/Coin/Coin.plist";
+	//const char* pszAnim_Coin_Rotate = "Rotate";
+	//// To add different animations here
+	//
+	//// make an animation
+	//// N.B. pdictPList is returned autoreleased - will clean itself at end of frame if not retained
+	//ValueMap& rdicPList = GCCocosHelpers::CreateDictionaryFromPlist( pszPlist_Coin );
+	//Animation* pAnimation = GCCocosHelpers::CreateAnimation( rdicPList, pszAnim_Coin_Rotate );
+	//
+	//ForEachObject( [&]( CGCObject* pcItemAsObject ) -> bool
+	//{
+	//	// this check is essentially redundant, but they say assumption is the mother of all something or others...
+	//	CCAssert( (GetGCTypeIDOf( CCollectible ) == pcItemAsObject->GetGCTypeID()),
+	//		"CGCObject derived type mismatch!" );
+	//
+	//	CGCObjSprite* pItemSprite = (CGCObjSprite*)pcItemAsObject;
+	//	pItemSprite->RunAction( GCCocosHelpers::CreateAnimationActionLoop( pAnimation ) );
+	//	return true;
+	//} );
 }
 
 

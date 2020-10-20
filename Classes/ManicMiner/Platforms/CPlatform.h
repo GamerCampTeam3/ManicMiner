@@ -35,7 +35,10 @@ public:
 
 	void VOnResourceAcquire() override;
 
-	EPlatformType GetPlatformType() { return m_ePlatformType; };
+	EPlatformType GetPlatformType() { return m_ePlatformType; }
+
+	bool GetCollisionEnabled() { return m_bCollisionEnabled; }
+	void SetCollisionEnabled( bool bCollisionEnabled ) { m_bCollisionEnabled = bCollisionEnabled; }
 
 private:
 
@@ -44,6 +47,8 @@ private:
 	cocos2d::Vec2 m_v2ResetPosition;
 
 	EPlatformType m_ePlatformType;
+
+	bool m_bCollisionEnabled;
 };
 
 #endif

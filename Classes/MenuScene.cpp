@@ -51,7 +51,7 @@ bool CMenuLayer::init()
     }
 
 	// Quick little change to help me change between res
-    const bool fullScreenSwitch = true;
+    constexpr bool fullScreenSwitch = true;
 
     if (fullScreenSwitch)
     {
@@ -66,9 +66,9 @@ bool CMenuLayer::init()
     else
     {
         // for windowed mode
-        Director::getInstance()->getOpenGLView()->setFrameSize( 1280, 720 );
+        Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         // resolution
-        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1280, 720, ResolutionPolicy::EXACT_FIT );
+        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
     }
 	
     Size visibleSize	= Director::getInstance()->getVisibleSize();

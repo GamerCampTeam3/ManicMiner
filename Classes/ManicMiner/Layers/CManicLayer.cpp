@@ -307,7 +307,46 @@ void CManicLayer::VOnDestroy()
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
 void CManicLayer::BeginContact( b2Contact* pB2Contact )
-{}
+{
+
+	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
+	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
+
+	const b2Body* pBodyA = pFixtureA->GetBody();
+	const b2Body* pBodyB = pFixtureB->GetBody();
+
+	CGCObjSpritePhysics* pGcSprPhysA = (CGCObjSpritePhysics*)pBodyA->GetUserData();
+	// if( this is not a GC object )
+	if (pGcSprPhysA == nullptr)
+	{
+		return;
+	}
+
+	CGCObjSpritePhysics* pGcSprPhysB = (CGCObjSpritePhysics*)pBodyB->GetUserData();
+	// if( this is not a GC object )
+	if (pGcSprPhysB == nullptr)
+	{
+		return;
+	}
+
+
+
+
+
+	// Henrique
+	// CHECK FOR PLATORM AND PLAYER COLLISION
+	if (pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID())
+	{
+		if (((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))
+			&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform )))
+			|| ((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ))
+				&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))))
+		{
+			CCLOG( "begin contact" );
+		}
+
+	}
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -317,7 +356,9 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
 void CManicLayer::EndContact( b2Contact* pB2Contact )
-{}
+{
+
+}
 // If not jumping > then falling
 // Collisions off
 
@@ -527,14 +568,12 @@ void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, co
 		{
 			rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
 			rcPlayer.SetCanBeControlled( false );
-			CCLOG( "Moving" );
 		}
 
 		else
 		{
 
 			rcPlayer.SetCanBeControlled( true );
-			CCLOG( "not moving" );
 
 		}
 

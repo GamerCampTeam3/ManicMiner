@@ -46,6 +46,7 @@ private:
 
 	float									m_fMovementSpeed;
 	float									m_fJumpForce;
+	float									m_fLastYPosition;
 	cocos2d::Vec2							m_v2Movement;					// Used to move the player
 
 	// Life logic
@@ -110,6 +111,8 @@ public:
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
 	// If you need this for conveyor belts, please use ConveyorBeltMovement.
 	void SetDirection			(EPlayerDirection lastDirection){ m_ePlayerDirection = lastDirection; }
+	void SetISGrounded( bool isGrounded ) { m_bIsGrounded = isGrounded; }
+	void SetLastYPos( float yPos ) { m_fLastYPosition = yPos; }
 
 	// Called when landing on top of a platform surface, enables player control and movement
 	void LandedOnWalkablePlatform();
