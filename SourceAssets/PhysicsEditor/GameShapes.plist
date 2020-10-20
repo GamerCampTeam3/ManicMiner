@@ -640,7 +640,7 @@
 			<key>bush</key>
 			<dict>
 				<key>anchorpoint</key>
-                <string>{ 0.5278,0.3470 }</string>
+                <string>{ 0.5330,0.3500 }</string>
 				<key>fixtures</key>
 				<array>
 
@@ -658,7 +658,7 @@
                          <key>circle</key>
                          <dict>
                              <key>radius</key> <real>29.941</real>
-                             <key>position</key> <string>{ -2.000,9.013 }</string>
+                             <key>position</key> <string>{ -2.313,8.833 }</string>
                          </dict>
                     </dict>
 					<dict>
@@ -675,9 +675,9 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 27.333,-19.820 }</string>	
-								<string>{ -0.667,18.180 }</string>	
-								<string>{ -30.667,-19.820 }</string>
+								<string>{ 27.020,-20.000 }</string>	
+								<string>{ -0.980,18.000 }</string>	
+								<string>{ -30.980,-20.000 }</string>
 							</array>
 						</array>
                     </dict>
