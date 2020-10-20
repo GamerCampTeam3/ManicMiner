@@ -104,6 +104,7 @@ public:
 	void IncrementLives	()			{ m_iLives++; }
 	void DecrementLives	()			{ m_iLives--; }
 	bool IsInMidAir()				{ return (m_ePlayerDirection == EPlayerDirection::EPD_Jumping && !m_bIsGrounded); }
+	float GetMovementSpeed() { return m_fMovementSpeed; }
 
 
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
@@ -115,7 +116,7 @@ public:
 
 
 
-	void ConveyorBeltMovement	(EPlayerDirection xAxisLock)	{ m_ePlayerDirection = xAxisLock; m_bCanBeControlled = false; }
+	void ConveyorBeltMovement( EPlayerDirection xAxisLock );
 	void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }
 
 	void MountedLadder			(EPlayerDirection yAxisLock)	{ m_ePlayerDirection = yAxisLock; m_bIsOnLadder = true; }

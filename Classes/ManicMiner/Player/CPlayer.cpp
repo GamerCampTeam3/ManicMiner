@@ -205,6 +205,7 @@ void CPlayer::KeyboardInput()
 			if ( m_bCanBeControlled && !IsInMidAir())
 			{				
 				ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, GetVelocity().y );
+
 			}
 		}
 
@@ -264,6 +265,27 @@ void CPlayer::UpdateMovement( )
 			break;
 	}
 }
+
+
+void CPlayer::ConveyorBeltMovement(EPlayerDirection xAxisLock)
+{
+	switch (xAxisLock)
+	{
+		case EPlayerDirection::EPD_Left:	
+			SetVelocity( cocos2d::Vec2( m_fMovementSpeed, 0.f ) );
+			break;
+		
+		case EPlayerDirection::EPD_Right:
+			SetVelocity( cocos2d::Vec2( abs( m_fMovementSpeed), 0.f ) );
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+
 
 
 // Movement Functions called by Input/Jump

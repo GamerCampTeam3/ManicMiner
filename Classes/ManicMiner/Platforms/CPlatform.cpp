@@ -11,10 +11,11 @@
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
 
-CPlatform::CPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition)
+CPlatform::CPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType)
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlatform))
 	, m_FactoryCreationParams(CreationParams)
 	, m_v2ResetPosition(ResetPosition)
+	, m_ePlatformType( PlatformType )
 {
 }
 
