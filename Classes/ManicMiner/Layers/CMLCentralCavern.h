@@ -7,6 +7,7 @@
 
 class CCGCentralCavern;
 class CObjCCGroupPlatform;
+class CAirManager;
 
 class CMLCentralCavern: public CManicLayer
 {
@@ -23,5 +24,8 @@ private:
 	CGCObjGroupHazardCentralCavern* m_pcGCGroupHazardCentralCavern;
 	CObjCCGroupPlatform* m_pcGroupPlatformCentralCavern;
 	CCGCentralCavern* m_pcCollectiblesGroupCentralCavern;
+
+	// air manager
+	CAirManager* m_pcAirManager;
 };
 #endif //#ifndef _CMANICLAYER_H_
