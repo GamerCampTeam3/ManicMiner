@@ -8,11 +8,10 @@ enum class EPlayerDirection
 {
 	EPD_Static = 0,
 	EPD_Right,
-	EPD_Left,
-	EPD_Up,
-	EPD_Down,
-	EPD_Jumping,
-	EPD_Falling
+	EPD_Left
+	//EPD_Up,
+	//EPD_Down,
+	//EPD_Jumping
 };
 
 #endif //ifndef _EPLAYERMOVEMENT_		#pragma once

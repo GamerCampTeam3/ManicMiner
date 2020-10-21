@@ -369,7 +369,6 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 				pPlatform->SetCollisionEnabled( true );
 
 
-
 				// Increment sensor count for the player
 				m_pcPlayer->SensorContactEvent( true );
 			}
@@ -396,8 +395,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 					// Conveyor Belt
 					case EPT_Moving:
 						{
-							m_pcPlayer->ConveyorBeltMovement( EPlayerDirection::EPD_Left );
-							m_pcPlayer->SetCanBeControlled( false );
+							m_pcPlayer->LandedOnConveyorBelt( EPlayerDirection::EPD_Left ); // needs to access platform direction
 						}	
 						break;
 					////////////////////////////////////////////////////////////////////////////////////
@@ -513,7 +511,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )
 					// If feet are no longer touching any ground surface
 					if( !m_pcPlayer->GetHardContactCount() )
 					{
-						m_pcPlayer->LeftWalkablePlatform();
+						m_pcPlayer->LeftGround();
 					}
 				}
 			}

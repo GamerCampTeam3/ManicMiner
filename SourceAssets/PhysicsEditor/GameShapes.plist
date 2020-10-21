@@ -788,10 +788,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -29.000,-60.000 }</string>	
-								<string>{ -29.000,-64.000 }</string>	
-								<string>{ 29.000,-64.000 }</string>	
-								<string>{ 29.000,-60.000 }</string>
+								<string>{ -30.000,-60.000 }</string>	
+								<string>{ -30.000,-90.000 }</string>	
+								<string>{ 30.000,-90.000 }</string>	
+								<string>{ 30.000,-60.000 }</string>
 							</array>
 						</array>
                     </dict>
