@@ -31,7 +31,8 @@ class CPlayer
 private:
 
 	// Constant values
-	const float								m_kfGravitionalPull;			// The gravitational force that affects the player for jumping purposes
+	/// Henrique note: this value isnt changing anything
+	const float								m_kfGravitionalPull = 8.0f;   // The gravitational force that affects the player for jumping purposes
 
 	// Our Movement Related variables
 	EPlayerDirection						m_ePlayerDirection;				// This stores the current direction the player is at
@@ -42,12 +43,9 @@ private:
 	bool									m_bIsOnLadder;
 	bool									m_bIsGrounded;					// Is walking on platform?
 	bool									m_bIsAlive;
-	int										m_iSensorContactCount;			// Number of sensors that are overlapping with the Player's "feet" sensor at any given frame
-	int										m_iHardContactCount;			// Number of hard contacts the player collision has at any given frame, sensor contacts are excluded
 
 	float									m_fMovementSpeed;
-	float									m_fJumpSpeed;
-	float									m_fLastYPosition;
+	float									m_fJumpForce;
 	cocos2d::Vec2							m_v2Movement;					// Used to move the player
 
 	// Life logic
@@ -59,9 +57,9 @@ private:
 	TGCActionToKeyMap< EPlayerActions >*	m_pcControllerActionToKeyMap;
 
 public:
-	//CPlayer();
+	CPlayer();
 	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos);
-	//CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos,const int startingLives);
+	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos,const int startingLives);
 
 	virtual ~CPlayer()	{}
 
@@ -93,22 +91,8 @@ public:
 	void SetCanJump			(bool canJump)		{ m_bCanJump = canJump; }
 	bool GetCanBeControlled	() const			{ return m_bCanBeControlled; }
 	void SetCanBeControlled	(bool canControl)	{ m_bCanBeControlled = canControl; }
-	bool GetIsGrounded		()					{ return m_bIsGrounded; }
-	void SetIsGrounded( bool bIsGrounded ) { m_bIsGrounded = bIsGrounded; }
-
-	int GetHardContactCount();
-	int GetSensorContactCount();
 
 	
-	// Called both on BeginContact() and EndContact() from collision engine
-	// Will either increment or decrement the m_iHardContactCount 
-	void HardContactEvent( bool bBeganContact );
-	
-	// For platform jump-through
-	// Called both on BeginContact() and EndContact() from collision engine
-	// Will either increment or decrement the m_iSensorContactCount
-	void SensorContactEvent( bool bBeganContact );
-
 
 	// For GameState related things:: Player lives
 	// Additionally included pre-made increment/decrement functions
@@ -126,14 +110,11 @@ public:
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
 	// If you need this for conveyor belts, please use ConveyorBeltMovement.
 	void SetDirection			(EPlayerDirection lastDirection){ m_ePlayerDirection = lastDirection; }
-	void SetISGrounded( bool isGrounded ) { m_bIsGrounded = isGrounded; }
-	void SetLastYPos( float yPos ) { m_fLastYPosition = yPos; }
 
 	// Called when landing on top of a platform surface, enables player control and movement
 	void LandedOnWalkablePlatform();
 
-	// Called when player is no longer touching any ground surface
-	void LeftWalkablePlatform();
+
 
 	void ConveyorBeltMovement( EPlayerDirection xAxisLock );
 	void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }

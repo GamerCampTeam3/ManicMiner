@@ -4,7 +4,7 @@
 
 CMLTheColdRoom::CMLTheColdRoom()
 	: CManicLayer()
-	//, m_pcGCGroupEnemyCentralCavern( nullptr )
+	, m_pcGCGroupEnemyCentralCavern( nullptr )
 {}
 
 CMLTheColdRoom::~CMLTheColdRoom()
@@ -25,9 +25,9 @@ void CMLTheColdRoom::VOnCreate( void )
 	GetPlayer().SetResetPosition( v2NewStart );
 
 
-	//// Enemies for Central Cavern
-	//m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
-	//CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
+	// Enemies for Central Cavern
+	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
+	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
 		
 	// Platforms for Central Cavern
 	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();

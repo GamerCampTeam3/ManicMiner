@@ -57,13 +57,7 @@ public:
 
 	void VOnResourceAcquire() override;
 
-	EPlatformType GetPlatformType() { return m_ePlatformType; }
-
-	bool GetCollisionEnabled() { return m_bCollisionEnabled; }
-	void SetCollisionEnabled( bool bCollisionEnabled ) { m_bCollisionEnabled = bCollisionEnabled; }	
-	
-	bool GetTriggersHardContactEvent() { return m_bTriggersHardContactEvent; }
-	void SetTriggersHardContactEvent( bool bShouldTrigger ) { m_bTriggersHardContactEvent = bShouldTrigger; }
+	EPlatformType GetPlatformType() { return m_ePlatformType; };
 
 
 
@@ -99,12 +93,7 @@ private:
 
 	EPlatformType m_ePlatformType;
 
-
 	void UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState);
-
-	bool m_bCollisionEnabled;
-	bool m_bTriggersHardContactEvent;
-
 };
 
 #endif

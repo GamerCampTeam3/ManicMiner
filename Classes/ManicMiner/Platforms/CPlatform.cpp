@@ -19,9 +19,6 @@ CPlatform::CPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 Res
 	, m_bInitiatedCrumbling(false)
 	, m_fCurrentCrumblingTimer(1.f)
 	, m_eCrumbleState(ECrumbleState::ECS_0)
-	, m_bCollisionEnabled( false )
-	, m_bTriggersHardContactEvent ( false )
-
 {
 }
 
@@ -32,7 +29,7 @@ void CPlatform::VOnResourceAcquire()
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
 	SetResetPosition(m_v2ResetPosition);
-
+	
 
 	m_pcDirector = cocos2d::Director::getInstance();
 
@@ -120,6 +117,3 @@ void CPlatform::UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState)
 		}
 	}
 }
-
-
-

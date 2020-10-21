@@ -14,29 +14,21 @@ USING_NS_CC;
 //////////////////////////////////////////////////////////////////////////
 // 
 //////////////////////////////////////////////////////////////////////////
-
-
-
-CCollectible::CCollectible( CGCFactoryCreationParams& CreationParams, ECollectibleType eType, cocos2d::Vec2 ResetPosition, CCollectiblesGroup& collectibleGroup )
-	: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
-	, m_FactoryCreationParams( CreationParams )
-	, m_eCollectibleType( eType )
-	, m_bHasBeenCollected( false )
-	, m_v2ResetPosition( ResetPosition)
-	, m_pcCollectiblesGroup( &collectibleGroup )
-{
-	
-}
-
-
+IN_CPP_CREATION_PARAMS_DECLARE( CGCObjItem, "TexturePacker/Sprites/Coin/Coin.plist", "coin", b2_staticBody, true );
+//virtual 
 void CCollectible::VOnResourceAcquire( void )
 {
-	VHandleFactoryParams( m_FactoryCreationParams, GetResetPosition() );
+	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjItem );
 	CGCObjSpritePhysics::VOnResourceAcquire();
-	SetResetPosition( m_v2ResetPosition );
 }
 
-
+CCollectible::CCollectible(ECollectibleType eType, CCollectiblesGroup &collectiblesGroup)
+	: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
+	, m_eCollectibleType	( eType )
+	, m_bHasBeenCollected	( false )
+	, m_pcCollectiblesGroup	( &collectiblesGroup )
+{
+}
 
 void CCollectible::VOnReset()
 {
@@ -70,5 +62,8 @@ void CCollectible::InteractEvent()
 
 CCollectible::~CCollectible()
 {
-	
+	safeDelete( m_pcCollectiblesGroup );
 }
+
+
+

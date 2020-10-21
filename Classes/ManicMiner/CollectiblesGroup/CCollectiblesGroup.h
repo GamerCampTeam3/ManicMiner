@@ -34,7 +34,6 @@ public:
 	void CollectibleEvent();
 	void SwitchEvent();
 	void CheckIfEnoughToOpenExit();
-	virtual void GenerateCollectibles();
 
 	void SetRequiredType( ECollectibleTypeRequired collectibleRequired )	{ m_eCollectibleTypeRequired = collectibleRequired; }
 	
@@ -46,13 +45,12 @@ public:
 	
 	//////////////////////////////////////////////////////////////////////////
 	// overrides for CGCObjectGroup public interface
-	// handles Collectibles
+	// handles GCObjItem
 	virtual bool		VHandlesThisTypeId( GCTypeID idQueryType );
 
 	// must return the typeid of the CGCObjectGroup derived class
 	virtual GCTypeID	VGetTypeId( void );
 	virtual void		VOnGroupResourceAcquire_PostObject( void );
-	virtual void		VOnGroupResourceAcquire() override;
 	virtual void		VOnGroupResourceRelease( void );
 
 	// CGCObjectGroup public interface

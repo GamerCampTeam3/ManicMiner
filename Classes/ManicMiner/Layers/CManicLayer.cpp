@@ -307,97 +307,7 @@ void CManicLayer::VOnDestroy()
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
 void CManicLayer::BeginContact( b2Contact* pB2Contact )
-{
-
-	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
-	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
-
-	const b2Body* pBodyA = pFixtureA->GetBody();
-	const b2Body* pBodyB = pFixtureB->GetBody();
-
-	CGCObjSpritePhysics* pGcSprPhysA = (CGCObjSpritePhysics*)pBodyA->GetUserData();
-	// if( this is not a GC object )
-	if (pGcSprPhysA == nullptr)
-	{
-		return;
-	}
-
-	CGCObjSpritePhysics* pGcSprPhysB = (CGCObjSpritePhysics*)pBodyB->GetUserData();
-	// if( this is not a GC object )
-	if (pGcSprPhysB == nullptr)
-	{
-		return;
-	}
-
-
-
-
-
-	// Henrique
-	// CHECK FOR PLATORM AND PLAYER COLLISION
-	if (pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID())
-	{
-		if (((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))
-			&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform )))
-			|| ((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ))
-			&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))))
-		{
-
-			// Get pointer to platform
-			CPlatform* pPlatform = nullptr;
-
-			// If BodyA is player, BodyB must be platform
-			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-			{
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysB );
-			}
-			// Else, vice versa
-			else
-			{
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysA );
-			}
-
-
-
-			// Check if this BeginContact is for feet + platform surface ( sensors only )
-			
-			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )
-			{
-				CCLOG( "Foot goes toot" );
-
-				// Activate this platform's collision
-				pPlatform->SetCollisionEnabled( true );
-
-
-
-				// Increment sensor count for the player
-				m_pcPlayer->SensorContactEvent( true );
-			}
-
-			// If not 2 sensors
-			// Check if this BeginContact is for character + platform ( no sensors included )
-			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )
-			{
-				if( pPlatform->GetCollisionEnabled() )
-				{
-
-					// Set the platform as a trigger for hard contact events
-					pPlatform->SetTriggersHardContactEvent( true );
-
-					// Increment hard contact count for the player
-					m_pcPlayer->HardContactEvent( true );
-
-					// If first contact with surface, and is on top of a surface ( is in contact with at least 1 platform sensor )
-					if( !m_pcPlayer->GetIsGrounded() )
-					{
-						// Set player as grounded
-						m_pcPlayer->LandedOnWalkablePlatform();
-					}
-				}
-			}
-		}
-	}
-}
+{}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -407,91 +317,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 ///////////////////////////////////////////////////////////////////////////////
 //virtual 
 void CManicLayer::EndContact( b2Contact* pB2Contact )
-{
-	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
-	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
-
-	const b2Body* pBodyA = pFixtureA->GetBody();
-	const b2Body* pBodyB = pFixtureB->GetBody();
-
-	CGCObjSpritePhysics* pGcSprPhysA = ( CGCObjSpritePhysics* )pBodyA->GetUserData();
-	// if( this is not a GC object )
-	if( pGcSprPhysA == nullptr )
-	{
-		return;
-	}
-
-	CGCObjSpritePhysics* pGcSprPhysB = ( CGCObjSpritePhysics* )pBodyB->GetUserData();
-	// if( this is not a GC object )
-	if( pGcSprPhysB == nullptr )
-	{
-		return;
-	}
-
-
-
-
-	// Henrique
-		// CHECK FOR PLATORM AND PLAYER COLLISION
-	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )
-	{
-		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) ) )
-			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
-				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )
-		{
-
-			// Get pointer to platform
-			CPlatform* pPlatform = nullptr;
-
-			// If BodyA is player, BodyB must be platform
-			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-			{
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysB );
-			}
-			// Else, vice versa
-			else
-			{
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysA );
-			}
-
-
-
-			// Check if this EndContact is for feet + platform surface sensors only
-			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )
-			{
-				CCLOG( "Foot goes untoot" );
-
-				// Deactivate this platform's collision
-				pPlatform->SetCollisionEnabled( false );
-
-				// Decrement sensor contact count
-				m_pcPlayer->SensorContactEvent( false );
-			}
-
-			// If not 2 sensors
-			// Check if this EndContact is for character + platform ( no sensors included )
-			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )
-			{
-				if( pPlatform->GetTriggersHardContactEvent() )
-				{
-
-					// Set the platform as no trigger for hard contact events
-					pPlatform->SetTriggersHardContactEvent( false );
-
-					// Decrement hard contact count
-					m_pcPlayer->HardContactEvent( false );
-
-					// If feet are no longer touching any ground surface
-					if( !m_pcPlayer->GetHardContactCount() )
-					{
-						m_pcPlayer->LeftWalkablePlatform();
-					}
-				}
-			}
-		}
-	}
-}
+{}
 // If not jumping > then falling
 // Collisions off
 
@@ -524,6 +350,10 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 		return;
 	}
 
+
+
+
+
 	// Henrique
 	// CHECK FOR PLATORM AND PLAYER COLLISION
 	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )
@@ -531,33 +361,59 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
 			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) ) )
 			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
-				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )
+			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )
 		{
-			// Check if this BeginContact is not running with any sensor triggers
-			if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )
+
+			// Get player fixture
+			b2Fixture* b2PlayerFixture = pB2Contact->GetFixtureA();
+
+			if( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
 			{
-				// We must check if this platform is supposed to have collision or not
-
-				// Get pointer to platform
-				CPlatform* pPlatform = nullptr;
-
-				// If BodyA is player, BodyB must be platform
-				if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-				{
-					pPlatform = static_cast< CPlatform* >( pGcSprPhysB );
-				}
-				// Else, vice versa
-				else
-				{
-					pPlatform = static_cast< CPlatform* >( pGcSprPhysA );
-				}
-
-				// Set contact collision accordingly
-				pB2Contact->SetEnabled( pPlatform->GetCollisionEnabled() );
+				b2PlayerFixture = pB2Contact->GetFixtureB();
 			}
 
+
+			// Compare bottom of player with top of platform
+			float PlayerFoot = m_pcPlayer->GetBoundingBox().getMinY();
+			
+			float platformTop = 0.0f;
+			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
+			{
+				platformTop = pGcSprPhysA->GetBoundingBox().getMaxY();
+			}
+			else
+			{
+				platformTop = pGcSprPhysB->GetBoundingBox().getMaxY();
+			}
+
+
+			if( m_pcPlayer->IsInMidAir() )
+			{
+				// If going upwards, always ignore collision
+				if( m_pcPlayer->GetVelocity().y > 0.0f )
+				{
+					pB2Contact->SetEnabled( false );
+				}
+				else
+				{
+					//if( platformTop < PlayerFoot )
+					//{
+					//	m_pcPlayer->LandedOnWalkablePlatform();
+					//}
+					//else
+					//{
+					//	pB2Contact->SetEnabled( false );
+					//}
+					m_pcPlayer->LandedOnWalkablePlatform();
+
+				}
+			}
 		}
 	}
+
+
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -671,6 +527,7 @@ void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, co
 		{
 			rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
 			rcPlayer.SetCanBeControlled( false );
+			CCLOG( "Moving" );
 		}
 
 		if(rcPlatform.GetPlatformType() == EPT_Crumbling)
@@ -682,6 +539,7 @@ void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, co
 		{
 
 			rcPlayer.SetCanBeControlled( true );
+			CCLOG( "not moving" );
 
 		}
 
