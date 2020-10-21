@@ -22,11 +22,8 @@ CCrumblingPlatform::CCrumblingPlatform( CGCFactoryCreationParams& CreationParams
 void CCrumblingPlatform::VOnResourceAcquire()
 {
 	CPlatform::VOnResourceAcquire();
-	
-	const char* pszAnim_Crumble = "Crumble";
 
-	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
-	m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
+	m_pcDirector = cocos2d::Director::getInstance();
 }
 
 void CCrumblingPlatform::VOnUpdate(float fTimeStep)
@@ -72,6 +69,7 @@ void CCrumblingPlatform::VOnReset()
 	m_eCrumbleState = ECrumbleState::ECS_0;
 	m_bCollisionEnabled = false;
 	m_bTriggersHardContactEvent = false;
+
 }
 
 void CCrumblingPlatform::InitiateCrumbling(float fSecondsToStartCrumbling)
@@ -81,6 +79,11 @@ void CCrumblingPlatform::InitiateCrumbling(float fSecondsToStartCrumbling)
 		m_fCurrentCrumblingTimer = fSecondsToStartCrumbling;
 		m_bInitiatedCrumbling = true;
 
+		const char* pszAnim_Crumble = "Crumble";
+
+		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+		m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
+		
 		m_pcCrumbleAnim->setDelayPerUnit(0.30f);
 		RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcCrumbleAnim));
 
