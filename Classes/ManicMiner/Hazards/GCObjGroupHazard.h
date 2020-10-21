@@ -27,11 +27,10 @@ public:
 	CGCObjGroupHazard			();		
 	virtual ~CGCObjGroupHazard	() override;
 
+	virtual void VOnGroupResourceAcquire() = 0;
+
 	// handles GCObjHazard
 	virtual bool VHandlesThisTypeId ( GCTypeID idQueryType ) override;
-	
-	virtual void VOnGroupResourceAcquire			() override;
-	virtual void VOnGroupResourceAcquire_PostObject	() override;
 	virtual void VOnGroupResourceRelease			() override;
 
 };

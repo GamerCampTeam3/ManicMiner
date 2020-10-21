@@ -7,21 +7,20 @@
 
 USING_NS_CC;
 
-CGCObjEnemy::CGCObjEnemy(const EMovementAxis EMovementAxisInput, const cocos2d::Vec2& AnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
-	bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId EnemyIdentifierInput,
+CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
+	bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyId,
 	CGCFactoryCreationParams& ParamsInput)
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
-	, eMovementAxis(EMovementAxisInput)
-	, eEnemyIdentifier(EnemyIdentifierInput)
-	, m_cAnchorPoint(AnchorPoint)
-	, fMovementWindowLength(fMovementRange)
-	, fSpeed(fSpeed)
-	, bMovingAWayFromAnchorPoint(bMovingAwayFromAnchorPoint)
-	, k_bArtDefaultIsEnemyFacingRight(false)
-	, rFactoryCreationParams(ParamsInput)
-	, fInitialDistanceFromAnchor (fInitialDistanceFromAnchor)
-	, bBounceIsLatchedDisabled(false)
-	, bSpriteIsFlippable(bSpriteIsFlippable)
+	, m_eMovementAxis(EMovementAxisInput)
+	, m_eEnemyId(eEnemyId)
+	, m_cAnchorPoint(rcAnchorPoint)
+	, m_fMovementWindowLength(fMovementRange)
+	, m_fSpeed(fSpeed)
+	, m_bMovingAWayFromAnchorPoint(bMovingAwayFromAnchorPoint)
+	, m_rFactoryCreationParams(ParamsInput)
+	, m_fInitialDistanceFromAnchor (fInitialDistanceFromAnchor)
+	, m_bBounceIsLatchedDisabled(false)
+	, m_bSpriteIsFlippable(bSpriteIsFlippable)
 {
 }
 
@@ -33,22 +32,22 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 {
 
 	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjEnemy );    
-	VHandleFactoryParams(rFactoryCreationParams, GetResetPosition());
+	VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
 
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
 	m_cTotalVelocity = Vec2::ZERO;
 
 	Vec2 AnchorPointAndOffset = m_cAnchorPoint;
-	if (EMovementAxis_LeftRight == eMovementAxis)
+	if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis)
 	{
-		m_cTotalVelocity.x = fSpeed;
-		AnchorPointAndOffset.x += fInitialDistanceFromAnchor;
+		m_cTotalVelocity.x = m_fSpeed;
+		AnchorPointAndOffset.x += m_fInitialDistanceFromAnchor;
 	}
 	else
 	{
-		m_cTotalVelocity.y = fSpeed;
-		AnchorPointAndOffset.y += fInitialDistanceFromAnchor;
+		m_cTotalVelocity.y = m_fSpeed;
+		AnchorPointAndOffset.y += m_fInitialDistanceFromAnchor;
 	}
 
 	SetResetPosition(AnchorPointAndOffset);
@@ -71,15 +70,15 @@ bool CGCObjEnemy::CheckForBoundaryReached(const float fCurrentPosition, const fl
 	bool bReturnResult = false;
 
 	// Test right or upper side boundary limit passed and flip to moving back to start if required.
-	if (bMovingAWayFromAnchorPoint && (fCurrentPosition >= fAnchorPoint + fMovementWindowLength))
+	if (m_bMovingAWayFromAnchorPoint && (fCurrentPosition >= fAnchorPoint + fMovementWindowLength))
 	{
-		bMovingAWayFromAnchorPoint = false;
+		m_bMovingAWayFromAnchorPoint = false;
 		bReturnResult = true;
 	}
 	// Test left or lower side boundary limit passed and flip to moving away from start if required.
-	else if (!bMovingAWayFromAnchorPoint && (fCurrentPosition <= fAnchorPoint))
+	else if (!m_bMovingAWayFromAnchorPoint && (fCurrentPosition <= fAnchorPoint))
 	{
-		bMovingAWayFromAnchorPoint = true;
+		m_bMovingAWayFromAnchorPoint = true;
 		bReturnResult = true;
 	}
 	return bReturnResult;
@@ -93,13 +92,13 @@ bool CGCObjEnemy::CheckForBoundaryReached(const float fCurrentPosition, const fl
 bool CGCObjEnemy::CheckForDirectionFlip()
 {
 	Vec2 CurrentPosition = GetSpritePosition();
-	if (EMovementAxis_LeftRight == eMovementAxis)
+	if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis)
 	{
-		return CheckForBoundaryReached(CurrentPosition.x, m_cAnchorPoint.x, fMovementWindowLength);
+		return CheckForBoundaryReached(CurrentPosition.x, m_cAnchorPoint.x, m_fMovementWindowLength);
 	}
 	else
 	{
-		return CheckForBoundaryReached(CurrentPosition.y, m_cAnchorPoint.y, fMovementWindowLength);
+		return CheckForBoundaryReached(CurrentPosition.y, m_cAnchorPoint.y, m_fMovementWindowLength);
 	}
 }
 
@@ -110,7 +109,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 {
 	CGCObject::VOnUpdate(fTimeStep);
 
-	if (bMovingAWayFromAnchorPoint)
+	if (m_bMovingAWayFromAnchorPoint)
 	{
 		SetVelocity(m_cTotalVelocity);
 	}
@@ -121,10 +120,10 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 	
 	if (CheckForDirectionFlip())
 	{
-		bBounceIsLatchedDisabled = false;
+		m_bBounceIsLatchedDisabled = false;
         // if the Enemy's direction has just flipped then need to change the facing orientation
 		// for left/right orientation Enemy's.
-		if (EMovementAxis_LeftRight == eMovementAxis && bSpriteIsFlippable)
+		if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis && m_bSpriteIsFlippable)
 		{
 			SetFacingOrientation();
 		}
@@ -136,10 +135,12 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 //
 void CGCObjEnemy::SetFacingOrientation()
 {
-	SetFlippedX((k_bArtDefaultIsEnemyFacingRight && !bMovingAWayFromAnchorPoint) || (!k_bArtDefaultIsEnemyFacingRight && bMovingAWayFromAnchorPoint));
+	const bool k_bArtDefaultIsEnemyFacingRight = false;
+	SetFlippedX((k_bArtDefaultIsEnemyFacingRight && !m_bMovingAWayFromAnchorPoint) || (!k_bArtDefaultIsEnemyFacingRight && m_bMovingAWayFromAnchorPoint));
 }
 //////////////////////////////////////////////////////////////////////////
-// Function to flip the enemies current direction of travel when it has collided with an object.
+// Function to flip the enemies current direction of travel when it has collided with an object
+// (note required only in the Kong Beast levels 8 and 12 when a wall is removed during gameplay).
 // 
 void CGCObjEnemy::BounceEnemyDirection()
 {
@@ -150,14 +151,14 @@ void CGCObjEnemy::BounceEnemyDirection()
 	// an enemy collides with an object which restricts the enemys moviement.  During gameplay the 
 	// ojbect is removed therefore allowing greater movement of the enemy.
 
-	if (!bBounceIsLatchedDisabled)
+	if (!m_bBounceIsLatchedDisabled)
 	{
-		if (EMovementAxis_LeftRight == eMovementAxis && bSpriteIsFlippable)
+		if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis && m_bSpriteIsFlippable)
 		{
-			SetFlippedX(!bMovingAWayFromAnchorPoint);
+			SetFlippedX(!m_bMovingAWayFromAnchorPoint);
 		}
-		bMovingAWayFromAnchorPoint = !bMovingAWayFromAnchorPoint;
+		m_bMovingAWayFromAnchorPoint = !m_bMovingAWayFromAnchorPoint;
 	}
 	// Latch the flag to stop the enemy constantly flipping during the collisions duration.
-	bBounceIsLatchedDisabled = true;
+	m_bBounceIsLatchedDisabled = true;
 }

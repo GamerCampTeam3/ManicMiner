@@ -31,35 +31,32 @@ class CGCObjEnemy
 : public CGCObjSpritePhysics
 {
 public:
-	enum EMovementAxis { EMovementAxis_UpDown, EMovementAxis_LeftRight };
 
 	void BounceEnemyDirection();
 
 private:
-	EMovementAxis				eMovementAxis;
-	EnemyTypes::EEnemyId	    eEnemyIdentifier;
+	EnemyTypes::EMovementAxis	m_eMovementAxis;
+	EnemyTypes::EEnemyId	    m_eEnemyId;
 	cocos2d::Vec2				m_cAnchorPoint;
 	cocos2d::Vec2				m_cTotalVelocity;
-	float						fSpeed;
-	float						fInitialDistanceFromAnchor;
-	float						fMovementWindowLength;
-	bool						bMovingAWayFromAnchorPoint;
-	bool						bInitialyMovingAwayFromAnchorPoint;
-	bool                        bBounceIsLatchedDisabled;
-	bool						bSpriteIsFlippable;
+	float						m_fSpeed;
+	float						m_fInitialDistanceFromAnchor;    
+	float						m_fMovementWindowLength;
+	bool						m_bMovingAWayFromAnchorPoint;
+	bool						m_bInitialyMovingAwayFromAnchorPoint;
+	bool                        m_bBounceIsLatchedDisabled;
+	bool						m_bSpriteIsFlippable;
 	bool						m_bHasBeenCollided;
-	const bool					k_bArtDefaultIsEnemyFacingRight;
-	CGCFactoryCreationParams&	rFactoryCreationParams;
+	CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
 	bool CheckForBoundaryReached(const float fCurrentPosition, const float fAnchorPoint, const float fMovementWindowLength);
-
 	bool CheckForDirectionFlip	();
 	void SetFacingOrientation	();
 		
 public:
 
-	CGCObjEnemy(const EMovementAxis EMovementAxisInput, const cocos2d::Vec2& AnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
-		bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId EnemyIdentifierInput,
+	CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
+		bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyIdentifier,
 		CGCFactoryCreationParams& ParamsInput);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -74,16 +71,9 @@ public:
 	virtual void VOnResurrected		( void ) override;
 	virtual void VOnUpdate			(float fTimeStep) override;
 
-
-	
-
-	// Bib Edit
-	const bool GetHasCollided() { return m_bHasBeenCollided; };
-	void SetHasCollided( bool collided ) { m_bHasBeenCollided = collided; };
-	
 	inline  EnemyTypes::EEnemyId GetEnemyIdentifier()
 	{
-		return eEnemyIdentifier;
+		return m_eEnemyId;
 	}
 };
 #endif // #ifndef _GCOBJENEMY_H_

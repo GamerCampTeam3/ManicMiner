@@ -50,6 +50,7 @@ void CCollectible::InteractEvent()
 			case ECollectibleType::Collectible:
 
 				m_pcCollectiblesGroup->CollectibleEvent();
+				m_pcCollectiblesGroup->AddScore();
 				CGCObjectManager::ObjectKill( this );
 				m_bHasBeenCollected = true;
 				break;

@@ -8,7 +8,7 @@ class HazardTypes
 {
 public:
 
-	enum EHazardId {
+	enum class EHazardId {
 		EBush,
 		EDownwardSpike,
 		EUpwardSpike,

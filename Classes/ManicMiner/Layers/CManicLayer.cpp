@@ -403,7 +403,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 					case EPT_Crumbling:
 						{
 							// Start Crumbling
-							pPlatform->InitiateCrumbling( 1.0f );
+							//pPlatform->InitiateCrumbling( 1.0f );
 
 							// Set player as grounded
 							m_pcPlayer->LandedOnWalkablePlatform();

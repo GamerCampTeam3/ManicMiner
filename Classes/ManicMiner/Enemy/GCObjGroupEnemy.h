@@ -27,12 +27,11 @@ public:
 	CGCObjGroupEnemy			();		
 	virtual ~CGCObjGroupEnemy	() override;
 
-	// handles GCObjEnemy
-	virtual bool VHandlesThisTypeId ( GCTypeID idQueryType ) override;
-	
-	virtual void VOnGroupResourceAcquire			() override;
-	virtual void VOnGroupResourceAcquire_PostObject	() override;
-	virtual void VOnGroupResourceRelease			() override;
+	virtual void VOnGroupResourceAcquire_PostObject	() = 0;
+	virtual void VOnGroupResourceAcquire			() = 0;
+
+	virtual bool VHandlesThisTypeId			( GCTypeID idQueryType ) override;
+	virtual void VOnGroupResourceRelease	() override;
 
 };
 #endif

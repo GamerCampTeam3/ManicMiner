@@ -17,13 +17,13 @@ class CGCObjHazard
 public:
 	
 private:
-	HazardTypes::EHazardId	    eHazardIdentifier;
+	HazardTypes::EHazardId	    m_eHazardIdentifier;
 	cocos2d::Vec2				m_cAnchorPoint;
-	CGCFactoryCreationParams&	rFactoryCreationParams;
+	CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
 public:
 
-	CGCObjHazard(const cocos2d::Vec2& AnchorPoint, const HazardTypes::EHazardId HazardIdentifierInput, CGCFactoryCreationParams& ParamsInput);
+	CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcParamsInput);
 
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
@@ -40,7 +40,7 @@ public:
 	
 	inline  HazardTypes::EHazardId GetHazardIdentifier()
 	{
-		return eHazardIdentifier;
+		return m_eHazardIdentifier;
 	}
 };
 #endif // #ifndef _GCOBJHAZARD_H_
