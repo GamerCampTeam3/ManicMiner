@@ -24,6 +24,7 @@
 #include "ManicMiner/Helpers/Helpers.h"
 
 // Include different platform types for collision checks
+#include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CBrickPlatform.h"
 #include "ManicMiner/Platforms/CCrumblingPlatform.h"
@@ -253,6 +254,10 @@ void CManicLayer::VOnCreate()
 		});
 
 
+	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact) -> void
+		{
+			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
+		});
 
 
 
@@ -261,6 +266,16 @@ void CManicLayer::VOnCreate()
 	//Label* pcScoreLabel = Label::create();
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
+
+void CManicLayer::PlayerCollidedDoor(CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact)
+{
+	const bool isColliding = rcContact.IsTouching();
+	if (isColliding)
+	{
+		rcDoor.InteractEvent();
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 // on update
