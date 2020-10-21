@@ -1,8 +1,9 @@
 #ifndef _CPLAYER_H_
 #define _CPLAYER_H_
 
+
 #ifndef _GCOBJSPRITEPHYSICS_H_
-#include "../../GCCocosInterface/GCObjSpritePhysics.h"
+#include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 #endif
 
 #include "ManicMiner/Enums/EPlayerMovement.h"

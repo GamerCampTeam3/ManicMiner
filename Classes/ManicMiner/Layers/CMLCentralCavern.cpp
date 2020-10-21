@@ -3,6 +3,7 @@
 #include "ManicMiner/Doors/CentralCavern/CDCreatorCentralCavern.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
+#include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 #include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
 #include "ManicMiner/Helpers/Helpers.h"
@@ -52,6 +53,8 @@ void CMLCentralCavern::VOnCreate( void )
 
 	m_pcCDCreatorCentralCavern = new CDCreatorCentralCavern( *this );
 	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
+
+	m_pCHUD = new CHUD( GetPlayer() , *this , *m_pcCollectiblesGroupCentralCavern);
 
 	m_pcAirManager = new CAirManager(origin, visibleSize);
 	m_pcAirManager->Init(*this);

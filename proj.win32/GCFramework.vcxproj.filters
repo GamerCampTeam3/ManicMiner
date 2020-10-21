@@ -139,6 +139,9 @@
     <Filter Include="Classes\ManicMiner\CollectiblesGroup\CentralCavern">
       <UniqueIdentifier>{facb8174-f5f7-4793-bd28-1fee60b404fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\HUD">
+      <UniqueIdentifier>{783eafeb-d4ac-4c59-940f-a8c13dbc1221}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -320,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp">
       <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\HUD\CHUD.cpp">
+      <Filter>Classes\ManicMiner\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -550,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h">
       <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\HUD\CHUD.h">
+      <Filter>Classes\ManicMiner\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
