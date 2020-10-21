@@ -5,6 +5,7 @@
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 #include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
 
+class CDCreatorCentralCavern;
 class CCGCentralCavern;
 class CObjCCGroupPlatform;
 class CAirManager;
@@ -24,6 +25,7 @@ private:
 	CGCObjGroupHazardCentralCavern* m_pcGCGroupHazardCentralCavern;
 	CObjCCGroupPlatform* m_pcGroupPlatformCentralCavern;
 	CCGCentralCavern* m_pcCollectiblesGroupCentralCavern;
+	CDCreatorCentralCavern* m_pcCDCreatorCentralCavern;
 
 	// air manager
 	CAirManager* m_pcAirManager;

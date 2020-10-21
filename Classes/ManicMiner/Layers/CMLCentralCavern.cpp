@@ -1,4 +1,6 @@
 #include "CMLCentralCavern.h"
+
+#include "ManicMiner/Doors/CentralCavern/CDCreatorCentralCavern.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
@@ -48,6 +50,9 @@ void CMLCentralCavern::VOnCreate( void )
 	m_pcCollectiblesGroupCentralCavern = new CCGCentralCavern(*this, ECollectibleTypeRequired::Collectible, 5);	
 	CGCObjectManager::ObjectGroupRegister( m_pcCollectiblesGroupCentralCavern );
 
+	m_pcCDCreatorCentralCavern = new CDCreatorCentralCavern( *this );
+	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
+
 	m_pcAirManager = new CAirManager(origin, visibleSize);
 	m_pcAirManager->Init(*this);
 }
@@ -65,6 +70,10 @@ void CMLCentralCavern::VOnDestroy(void)
 
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);
 	safeDelete( m_pcGroupPlatformCentralCavern );
+
+	CGCObjectManager::ObjectGroupUnRegister( m_pcCDCreatorCentralCavern );
+	safeDelete( m_pcCDCreatorCentralCavern );
+
 
 	// Call base class last
 	CManicLayer::VOnDestroy();
