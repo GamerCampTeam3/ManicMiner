@@ -45,7 +45,7 @@ private:
 	class cocos2d::Director* m_pcDirector;
 
 	cocos2d::Animation* m_pcCrumbleAnim;
-
+	cocos2d::Animation* m_pcIdleAnim;
 
 	void UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState);
 
