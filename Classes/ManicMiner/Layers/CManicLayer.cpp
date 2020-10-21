@@ -530,6 +530,11 @@ void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, co
 			CCLOG( "Moving" );
 		}
 
+		if(rcPlatform.GetPlatformType() == EPT_Crumbling)
+		{
+			rcPlatform.InitiateCrumbling(1.0f);
+		}
+		
 		else
 		{
 

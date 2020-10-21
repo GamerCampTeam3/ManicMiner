@@ -124,6 +124,9 @@
     <Filter Include="Classes\ManicMiner\Hazards\CentralCavern">
       <UniqueIdentifier>{6f8450d9-edd1-4582-a165-de5caa5c66a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Platforms\Crumbling">
+      <UniqueIdentifier>{555c7045-9fa9-4463-9606-e30d8d750f6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -290,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Hazards\GCObjHazard.cpp">
       <Filter>Classes\ManicMiner\Hazards</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\Crumbling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Hazards\GCObjHazard.h">
       <Filter>Classes\ManicMiner\Hazards</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\Crumbling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
