@@ -213,17 +213,18 @@ void CPlayer::LeftWalkablePlatform()
 	// If player did not initiate jump
 	if( m_ePlayerDirection != EPlayerDirection::EPD_Jumping )
 	{
+		// Drop straight down
 		auto v2CurrentVelocity = GetVelocity();
 		SetVelocity( cocos2d::Vec2( 0.0f, v2CurrentVelocity.y ) );
 	
+		CCLOG( "Dropping straight down" );
+
 		m_eLastPlayerDirection = m_ePlayerDirection;
 		m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
 
 		m_bIsGrounded = false;
 		m_bCanJump = false;
 	}
-
-
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -234,16 +235,16 @@ void CPlayer::VOnUpdate( f32 fTimeStep )
 {
 	KeyboardInput();
 
-	std::string string1 = std::to_string( m_iHardContactCount );
-	char const* pchar1 = string1.c_str();
+	//std::string string1 = std::to_string( m_iHardContactCount );
+	//char const* pchar1 = string1.c_str();
 
-	CCLOG( "Hard Count:" );	
-	CCLOG( pchar1 );	
-	
-	std::string string2 = std::to_string( m_iSensorContactCount );
-	char const* pchar2 = string2.c_str();
-	CCLOG( "Soft Count:" );
-	CCLOG( pchar2 );
+	//CCLOG( "Hard Count:" );	
+	//CCLOG( pchar1 );	
+	//
+	//std::string string2 = std::to_string( m_iSensorContactCount );
+	//char const* pchar2 = string2.c_str();
+	//CCLOG( "Soft Count:" );
+	//CCLOG( pchar2 );
 
 
 	//UpdateMovement( fTimeStep );
