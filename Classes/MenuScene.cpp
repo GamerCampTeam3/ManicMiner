@@ -65,8 +65,8 @@ bool CMenuLayer::init()
     else
     {
 		// Set resolution
-		Director::getInstance()->getOpenGLView()->setFrameSize( 1280, 720 );
-        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1280, 720, ResolutionPolicy::EXACT_FIT );
+		Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
     }
 	
     Size visibleSize	= Director::getInstance()->getVisibleSize();
