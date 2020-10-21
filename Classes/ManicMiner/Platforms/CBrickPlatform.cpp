@@ -13,7 +13,7 @@
 CBrickPlatform::CBrickPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType)
 	: CPlatform(CreationParams, ResetPosition, PlatformType)
 {
-
+	SetCollisionEnabled( true );
 }
 
 void CBrickPlatform::VOnResourceAcquire()

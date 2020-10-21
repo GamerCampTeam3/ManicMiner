@@ -25,6 +25,8 @@
 #include "ManicMiner/Helpers/Helpers.h"
 
 
+#include "ManicMiner/Platforms/CBrickPlatform.h"
+
 USING_NS_CC;
 
 //////////////////////////////////////////////////////////////////////////
@@ -243,7 +245,7 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
 		} );
 
-	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact) -> void
+	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedHazard(rcPlayer, rcHazard, rcContact);
 		});
@@ -389,7 +391,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 
 
 					// Check Platform Type
-					switch( pPlatform->GetPlatformType() )
+					switch( pPlatform->GetGCTypeID () )
 					{
 					////////////////////////////////////////////////////////////////////////////////////
 					// Conveyor Belt

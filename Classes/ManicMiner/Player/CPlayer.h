@@ -122,7 +122,7 @@ public:
 	void IncrementLives	()			{ m_iLives++; }
 	void DecrementLives	()			{ m_iLives--; }
 	bool IsInMidAir()				{ return ( !m_bIsGrounded); }
-	float GetMovementSpeed() { return m_fMovementSpeed; }
+	float GetMovementSpeed()		{ return m_fMovementSpeed; }
 
 
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
