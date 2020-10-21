@@ -187,6 +187,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitch.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Collectible\CCollectible.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CDoor.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\CentralCavern\GCObjGroupEnemyCentralCavern.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.cpp" />
@@ -258,6 +261,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\CSwitch.h" />
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\I_Interactible.h" />
     <ClInclude Include="..\Classes\ManicMiner\Collectible\CCollectible.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CDoor.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\CentralCavern\GCObjGroupEnemyCentralCavern.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEnemy.h" />

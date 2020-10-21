@@ -50,14 +50,15 @@ bool CMenuLayer::init()
         return false;
     }
 
-	// Quick little change to help me change between res
+    // Bib Edit
+	// This is a little boolean that allows for quick swapping from fullscreen to windowed
+	// This is required to avoid flickering and alt-tabbing for debugging on Higher resolution screens
     const bool fullScreenSwitch = true;
 
     if ( fullScreenSwitch )
     {
         // Stretch to fullscreen
         static_cast< GLViewImpl* >( cocos2d::Director::getInstance()->getOpenGLView() )->setFullscreen();
-
         // Set resolution
         Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
@@ -68,6 +69,7 @@ bool CMenuLayer::init()
 		Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
     }
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
     Size visibleSize	= Director::getInstance()->getVisibleSize();
     Vec2 origin			= Director::getInstance()->getVisibleOrigin();

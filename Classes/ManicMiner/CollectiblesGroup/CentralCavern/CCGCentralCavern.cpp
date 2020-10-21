@@ -1,4 +1,4 @@
-#include "ManicMiner/CollectiblesGroup/CentralCavern/CCGCentralCavern.h"
+#include "CCGCentralCavern.h"
 
 #include "Box2D/Dynamics/b2Body.h"
 #include "ManicMiner/Collectible/CCollectible.h"
@@ -9,7 +9,6 @@
 
 void CCGCentralCavern::GenerateCollectibles()
 {
-
 	CCollectible* pCollectible_0 = new CCollectible( m_cCreationParams, ECollectibleType::Collectible, cocos2d::Vec2( 1740.f, 920.f ), *this );
 	CCollectible* pCollectible_1 = new CCollectible( m_cCreationParams, ECollectibleType::Collectible, cocos2d::Vec2( 1820.f, 580.f ), *this );
 	CCollectible* pCollectible_2 = new CCollectible( m_cCreationParams, ECollectibleType::Collectible, cocos2d::Vec2( 690.f, 920.f ), *this );
@@ -32,3 +31,5 @@ void CCGCentralCavern::VOnGroupResourceRelease()
 	CGCObjectGroup::VOnGroupResourceRelease();
 	DeleteCollectibles();
 }
+
+
