@@ -40,6 +40,7 @@ void CHUD::VOnReset()
 
 void CHUD::UpdateLabel()
 {
+	
 	m_pglOwnerGameLayer->removeChild( m_pLivesLabel );
 	m_pglOwnerGameLayer->removeChild( m_pScoreLabel );
 	
@@ -54,15 +55,3 @@ void CHUD::UpdateLabel()
 	m_pglOwnerGameLayer->addChild( m_pLivesLabel, 2 );
 	m_pglOwnerGameLayer->addChild( m_pScoreLabel, 2 );
 }
-
-CHUD::~CHUD()
-{
-	m_pLivesLabel->release();
-	delete m_pLivesLabel;
-	m_pLivesLabel = nullptr;
-
-	m_pScoreLabel->release();
-	delete m_pScoreLabel;
-	m_pScoreLabel = nullptr;
-}
-

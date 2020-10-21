@@ -142,6 +142,18 @@
     <Filter Include="Classes\ManicMiner\HUD">
       <UniqueIdentifier>{783eafeb-d4ac-4c59-940f-a8c13dbc1221}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Door">
+      <UniqueIdentifier>{ba12dab5-1246-48ca-b711-40ef31239494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\DoorCreator">
+      <UniqueIdentifier>{f0922c52-e67c-41d1-b02f-0f900ed8d1ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\DoorCreator\CentralCavern">
+      <UniqueIdentifier>{35e6ee73-1027-4420-b682-a29c6d7a97f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\CollectiblesGroup\CentralCavern">
+      <UniqueIdentifier>{9873ba2f-793b-4929-a7e3-063fe81a987b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -309,10 +321,6 @@
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms\Crumbling</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CDoor.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CMovingPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms\Moving</Filter>
     </ClCompile>
@@ -327,6 +335,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\HUD\CHUD.cpp">
       <Filter>Classes\ManicMiner\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CDoor.cpp">
+      <Filter>Classes\ManicMiner\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.cpp">
+      <Filter>Classes\ManicMiner\DoorCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\DoorCreator\CentralCavern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -543,10 +563,6 @@
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.h">
       <Filter>Classes\ManicMiner\Platforms\Crumbling</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CDoor.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CMovingPlatform.h">
       <Filter>Classes\ManicMiner\Platforms\Moving</Filter>
     </ClInclude>
@@ -561,6 +577,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\HUD\CHUD.h">
       <Filter>Classes\ManicMiner\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CDoor.h">
+      <Filter>Classes\ManicMiner\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.h">
+      <Filter>Classes\ManicMiner\DoorCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.h">
+      <Filter>Classes\ManicMiner\DoorCreator\CentralCavern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h">
+      <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

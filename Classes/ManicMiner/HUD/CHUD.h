@@ -17,7 +17,6 @@ class CHUD
 {
 public:
 	CHUD(CPlayer& cPlayer, CManicLayer& cLayer, CCollectiblesGroup& collectiblesGroup);
-	~CHUD();
 
 	void UpdateLabel();
 	//void init(CManicLayer& cLayer);

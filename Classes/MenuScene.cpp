@@ -53,7 +53,7 @@ bool CMenuLayer::init()
     // Bib Edit
 	// This is a little boolean that allows for quick swapping from fullscreen to windowed
 	// This is required to avoid flickering and alt-tabbing for debugging on Higher resolution screens
-    const bool fullScreenSwitch = true;
+    const bool fullScreenSwitch = false;
 
     if ( fullScreenSwitch )
     {
