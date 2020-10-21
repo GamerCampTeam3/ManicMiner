@@ -79,6 +79,21 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
+            <key>Idle/cc_platform_crumbling_01.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{60,60}</string>
+                <key>spriteSourceSize</key>
+                <string>{60,60}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{60,60}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
             <key>cc_platform_crumbling.png</key>
             <dict>
                 <key>aliases</key>
@@ -108,7 +123,7 @@
             <key>size</key>
             <string>{62,203}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:18d1efe280103f883be35b1acb7f9fb2:d697f4f4584af88de7df78cde9670431:d67b179265fda25b1c903969a56a167b$</string>
+            <string>$TexturePacker:SmartUpdate:b7283fefbeaa912f4f36e04a3aca03ae:c3f8169efc83e748d77b86110573e262:d67b179265fda25b1c903969a56a167b$</string>
             <key>textureFileName</key>
             <string>CN_Platform_Crumbling_1x1.png</string>
         </dict>

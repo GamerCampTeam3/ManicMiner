@@ -63,13 +63,15 @@ void CCrumblingPlatform::VOnReset()
 	
 	m_fCurrentCrumblingTimer = 0;
 
-	m_v2ResetPosition = cocos2d::Vec2(0.f, 0.f);
 	m_bInitiatedCrumbling = false;
 	m_fCurrentCrumblingTimer = 1.f;
 	m_eCrumbleState = ECrumbleState::ECS_0;
-	m_bCollisionEnabled = false;
-	m_bTriggersHardContactEvent = false;
 
+	const char* pszAnim_Idle = "Idle";
+
+	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+	m_pcIdleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Idle);
+	RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcIdleAnim));
 }
 
 void CCrumblingPlatform::InitiateCrumbling(float fSecondsToStartCrumbling)
