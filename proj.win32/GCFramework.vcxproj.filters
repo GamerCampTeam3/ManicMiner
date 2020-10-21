@@ -237,9 +237,6 @@
     <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp">
       <Filter>Classes\ManicMiner\AirManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.cpp">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp">
       <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClCompile>
@@ -418,9 +415,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h">
       <Filter>Classes\ManicMiner\AirManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.h">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h">
       <Filter>Classes\ManicMiner\Enemy</Filter>

@@ -27,7 +27,7 @@ using namespace cocos2d;
 CGCObjGroupLander::CGCObjGroupLander()
 {
 	m_v2FormationOrigin = Vec2::ZERO;
-	bFirstPassDone = false;
+	m_bFirstPassDone = false;
 	
 	fStartupCounter = 0.0;
 }
@@ -68,14 +68,6 @@ GCTypeID CGCObjGroupLander::VGetTypeId()
 void CGCObjGroupLander::RegisterLanderCollision(GCTypeID idLander)
 {
 	
-	// then need to activate a new random lander.
-	//  - needs to be after a delay period with some random element also.
-	//  - needs to not be the same position as the one destroyed?
-	
-
-
-
-
 	// First find and kill the Lander.
 	int iPosition = 0;
 	ForEachObjectIn_LiveList([&](CGCObject* pObject) -> bool
@@ -151,13 +143,15 @@ void CGCObjGroupLander::KillLandersNotRequiredAtLevelStartup()
 
 //int CGCObjGroupLander::AllocateRandomLanders(int iNumberToAllocate)
 //{
+
+
 	//CCAssert((iNumberToAllocate > 0 || (iNumberToAllocate <= k_iMaxLanderAnchorPoints)),
-	//	"CGCObjectGroupLander: AllocateRandomLander has been called with an out of range input parameter.");
+		//"CGCObjectGroupLander: AllocateRandomLander has been called with an out of range input parameter.");
 
 	//int iTotalPicked = 0;
-//	int iReturnValue = 0;
+	//int iReturnValue = 0;
 //	while (iTotalPicked < iNumberToAllocate)
-	//{
+//{
 		//pick a random anchor point 
 		//int iRand = cocos2d::RandomHelper::random_int(0, k_iMaxLanderAnchorPoints - 1);
 
@@ -176,10 +170,6 @@ void CGCObjGroupLander::VOnGroupResourceAcquire()
 {
 	CGCObjectGroup::VOnGroupResourceAcquire();
 	
-	//struct LanderConfig xx = { 0.0f, 0.0f };
-
-
-	// REVERSE ORDER?
 
 	// Lander 1
 	LanderConfigVars.push_back({ 0.0f, 7.0f });
@@ -190,17 +180,10 @@ void CGCObjGroupLander::VOnGroupResourceAcquire()
 	// Lander 3
 	LanderConfigVars.push_back({ 4.0f, 7.0f });
 
-
-
-
 	StartupTimingsThresholdQueue.push(0.0);
 	StartupTimingsThresholdQueue.push(4.0);
 	StartupTimingsThresholdQueue.push(7.0);
 	StartupTimingsThresholdQueue.push(11.0);
-
-
-
-
 
 
 	// Initialse the vector of Lander Activations to the max allowed.
@@ -232,7 +215,6 @@ void CGCObjGroupLander::VOnGroupResourceAcquire_PostObject()
 	// parent class version
 	CGCObjectGroup::VOnGroupResourceAcquire_PostObject();
 
-
     // set up animations for pAnimation group 2
 	const char* pszPlist_Coin = "TexturePacker/Sprites/Coin/Coin.plist";
 	const char* pszAnim_Coin_Rotate = "Rotate";
@@ -251,7 +233,6 @@ void CGCObjGroupLander::VOnGroupResourceAcquire_PostObject()
 		// Create the animation for each Enemy in the group according to the cAnimationLookup map
 		pItemSprite->RunAction(GCCocosHelpers::CreateAnimationActionLoop( pAnimation1 ));
 
-		
 		return true;
 	} );
 
@@ -279,7 +260,6 @@ void CGCObjGroupLander::CreateLanders()
 		// Store the GCTypeID in a map to allow an index from the GCTypeID to the anchor position.
 		LanderGCTypeIDLookup.insert({pLander->GetGCTypeID(), iLoop});
 
-		
 	}
 }
 
@@ -300,18 +280,10 @@ void CGCObjGroupLander::ActivateLanders(float fTimeStamp)
 			CGCObjLander* pItemObj = (CGCObjLander*)pObject;
 
 			
-			//if 
-
-
-
 			//iPosition++;
 
 			return true;
 		});
-
-
-
-
 
 
 }
@@ -324,7 +296,7 @@ void CGCObjGroupLander::VOnGroupUpdate(f32 fTimeStep)
 	
 	// NOTE - THIS FIRST PASS CONCEPT IS A TEMPORARY SOLUTION UNTIL I DECIDE WHERE THE LANDER
 	// INITIAL KILLING OF LANDERS NOT REQUIRED IS TO GO
-	if (!bFirstPassDone) {
+	if (!m_bFirstPassDone) {
 		KillLandersNotRequiredAtLevelStartup();
 	}
 
@@ -343,17 +315,12 @@ void CGCObjGroupLander::VOnGroupUpdate(f32 fTimeStep)
 			StartupTimingsThresholdQueue.pop();
 		}
 
-
 	}
 
 
 
 
-
-
-
-	bFirstPassDone = true;
-	
+	m_bFirstPassDone = true;
 }
 
 //////////////////////////////////////////////////////////////////////////

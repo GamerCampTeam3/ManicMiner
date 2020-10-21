@@ -30,9 +30,7 @@ CGCObjGroupHazardCentralCavern::~CGCObjGroupHazardCentralCavern()
 
 void CGCObjGroupHazardCentralCavern::VOnGroupResourceAcquire()
 {
-	// Call parent class
-	CGCObjGroupHazard::VOnGroupResourceAcquire();
-
+	
 	CGCObjHazard* pHazard1 = new CGCObjHazard(cocos2d::Vec2(700.0f, 200.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
 	CGCObjHazard* pHazard2 = new CGCObjHazard(cocos2d::Vec2(1250.0f, 440.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
 	CGCObjHazard* pHazard3 = new CGCObjHazard(cocos2d::Vec2(1450.0f, 680.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
