@@ -169,7 +169,7 @@ private:
 	{
 		return m_bWasNextLevelRequested;
 	}
-	void RequestNextLevel();
+
 
 
 public:
@@ -179,8 +179,10 @@ public:
 	{
 		//ResetLevel();
 		m_bWasResetRequested = true;
-	}	
+	}
+	void RequestNextLevel();
 	
 	void SetGameState( EGameState gameState ) { m_eGameState = gameState; }
+	EGameState GetGameState() { return m_eGameState; }
 };
 #endif // #ifndef _CMANICLAYER_H_

@@ -11,10 +11,6 @@
 
 USING_NS_CC;
 
-//////////////////////////////////////////////////////////////////////////
-// 
-//////////////////////////////////////////////////////////////////////////
-
 
 
 CCollectible::CCollectible( CGCFactoryCreationParams& CreationParams, ECollectibleType eType, cocos2d::Vec2 ResetPosition, CCollectiblesGroup& collectibleGroup )
@@ -66,9 +62,4 @@ void CCollectible::InteractEvent()
 				break;
 		}
 	}
-}
-
-CCollectible::~CCollectible()
-{
-	
 }

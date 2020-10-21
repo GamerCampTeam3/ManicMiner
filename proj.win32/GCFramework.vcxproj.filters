@@ -127,6 +127,12 @@
     <Filter Include="Classes\ManicMiner\CollectiblesGroup\CentralCavern">
       <UniqueIdentifier>{b303e3ca-1fbd-430f-95fd-8fde748acb30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Doors">
+      <UniqueIdentifier>{33f6abe0-cadb-4b93-ad08-9d29ee4a4429}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Doors\CentralCavern">
+      <UniqueIdentifier>{6133ce33-04e3-4d95-9dd0-85b2d978e5fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -294,8 +300,17 @@
     <ClCompile Include="..\Classes\ManicMiner\Hazards\GCObjHazard.cpp">
       <Filter>Classes\ManicMiner\Hazards</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CDoor.cpp">
+      <Filter>Classes\ManicMiner\Doors</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp">
       <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.cpp">
+      <Filter>Classes\ManicMiner\Doors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.cpp">
+      <Filter>Classes\ManicMiner\Doors\CentralCavern</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -512,8 +527,17 @@
     <ClInclude Include="..\Classes\ManicMiner\Hazards\GCObjHazard.h">
       <Filter>Classes\ManicMiner\Hazards</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CDoor.h">
+      <Filter>Classes\ManicMiner\Doors</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h">
       <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.h">
+      <Filter>Classes\ManicMiner\Doors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.h">
+      <Filter>Classes\ManicMiner\Doors\CentralCavern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
