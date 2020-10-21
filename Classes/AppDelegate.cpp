@@ -67,7 +67,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	
 	if( !glview ) 
 	{
-		glview = GLViewImpl::create("GC Framework Demo");
+		glview = GLViewImpl::create("Manic Miner Remake");
 		pDirector->setOpenGLView(glview);
 	}
 
