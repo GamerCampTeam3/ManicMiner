@@ -6,22 +6,24 @@
         <dict>
             <key>background.png</key>
             <dict>
-                <key>frame</key>
-                <string>{{0,0},{1920,1080}}</string>
-                <key>offset</key>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
                 <string>{0,0}</string>
-                <key>rotated</key>
+                <key>spriteSize</key>
+                <string>{1920,960}</string>
+                <key>spriteSourceSize</key>
+                <string>{1920,960}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{1920,960}}</string>
+                <key>textureRotated</key>
                 <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{1920,1080}}</string>
-                <key>sourceSize</key>
-                <string>{1920,1080}</string>
             </dict>
         </dict>
         <key>metadata</key>
         <dict>
             <key>format</key>
-            <integer>2</integer>
+            <integer>3</integer>
             <key>pixelFormat</key>
             <string>RGBA8888</string>
             <key>premultiplyAlpha</key>
@@ -29,9 +31,9 @@
             <key>realTextureFileName</key>
             <string>background.png</string>
             <key>size</key>
-            <string>{2048,2048}</string>
+            <string>{1922,962}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:434fb0ea9418082c2c82b29f60bf729e:dd5dba058af67db0767d93d88aafe3bd:0efa5fec0be417390841f237bfdb917e$</string>
+            <string>$TexturePacker:SmartUpdate:fa24666563d4c5b1e1f1fe05c2255ae0:321f0b1b0586d5bf55f1d98a09d0b4a3:0efa5fec0be417390841f237bfdb917e$</string>
             <key>textureFileName</key>
             <string>background.png</string>
         </dict>

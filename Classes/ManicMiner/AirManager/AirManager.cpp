@@ -175,6 +175,8 @@ void CAirManager::LeavingLevel( CManicLayer& rNewManicLayer )
 
 void CAirManager::VOnUpdate( float fTimeStep )
 {
+	CGCObject::VOnUpdate(fTimeStep);
+	
 	UpdateAirTimer();
 	UpdateAirUIElements();
 }

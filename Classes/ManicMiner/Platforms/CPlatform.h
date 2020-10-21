@@ -28,7 +28,7 @@ enum EPlatformType
 	EPT_Regular
 };
 
-enum EPlatformSize
+enum class EPlatformSize
 {
 	EPS_1x1,
 	EPS_2x1,
@@ -57,6 +57,8 @@ public:
 
 	void VOnResourceAcquire() override;
 
+	void VOnReset() override;
+	
 	EPlatformType GetPlatformType() { return m_ePlatformType; }
 
 	bool GetCollisionEnabled() { return m_bCollisionEnabled; }
@@ -66,32 +68,8 @@ public:
 	void SetTriggersHardContactEvent( bool bShouldTrigger ) { m_bTriggersHardContactEvent = bShouldTrigger; }
 
 
-
-	////////////////////////////////////////////////////////////////////////
-	/// Crumbling Platforms
-
-	// needs refactoring
-
-	ECrumbleState m_eCrumbleState;
 	
-	void VOnUpdate(float fTimeStep) override;
-
-	bool m_bInitiatedCrumbling;
-
-	float m_fCurrentCrumblingTimer;
-	float m_fReduceCrumblingTimerBy;
-
-	class cocos2d::Director* m_pcDirector;
-
-	cocos2d::Animation* m_pcCrumbleAnim;
-	
-	// Initiates Crumbling Timer and Animation
-	void InitiateCrumbling(float fSecondsToStartCrumbling);
-
-	/// Crumbling Platforms
-	////////////////////////////////////////////////////////////////////////
-	
-private:
+protected:
 
 	CGCFactoryCreationParams& m_FactoryCreationParams;
 
@@ -100,11 +78,11 @@ private:
 	EPlatformType m_ePlatformType;
 
 
-	void UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState);
-
 	bool m_bCollisionEnabled;
 	bool m_bTriggersHardContactEvent;
 
+
+	cocos2d::Director* m_pcDirector;
 };
 
 #endif

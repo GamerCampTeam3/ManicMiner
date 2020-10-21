@@ -209,9 +209,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CGroundPlatform.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CMovingPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CPlatform.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h" />
     <ClCompile Include="..\Classes\MenuScene.cpp" />
@@ -290,9 +294,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CGroundPlatform.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CMovingPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CPlatform.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />
