@@ -142,7 +142,7 @@
 			<key>coin</key>
 			<dict>
 				<key>anchorpoint</key>
-                <string>{ 0.5000,0.5000 }</string>
+                <string>{ 0.5006,0.5013 }</string>
 				<key>fixtures</key>
 				<array>
 
@@ -160,22 +160,22 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 2.000,-8.000 }</string>	
-								<string>{ 5.000,-6.000 }</string>	
-								<string>{ 6.000,-4.000 }</string>	
-								<string>{ -6.000,-4.000 }</string>	
-								<string>{ -5.000,-6.000 }</string>	
-								<string>{ -2.000,-8.000 }</string>
+								<string>{ 1.992,-8.024 }</string>	
+								<string>{ 4.992,-6.024 }</string>	
+								<string>{ 5.992,-4.024 }</string>	
+								<string>{ -6.008,-4.024 }</string>	
+								<string>{ -5.008,-6.024 }</string>	
+								<string>{ -2.008,-8.024 }</string>
 							</array>
 							<array>	
-								<string>{ 4.000,7.000 }</string>	
-								<string>{ 2.000,8.000 }</string>	
-								<string>{ -2.000,8.000 }</string>	
-								<string>{ -4.000,7.000 }</string>	
-								<string>{ -6.000,4.000 }</string>	
-								<string>{ -6.000,-4.000 }</string>	
-								<string>{ 6.000,-4.000 }</string>	
-								<string>{ 6.000,4.000 }</string>
+								<string>{ 3.992,6.976 }</string>	
+								<string>{ 1.992,7.976 }</string>	
+								<string>{ -2.008,7.976 }</string>	
+								<string>{ -4.008,6.976 }</string>	
+								<string>{ -6.008,3.976 }</string>	
+								<string>{ -6.008,-4.024 }</string>	
+								<string>{ 5.992,-4.024 }</string>	
+								<string>{ 5.992,3.976 }</string>
 							</array>
 						</array>
                     </dict>
