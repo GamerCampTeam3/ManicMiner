@@ -77,6 +77,7 @@ void CMLCentralCavern::VOnDestroy(void)
 	CGCObjectManager::ObjectGroupUnRegister( m_pcCDCreatorCentralCavern );
 	safeDelete( m_pcCDCreatorCentralCavern );
 
+	safeDelete( m_pCHUD );
 
 	// Call base class last
 	CManicLayer::VOnDestroy();
