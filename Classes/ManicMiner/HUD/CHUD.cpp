@@ -8,6 +8,8 @@
 #include "GamerCamp/GCCocosInterface/GB2ShapeCache-x.h"
 
 #include <string>
+
+#include "ManicMiner/Helpers/Helpers.h"
 USING_NS_CC;
 
 CHUD::CHUD( CPlayer& cPlayer, CManicLayer& cLayer, CCollectiblesGroup& collectiblesGroup )

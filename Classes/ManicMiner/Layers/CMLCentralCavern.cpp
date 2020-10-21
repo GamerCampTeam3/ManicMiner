@@ -54,7 +54,7 @@ void CMLCentralCavern::VOnCreate( void )
 	m_pcCDCreatorCentralCavern = new CDCreatorCentralCavern( *this );
 	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
 
-	m_pCHUD = new CHUD( GetPlayer() , *this , *m_pcCollectiblesGroupCentralCavern);
+	// m_pCHUD = new CHUD( GetPlayer() , *this , *m_pcCollectiblesGroupCentralCavern);
 
 	m_pcAirManager = new CAirManager(origin, visibleSize);
 	m_pcAirManager->Init(*this);
@@ -77,7 +77,7 @@ void CMLCentralCavern::VOnDestroy(void)
 	CGCObjectManager::ObjectGroupUnRegister( m_pcCDCreatorCentralCavern );
 	safeDelete( m_pcCDCreatorCentralCavern );
 
-	safeDelete( m_pCHUD );
+	// safeDelete( m_pCHUD );
 
 	// Call base class last
 	CManicLayer::VOnDestroy();
