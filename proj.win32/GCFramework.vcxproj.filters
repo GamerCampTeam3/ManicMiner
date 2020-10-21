@@ -127,17 +127,17 @@
     <Filter Include="Classes\ManicMiner\Platforms\Crumbling">
       <UniqueIdentifier>{555c7045-9fa9-4463-9606-e30d8d750f6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\CDoor">
-      <UniqueIdentifier>{c6a3f066-5d2c-4275-a426-e612543f5de9}</UniqueIdentifier>
+    <Filter Include="Classes\ManicMiner\Platforms\Moving">
+      <UniqueIdentifier>{1fd07c58-3e91-4aae-aeca-039e0a40fa52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\CDoorCreator">
-      <UniqueIdentifier>{2a556804-a1d1-4281-9f6a-c8b840519b38}</UniqueIdentifier>
+    <Filter Include="Classes\ManicMiner\Platforms\Regular">
+      <UniqueIdentifier>{f626e070-7d63-4ca8-a021-bc540a0c58d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\CDoorCreator\CentralCavern">
-      <UniqueIdentifier>{667fb0db-b66b-4482-a1f5-ab56c504d57b}</UniqueIdentifier>
+    <Filter Include="Classes\ManicMiner\Platforms\Ground">
+      <UniqueIdentifier>{d4ae9a7a-ced3-4edf-93ad-95dac71bda5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\CollectiblesGroup\CentralCavern">
-      <UniqueIdentifier>{facb8174-f5f7-4793-bd28-1fee60b404fc}</UniqueIdentifier>
+    <Filter Include="Classes\ManicMiner\Platforms\Brick">
+      <UniqueIdentifier>{9c56e534-daab-4324-a640-c47bdffa0f6a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ManicMiner\HUD">
       <UniqueIdentifier>{783eafeb-d4ac-4c59-940f-a8c13dbc1221}</UniqueIdentifier>
@@ -252,9 +252,6 @@
     <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp">
       <Filter>Classes\ManicMiner\AirManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.cpp">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp">
       <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClCompile>
@@ -312,17 +309,21 @@
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms\Crumbling</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CDoor.cpp">
-      <Filter>Classes\ManicMiner\CDoor</Filter>
+    <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CDoor.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CMovingPlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\Moving</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.cpp">
-      <Filter>Classes\ManicMiner\CDoorCreator</Filter>
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CGroundPlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.cpp">
-      <Filter>Classes\ManicMiner\CDoorCreator\CentralCavern</Filter>
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\Brick</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp">
-      <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\Regular</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\HUD\CHUD.cpp">
       <Filter>Classes\ManicMiner\HUD</Filter>
@@ -449,9 +450,6 @@
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h">
       <Filter>Classes\ManicMiner\AirManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCEnemyDataStore.h">
-      <Filter>Classes\ManicMiner\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h">
       <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClInclude>
@@ -545,17 +543,21 @@
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.h">
       <Filter>Classes\ManicMiner\Platforms\Crumbling</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CDoor.h">
-      <Filter>Classes\ManicMiner\CDoor</Filter>
+    <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CDoor.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CMovingPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\Moving</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDoorCreator.h">
-      <Filter>Classes\ManicMiner\CDoorCreator</Filter>
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CGroundPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CentralCavern\CDCreatorCentralCavern.h">
-      <Filter>Classes\ManicMiner\CDoorCreator\CentralCavern</Filter>
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\Brick</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h">
-      <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\Regular</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\HUD\CHUD.h">
       <Filter>Classes\ManicMiner\HUD</Filter>

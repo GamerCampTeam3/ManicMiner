@@ -405,7 +405,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 					case EPT_Crumbling:
 						{
 							// Start Crumbling
-							pPlatform->InitiateCrumbling( 1.0f );
+							//pPlatform->InitiateCrumbling( 1.0f );
 
 							// Set player as grounded
 							m_pcPlayer->LandedOnWalkablePlatform();
@@ -667,27 +667,39 @@ void CManicLayer::HandleCollisions()
 // Player + Enemy
 void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
 {
-	OnDeath();
+	if( rcContact.IsTouching() )
+	{
+		OnDeath();
+	}
 }
 
 // Player + Hazard
 void CManicLayer::PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact)
 {
-	OnDeath();
+	if( rcContact.IsTouching() )
+	{
+		OnDeath();
+	}
 }
 
 
 
-void CManicLayer::EnemyCollidedPlatform(CGCObjEnemy& rcEnemy, const b2Contact& rcContact)
+void CManicLayer::EnemyCollidedPlatform( CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
 {
-	rcEnemy.BounceEnemyDirection();
+	if( rcContact.IsTouching() )
+	{
+		rcEnemy.BounceEnemyDirection();
+	}
 }
 
 
 // Player + Collectible
 void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact )
 {
-	rcCollectible.InteractEvent();
+	if( rcContact.IsTouching() )
+	{
+		rcCollectible.InteractEvent();
+	}
 }
 
 void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact )

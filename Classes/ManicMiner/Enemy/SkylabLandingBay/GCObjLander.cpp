@@ -18,28 +18,26 @@ USING_NS_CC;
 // this type - need this to construct our base type
 
 
-
-CGCObjLander::CGCObjLander(const cocos2d::Vec2& AnchorPoint, const float fSpeed, CGCFactoryCreationParams& ParamsInput)
+CGCObjLander::CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const float fSpeed, CGCFactoryCreationParams& rcParamsInput)
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjLander))
-	, rFactoryCreationParams(ParamsInput)
-	, m_cAnchorPoint(AnchorPoint)
-	, fSpeed(fSpeed)
+	, m_rFactoryCreationParams(rcParamsInput)
+	, m_cAnchorPoint(rcAnchorPoint)
+	, m_fSpeed(fSpeed)
 {
 }
 
-//IN_CPP_CREATION_PARAMS_DECLARE( CGCObjLander, "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist", "koopa", b2_dynamicBody, true );
 //virtual 
 void CGCObjLander::VOnResourceAcquire( void )
 {
 
 	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjLander );    
-	VHandleFactoryParams(rFactoryCreationParams, GetResetPosition());
+	VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
 
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
 	m_cTotalVelocity = Vec2::ZERO;
 
-	m_cTotalVelocity.x = fSpeed;
+	m_cTotalVelocity.x = m_fSpeed;
 
 	SetResetPosition(m_cAnchorPoint);
 
@@ -59,7 +57,5 @@ void CGCObjLander::VOnResurrected( void )
 void CGCObjLander::VOnUpdate(float fTimeStep)
 {
 	CGCObject::VOnUpdate(fTimeStep);
-
-	
 
 }
