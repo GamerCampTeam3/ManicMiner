@@ -100,7 +100,7 @@ void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 			{
 				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
 			}
-
+			break;
 		case ECollectibleTypeRequired::Switch:
 			if (m_iSwitches == m_iMaxSwitches)
 			{
@@ -113,6 +113,7 @@ void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 			{
 				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
 			}
+			break;
 	}
 }
 
