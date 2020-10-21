@@ -125,6 +125,9 @@ private:
 		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
 
+
+public:
+	
 	////////////////////////////////////////////////////////////////////////////
 	// General Game Logic
 	////////////////////////////////////////////////////////////////////////////

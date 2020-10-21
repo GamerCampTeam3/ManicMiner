@@ -9,14 +9,15 @@
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "GamerCamp/GCCocosInterface/GB2ShapeCache-x.h"
 #include "../GameInstance/CGameInstance.h"
-#include "../Layers/CManicLayer.h"
+#include "../Layers/CMLCentralCavern.h"
 
 USING_NS_CC;
 
 
 // constructor 
-CAirManager::CAirManager( cocos2d::Point pOrigin, cocos2d::Size visibleSize )
-	: m_eAirState( EAirState::EAS_HasAirLeft )
+CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
+	: CGCObject(GetGCTypeIDOf(CAirManager))
+	, m_eAirState( EAirState::EAS_HasAirLeft )
 	, m_pglOwnerGameLayer		( nullptr )
 	, m_pdDirector				( nullptr )
 	, m_pcGCSprAirBar			( nullptr )
@@ -37,9 +38,7 @@ CAirManager::CAirManager( cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 
 CAirManager::~CAirManager()
 {
-	// leave no dangling pointers
 	m_pglOwnerGameLayer = nullptr;
-
 	m_pdDirector = nullptr;
 
 	// empty variables
@@ -145,7 +144,7 @@ CAirManager::~CAirManager()
 //}
 
 
-void CAirManager::Reset()
+void CAirManager::VOnReset()
 {
 	m_fRemainingAirAmount = m_fMaxAir;
 	m_fConsumedAirAmount = 0.f;
@@ -174,7 +173,7 @@ void CAirManager::LeavingLevel( CManicLayer& rNewManicLayer )
 	}
 }
 
-void CAirManager::Update( float fTimeStep )
+void CAirManager::VOnUpdate( float fTimeStep )
 {
 	UpdateAirTimer();
 	UpdateAirUIElements();
@@ -182,7 +181,7 @@ void CAirManager::Update( float fTimeStep )
 
 
 
-void CAirManager::Init( class CManicLayer& rglOwnerGameLayer )
+void CAirManager::Init( class CMLCentralCavern& rglOwnerGameLayer )
 {
 	//if( !m_bInitialized )
 	{
@@ -289,7 +288,7 @@ bool CAirManager::UpdateAirTimer()
 {
 	if( m_fRemainingAirAmount <= 0.0f ) // if no air left return false
 	{
-		//OutOfAir();
+		m_pglOwnerGameLayer->OnDeath();
 		return false;
 	}
 

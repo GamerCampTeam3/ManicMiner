@@ -16,29 +16,32 @@ enum EAirState
 	EAS_HasAirLeft
 };
 
-class CAirManager
+class CAirManager : public CGCObject
 {
 public:
-	CAirManager( cocos2d::Point pOrigin, cocos2d::Size visibleSize );
+	CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize );
 
 	//CAirManager(class IGCGameLayer* pglOwnerGameLayer, cocos2d::Size* pv2VisibleSize, cocos2d::Point* ppOrigin);	// overloaded constructor
 	virtual ~CAirManager();
 
-	void Reset();
+	//void Reset();
 
 	void LeavingLevel( CManicLayer& rNewManicLayer );
 
-	void Update(float fTimeStep);
+	//void Update(float fTimeStep);
 
+	void VOnUpdate(float fTimeStep) override;
 
-	void Init( class CManicLayer& rglOwnerGameLayer );
+	void VOnReset() override;
+
+	void Init( class CMLCentralCavern& rglOwnerGameLayer );
 	
 	bool GetHasInitialized();
 private:
 
 	EAirState m_eAirState;
 	
-	class CManicLayer* m_pglOwnerGameLayer;
+	class CMLCentralCavern* m_pglOwnerGameLayer;
 
 	class cocos2d::Director* m_pdDirector;
 	
