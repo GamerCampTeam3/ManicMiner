@@ -1,4 +1,6 @@
 #include "CMLCentralCavern.h"
+
+#include "ManicMiner/Doors/CentralCavern/CDCreatorCentralCavern.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
@@ -6,11 +8,13 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
 #include "ManicMiner/CollectiblesGroup/CentralCavern/CCGCentralCavern.h"
+#include "ManicMiner/AirManager/AirManager.h"
 
 CMLCentralCavern::CMLCentralCavern( )
 	: CManicLayer( )
 	, m_pcGCGroupEnemyCentralCavern(nullptr)
 	, m_pcGCGroupHazardCentralCavern(nullptr)
+	, m_pcGroupPlatformCentralCavern(nullptr)
 	, m_pcCollectiblesGroupCentralCavern(nullptr)
 {}
 
@@ -22,10 +26,9 @@ void CMLCentralCavern::VOnCreate( void )
 	CManicLayer::VOnCreate();
 
 
-	cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+	cocos2d::Size  visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 	cocos2d::Point origin = cocos2d::Director::getInstance()->getVisibleOrigin();
-	cocos2d::Vec2	v2NewStart( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.33f ) ) );
-
+	cocos2d::Vec2  v2NewStart( ( origin.x + ( visibleSize.width * 0.08f ) ), ( origin.y + ( visibleSize.height * 0.11f ) ) );
 
 	// Edit Custom Layout
 	GetPlayer().SetResetPosition( v2NewStart );
@@ -46,6 +49,12 @@ void CMLCentralCavern::VOnCreate( void )
 
 	m_pcCollectiblesGroupCentralCavern = new CCGCentralCavern(*this, ECollectibleTypeRequired::Collectible, 5);	
 	CGCObjectManager::ObjectGroupRegister( m_pcCollectiblesGroupCentralCavern );
+
+	m_pcCDCreatorCentralCavern = new CDCreatorCentralCavern( *this );
+	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
+
+	m_pcAirManager = new CAirManager(origin, visibleSize);
+	m_pcAirManager->Init(*this);
 }
 
 void CMLCentralCavern::VOnDestroy(void)
@@ -61,6 +70,10 @@ void CMLCentralCavern::VOnDestroy(void)
 
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);
 	safeDelete( m_pcGroupPlatformCentralCavern );
+
+	CGCObjectManager::ObjectGroupUnRegister( m_pcCDCreatorCentralCavern );
+	safeDelete( m_pcCDCreatorCentralCavern );
+
 
 	// Call base class last
 	CManicLayer::VOnDestroy();

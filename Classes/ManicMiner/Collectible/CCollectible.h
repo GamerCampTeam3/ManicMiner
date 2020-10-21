@@ -21,7 +21,6 @@ public:
 	
 	
 	CCollectible( CGCFactoryCreationParams& CreationParams, ECollectibleType eType, cocos2d::Vec2 ResetPosition, CCollectiblesGroup& collectibleGroup );
-	~CCollectible();
 
 	virtual void VOnResourceAcquire( void ) override;
 	virtual void VOnReset() override;

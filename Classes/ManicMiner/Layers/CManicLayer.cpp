@@ -387,12 +387,40 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 					// Increment hard contact count for the player
 					m_pcPlayer->HardContactEvent( true );
 
-					// If first contact with surface, and is on top of a surface ( is in contact with at least 1 platform sensor )
-					if( !m_pcPlayer->GetIsGrounded() )
+
+
+					// Check Platform Type
+					switch( pPlatform->GetPlatformType() )
 					{
-						// Set player as grounded
-						m_pcPlayer->LandedOnWalkablePlatform();
+					////////////////////////////////////////////////////////////////////////////////////
+					// Conveyor Belt
+					case EPT_Moving:
+						{
+							m_pcPlayer->ConveyorBeltMovement( EPlayerDirection::EPD_Left );
+							m_pcPlayer->SetCanBeControlled( false );
+						}	
+						break;
+					////////////////////////////////////////////////////////////////////////////////////
+					// Crumbling Platforms
+					case EPT_Crumbling:
+						{
+							// Start Crumbling
+							pPlatform->InitiateCrumbling( 1.0f );
+
+							// Set player as grounded
+							m_pcPlayer->LandedOnWalkablePlatform();
+						}
+						break;
+					////////////////////////////////////////////////////////////////////////////////////
+					// Default
+					default:
+						{
+							// Set player as grounded
+							m_pcPlayer->LandedOnWalkablePlatform();
+						}
+						break;
 					}
+					
 				}
 			}
 		}
@@ -581,52 +609,52 @@ void CManicLayer::PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImp
 ///
 void CManicLayer::HandleCollisions()
 {
-	// check for collisions
-	b2Body* pBodyToDestroy = nullptr;
-	for( const b2Contact* pB2Contact = IGCGameLayer::ActiveInstance()->B2dGetWorld()->GetContactList();
-		nullptr != pB2Contact;
-		pB2Contact = pB2Contact->GetNext() )
-	{
-		const b2Fixture* pFixtureA = CGCObjSpritePhysics::FromB2DContactGetFixture_A( pB2Contact );
-		const b2Fixture* pFixtureB = CGCObjSpritePhysics::FromB2DContactGetFixture_B( pB2Contact );
+	//// check for collisions
+	//b2Body* pBodyToDestroy = nullptr;
+	//for( const b2Contact* pB2Contact = IGCGameLayer::ActiveInstance()->B2dGetWorld()->GetContactList();
+	//	nullptr != pB2Contact;
+	//	pB2Contact = pB2Contact->GetNext() )
+	//{
+	//	const b2Fixture* pFixtureA = CGCObjSpritePhysics::FromB2DContactGetFixture_A( pB2Contact );
+	//	const b2Fixture* pFixtureB = CGCObjSpritePhysics::FromB2DContactGetFixture_B( pB2Contact );
 
-		// return if either physics body has null user data
-		CGCObjSpritePhysics* pGcSprPhysA = CGCObjSpritePhysics::FromB2DFixtureGetSpritePhysics( pFixtureA );
-		if( !pGcSprPhysA )
-		{
-			return;
-		}
+	//	// return if either physics body has null user data
+	//	CGCObjSpritePhysics* pGcSprPhysA = CGCObjSpritePhysics::FromB2DFixtureGetSpritePhysics( pFixtureA );
+	//	if( !pGcSprPhysA )
+	//	{
+	//		return;
+	//	}
 
-		CGCObjSpritePhysics* pGcSprPhysB = CGCObjSpritePhysics::FromB2DFixtureGetSpritePhysics( pFixtureB );
-		if( !pGcSprPhysB )
-		{
-			return;
-		}
+	//	CGCObjSpritePhysics* pGcSprPhysB = CGCObjSpritePhysics::FromB2DFixtureGetSpritePhysics( pFixtureB );
+	//	if( !pGcSprPhysB )
+	//	{
+	//		return;
+	//	}
 
-		// check for user data - this is defined in physics editor as the 'Id' text
-		// in the text box immediately below the 'Is Sensor?' checkbox
-		// 
-		// Mario has a fixture that is a sensor with id 'bottom_left' 
-		// and this is what we're checking for :)
-		const std::string*  pstrCheckMe = cocos2d::GB2ShapeCache::getFixtureIdText( pFixtureA );
-		bool				bNameMatches = ( 0 == pstrCheckMe->compare( "bottom_left" ) );
-		bool				bIsASensor = pFixtureA->IsSensor();
+	//	// check for user data - this is defined in physics editor as the 'Id' text
+	//	// in the text box immediately below the 'Is Sensor?' checkbox
+	//	// 
+	//	// Mario has a fixture that is a sensor with id 'bottom_left' 
+	//	// and this is what we're checking for :)
+	//	const std::string*  pstrCheckMe = cocos2d::GB2ShapeCache::getFixtureIdText( pFixtureA );
+	//	bool				bNameMatches = ( 0 == pstrCheckMe->compare( "bottom_left" ) );
+	//	bool				bIsASensor = pFixtureA->IsSensor();
 
-		if( pstrCheckMe && bNameMatches && bIsASensor )
-		{
-			int i = 0;
-			++i;
-		}
+	//	if( pstrCheckMe && bNameMatches && bIsASensor )
+	//	{
+	//		int i = 0;
+	//		++i;
+	//	}
 
-		pstrCheckMe = cocos2d::GB2ShapeCache::getFixtureIdText( pFixtureB );
-		if( pstrCheckMe
-			&& ( 0 == pstrCheckMe->compare( "bottom_left" ) )
-			&& pFixtureB->IsSensor() )
-		{
-			int i = 0;
-			++i;
-		}
-	}
+	//	pstrCheckMe = cocos2d::GB2ShapeCache::getFixtureIdText( pFixtureB );
+	//	if( pstrCheckMe
+	//		&& ( 0 == pstrCheckMe->compare( "bottom_left" ) )
+	//		&& pFixtureB->IsSensor() )
+	//	{
+	//		int i = 0;
+	//		++i;
+	//	}
+	//}
 }
 
 // GetPhysicsBody()->GetFixtureList()->IsSensor();
@@ -667,18 +695,14 @@ void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, co
 	const bool isColliding = rcContact.IsTouching();
 	if( isColliding )
 	{
-		if (rcPlatform.GetPlatformType() == EPT_Moving)
-		{
-			rcPlayer.ConveyorBeltMovement( EPlayerDirection::EPD_Left );
-			rcPlayer.SetCanBeControlled( false );
-		}
 
-		else
-		{
+		
+		//else
+		//{
 
-			rcPlayer.SetCanBeControlled( true );
+		//	rcPlayer.SetCanBeControlled( true );
 
-		}
+		//}
 
 		//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
 		//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();

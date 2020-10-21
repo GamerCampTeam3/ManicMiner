@@ -19,9 +19,10 @@ public:
 	
 
 private:
-	void GenerateCollectibles() override;
+	 void GenerateCollectibles() override;
 	 void DeleteCollectibles();
 	 void VOnGroupResourceRelease() override;
+	
 };
 
 

@@ -125,6 +125,9 @@ private:
 		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
 
+
+public:
+	
 	////////////////////////////////////////////////////////////////////////////
 	// General Game Logic
 	////////////////////////////////////////////////////////////////////////////
@@ -169,7 +172,7 @@ private:
 	{
 		return m_bWasNextLevelRequested;
 	}
-	void RequestNextLevel();
+
 
 
 public:
@@ -179,8 +182,10 @@ public:
 	{
 		//ResetLevel();
 		m_bWasResetRequested = true;
-	}	
+	}
+	void RequestNextLevel();
 	
 	void SetGameState( EGameState gameState ) { m_eGameState = gameState; }
+	EGameState GetGameState() { return m_eGameState; }
 };
 #endif // #ifndef _CMANICLAYER_H_
