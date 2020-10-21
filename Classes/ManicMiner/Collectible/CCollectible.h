@@ -10,18 +10,17 @@ class CCollectible
 : public CGCObjSpritePhysics
 {
 private:
+	CGCFactoryCreationParams& m_FactoryCreationParams;
 	ECollectibleType m_eCollectibleType;
 	bool m_bHasBeenCollected;
+	cocos2d::Vec2 m_v2ResetPosition;
 	CCollectiblesGroup* m_pcCollectiblesGroup;
+
 
 public:
 	
-	CCollectible( void )
-		: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
-		, m_bHasBeenCollected( false )
-	{}
-
-	CCollectible( ECollectibleType eType, CCollectiblesGroup &collectibleGroup );
+	
+	CCollectible( CGCFactoryCreationParams& CreationParams, ECollectibleType eType, cocos2d::Vec2 ResetPosition, CCollectiblesGroup& collectibleGroup );
 	~CCollectible();
 
 	virtual void VOnResourceAcquire( void ) override;
