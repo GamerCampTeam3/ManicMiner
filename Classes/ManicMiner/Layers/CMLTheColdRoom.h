@@ -17,7 +17,7 @@ public:
 
 private:
 	// object groups
-	CGCObjGroupEnemyCentralCavern* m_pcGCGroupEnemyCentralCavern;
+	//CGCObjGroupEnemyCentralCavern* m_pcGCGroupEnemyCentralCavern;
 	CObjCCGroupPlatform* m_pcGroupPlatformCentralCavern;
 };
 #endif //#ifndef _CMLTHECOLDROOM_H_

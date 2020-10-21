@@ -17,6 +17,7 @@ CPlatform::CPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 Res
 	, m_v2ResetPosition(ResetPosition)
 	, m_ePlatformType( PlatformType )
 	, m_bCollisionEnabled( false )
+	, m_bTriggersHardContactEvent ( false )
 {
 }
 

@@ -31,7 +31,6 @@ class CPlayer
 private:
 
 	// Constant values
-	/// Henrique note: this value isnt changing anything
 	const float								m_kfGravitionalPull;			// The gravitational force that affects the player for jumping purposes
 
 	// Our Movement Related variables
@@ -43,6 +42,8 @@ private:
 	bool									m_bIsOnLadder;
 	bool									m_bIsGrounded;					// Is walking on platform?
 	bool									m_bIsAlive;
+	int										m_iSensorContactCount;			// Number of sensors that are overlapping with the Player's "feet" sensor at any given frame
+	int										m_iHardContactCount;			// Number of hard contacts the player collision has at any given frame, sensor contacts are excluded
 
 	float									m_fMovementSpeed;
 	float									m_fJumpSpeed;
@@ -58,9 +59,9 @@ private:
 	TGCActionToKeyMap< EPlayerActions >*	m_pcControllerActionToKeyMap;
 
 public:
-	CPlayer();
+	//CPlayer();
 	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos);
-	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos,const int startingLives);
+	//CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos,const int startingLives);
 
 	virtual ~CPlayer()	{}
 
@@ -92,8 +93,22 @@ public:
 	void SetCanJump			(bool canJump)		{ m_bCanJump = canJump; }
 	bool GetCanBeControlled	() const			{ return m_bCanBeControlled; }
 	void SetCanBeControlled	(bool canControl)	{ m_bCanBeControlled = canControl; }
+	bool GetIsGrounded		()					{ return m_bIsGrounded; }
+	void SetIsGrounded( bool bIsGrounded ) { m_bIsGrounded = bIsGrounded; }
+
+	int GetHardContactCount();
+	int GetSensorContactCount();
 
 	
+	// Called both on BeginContact() and EndContact() from collision engine
+	// Will either increment or decrement the m_iHardContactCount 
+	void HardContactEvent( bool bBeganContact );
+	
+	// For platform jump-through
+	// Called both on BeginContact() and EndContact() from collision engine
+	// Will either increment or decrement the m_iSensorContactCount
+	void SensorContactEvent( bool bBeganContact );
+
 
 	// For GameState related things:: Player lives
 	// Additionally included pre-made increment/decrement functions
@@ -117,7 +132,8 @@ public:
 	// Called when landing on top of a platform surface, enables player control and movement
 	void LandedOnWalkablePlatform();
 
-
+	// Called when player is no longer touching any ground surface
+	void LeftWalkablePlatform();
 
 	void ConveyorBeltMovement( EPlayerDirection xAxisLock );
 	void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }

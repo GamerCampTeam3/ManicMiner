@@ -51,6 +51,8 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
 	, m_bIsOnLadder						( false )
 	, m_bIsGrounded						( false )
 	, m_bIsAlive						( true )
+	, m_iSensorContactCount				( 0 )
+	, m_iHardContactCount				( 0 )
 	, m_v2Movement						( 0.0f, 0.0f )
 	, m_fMovementSpeed					( -4.f )
 	, m_fJumpSpeed						( 10.6f )
@@ -153,20 +155,75 @@ void CPlayer::Die()
 	}
 }
 
+int CPlayer::GetHardContactCount()
+{
+	return m_iHardContactCount;
+}
+
+int CPlayer::GetSensorContactCount()
+{
+	return m_iSensorContactCount;
+}
+
+void CPlayer::HardContactEvent( bool bBeganContact )
+{
+	// If began a new contact, add to the sum
+	if ( bBeganContact )
+	{
+		++m_iHardContactCount;
+	}
+	// Else, a contact came to an end, decrement the sum
+	else
+	{
+		--m_iHardContactCount;
+	}
+}
+
+void CPlayer::SensorContactEvent( bool bBeganContact )
+{
+	// If began a new contact, add to the sum
+	if( bBeganContact )
+	{
+		++m_iSensorContactCount;
+	}
+	// Else, a contact came to an end, decrement the sum
+	else
+	{
+		--m_iSensorContactCount;
+	}
+}
+
 void CPlayer::LandedOnWalkablePlatform()
 {
-	if( GetVelocity().y < 0.0f )
+	CCLOG( "Landed" );
+	m_bCanJump = true;
+	m_bCanBeControlled = true;
+	m_bIsGrounded = true;
+
+
+
+	//ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+
+	// Run another check for player input
+	KeyboardInput();
+}
+
+void CPlayer::LeftWalkablePlatform()
+{
+	// If player did not initiate jump
+	if( m_ePlayerDirection != EPlayerDirection::EPD_Jumping )
 	{
-		CCLOG( "Landed" );
-		m_bCanJump = true;
-		m_bCanBeControlled = true;
-		m_bIsGrounded = true;
-		m_ePlayerDirection = EPlayerDirection::EPD_Static;
+		auto v2CurrentVelocity = GetVelocity();
+		SetVelocity( cocos2d::Vec2( 0.0f, v2CurrentVelocity.y ) );
+	
+		m_eLastPlayerDirection = m_ePlayerDirection;
+		m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
 
-
-
-		//ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+		m_bIsGrounded = false;
+		m_bCanJump = false;
 	}
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -176,6 +233,19 @@ void CPlayer::LandedOnWalkablePlatform()
 void CPlayer::VOnUpdate( f32 fTimeStep )
 {
 	KeyboardInput();
+
+	std::string string1 = std::to_string( m_iHardContactCount );
+	char const* pchar1 = string1.c_str();
+
+	CCLOG( "Hard Count:" );	
+	CCLOG( pchar1 );	
+	
+	std::string string2 = std::to_string( m_iSensorContactCount );
+	char const* pchar2 = string2.c_str();
+	CCLOG( "Soft Count:" );
+	CCLOG( pchar2 );
+
+
 	//UpdateMovement( fTimeStep );
 }
 
@@ -193,7 +263,7 @@ void CPlayer::KeyboardInput()
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump )))
 		{
-			CCLOG( "jump input received" );
+			//CCLOG( "jump input received" );
 			JumpEvent();
 		}
 
@@ -278,14 +348,8 @@ void CPlayer::ConveyorBeltMovement(EPlayerDirection xAxisLock)
 		case EPlayerDirection::EPD_Right:
 			SetVelocity( cocos2d::Vec2( abs( m_fMovementSpeed), 0.f ) );
 			break;
-
-		default:
-			break;
 	}
 }
-
-
-
 
 
 // Movement Functions called by Input/Jump
@@ -322,8 +386,8 @@ void CPlayer::ApplyDirectionChange( EPlayerDirection eNewDirection, float fHoriz
 		const Vec2 v2NewVelocity( fHorizontalVelocity, fVerticalVelocity );
 		m_v2Movement = v2NewVelocity;
 
-		m_ePlayerDirection = eNewDirection;
 		m_eLastPlayerDirection = m_ePlayerDirection;
+		m_ePlayerDirection = eNewDirection;
 		
 		UpdateMovement();
 	}
