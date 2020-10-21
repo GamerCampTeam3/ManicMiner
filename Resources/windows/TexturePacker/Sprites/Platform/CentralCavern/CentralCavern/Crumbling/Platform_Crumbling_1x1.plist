@@ -11,11 +11,71 @@
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
+                <string>{62,62}</string>
+                <key>spriteSourceSize</key>
+                <string>{62,62}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{62,62}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>Crumble/CN_Platform_Crumbling_1x1_Frame_01.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
                 <string>{60,60}</string>
                 <key>spriteSourceSize</key>
                 <string>{60,60}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{60,60}}</string>
+                <string>{{1,65},{60,60}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>Crumble/CN_Platform_Crumbling_1x1_Frame_02.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{60,60}</string>
+                <key>spriteSourceSize</key>
+                <string>{60,60}</string>
+                <key>textureRect</key>
+                <string>{{1,127},{60,60}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>Crumble/CN_Platform_Crumbling_1x1_Frame_03.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,15}</string>
+                <key>spriteSize</key>
+                <string>{60,30}</string>
+                <key>spriteSourceSize</key>
+                <string>{60,60}</string>
+                <key>textureRect</key>
+                <string>{{1,189},{60,30}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>Crumble/CN_Platform_Crumbling_1x1_Frame_04.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-28.5,28.5}</string>
+                <key>spriteSize</key>
+                <string>{3,3}</string>
+                <key>spriteSourceSize</key>
+                <string>{60,60}</string>
+                <key>textureRect</key>
+                <string>{{1,221},{3,3}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -31,9 +91,9 @@
             <key>realTextureFileName</key>
             <string>CN_Platform_Crumbling_1x1.png</string>
             <key>size</key>
-            <string>{62,62}</string>
+            <string>{64,225}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e1991999b9d907b17461aeeb5f13b0bb:e874cb47c95f552b59b2ec2e3cbcafa3:d67b179265fda25b1c903969a56a167b$</string>
+            <string>$TexturePacker:SmartUpdate:5461fc72d49f7cf69de600b477e9d892:8d6206bf75be2a974a0be3e83a58918e:d67b179265fda25b1c903969a56a167b$</string>
             <key>textureFileName</key>
             <string>CN_Platform_Crumbling_1x1.png</string>
         </dict>

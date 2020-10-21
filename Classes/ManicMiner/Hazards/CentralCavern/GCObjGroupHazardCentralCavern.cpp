@@ -33,13 +33,13 @@ void CGCObjGroupHazardCentralCavern::VOnGroupResourceAcquire()
 	// Call parent class
 	CGCObjGroupHazard::VOnGroupResourceAcquire();
 
-	CGCObjHazard* pHazard1 = new CGCObjHazard(cocos2d::Vec2(700.0f, 200.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
-	CGCObjHazard* pHazard2 = new CGCObjHazard(cocos2d::Vec2(1250.0f, 440.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
-	CGCObjHazard* pHazard3 = new CGCObjHazard(cocos2d::Vec2(1450.0f, 680.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
-	CGCObjHazard* pHazard4 = new CGCObjHazard(cocos2d::Vec2(1650.0f, 680.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
+	CGCObjHazard* pHazard1 = new CGCObjHazard(cocos2d::Vec2(700.0f, 210.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
+	CGCObjHazard* pHazard2 = new CGCObjHazard(cocos2d::Vec2(1250.0f, 450.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
+	CGCObjHazard* pHazard3 = new CGCObjHazard(cocos2d::Vec2(1450.0f, 690.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
+	CGCObjHazard* pHazard4 = new CGCObjHazard(cocos2d::Vec2(1650.0f, 690.0f), HazardTypes::EHazardId::EBush, s_cCreationParams_CGCObj_EBush);
 
-	CGCObjHazard* pHazard5 = new CGCObjHazard(cocos2d::Vec2(740.0f, 1000.0f), HazardTypes::EHazardId::EDownwardSpike, s_cCreationParams_CGCObj_EDownwardSpike);
-	CGCObjHazard* pHazard6 = new CGCObjHazard(cocos2d::Vec2(940.0f, 1000.0f), HazardTypes::EHazardId::EDownwardSpike, s_cCreationParams_CGCObj_EDownwardSpike);
+	CGCObjHazard* pHazard5 = new CGCObjHazard(cocos2d::Vec2(740.0f, 990.0f), HazardTypes::EHazardId::EDownwardSpike, s_cCreationParams_CGCObj_EDownwardSpike);
+	CGCObjHazard* pHazard6 = new CGCObjHazard(cocos2d::Vec2(940.0f, 990.0f), HazardTypes::EHazardId::EDownwardSpike, s_cCreationParams_CGCObj_EDownwardSpike);
 
 }
 

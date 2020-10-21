@@ -100,7 +100,7 @@ bool CMenuLayer::init()
         "Buttons/Exit/ExitButton_01.png",
         CC_CALLBACK_1(CMenuLayer::CB_OnGameExitButton, this));
 
-    pItemExitGame->setPosition(Vec2(1900.f, 20.f));
+    pItemExitGame->setPosition(Vec2(1900.f, 1060.f));
 
     pMenu = Menu::create(pItemExitGame, nullptr);
     pMenu->setPosition(Vec2::ZERO);
