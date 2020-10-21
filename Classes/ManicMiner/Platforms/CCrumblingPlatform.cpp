@@ -67,7 +67,6 @@ void CCrumblingPlatform::VOnReset()
 	m_fCurrentCrumblingTimer = 0;
 
 	m_v2ResetPosition = cocos2d::Vec2(0.f, 0.f);
-	m_ePlatformType = EPT_Regular;
 	m_bInitiatedCrumbling = false;
 	m_fCurrentCrumblingTimer = 1.f;
 	m_eCrumbleState = ECrumbleState::ECS_0;

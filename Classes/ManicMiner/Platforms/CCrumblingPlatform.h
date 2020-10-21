@@ -28,6 +28,8 @@ public:
 
 	void VOnReset() override;
 
+	// Initiates Crumbling Timer and Animation
+	void InitiateCrumbling(float fSecondsToStartCrumbling);
 private:
 
 	////////////////////////////////////////////////////////////////////////
@@ -44,8 +46,6 @@ private:
 
 	cocos2d::Animation* m_pcCrumbleAnim;
 
-	// Initiates Crumbling Timer and Animation
-	void InitiateCrumbling(float fSecondsToStartCrumbling);
 
 	void UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState);
 
