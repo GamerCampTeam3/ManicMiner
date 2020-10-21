@@ -20,7 +20,7 @@ class CCrumblingPlatform : public CPlatform
 {
 public:
 	
-	CCrumblingPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType);
+	CCrumblingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 
 	void VOnResourceAcquire() override;
 

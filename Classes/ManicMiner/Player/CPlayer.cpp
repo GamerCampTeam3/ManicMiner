@@ -13,7 +13,7 @@
 
 USING_NS_CC;
 
-
+static int testnum = 0;
 // action map arrays must match in length - in the templated controller class we use they map from the user define enum to cocos2d::Controller::Key 
 static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,								EPlayerActions::EPA_AxisMove_Y,								EPlayerActions::EPA_Jump };
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
@@ -156,6 +156,11 @@ void CPlayer::Die()
 	}
 }
 
+bool CPlayer::GetIsOnConveyorBelt()
+{
+	return ( !m_bCanBeControlled || m_bIsPendingDirection );
+}
+
 int CPlayer::GetHardContactCount()
 {
 	return m_iHardContactCount;
@@ -177,6 +182,12 @@ void CPlayer::HardContactEvent( bool bBeganContact )
 	else
 	{
 		--m_iHardContactCount;
+	}
+
+	// Might happen because of bricks
+	if (m_iHardContactCount < 0)
+	{
+		m_iHardContactCount = 0;
 	}
 }
 
@@ -210,7 +221,12 @@ void CPlayer::LandedOnWalkablePlatform()
 
 void CPlayer::LandedOnConveyorBelt( EPlayerDirection eDirectionLock )
 {
-	CCLOG( "Landed" );
+	testnum++;
+	if( testnum == 3 )
+	{
+ 		int z = 0;
+	}
+	CCLOG( "Landed on Conveyor Belt" );
 	m_bCanJump = true;
 	m_bIsGrounded = true;
 
@@ -248,6 +264,7 @@ void CPlayer::LandedOnConveyorBelt( EPlayerDirection eDirectionLock )
 
 void CPlayer::ForceConveyorBeltMovement( )
 {
+	CCLOG( "Forced Conveyor Direction" );
 	m_bIsGrounded = true;
 	m_bCanJump = true;
 	m_bCanBeControlled = false;
@@ -272,6 +289,7 @@ void CPlayer::ForceConveyorBeltMovement( )
 
 void CPlayer::LeftGround()
 {
+	CCLOG( "Left the Ground" );
 	// If player did not initiate jump
 	if( m_bCanJump )
 	{
@@ -286,6 +304,17 @@ void CPlayer::LeftGround()
 		m_ePlayerDirection = EPlayerDirection::EPD_Static;
 	}
 	m_bIsGrounded = false;
+	m_bIsPendingDirection = false;
+}
+
+void CPlayer::BumpedWithBricks()
+{
+	CCLOG( "Wall Bump" );
+	// Make sure player is not standing in conveyor belt
+	if ( !GetIsOnConveyorBelt() )
+	{
+		ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, GetVelocity().y );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -398,8 +427,6 @@ void CPlayer::UpdateMovement( )
 	}
 }
 
-
-
 // Movement Functions called by Input/Jump
 void CPlayer::JumpEvent()
 {
@@ -427,7 +454,6 @@ void CPlayer::JumpEvent()
 	//m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
 
 	m_bCanJump = false;
-	m_bIsGrounded = false;
 
 	// Unlock from conveyor belt always
 	m_bCanBeControlled = true;

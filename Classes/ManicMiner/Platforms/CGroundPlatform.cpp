@@ -10,10 +10,10 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
-CGroundPlatform::CGroundPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType)
-	: CPlatform(CreationParams, ResetPosition, PlatformType)
+CGroundPlatform::CGroundPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
+	: CPlatform( CreationParams, ResetPosition )
 {
-
+	m_ePlatformType = EPlatformType::EPT_Ground;
 }
 
 void CGroundPlatform::VOnResourceAcquire()

@@ -10,12 +10,11 @@ class CBrickPlatform : public CPlatform
 {
 public:
 
-	CBrickPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType);
+	CBrickPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 
 	void VOnResourceAcquire() override;
 
 	void VOnReset() override;
-
 };
 
 #endif

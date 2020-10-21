@@ -53,20 +53,19 @@ class CPlatform :
     public CGCObjSpritePhysics
 {
 public:
-	CPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType);
+	CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 
 	void VOnResourceAcquire() override;
 
 	void VOnReset() override;
 	
-	EPlatformType GetPlatformType() { return m_ePlatformType; }
+	EPlatformType GetPlatformType();
 
-	bool GetCollisionEnabled() { return m_bCollisionEnabled; }
-	void SetCollisionEnabled( bool bCollisionEnabled ) { m_bCollisionEnabled = bCollisionEnabled; }	
+	bool GetCollisionEnabled();
+	void SetCollisionEnabled( bool bCollisionEnabled );
 	
-	bool GetTriggersHardContactEvent() { return m_bTriggersHardContactEvent; }
-	void SetTriggersHardContactEvent( bool bShouldTrigger ) { m_bTriggersHardContactEvent = bShouldTrigger; }
-
+	bool GetTriggersHardContactEvent();
+	void SetTriggersHardContactEvent( bool bShouldTrigger ); 
 
 	
 protected:

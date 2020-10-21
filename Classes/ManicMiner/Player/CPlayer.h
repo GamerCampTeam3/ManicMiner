@@ -96,7 +96,9 @@ public:
 	bool GetCanBeControlled	() const			{ return m_bCanBeControlled; }
 	void SetCanBeControlled	(bool canControl)	{ m_bCanBeControlled = canControl; }
 	bool GetIsGrounded		()					{ return m_bIsGrounded; }
-	void SetIsGrounded( bool bIsGrounded ) { m_bIsGrounded = bIsGrounded; }
+
+	bool GetIsOnConveyorBelt();
+	//void SetIsGrounded( bool bIsGrounded ) { m_bIsGrounded = bIsGrounded; }
 
 	int GetHardContactCount();
 	int GetSensorContactCount();
@@ -128,7 +130,6 @@ public:
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
 	// If you need this for conveyor belts, please use ConveyorBeltMovement.
 	void SetDirection			(EPlayerDirection lastDirection){ m_ePlayerDirection = lastDirection; }
-	void SetISGrounded( bool isGrounded ) { m_bIsGrounded = isGrounded; }
 	void SetLastYPos( float yPos ) { m_fLastYPosition = yPos; }
 
 	// Called when landing on top of a platform surface, enables player control and movement
@@ -140,8 +141,11 @@ public:
 	// Called when player is no longer touching any ground surface
 	void LeftGround();
 
+	// Called when player bumps head or sideways midjump with brick platform (solid, not pass-through)
+	void BumpedWithBricks();
+
 	void ForceConveyorBeltMovement();
-	void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }
+	//void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }
 
 	//void MountedLadder			(EPlayerDirection yAxisLock)	{ m_ePlayerDirection = yAxisLock; m_bIsOnLadder = true; }
 	//void UnMountedLadder		()								{ m_bIsOnLadder = false; }

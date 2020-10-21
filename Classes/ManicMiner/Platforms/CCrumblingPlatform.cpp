@@ -10,13 +10,13 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
-CCrumblingPlatform::CCrumblingPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType)
-	: CPlatform(CreationParams, ResetPosition, PlatformType)
+CCrumblingPlatform::CCrumblingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
+	: CPlatform( CreationParams, ResetPosition )
 	, m_bInitiatedCrumbling(false)
 	, m_fCurrentCrumblingTimer(1.f)
 	, m_eCrumbleState(ECS_0)
 {
-
+	m_ePlatformType = EPlatformType::EPT_Crumbling;
 }
 
 void CCrumblingPlatform::VOnResourceAcquire()

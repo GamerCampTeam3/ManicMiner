@@ -10,7 +10,7 @@ class CGroundPlatform : public CPlatform
 {
 public:
 
-	CGroundPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType);
+	CGroundPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 
 	void VOnResourceAcquire() override;
 
