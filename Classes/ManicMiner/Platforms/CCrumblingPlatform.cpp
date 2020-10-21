@@ -23,6 +23,7 @@ void CCrumblingPlatform::VOnResourceAcquire()
 {
 	CPlatform::VOnResourceAcquire();
 
+	m_pcDirector = cocos2d::Director::getInstance();
 }
 
 void CCrumblingPlatform::VOnUpdate(float fTimeStep)
@@ -31,7 +32,7 @@ void CCrumblingPlatform::VOnUpdate(float fTimeStep)
 
 	if (m_bInitiatedCrumbling)
 	{
-		m_fReduceCrumblingTimerBy = 1.f / 60.f; //m_pcDirector->getFrameRate();
+		m_fReduceCrumblingTimerBy = 1.f / m_pcDirector->getFrameRate();
 
 		m_fCurrentCrumblingTimer -= m_fReduceCrumblingTimerBy;
 		
