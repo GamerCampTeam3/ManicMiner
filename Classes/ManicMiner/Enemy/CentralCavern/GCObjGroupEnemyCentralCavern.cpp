@@ -10,7 +10,7 @@
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 
 // Static Creation Params lifted out of GCObjEnemy to here to allow GCObjEnemy to be a class which can represent differnt Enemy sprites/animations/physics.
-static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist", "koopa", b2_dynamicBody, true);
+static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -37,12 +37,12 @@ void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire_PostObject()
 {
 	
 	// set up animations for pAnimation group 1
-	const char* pszPlist2 = "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist";
-	const char* pszAnim_Fly2 = "Fly";
+	//const char* pszPlist2 = "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist";
+	//const char* pszAnim_Fly2 = "Fly";
 
 	// make an animation
-	cocos2d::ValueMap& rdictPList1 = GCCocosHelpers::CreateDictionaryFromPlist(pszPlist2);
-	cocos2d::Animation* pAnimation1 = GCCocosHelpers::CreateAnimation(rdictPList1, pszAnim_Fly2);
+	//cocos2d::ValueMap& rdictPList1 = GCCocosHelpers::CreateDictionaryFromPlist(pszPlist2);
+	//cocos2d::Animation* pAnimation1 = GCCocosHelpers::CreateAnimation(rdictPList1, pszAnim_Fly2);
 	
 	// set up animations for pAnimation group 2 - NOTE EXAMPLE FOR FUTURE LEVELS.
 	//const char* pszPlist_Coin = "TexturePacker/Sprites/Coin/Coin.plist";
@@ -52,12 +52,12 @@ void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire_PostObject()
 	//cocos2d::Animation* pAnimation2 = GCCocosHelpers::CreateAnimation(rdicPList2, pszAnim_Coin_Rotate);
 
 	// Create a dictionary of EnemyId's mapped to their corresponding animation.
-	std::unordered_map<EnemyTypes::EEnemyId, cocos2d::Animation*> cAnimationLookup = {
+	//std::unordered_map<EnemyTypes::EEnemyId, cocos2d::Animation*> cAnimationLookup = {
 
-		{EnemyTypes::EEnemyId::EDuck, pAnimation1}
+	//	{EnemyTypes::EEnemyId::EDuck, pAnimation1}
 		//{EnemyTypes::EEnemyId::EPenguin, pAnimation2},  <----Example for level with multiple enemies.
 
-	};
+	//};
 
 	ForEachObject( [&] ( CGCObject* pObject) -> bool
 	{
@@ -68,7 +68,7 @@ void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire_PostObject()
 		CGCObjEnemy* pItemObj = (CGCObjEnemy*)pObject;
 
 		// Create the animation for each Enemy in the group according to the Enemy Identifier indexed into the cAnimationLookup map
-		pItemSprite->RunAction(GCCocosHelpers::CreateAnimationActionLoop( cAnimationLookup[pItemObj->GetEnemyIdentifier()]));
+		//pItemSprite->RunAction(GCCocosHelpers::CreateAnimationActionLoop( cAnimationLookup[pItemObj->GetEnemyIdentifier()]));
 
 		return true;
 	} );

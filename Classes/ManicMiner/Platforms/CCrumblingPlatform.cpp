@@ -27,7 +27,6 @@ void CCrumblingPlatform::VOnResourceAcquire()
 
 	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
 	m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
-	m_pcCrumbleAnim->setDelayPerUnit(0.30f);
 }
 
 void CCrumblingPlatform::VOnUpdate(float fTimeStep)
@@ -83,6 +82,7 @@ void CCrumblingPlatform::InitiateCrumbling(float fSecondsToStartCrumbling)
 		m_fCurrentCrumblingTimer = fSecondsToStartCrumbling;
 		m_bInitiatedCrumbling = true;
 
+		m_pcCrumbleAnim->setDelayPerUnit(0.30f);
 		RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcCrumbleAnim));
 
 	}

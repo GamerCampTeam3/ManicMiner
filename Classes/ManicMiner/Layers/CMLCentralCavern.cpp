@@ -71,6 +71,7 @@ void CMLCentralCavern::VOnDestroy(void)
 	CGCObjectManager::ObjectGroupUnRegister( m_pcCollectiblesGroupCentralCavern );
 	safeDelete( m_pcCollectiblesGroupCentralCavern );
 
+	m_pcGroupPlatformCentralCavern->DestroyPlatforms();
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);
 	safeDelete( m_pcGroupPlatformCentralCavern );
 

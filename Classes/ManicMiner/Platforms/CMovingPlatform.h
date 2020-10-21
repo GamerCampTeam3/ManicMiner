@@ -15,6 +15,10 @@ public:
 	void VOnResourceAcquire() override;
 	
 	void VOnReset() override;
+
+private:
+
+	cocos2d::Animation* m_pcMovingAnim;
 	
 };
 

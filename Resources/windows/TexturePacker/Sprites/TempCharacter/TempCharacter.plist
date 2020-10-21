@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>TempCharacter.png</key>
+            <key>mm_character_willy.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{54,120}</string>
+                <string>{60,120}</string>
                 <key>spriteSourceSize</key>
                 <string>{60,120}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{54,120}}</string>
+                <string>{{1,1},{60,120}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -31,9 +31,9 @@
             <key>realTextureFileName</key>
             <string>TempCharacter.png</string>
             <key>size</key>
-            <string>{56,122}</string>
+            <string>{62,122}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0c32423de1c0516ac7d8dd6b3922fbb3:78b3301c02e7d4e2198c29ab7deb5832:d2b147d7904b686d63aed2b87413506f$</string>
+            <string>$TexturePacker:SmartUpdate:7c39e9c9021341258e794298e9a7ad52:ddfe0960f78f09ba26c9fb36581ee067:d2b147d7904b686d63aed2b87413506f$</string>
             <key>textureFileName</key>
             <string>TempCharacter.png</string>
         </dict>

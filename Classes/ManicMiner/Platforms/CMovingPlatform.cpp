@@ -19,6 +19,12 @@ CMovingPlatform::CMovingPlatform(CGCFactoryCreationParams& CreationParams, cocos
 void CMovingPlatform::VOnResourceAcquire()
 {
 	CPlatform::VOnResourceAcquire();
+
+	const char* pszAnim_Move = "MoveLeft";
+
+	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+	m_pcMovingAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Move);
+	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcMovingAnim));
 }
 
 void CMovingPlatform::VOnReset()
