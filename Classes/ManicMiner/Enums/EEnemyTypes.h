@@ -8,7 +8,7 @@ class EnemyTypes
 {
 public:
 
-	enum EEnemyId {
+	enum class EEnemyId {
 		EDuck,
 		EPenguin,
 		EOstrich,
@@ -16,5 +16,12 @@ public:
 		EKong,
 		ELander    // (Skylab landing bay - destroys on impact)
 	};
+	
+	enum class EMovementAxis {
+		EMovementAxis_UpDown, 
+		EMovementAxis_LeftRight 
+	};
+
+
 };
 #endif //ifndef _EENEMY_		#pragma once

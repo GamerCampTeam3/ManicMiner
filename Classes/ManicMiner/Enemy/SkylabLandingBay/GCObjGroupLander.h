@@ -55,15 +55,12 @@ private:
 
 	void ActivateLanders(float fTimeStamp);
 
-	bool bFirstPassDone;
+	bool m_bFirstPassDone;
 	
 	const int k_iMaxLanderAnchorPoints = 12;
-	//const int k_iMaxActiveLanders = 5;
 	const int k_iAnchorPointStepDistance = 180;
 	const int k_iAnchorPointYPosition = 1000;
 	
-
-
 	float fStartupCounter;
 
 	struct LanderConfig
@@ -76,31 +73,15 @@ private:
 
 	std::vector<LanderConfig> LanderConfigVars;
 
-
-
-
 	//std::vector<bool> vLanderActivators;
 	std::vector<cocos2d::Vec2> vLanderAnchorPoints;
 
 	std::queue <float> StartupTimingsThresholdQueue;
 	//std::unordered_map<int, std::vector <GCTypeID>> StartupTimingsObjectCrossReference ;
 
-
 	std::vector<LanderConfig> LanderConfig;
 
-
-	
-
-
-
-	/// DICTIONARY OF GCTYPEID AGAINST INT
-
 	std::unordered_map<GCTypeID, int> LanderGCTypeIDLookup ;
-
-
-
-
-
 
 public:
 	

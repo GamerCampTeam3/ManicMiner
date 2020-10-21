@@ -23,12 +23,12 @@ private:
 	
 	cocos2d::Vec2				m_cAnchorPoint;
 	cocos2d::Vec2				m_cTotalVelocity;
-	float						fSpeed;
-	CGCFactoryCreationParams&	rFactoryCreationParams;
+	float						m_fSpeed;
+	CGCFactoryCreationParams&	m_rFactoryCreationParams;
 	
 public:
 
-	CGCObjLander(const cocos2d::Vec2& AnchorPoint, const float fSpeed, CGCFactoryCreationParams& ParamsInput);
+	CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const float fSpeed, CGCFactoryCreationParams& rcParamsInput);
 
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 

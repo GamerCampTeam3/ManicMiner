@@ -1,3 +1,5 @@
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // (C) Gamer Camp / Dave O'Dwyer October 2020
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,10 +35,8 @@ CGCObjGroupEnemyCentralCavern::~CGCObjGroupEnemyCentralCavern()
 // a level with more than one enemey.
 void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire_PostObject()
 {
-	// Call parent class
-	CGCObjGroupEnemy::VOnGroupResourceAcquire_PostObject();
 	
-		// set up animations for pAnimation group 1
+	// set up animations for pAnimation group 1
 	const char* pszPlist2 = "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist";
 	const char* pszAnim_Fly2 = "Fly";
 
@@ -81,11 +81,8 @@ void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire_PostObject()
 
 void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire() 
 {
-	// Call parent class
-	CGCObjGroupEnemy::VOnGroupResourceAcquire();
-
 	// Central Cavern requires only one enemy.
-	CGCObjEnemy* pEnemy = new CGCObjEnemy(CGCObjEnemy::EMovementAxis_LeftRight, cocos2d::Vec2(510.0f, 450.0f), 480.0f, 0.0f, true, 1.0f, true, EnemyTypes::EEnemyId::EDuck, s_cCreationParams_CGCObj_EDuck);
+	CGCObjEnemy* pcEnemy = new CGCObjEnemy(EnemyTypes::EMovementAxis::EMovementAxis_LeftRight, cocos2d::Vec2(510.0f, 450.0f), 480.0f, 0.0f, true, 1.0f, true, EnemyTypes::EEnemyId::EDuck, s_cCreationParams_CGCObj_EDuck);
 	//pEnemy->SetName("E1");
 }
 
