@@ -1,13 +1,13 @@
-
-#ifndef _CCOLLECTIBLE_H_
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
-#endif
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "ManicMiner/Helpers/Helpers.h"
+
+
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 
 USING_NS_CC;
 
@@ -45,6 +45,8 @@ void CCollectible::InteractEvent()
 {
 	if (!m_bHasBeenCollected)
 	{
+		PlaySoundEffect( ESoundName::ESN_KeyCollected );
+		
 		switch (m_eCollectibleType)
 		{
 			case ECollectibleType::Collectible:
