@@ -4,9 +4,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "MenuScene.h"
 
-#include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
 
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 
 USING_NS_CC;
 
@@ -53,7 +53,7 @@ bool CMenuLayer::init()
     // Bib Edit
 	// This is a little boolean that allows for quick swapping from fullscreen to windowed
 	// This is required to avoid flickering and alt-tabbing for debugging on Higher resolution screens
-    const bool fullScreenSwitch = true;
+    const bool fullScreenSwitch = false;
 
     if ( fullScreenSwitch )
     {
@@ -128,8 +128,9 @@ bool CMenuLayer::init()
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
-	//PreloadSoundEffect( ESoundName::ESN_KeyCollected );
-	//PlaySoundEffect( ESoundName::ESN_KeyCollected );
+	PreloadSoundEffect( ESoundName::ESN_KeyCollected );
+	PreloadSoundEffect( ESoundName::BabyShark );
+	PlaySoundEffect( ESoundName::BabyShark );
 	m_pcLevelManager->EnterCavern();
 }
 

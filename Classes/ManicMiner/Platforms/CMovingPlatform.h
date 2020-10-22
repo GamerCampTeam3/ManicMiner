@@ -10,11 +10,15 @@ class CMovingPlatform : public CPlatform
 {
 public:
 	
-	CMovingPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType);
+	CMovingPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 
 	void VOnResourceAcquire() override;
 	
 	void VOnReset() override;
+
+private:
+
+	cocos2d::Animation* m_pcMovingAnim;
 	
 };
 

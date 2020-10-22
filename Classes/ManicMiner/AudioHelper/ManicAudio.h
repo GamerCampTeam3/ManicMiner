@@ -12,7 +12,8 @@ enum class ESoundName
 {
 	ESN_Death,
 	ESN_MusicTheme,
-	ESN_KeyCollected
+	ESN_KeyCollected,
+	BabyShark
 };
 
 // Declare std::map that links every ESoundName to an audio file directory, type std::string
@@ -20,11 +21,13 @@ const static std::map <ESoundName, std::string> k_mapSoundFiles =
 {
 	{ ESoundName::ESN_Death,				"audio/Transition.wav"					},
 	{ ESoundName::ESN_MusicTheme,			"audio/YouWouldNotBelieveYourEyes.wav"	},
-	{ ESoundName::ESN_KeyCollected,			"audio/Transition.wav"					}
+	{ ESoundName::ESN_KeyCollected,			"audio/SnakeBumped.wav"					},
+	{ ESoundName::BabyShark,				"audio/BabyShark.mp3"					}
+
 };
 
 // Helper function that plays a SoundEffect, taking in its respective ESoundName
-void PlaySoundEffect( ESoundName eSoundName )
+inline void PlaySoundEffect( ESoundName eSoundName )
 {
 	auto audioEngine = SimpleAudioEngine::getInstance();
 
@@ -34,7 +37,7 @@ void PlaySoundEffect( ESoundName eSoundName )
 	audioEngine->playEffect( sAudioDirectory, false, 1.0f, 1.0f, 1.0f );
 }
 
-void PreloadSoundEffect( ESoundName eSoundName )
+inline void PreloadSoundEffect( ESoundName eSoundName )
 {
 	auto audioEngine = SimpleAudioEngine::getInstance();
 

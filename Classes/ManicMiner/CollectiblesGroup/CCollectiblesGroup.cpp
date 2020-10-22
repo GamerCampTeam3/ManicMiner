@@ -39,6 +39,7 @@ CCollectiblesGroup::CCollectiblesGroup()
 	, m_iMaxSwitches			( 0 )
 	, m_eCollectibleTypeRequired( ECollectibleTypeRequired::Collectible )
 	, m_pcManicLayer			( nullptr )
+	, m_iScore					( 0 )
 {
 }
 
@@ -51,6 +52,7 @@ CCollectiblesGroup::CCollectiblesGroup( CManicLayer& cLayer )
 	, m_iMaxSwitches			( 0 )
 	, m_eCollectibleTypeRequired( ECollectibleTypeRequired::Collectible )
 	, m_pcManicLayer			( &cLayer )
+	, m_iScore					( 0 )
 {
 }
 
@@ -61,6 +63,7 @@ CCollectiblesGroup::CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeReq
 	, m_iMaxSwitches			( 0 )
 	, m_eCollectibleTypeRequired( typeCollectibles )
 	, m_pcManicLayer			( &cLayer )
+	, m_iScore					( 0 )
 {
 
 }
@@ -72,6 +75,7 @@ CCollectiblesGroup::CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeReq
 	, m_iMaxSwitches			( 0 )
 	, m_eCollectibleTypeRequired( typeCollectibles )
 	, m_pcManicLayer			( &cLayer )
+	, m_iScore					( 0 )
 {
 }
 
@@ -96,7 +100,7 @@ void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 			{
 				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
 			}
-
+			break;
 		case ECollectibleTypeRequired::Switch:
 			if (m_iSwitches == m_iMaxSwitches)
 			{
@@ -109,6 +113,7 @@ void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 			{
 				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
 			}
+			break;
 	}
 }
 

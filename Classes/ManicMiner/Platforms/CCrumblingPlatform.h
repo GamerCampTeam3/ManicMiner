@@ -20,7 +20,7 @@ class CCrumblingPlatform : public CPlatform
 {
 public:
 	
-	CCrumblingPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType);
+	CCrumblingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 
 	void VOnResourceAcquire() override;
 
@@ -28,6 +28,8 @@ public:
 
 	void VOnReset() override;
 
+	// Initiates Crumbling Timer and Animation
+	void InitiateCrumbling(float fSecondsToStartCrumbling);
 private:
 
 	////////////////////////////////////////////////////////////////////////
@@ -43,9 +45,7 @@ private:
 	class cocos2d::Director* m_pcDirector;
 
 	cocos2d::Animation* m_pcCrumbleAnim;
-
-	// Initiates Crumbling Timer and Animation
-	void InitiateCrumbling(float fSecondsToStartCrumbling);
+	cocos2d::Animation* m_pcIdleAnim;
 
 	void UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState);
 

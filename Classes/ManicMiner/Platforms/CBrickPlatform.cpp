@@ -10,10 +10,10 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
-CBrickPlatform::CBrickPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType)
-	: CPlatform(CreationParams, ResetPosition, PlatformType)
+CBrickPlatform::CBrickPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
+	: CPlatform( CreationParams, ResetPosition )
 {
-
+	m_ePlatformType = EPlatformType::EPT_Brick;
 }
 
 void CBrickPlatform::VOnResourceAcquire()
@@ -24,4 +24,6 @@ void CBrickPlatform::VOnResourceAcquire()
 void CBrickPlatform::VOnReset()
 {
 	CPlatform::VOnReset();
+	m_bCollisionEnabled = true;
+	m_bTriggersHardContactEvent = true;
 }

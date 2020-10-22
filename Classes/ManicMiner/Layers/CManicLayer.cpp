@@ -18,11 +18,19 @@
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Player/CPlayer.h"
 #include "MenuScene.h"
-#include "../GameInstance/CGameInstance.h"
-#include "../LevelManager/CLevelManager.h"
-#include "../Platforms/CPlatform.h"
-#include "GamerCamp/GameSpecific/Platforms/GCObjPlatform.h"
+#include "ManicMiner/GameInstance/CGameInstance.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
+//#include "GamerCamp/GameSpecific/Platforms/GCObjPlatform.h"
 #include "ManicMiner/Helpers/Helpers.h"
+
+// Include different platform types for collision checks
+#include "ManicMiner/Doors/CDoor.h"
+#include "ManicMiner/Platforms/CPlatform.h"
+#include "ManicMiner/Platforms/CBrickPlatform.h"
+#include "ManicMiner/Platforms/CCrumblingPlatform.h"
+#include "ManicMiner/Platforms/CGroundPlatform.h"
+#include "ManicMiner/Platforms/CMovingPlatform.h"
+#include "ManicMiner/Platforms/CRegularPlatform.h"
 
 
 USING_NS_CC;
@@ -121,9 +129,6 @@ void CManicLayer::VOnCreate()
 	// create the default object group
 	IGCGameLayer::VOnCreate();
 
-	Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
-	Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
-
 	///////////////////////////////////////////////////////////////////////////
 	/// Exit Button
 
@@ -151,7 +156,7 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 
 	// add "CGCGameLayerPlatformer" splash screen"
-	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/background.plist";
+	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist";
 	{
 		m_pcGCSprBackGround = new CGCObjSprite();
 		m_pcGCSprBackGround->CreateSprite( pszPlist_background );
@@ -243,12 +248,16 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
 		} );
 
-	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact) -> void
+	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedHazard(rcPlayer, rcHazard, rcContact);
 		});
 
 
+	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact) -> void
+		{
+			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
+		});
 
 
 
@@ -257,6 +266,16 @@ void CManicLayer::VOnCreate()
 	//Label* pcScoreLabel = Label::create();
 
 }// void CGCGameLayerPlatformer::VOnCreate() { ...
+
+void CManicLayer::PlayerCollidedDoor(CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact)
+{
+	const bool isColliding = rcContact.IsTouching();
+	if (isColliding)
+	{
+		rcDoor.InteractEvent();
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 // on update
@@ -369,7 +388,6 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 				pPlatform->SetCollisionEnabled( true );
 
 
-
 				// Increment sensor count for the player
 				m_pcPlayer->SensorContactEvent( true );
 			}
@@ -381,6 +399,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 				if( pPlatform->GetCollisionEnabled() )
 				{
 
+
 					// Set the platform as a trigger for hard contact events
 					pPlatform->SetTriggersHardContactEvent( true );
 
@@ -388,31 +407,55 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 					m_pcPlayer->HardContactEvent( true );
 
 
-
 					// Check Platform Type
-					switch( pPlatform->GetPlatformType() )
+					switch( pPlatform->GetPlatformType () )
 					{
-					////////////////////////////////////////////////////////////////////////////////////
-					// Conveyor Belt
+						////////////////////////////////////////////////////////////////////////////////
+						// MOVING																	////
+						////////////////////////////////////////////////////////////////////////////////
 					case EPT_Moving:
 						{
-							m_pcPlayer->ConveyorBeltMovement( EPlayerDirection::EPD_Left );
-							m_pcPlayer->SetCanBeControlled( false );
+							m_pcPlayer->LandedOnConveyorBelt( EPlayerDirection::EPD_Left ); // needs to access platform direction
 						}	
 						break;
-					////////////////////////////////////////////////////////////////////////////////////
-					// Crumbling Platforms
+						////////////////////////////////////////////////////////////////////////////////
+						// CRUMBLING																////
+						////////////////////////////////////////////////////////////////////////////////
 					case EPT_Crumbling:
 						{
 							// Start Crumbling
-							//pPlatform->InitiateCrumbling( 1.0f );
+						auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pPlatform );
+
+						if( pCrumblingPlatform != nullptr )
+						{
+							pCrumblingPlatform->InitiateCrumbling( 1.0f );
+						}
 
 							// Set player as grounded
 							m_pcPlayer->LandedOnWalkablePlatform();
 						}
 						break;
-					////////////////////////////////////////////////////////////////////////////////////
-					// Default
+						////////////////////////////////////////////////////////////////////////////////
+						// BRICK																	////
+						////////////////////////////////////////////////////////////////////////////////
+					case EPT_Brick:
+						{
+						// If in mid air and sensor contacts == 0
+							if( ( m_pcPlayer->IsInMidAir() ) && ( m_pcPlayer->GetSensorContactCount() == 0 ) || ( m_pcPlayer->GetIsOnConveyorBelt() ) )
+							{
+								// Player Bumped onto brick
+								m_pcPlayer->BumpedWithBricks();
+							}
+							else
+							{
+								// Set player as grounded
+								m_pcPlayer->LandedOnWalkablePlatform();
+							}
+						}
+					break;
+					////////////////////////////////////////////////////////////////////////////////
+					// DEFAULT																	////
+					////////////////////////////////////////////////////////////////////////////////
 					default:
 						{
 							// Set player as grounded
@@ -459,8 +502,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )
 
 
 
-	// Henrique
-		// CHECK FOR PLATORM AND PLAYER COLLISION
+	// CHECK FOR PLATORM AND PLAYER COLLISION
 	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )
 	{
 		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
@@ -490,8 +532,12 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )
 			{
 				CCLOG( "Foot goes untoot" );
 
-				// Deactivate this platform's collision
-				pPlatform->SetCollisionEnabled( false );
+				// If this platform is not a CBrickPlatform
+				if( pPlatform->GetPlatformType() != EPlatformType::EPT_Brick )
+				{
+					// Deactivate this platform's collision
+					pPlatform->SetCollisionEnabled( false );
+				}
 
 				// Decrement sensor contact count
 				m_pcPlayer->SensorContactEvent( false );
@@ -511,9 +557,10 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )
 					m_pcPlayer->HardContactEvent( false );
 
 					// If feet are no longer touching any ground surface
-					if( !m_pcPlayer->GetHardContactCount() )
+					if( !m_pcPlayer->GetHardContactCount() && m_pcPlayer->GetIsGrounded() )
 					{
-						m_pcPlayer->LeftWalkablePlatform();
+						m_pcPlayer->LeftGround();
+						CCLOG( "LeftGround()" );
 					}
 				}
 			}
@@ -751,13 +798,13 @@ void CManicLayer::OnFinishedLooting()
 {
 	m_eGameState = EGameState::EGS_Escaping;
 
-	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjPlatform& rPlatform, const b2Contact& rcContact ) -> void
-		{
-			if( m_eGameState == EGameState::EGS_Escaping )
-			{
-				OnEscaped();
-			}
-		} );
+	//GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjPlatform& rPlatform, const b2Contact& rcContact ) -> void
+	//	{
+	//		if( m_eGameState == EGameState::EGS_Escaping )
+	//		{
+	//			OnEscaped();
+	//		}
+	//	} );
 }
 
 void CManicLayer::OnEscaped()

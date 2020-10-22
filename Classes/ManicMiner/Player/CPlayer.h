@@ -1,8 +1,9 @@
 #ifndef _CPLAYER_H_
 #define _CPLAYER_H_
 
+
 #ifndef _GCOBJSPRITEPHYSICS_H_
-#include "../../GCCocosInterface/GCObjSpritePhysics.h"
+#include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 #endif
 
 #include "ManicMiner/Enums/EPlayerMovement.h"
@@ -36,10 +37,11 @@ private:
 	// Our Movement Related variables
 	EPlayerDirection						m_ePlayerDirection;				// This stores the current direction the player is at
 	EPlayerDirection						m_eLastPlayerDirection;			// This stores the last direction of the player, used for the jump lock
+	EPlayerDirection						m_ePendingDirection;			// This stores the direction the player should go, assigned by the last conveyor belt it came in contact with
 
 	bool									m_bCanJump;						// This regulates the player's ability to jump again
 	bool									m_bCanBeControlled;				// This disables input of the X-axis directional movement of the player while jumping (or on a conveyor belt)
-	bool									m_bIsOnLadder;
+	bool									m_bIsPendingDirection;			// This is so the player can walk on the opposite direction of the conveyor belt, if landed in that direction at first
 	bool									m_bIsGrounded;					// Is walking on platform?
 	bool									m_bIsAlive;
 	int										m_iSensorContactCount;			// Number of sensors that are overlapping with the Player's "feet" sensor at any given frame
@@ -88,13 +90,15 @@ public:
 	// Damage / Death logic
 	void Die();
 
-	//Getters and setters
+	// Getters and setters
 	bool GetCanJump			() const			{ return m_bCanJump; }
 	void SetCanJump			(bool canJump)		{ m_bCanJump = canJump; }
 	bool GetCanBeControlled	() const			{ return m_bCanBeControlled; }
 	void SetCanBeControlled	(bool canControl)	{ m_bCanBeControlled = canControl; }
 	bool GetIsGrounded		()					{ return m_bIsGrounded; }
-	void SetIsGrounded( bool bIsGrounded ) { m_bIsGrounded = bIsGrounded; }
+
+	bool GetIsOnConveyorBelt();
+	//void SetIsGrounded( bool bIsGrounded ) { m_bIsGrounded = bIsGrounded; }
 
 	int GetHardContactCount();
 	int GetSensorContactCount();
@@ -119,27 +123,32 @@ public:
 
 	void IncrementLives	()			{ m_iLives++; }
 	void DecrementLives	()			{ m_iLives--; }
-	bool IsInMidAir()				{ return (m_ePlayerDirection == EPlayerDirection::EPD_Jumping && !m_bIsGrounded); }
-	float GetMovementSpeed() { return m_fMovementSpeed; }
+	bool IsInMidAir()				{ return ( !m_bIsGrounded); }
+	float GetMovementSpeed()		{ return m_fMovementSpeed; }
 
 
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
 	// If you need this for conveyor belts, please use ConveyorBeltMovement.
 	void SetDirection			(EPlayerDirection lastDirection){ m_ePlayerDirection = lastDirection; }
-	void SetISGrounded( bool isGrounded ) { m_bIsGrounded = isGrounded; }
 	void SetLastYPos( float yPos ) { m_fLastYPosition = yPos; }
 
 	// Called when landing on top of a platform surface, enables player control and movement
 	void LandedOnWalkablePlatform();
 
+	// Called when landing on top of a conveyor belt surface, will set direction lock to pending
+	void LandedOnConveyorBelt( EPlayerDirection eDirectionLock );
+
 	// Called when player is no longer touching any ground surface
-	void LeftWalkablePlatform();
+	void LeftGround();
 
-	void ConveyorBeltMovement( EPlayerDirection xAxisLock );
-	void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }
+	// Called when player bumps head or sideways midjump with brick platform (solid, not pass-through)
+	void BumpedWithBricks();
 
-	void MountedLadder			(EPlayerDirection yAxisLock)	{ m_ePlayerDirection = yAxisLock; m_bIsOnLadder = true; }
-	void UnMountedLadder		()								{ m_bIsOnLadder = false; }
+	void ForceConveyorBeltMovement();
+	//void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }
+
+	//void MountedLadder			(EPlayerDirection yAxisLock)	{ m_ePlayerDirection = yAxisLock; m_bIsOnLadder = true; }
+	//void UnMountedLadder		()								{ m_bIsOnLadder = false; }
 
 	// Returns the current movement direction of the player
 	EPlayerDirection GetDirection() { return m_ePlayerDirection; };

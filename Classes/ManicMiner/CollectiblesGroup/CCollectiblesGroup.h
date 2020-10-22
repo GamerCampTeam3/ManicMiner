@@ -19,6 +19,7 @@ class CCollectiblesGroup
 	int m_iSwitches;
 	int m_iMaxCollectibles;
 	int m_iMaxSwitches;
+	int m_iScore;
 
 	ECollectibleTypeRequired m_eCollectibleTypeRequired;
 	CManicLayer*			 m_pcManicLayer;
@@ -43,6 +44,9 @@ public:
 	
 	int  GetSwitches ()														{ return m_iSwitches; }
 	void SetSwitches( int switches )										{ m_iSwitches = switches; }
+
+	int GetScore() { return m_iScore; }
+	void AddScore() { m_iScore += 10000; }
 	
 	//////////////////////////////////////////////////////////////////////////
 	// overrides for CGCObjectGroup public interface

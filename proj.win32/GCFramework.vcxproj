@@ -158,8 +158,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GamerCamp\GameSpecific\GCGameLayerPlatformer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjGroupInvader.cpp" />
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjInvader.cpp" />
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjGroupInvader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjInvader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjGroupItem.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjItem.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjGroupPlatform.cpp" />
@@ -202,6 +206,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Hazards\CentralCavern\GCObjGroupHazardCentralCavern.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Hazards\GCObjGroupHazard.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Hazards\GCObjHazard.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\HUD\CHUD.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.cpp" />
@@ -232,8 +237,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\GamerCamp\GameSpecific\GCGameLayerPlatformer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjGroupInvader.h" />
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjInvader.h" />
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjGroupInvader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjInvader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjGroupItem.h" />
     <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjItem.h" />
     <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjGroupPlatform.h" />
@@ -287,6 +296,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Hazards\GCObjGroupHazard.h" />
     <ClInclude Include="..\Classes\ManicMiner\Hazards\GCObjHazard.h" />
     <ClInclude Include="..\Classes\ManicMiner\Helpers\Helpers.h" />
+    <ClInclude Include="..\Classes\ManicMiner\HUD\CHUD.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.h" />

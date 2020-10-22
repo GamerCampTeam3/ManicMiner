@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>CN_Platform_Regular_1x1.png</key>
+            <key>cc_platform_regular_1x1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -33,7 +33,7 @@
             <key>size</key>
             <string>{62,62}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b2fec4372e704121fda205d4456e4ee3:df6fc72f9bad499c22a54c79bbbcb222:34342b9935911ad3eb24c4d192ad2300$</string>
+            <string>$TexturePacker:SmartUpdate:48d3278ae7f96b5f9ae18c76b0fa3f8c:815ccff4ccf1797209409ea3d0b6a19e:34342b9935911ad3eb24c4d192ad2300$</string>
             <key>textureFileName</key>
             <string>CN_Platform_Regular_1x1.png</string>
         </dict>

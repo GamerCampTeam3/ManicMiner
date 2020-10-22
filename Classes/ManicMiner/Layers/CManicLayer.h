@@ -8,6 +8,7 @@
 #include "../GameState/EGameState.h"
 
 
+class CDoor;
 ////////////////////////////////////////////////////////////////////////////
 // Forward Declarations													  //
 ////////////////////////////////////////////////////////////////////////////
@@ -123,7 +124,9 @@ private:
 		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
 		void PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact);
 		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
+		void PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact );
 		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
+	
 
 
 public:

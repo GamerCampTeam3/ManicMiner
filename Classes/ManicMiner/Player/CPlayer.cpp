@@ -13,7 +13,7 @@
 
 USING_NS_CC;
 
-
+static int testnum = 0;
 // action map arrays must match in length - in the templated controller class we use they map from the user define enum to cocos2d::Controller::Key 
 static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,								EPlayerActions::EPA_AxisMove_Y,								EPlayerActions::EPA_Jump };
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
@@ -46,9 +46,10 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
 	, m_kfGravitionalPull				( 2.3f )
 	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
 	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
+	, m_ePendingDirection				( EPlayerDirection::EPD_Static )
 	, m_bCanJump						( true )
 	, m_bCanBeControlled				( true )
-	, m_bIsOnLadder						( false )
+	, m_bIsPendingDirection				( false )
 	, m_bIsGrounded						( false )
 	, m_bIsAlive						( true )
 	, m_iSensorContactCount				( 0 )
@@ -155,6 +156,11 @@ void CPlayer::Die()
 	}
 }
 
+bool CPlayer::GetIsOnConveyorBelt()
+{
+	return ( !m_bCanBeControlled || m_bIsPendingDirection );
+}
+
 int CPlayer::GetHardContactCount()
 {
 	return m_iHardContactCount;
@@ -176,6 +182,12 @@ void CPlayer::HardContactEvent( bool bBeganContact )
 	else
 	{
 		--m_iHardContactCount;
+	}
+
+	// Might happen because of bricks
+	if (m_iHardContactCount < 0)
+	{
+		m_iHardContactCount = 0;
 	}
 }
 
@@ -199,8 +211,7 @@ void CPlayer::LandedOnWalkablePlatform()
 	m_bCanJump = true;
 	m_bCanBeControlled = true;
 	m_bIsGrounded = true;
-
-
+	m_bIsPendingDirection = false;
 
 	//ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
 
@@ -208,22 +219,101 @@ void CPlayer::LandedOnWalkablePlatform()
 	KeyboardInput();
 }
 
-void CPlayer::LeftWalkablePlatform()
+void CPlayer::LandedOnConveyorBelt( EPlayerDirection eDirectionLock )
 {
+	testnum++;
+	if( testnum == 3 )
+	{
+ 		int z = 0;
+	}
+	CCLOG( "Landed on Conveyor Belt" );
+	m_bCanJump = true;
+	m_bIsGrounded = true;
+
+
+	m_ePendingDirection = eDirectionLock;
+	// Now we must check the player input
+	const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
+	TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, ( *m_pcControllerActionToKeyMap ) );
+	if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) ) )
+	{
+		m_bCanBeControlled = true;
+		m_bIsPendingDirection = true;
+		JumpEvent();
+	}
+	else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left  ) ) && ( eDirectionLock == EPlayerDirection::EPD_Right ) )
+	{
+		ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, 0.0f );
+		m_bCanBeControlled = true;
+		m_bIsPendingDirection = true;
+	}
+	else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) ) && ( eDirectionLock == EPlayerDirection::EPD_Left ) )
+	{
+		ApplyDirectionChange( EPlayerDirection::EPD_Right, m_fMovementSpeed * -1.0f, 0.0f );
+		m_bCanBeControlled = true;
+		m_bIsPendingDirection = true;
+	}
+	// Not trying to move -> force
+	else
+	{
+		m_bCanBeControlled = true;
+		m_bIsPendingDirection = true;
+		ForceConveyorBeltMovement();
+	}
+}
+
+void CPlayer::ForceConveyorBeltMovement( )
+{
+	CCLOG( "Forced Conveyor Direction" );
+	m_bIsGrounded = true;
+	m_bCanJump = true;
+	m_bCanBeControlled = false;
+	m_bIsPendingDirection = false;
+
+	switch( m_ePendingDirection )
+	{
+		case EPlayerDirection::EPD_Left:
+		{
+			ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, 0.0f );
+		}
+		break;
+
+		case EPlayerDirection::EPD_Right:
+		{
+			ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed * -1.0f, 0.0f );
+		}
+		break;
+	}	
+
+}
+
+void CPlayer::LeftGround()
+{
+	CCLOG( "Left the Ground" );
 	// If player did not initiate jump
-	if( m_ePlayerDirection != EPlayerDirection::EPD_Jumping )
+	if( m_bCanJump )
 	{
 		// Drop straight down
 		auto v2CurrentVelocity = GetVelocity();
 		SetVelocity( cocos2d::Vec2( 0.0f, v2CurrentVelocity.y ) );
 	
 		CCLOG( "Dropping straight down" );
+		m_bCanJump = false;
 
 		m_eLastPlayerDirection = m_ePlayerDirection;
-		m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
+		m_ePlayerDirection = EPlayerDirection::EPD_Static;
+	}
+	m_bIsGrounded = false;
+	m_bIsPendingDirection = false;
+}
 
-		m_bIsGrounded = false;
-		m_bCanJump = false;
+void CPlayer::BumpedWithBricks()
+{
+	CCLOG( "Wall Bump" );
+	// Make sure player is not standing in conveyor belt
+	if ( !GetIsOnConveyorBelt() )
+	{
+		ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, GetVelocity().y );
 	}
 }
 
@@ -273,10 +363,10 @@ void CPlayer::KeyboardInput()
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Left )))
 		{
+			// If can be controlled and is grounded
 			if ( m_bCanBeControlled && !IsInMidAir())
-			{				
+			{
 				ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, GetVelocity().y );
-
 			}
 		}
 
@@ -337,31 +427,36 @@ void CPlayer::UpdateMovement( )
 	}
 }
 
-
-void CPlayer::ConveyorBeltMovement(EPlayerDirection xAxisLock)
-{
-	switch (xAxisLock)
-	{
-		case EPlayerDirection::EPD_Left:	
-			SetVelocity( cocos2d::Vec2( m_fMovementSpeed, 0.f ) );
-			break;
-		
-		case EPlayerDirection::EPD_Right:
-			SetVelocity( cocos2d::Vec2( abs( m_fMovementSpeed), 0.f ) );
-			break;
-	}
-}
-
-
 // Movement Functions called by Input/Jump
 void CPlayer::JumpEvent()
 {
-	SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpSpeed ) );
-	m_eLastPlayerDirection = m_ePlayerDirection;
-	m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
+	// If on normal platform, jump normally
+	if( !m_bIsPendingDirection )
+	{
+		SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpSpeed ) );
+	}
+	// Else, on top of conveyor, jump that way
+	else
+	{
+		switch( m_ePendingDirection )
+		{
+		case EPlayerDirection::EPD_Right:
+			SetVelocity( cocos2d::Vec2( m_fMovementSpeed * -1.0f, m_fJumpSpeed ) );
+			break;
+		case EPlayerDirection::EPD_Left:
+			SetVelocity( cocos2d::Vec2( m_fMovementSpeed, m_fJumpSpeed ) );
+			break;
+		}
+		m_eLastPlayerDirection = m_ePlayerDirection;
+		m_ePlayerDirection = m_ePendingDirection;
+	}
+	//m_eLastPlayerDirection = m_ePlayerDirection;
+	//m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
 
 	m_bCanJump = false;
-	m_bIsGrounded = false;
+
+	// Unlock from conveyor belt always
+	m_bCanBeControlled = true;
 }
 
 
@@ -370,26 +465,37 @@ void CPlayer::ApplyDirectionChange( EPlayerDirection eNewDirection, float fHoriz
 	// If changing direction
 	if( eNewDirection != m_ePlayerDirection )
 	{
-		switch( eNewDirection )
+
+		// If on conveyor belt and the new direction is not the same as belt movement
+		if( m_bIsPendingDirection && eNewDirection != m_ePendingDirection )
 		{
-		case EPlayerDirection::EPD_Static:
-			CCLOG( "static" );
-			break;
-		case EPlayerDirection::EPD_Right:
-			CCLOG( "right" );
-			break;
-		case EPlayerDirection::EPD_Left:
-			CCLOG( "left" );
-			break;
+			ForceConveyorBeltMovement();
 		}
 
-		// Change velocity
-		const Vec2 v2NewVelocity( fHorizontalVelocity, fVerticalVelocity );
-		m_v2Movement = v2NewVelocity;
+		// Else, walking on normal platform
+		else
+		{
+			switch( eNewDirection )
+			{
+			case EPlayerDirection::EPD_Static:
+				CCLOG( "static" );
+				break;
+			case EPlayerDirection::EPD_Right:
+				CCLOG( "right" );
+				break;
+			case EPlayerDirection::EPD_Left:
+				CCLOG( "left" );
+				break;
+			}
 
-		m_eLastPlayerDirection = m_ePlayerDirection;
-		m_ePlayerDirection = eNewDirection;
+			// Change velocity
+			const Vec2 v2NewVelocity( fHorizontalVelocity, fVerticalVelocity );
+			m_v2Movement = v2NewVelocity;
+
+			m_eLastPlayerDirection = m_ePlayerDirection;
+			m_ePlayerDirection = eNewDirection;
 		
-		UpdateMovement();
+			UpdateMovement();
+		}
 	}
 }

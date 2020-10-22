@@ -10,24 +10,20 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
-CCrumblingPlatform::CCrumblingPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType)
-	: CPlatform(CreationParams, ResetPosition, PlatformType)
+CCrumblingPlatform::CCrumblingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
+	: CPlatform( CreationParams, ResetPosition )
 	, m_bInitiatedCrumbling(false)
 	, m_fCurrentCrumblingTimer(1.f)
 	, m_eCrumbleState(ECS_0)
 {
-
+	m_ePlatformType = EPlatformType::EPT_Crumbling;
 }
 
 void CCrumblingPlatform::VOnResourceAcquire()
 {
 	CPlatform::VOnResourceAcquire();
-	
-	const char* pszAnim_Crumble = "Crumble";
 
-	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
-	m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
-	m_pcCrumbleAnim->setDelayPerUnit(0.30f);
+	m_pcDirector = cocos2d::Director::getInstance();
 }
 
 void CCrumblingPlatform::VOnUpdate(float fTimeStep)
@@ -67,13 +63,15 @@ void CCrumblingPlatform::VOnReset()
 	
 	m_fCurrentCrumblingTimer = 0;
 
-	m_v2ResetPosition = cocos2d::Vec2(0.f, 0.f);
-	m_ePlatformType = EPT_Regular;
 	m_bInitiatedCrumbling = false;
 	m_fCurrentCrumblingTimer = 1.f;
 	m_eCrumbleState = ECrumbleState::ECS_0;
-	m_bCollisionEnabled = false;
-	m_bTriggersHardContactEvent = false;
+
+	const char* pszAnim_Idle = "Idle";
+
+	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+	m_pcIdleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Idle);
+	RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcIdleAnim));
 }
 
 void CCrumblingPlatform::InitiateCrumbling(float fSecondsToStartCrumbling)
@@ -83,6 +81,12 @@ void CCrumblingPlatform::InitiateCrumbling(float fSecondsToStartCrumbling)
 		m_fCurrentCrumblingTimer = fSecondsToStartCrumbling;
 		m_bInitiatedCrumbling = true;
 
+		const char* pszAnim_Crumble = "Crumble";
+
+		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+		m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
+		
+		m_pcCrumbleAnim->setDelayPerUnit(0.30f);
 		RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcCrumbleAnim));
 
 	}

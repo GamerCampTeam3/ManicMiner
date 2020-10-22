@@ -10,7 +10,7 @@ class CRegularPlatform : public CPlatform
 {
 public:
 
-	CRegularPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, EPlatformType PlatformType);
+	CRegularPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 
 	void VOnResourceAcquire() override;
 
