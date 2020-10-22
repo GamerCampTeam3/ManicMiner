@@ -29,7 +29,10 @@ public:
 	void VOnReset() override;
 
 	// Initiates Crumbling Timer and Animation
-	void InitiateCrumbling(float fSecondsToStartCrumbling);
+	void InitiateCrumbling();
+
+	void StopCrumbling();
+	
 private:
 
 	////////////////////////////////////////////////////////////////////////

@@ -428,7 +428,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 
 						if( pCrumblingPlatform != nullptr )
 						{
-							pCrumblingPlatform->InitiateCrumbling( 1.0f );
+							pCrumblingPlatform->InitiateCrumbling();
 						}
 
 							// Set player as grounded
@@ -561,6 +561,18 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )
 					{
 						m_pcPlayer->LeftGround();
 						CCLOG( "LeftGround()" );
+					}
+
+					switch(pPlatform->GetPlatformType())
+					{
+					case EPT_Crumbling :
+						auto pCrumblingPlatform = static_cast<CCrumblingPlatform*> (pPlatform);
+
+						if (pCrumblingPlatform != nullptr)
+						{
+							pCrumblingPlatform->StopCrumbling();
+						}
+						break;
 					}
 				}
 			}

@@ -42,6 +42,7 @@ enum class EPlatformSize
 
 enum ECrumbleState
 {
+	
 	ECS_0,
 	ECS_1,
 	ECS_2,

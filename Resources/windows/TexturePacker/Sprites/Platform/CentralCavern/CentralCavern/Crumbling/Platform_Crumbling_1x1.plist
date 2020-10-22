@@ -4,22 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Crumble/cc_platform_crumbling_01.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{60,60}</string>
-                <key>spriteSourceSize</key>
-                <string>{60,60}</string>
-                <key>textureRect</key>
-                <string>{{1,1},{60,60}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>Crumble/cc_platform_crumbling_02.png</key>
+            <key>Crumble_Stage_00/cc_platform_crumbling_01.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -34,7 +19,22 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>Crumble/cc_platform_crumbling_03.png</key>
+            <key>Crumble_Stage_01/cc_platform_crumbling_02.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,6}</string>
+                <key>spriteSize</key>
+                <string>{60,48}</string>
+                <key>spriteSourceSize</key>
+                <string>{60,60}</string>
+                <key>textureRect</key>
+                <string>{{1,117},{60,48}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>Crumble_Stage_02/cc_platform_crumbling_03.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -45,11 +45,11 @@
                 <key>spriteSourceSize</key>
                 <string>{60,60}</string>
                 <key>textureRect</key>
-                <string>{{1,117},{60,40}}</string>
+                <string>{{1,167},{60,40}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>Crumble/cc_platform_crumbling_04.png</key>
+            <key>Crumble_Stage_03/cc_platform_crumbling_04.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -60,11 +60,11 @@
                 <key>spriteSourceSize</key>
                 <string>{60,60}</string>
                 <key>textureRect</key>
-                <string>{{1,159},{60,38}}</string>
+                <string>{{1,209},{60,38}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>Crumble/cc_platform_crumbling_05.png</key>
+            <key>Crumble_Stage_Destroy/cc_platform_crumbling_05.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -75,11 +75,11 @@
                 <key>spriteSourceSize</key>
                 <string>{60,60}</string>
                 <key>textureRect</key>
-                <string>{{1,199},{3,3}}</string>
+                <string>{{1,249},{3,3}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>Idle/cc_platform_crumbling_01.png</key>
+            <key>Crumble_Stage_Idle/cc_platform_crumbling_01.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -121,9 +121,9 @@
             <key>realTextureFileName</key>
             <string>CN_Platform_Crumbling_1x1.png</string>
             <key>size</key>
-            <string>{62,203}</string>
+            <string>{62,253}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b7283fefbeaa912f4f36e04a3aca03ae:c3f8169efc83e748d77b86110573e262:d67b179265fda25b1c903969a56a167b$</string>
+            <string>$TexturePacker:SmartUpdate:3f7e1c36f3effb0dc78ad55621c06e72:2c90cdd8683c58692943c447a4aa440b:d67b179265fda25b1c903969a56a167b$</string>
             <key>textureFileName</key>
             <string>CN_Platform_Crumbling_1x1.png</string>
         </dict>

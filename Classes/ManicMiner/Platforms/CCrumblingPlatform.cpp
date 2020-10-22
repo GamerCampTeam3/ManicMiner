@@ -67,55 +67,83 @@ void CCrumblingPlatform::VOnReset()
 	m_fCurrentCrumblingTimer = 1.f;
 	m_eCrumbleState = ECrumbleState::ECS_0;
 
-	const char* pszAnim_Idle = "Idle";
+	const char* pszAnim_Idle = "Crumble_Stage_Idle";
 
 	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
 	m_pcIdleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Idle);
 	RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcIdleAnim));
 }
 
-void CCrumblingPlatform::InitiateCrumbling(float fSecondsToStartCrumbling)
+void CCrumblingPlatform::InitiateCrumbling()
 {
 	if (m_bInitiatedCrumbling == false)
 	{
-		m_fCurrentCrumblingTimer = fSecondsToStartCrumbling;
 		m_bInitiatedCrumbling = true;
 
-		const char* pszAnim_Crumble = "Crumble";
-
+		const char* pszAnim_Crumble = "Crumble_Stage_Idle";
+		switch (m_eCrumbleState)
+		{
+		case ECS_0:
+			pszAnim_Crumble = "Crumble_Stage_00";
+			break;
+		case ECS_1:
+			pszAnim_Crumble = "Crumble_Stage_01";
+			break;
+		case ECS_2:
+			pszAnim_Crumble = "Crumble_Stage_02";
+			break;
+		case ECS_3:
+			pszAnim_Crumble = "Crumble_Stage_03";
+			break;
+		}
 		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
 		m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
-		
-		m_pcCrumbleAnim->setDelayPerUnit(0.30f);
 		RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcCrumbleAnim));
-
 	}
 }
+
+void CCrumblingPlatform::StopCrumbling()
+{
+	if(m_bInitiatedCrumbling == true)
+	{
+		m_bInitiatedCrumbling = false;
+	}
+}
+
 
 void CCrumblingPlatform::UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState)
 {
 	if (eNewCrumbleState != m_eCrumbleState)
 	{
+		const char* pszAnim_Crumble;
 		// for extra functionality - playing sound on each crumble
 		switch (eNewCrumbleState)
 		{
+		case ECS_0:
+			m_eCrumbleState = ECrumbleState::ECS_0;
+			pszAnim_Crumble = "Crumble_Stage_00";
 		case ECS_1:
 			m_eCrumbleState = ECrumbleState::ECS_1;
-
+			pszAnim_Crumble = "Crumble_Stage_01";
 			break;
 		case ECS_2:
 			m_eCrumbleState = ECrumbleState::ECS_2;
-
+			pszAnim_Crumble = "Crumble_Stage_02";
 			break;
 		case ECS_3:
 			m_eCrumbleState = ECrumbleState::ECS_3;
-
+			pszAnim_Crumble = "Crumble_Stage_03";
 			break;
 		case ECS_Destroy:
 			m_eCrumbleState = ECrumbleState::ECS_Destroy;
 			GetPhysicsBody()->SetActive(false);
+			pszAnim_Crumble = "Crumble_Stage_Destroy";
 			break;
 		}
+
+		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+		m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
+		RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcCrumbleAnim));
 	}
 }
 
