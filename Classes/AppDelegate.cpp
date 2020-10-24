@@ -5,12 +5,10 @@
 #include "AppMacros.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCObject/GCObjGroupDefault.h"
-#include "ManicMiner/LevelManager/CLevelManager.h"
-#include "MenuScene.h"
 #include "SimpleAudioEngine.h"
 
-// Include Resolution Helper
-#include "ManicMiner/ResolutionHelper/ResolutionHelper.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
+
 
 USING_NS_CC;
 using namespace std;
@@ -145,14 +143,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// GamerCamp Edit
 	//////////////////////////////////////////////////////////////////////////
 
-		// Henrique edit
+	//////////////////////////////////////////////////////////////////////////
+	// Henrique edit
 
-		// Get correct resolution
-		GetDesktopResolution();
-
-		// Create Level Manager ( which will create the Main Menu )
+		// Create Level Manager ( which will create the Main Menu Scene )
 		m_pcLevelManager = new CLevelManager( *pDirector );
-		m_pcLevelManager->Init();
+	
+	// Henrique Edit
+	//////////////////////////////////////////////////////////////////////////
 
     return true;
 }

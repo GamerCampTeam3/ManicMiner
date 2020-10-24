@@ -24,22 +24,22 @@ class CLevelManager;													  //
 class CManicLayer: public IGCGameLayer, public b2ContactListener
 {
 private:
-	// Reference to the GameInstance
+	// Reference to the LevelManager in order to proceed
 	CLevelManager* m_pcLevelManager;
 
-	// GameState Enum
+	// GameState Enum, opens door and may change enemy behaviour
 	EGameState m_eGameState;
 
-	// Handling Reset Bool
+	// Handling Reset Flag
 	bool m_bWasResetRequested;
 
-	// Handling Going to Next Level
+	// Handling Going to Next Level Flag
 	bool m_bWasNextLevelRequested;
 
-	// backgrounds
+	// Pointer to Background Sprite
 	CGCObjSprite* m_pcGCSprBackGround;
 
-	// Mario
+	// Pointer to player, for easy play access
 	CPlayer* m_pcPlayer;
 
 	ECollectibleTypeRequired m_eCollectibleTypeRequired;
@@ -61,18 +61,12 @@ public:
 		EPA_Jump
 	};
 
-
-	// called from VOnUpdate
-	void HandleCollisions( void );
-
-	//////////////////////////////////////////////////////////////////////////
-	// CCNode interface...
+	////////////////////////////////////////////////////////////////////////////////
+	// CCNode interface onEnter -> We override to initialize the keyboard manager
 	virtual void onEnter() override;
-	virtual void onExit() override;
-	// CCNode interface...
-	//////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
 
-	//////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
 	// IGCGameLayer interface
 
 	virtual	void VOnCreate( void )			override;
@@ -90,8 +84,6 @@ public:
 	virtual void BeginContact( b2Contact* pB2Contact );
 	virtual void EndContact( b2Contact* pB2Contact );
 	virtual void PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold );
-	virtual void PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse );
-
 
 
 	////////////////////////////////////////////////////////////////////////////

@@ -2,15 +2,16 @@
 
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
-#include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 #include "GamerCamp/Core/GCTypes.h"
 #include "GamerCamp/GCObject/GCObject.h"
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-#include "ManicMiner/Platforms/CPlatform.h"
-#include "ManicMiner/Platforms/CCrumblingPlatform.h"
-#include "ManicMiner/Platforms/CMovingPlatform.h"
-#include "ManicMiner/Platforms/CGroundPlatform.h"
+
+#include "ManicMiner/Enums/EPlayerMovement.h"
 #include "ManicMiner/Platforms/CBrickPlatform.h"
+#include "ManicMiner/Platforms/CCrumblingPlatform.h"
+#include "ManicMiner/Platforms/CGroundPlatform.h"
+#include "ManicMiner/Platforms/CMovingPlatform.h"
+#include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CRegularPlatform.h"
 
 // creation params
@@ -99,7 +100,7 @@ void CObjCCGroupPlatform::CreatePlatforms()
 	CPlatform* pcPlatformRegular3rd = new CRegularPlatform(s_cCreationParams_Platform_2x1, cocos2d::Vec2(1800.f, 330.f) );
 
         // moving platform
-	CPlatform* pcPlatformMoving1st = new CMovingPlatform(s_cCreationParams_Platform_Moving_20x1, cocos2d::Vec2(1080.f, 390.f));
+	CPlatform* pcPlatformMoving1st = new CMovingPlatform(s_cCreationParams_Platform_Moving_20x1, cocos2d::Vec2(1080.f, 390.f), EPlayerDirection::Left );
 
 	CPlatform* pcPlatformBrick2nd = new CBrickPlatform(s_cCreationParams_Platform_Brick_3x1, cocos2d::Vec2(1110.f, 450.f));
 

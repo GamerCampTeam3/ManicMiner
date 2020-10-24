@@ -101,11 +101,6 @@ void CManicLayer::onEnter()
 	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
 }
 
-void CManicLayer::onExit()
-{
-	IGCGameLayer::onExit();
-}
-
 //////////////////////////////////////////////////////////////////////////
 // on create
 //////////////////////////////////////////////////////////////////////////
@@ -226,16 +221,10 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 
 	// starting position
-	const Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
+	const Vec2 v2PlayerStartPos = v2ScreenCentre_Pixels;
 
 	// create player object
-	m_pcPlayer = new CPlayer( *this, v2MarioStartPos );
-
-
-	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact ) -> void
-		{
-			PlatformCollided( rcPlayer, rcPlatform, rcContact );
-		} );
+	m_pcPlayer = new CPlayer( v2PlayerStartPos );
 
 
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
@@ -259,13 +248,7 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
 		});
 
-
-
-
-
-	//Label* pcScoreLabel = Label::create();
-
-}// void CGCGameLayerPlatformer::VOnCreate() { ...
+}
 
 void CManicLayer::PlayerCollidedDoor(CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact)
 {
@@ -284,9 +267,6 @@ void CManicLayer::PlayerCollidedDoor(CPlayer& rcPlayer, CDoor& rcDoor, const b2C
 void CManicLayer::VOnUpdate( f32 fTimeStep )
 {
 	IGCGameLayer::VOnUpdate( fTimeStep );
-
-	// this shows how to iterate and respond to the box2d collision info
-	HandleCollisions();
 
 	// Reset level request ( and not going to next level )
 	if( GetWasResetRequested() && !GetWasNextLevelRequested() )
@@ -415,7 +395,13 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 						////////////////////////////////////////////////////////////////////////////////
 					case EPT_Moving:
 						{
-							m_pcPlayer->LandedOnConveyorBelt( EPlayerDirection::EPD_Left ); // needs to access platform direction
+							// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 
+							auto pMovingPlatform = static_cast< CMovingPlatform* > ( pPlatform );
+
+							if( pMovingPlatform != nullptr )
+							{
+								m_pcPlayer->LandedOnConveyorBelt( pMovingPlatform->GetDirectionLock() );
+							}
 						}	
 						break;
 						////////////////////////////////////////////////////////////////////////////////
@@ -441,7 +427,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 					case EPT_Brick:
 						{
 						// If in mid air and sensor contacts == 0
-							if( ( m_pcPlayer->IsInMidAir() ) && ( m_pcPlayer->GetSensorContactCount() == 0 ) || ( m_pcPlayer->GetIsOnConveyorBelt() ) )
+							if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 ) || ( m_pcPlayer->GetIsOnConveyorBelt() ) )
 							{
 								// Player Bumped onto brick
 								m_pcPlayer->BumpedWithBricks();
@@ -579,9 +565,6 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )
 		}
 	}
 }
-// If not jumping > then falling
-// Collisions off
-
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -647,77 +630,6 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// post solve
-// insert any logic that needs to be done after a contact is resolved
-// e.g. check the types and double the impulse
-///////////////////////////////////////////////////////////////////////////////
-//virtual 
-void CManicLayer::PostSolve( b2Contact* pB2Contact, const b2ContactImpulse* pImpulse )
-{}
-
-///////////////////////////////////////////////////////////////////////////////
-// this function can only look at the collisions that happened (and which 
-// have potentially been resolved) in the previous physics step
-// 
-// N.B. it is totally possible to get a callback after collisions have been 
-// detected, but before they're resolved so you can choose to ignore them - 
-// e.g. for gamplay reasons like jumping up through a platform
-// 
-///////////////////////////////////////////////////////////////////////////////
-///
-void CManicLayer::HandleCollisions()
-{
-	//// check for collisions
-	//b2Body* pBodyToDestroy = nullptr;
-	//for( const b2Contact* pB2Contact = IGCGameLayer::ActiveInstance()->B2dGetWorld()->GetContactList();
-	//	nullptr != pB2Contact;
-	//	pB2Contact = pB2Contact->GetNext() )
-	//{
-	//	const b2Fixture* pFixtureA = CGCObjSpritePhysics::FromB2DContactGetFixture_A( pB2Contact );
-	//	const b2Fixture* pFixtureB = CGCObjSpritePhysics::FromB2DContactGetFixture_B( pB2Contact );
-
-	//	// return if either physics body has null user data
-	//	CGCObjSpritePhysics* pGcSprPhysA = CGCObjSpritePhysics::FromB2DFixtureGetSpritePhysics( pFixtureA );
-	//	if( !pGcSprPhysA )
-	//	{
-	//		return;
-	//	}
-
-	//	CGCObjSpritePhysics* pGcSprPhysB = CGCObjSpritePhysics::FromB2DFixtureGetSpritePhysics( pFixtureB );
-	//	if( !pGcSprPhysB )
-	//	{
-	//		return;
-	//	}
-
-	//	// check for user data - this is defined in physics editor as the 'Id' text
-	//	// in the text box immediately below the 'Is Sensor?' checkbox
-	//	// 
-	//	// Mario has a fixture that is a sensor with id 'bottom_left' 
-	//	// and this is what we're checking for :)
-	//	const std::string*  pstrCheckMe = cocos2d::GB2ShapeCache::getFixtureIdText( pFixtureA );
-	//	bool				bNameMatches = ( 0 == pstrCheckMe->compare( "bottom_left" ) );
-	//	bool				bIsASensor = pFixtureA->IsSensor();
-
-	//	if( pstrCheckMe && bNameMatches && bIsASensor )
-	//	{
-	//		int i = 0;
-	//		++i;
-	//	}
-
-	//	pstrCheckMe = cocos2d::GB2ShapeCache::getFixtureIdText( pFixtureB );
-	//	if( pstrCheckMe
-	//		&& ( 0 == pstrCheckMe->compare( "bottom_left" ) )
-	//		&& pFixtureB->IsSensor() )
-	//	{
-	//		int i = 0;
-	//		++i;
-	//	}
-	//}
-}
-
-// GetPhysicsBody()->GetFixtureList()->IsSensor();
-
 ////////////////////////////////////////////////////////////////////////////
 // Object Specific Collision Handles ///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -758,36 +670,6 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 	if( rcContact.IsTouching() )
 	{
 		rcCollectible.InteractEvent();
-	}
-}
-
-void CManicLayer::PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact )
-{
-	const bool isColliding = rcContact.IsTouching();
-	if( isColliding )
-	{
-
-		
-		//else
-		//{
-
-		//	rcPlayer.SetCanBeControlled( true );
-
-		//}
-
-		//Vec2 const rcPlatformPosition = rcPlatform.GetSpritePosition();
-		//Vec2 const rcPlayerPosition = rcPlayer.GetSpritePosition();
-		//if( rcPlayerPosition.y > rcPlatformPosition.y )
-		//{
-
-		//}
-		//else
-		//{
-		//	if( m_eGameState == EGameState::EGS_Escaping )
-		//	{
-		//		OnEscaped();
-		//	}
-		//}
 	}
 }
 
