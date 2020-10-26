@@ -24,6 +24,10 @@ void CCrumblingPlatform::VOnResourceAcquire()
 	CPlatform::VOnResourceAcquire();
 
 	m_pcDirector = cocos2d::Director::getInstance();
+
+	// use for loop
+	LoadAnimations();
+	
 }
 
 void CCrumblingPlatform::VOnUpdate(float fTimeStep)
@@ -32,8 +36,10 @@ void CCrumblingPlatform::VOnUpdate(float fTimeStep)
 
 	if (m_bInitiatedCrumbling)
 	{
+		// the amount to reduce the crumblingtimer by on every frame
 		m_fReduceCrumblingTimerBy = 1.f / m_pcDirector->getFrameRate();
 
+		// 
 		m_fCurrentCrumblingTimer -= m_fReduceCrumblingTimerBy;
 		
 		if (m_fCurrentCrumblingTimer <= 0.75f && m_fCurrentCrumblingTimer >= 0.56f)
@@ -50,7 +56,7 @@ void CCrumblingPlatform::VOnUpdate(float fTimeStep)
 		}
 		else if (m_fCurrentCrumblingTimer <= 0.0f)
 		{
-			// destroy platform 
+			// destroy platform - doesn't destroy it, just disables the physicsbody of the respective crumbling platform
 			UpdateCrumblingPlatform(ECrumbleState::ECS_Destroy);
 		}
 		
@@ -67,12 +73,10 @@ void CCrumblingPlatform::VOnReset()
 	m_fCurrentCrumblingTimer = 1.f;
 	m_eCrumbleState = ECrumbleState::ECS_0;
 
-	const char* pszAnim_Idle = "Crumble_Stage_Idle";
-
-	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
-	m_pcIdleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Idle);
-	RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcIdleAnim));
+	RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[0]));
 }
+
+
 
 void CCrumblingPlatform::InitiateCrumbling()
 {
@@ -80,25 +84,7 @@ void CCrumblingPlatform::InitiateCrumbling()
 	{
 		m_bInitiatedCrumbling = true;
 
-		const char* pszAnim_Crumble = "Crumble_Stage_Idle";
-		switch (m_eCrumbleState)
-		{
-		case ECS_0:
-			pszAnim_Crumble = "Crumble_Stage_00";
-			break;
-		case ECS_1:
-			pszAnim_Crumble = "Crumble_Stage_01";
-			break;
-		case ECS_2:
-			pszAnim_Crumble = "Crumble_Stage_02";
-			break;
-		case ECS_3:
-			pszAnim_Crumble = "Crumble_Stage_03";
-			break;
-		}
-		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
-		m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
-		RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcCrumbleAnim));
+		UpdateCrumblingPlatform(m_eCrumbleState);
 	}
 }
 
@@ -110,40 +96,67 @@ void CCrumblingPlatform::StopCrumbling()
 	}
 }
 
+void CCrumblingPlatform::VOnResourceRelease()
+{
+	CPlatform::VOnResourceRelease();
+	
+	int iCounter = 0;
+	// release all animations when killed
+	for(auto* Animations : m_pcAnimations)
+	{
+		m_pcAnimations[iCounter]->release();
+	}
+}
+
+void CCrumblingPlatform::LoadAnimations()
+{
+	m_pszAnimations[0] = "Crumble_Stage_Idle";
+	m_pszAnimations[1] = "Crumble_Stage_00";
+	m_pszAnimations[2] = "Crumble_Stage_01";
+	m_pszAnimations[3] = "Crumble_Stage_02";
+	m_pszAnimations[4] = "Crumble_Stage_03";
+	m_pszAnimations[5] = "Crumble_Stage_Destroy";
+
+	int iCounter = 0;
+	for(const char* pszAnim : m_pszAnimations)
+	{
+		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+		m_pcAnimations[iCounter] = GCCocosHelpers::CreateAnimation(rdictPlist, m_pszAnimations[iCounter]);
+		m_pcAnimations[iCounter]->retain();
+		
+		iCounter++;
+	}
+}
 
 void CCrumblingPlatform::UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState)
 {
+	// only if the new state is different to the current state
 	if (eNewCrumbleState != m_eCrumbleState)
 	{
-		const char* pszAnim_Crumble;
 		// for extra functionality - playing sound on each crumble
 		switch (eNewCrumbleState)
 		{
 		case ECS_0:
 			m_eCrumbleState = ECrumbleState::ECS_0;
-			pszAnim_Crumble = "Crumble_Stage_00";
+			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[1]));
 		case ECS_1:
 			m_eCrumbleState = ECrumbleState::ECS_1;
-			pszAnim_Crumble = "Crumble_Stage_01";
+			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[2]));
 			break;
 		case ECS_2:
 			m_eCrumbleState = ECrumbleState::ECS_2;
-			pszAnim_Crumble = "Crumble_Stage_02";
+			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[3]));
 			break;
 		case ECS_3:
 			m_eCrumbleState = ECrumbleState::ECS_3;
-			pszAnim_Crumble = "Crumble_Stage_03";
+			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[4]));
 			break;
 		case ECS_Destroy:
 			m_eCrumbleState = ECrumbleState::ECS_Destroy;
 			GetPhysicsBody()->SetActive(false);
-			pszAnim_Crumble = "Crumble_Stage_Destroy";
+			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[5]));
 			break;
 		}
-
-		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
-		m_pcCrumbleAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Crumble);
-		RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcCrumbleAnim));
 	}
 }
 

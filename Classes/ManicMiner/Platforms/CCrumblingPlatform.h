@@ -5,6 +5,7 @@
 #define _CCRUMBLINGPLATFORM_H_
 
 #include "CPlatform.h"
+#include "2d/CCActionInterval.h"
 
 /*
 enum class ECrumbleState
@@ -32,6 +33,8 @@ public:
 	void InitiateCrumbling();
 
 	void StopCrumbling();
+
+	void VOnResourceRelease() override;
 	
 private:
 
@@ -50,6 +53,12 @@ private:
 	cocos2d::Animation* m_pcCrumbleAnim;
 	cocos2d::Animation* m_pcIdleAnim;
 
+	//cocos2d::Map<std::string, cocos2d::Animation*> m_mAnimationMap;
+	char* m_pszAnimations[6];
+	cocos2d::Animation* m_pcAnimations[6];
+	
+	void LoadAnimations();
+	
 	void UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState);
 
 	/// Crumbling Platforms
