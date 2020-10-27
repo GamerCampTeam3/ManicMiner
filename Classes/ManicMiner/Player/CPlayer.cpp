@@ -1,13 +1,16 @@
-//#include <memory.h>
+//////////////////////////////////////////////////////////////////////////////////////
+// Gamer Camp 2020 / Henrique & Bib													//
+//////////////////////////////////////////////////////////////////////////////////////
+
 
 #include "Classes/ManicMiner/Player/CPlayer.h"
-//#include "GamerCamp/GCObject/GCObjectManager.h"
+
 #include "AppDelegate.h"
 #include "GamerCamp/GameController/GCController.h"
 #include "ManicMiner/Helpers/Helpers.h"
-
-
 #include "ManicMiner/Layers/CManicLayer.h"
+
+
 
 USING_NS_CC;
 
@@ -15,8 +18,12 @@ USING_NS_CC;
 static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,								EPlayerActions::EPA_AxisMove_Y,								EPlayerActions::EPA_Jump };
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
 
-//////////////////////////////////////////////////////////////////////////
-/// Constructor that takes a Vec2 for starting position
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// [CONSTRUCTOR]																				//
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// Param1: const cocos2d::Vec2& startingPos														//
+// Used for setting this CGCObjSprite's m_v2InitialPosition ( aka reset position )				//
+////////////////////////////////////////////////////////////////////////////////////////////////// 
 CPlayer::CPlayer( const cocos2d::Vec2& startingPos )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
 	, m_kfGravitionalPull				( 2.3f )
@@ -38,10 +45,9 @@ CPlayer::CPlayer( const cocos2d::Vec2& startingPos )
 	SetResetPosition( startingPos );
 }
 
-
-//////////////////////////////////////////////////////////////////////////
-// //virtual 
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// VOnResourceAcquire																			//
+//////////////////////////////////////////////////////////////////////////////////////////////////
 IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/TempCharacter.plist", "TempCharacter", b2_dynamicBody, true );
 void CPlayer::VOnResourceAcquire()
 {

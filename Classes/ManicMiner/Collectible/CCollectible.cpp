@@ -45,7 +45,7 @@ void CCollectible::InteractEvent()
 {
 	if (!m_bHasBeenCollected)
 	{
-		PlaySoundEffect( ESoundName::ESN_KeyCollected );
+		PlaySoundEffect( ESoundName::KeyCollected );
 		
 		switch (m_eCollectibleType)
 		{

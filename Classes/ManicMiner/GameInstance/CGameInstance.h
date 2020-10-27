@@ -1,14 +1,19 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-// Gamer Camp 2020 / Henrique															//
-//////////////////////////////////////////////////////////////////////////////////////////
-// CGameInstance was a templated singleton in which we would handle most game logic		//
-// such as player death, item collected, going to next level, game states, etc;			//
-// But after the first tutorial with Zaf, it was decided this was not the best approach //
-// and all this logic has been moved to the CManicLayer class							//
-//////////////////////////////////////////////////////////////////////////////////////////
-// Completely commented out and excluded from the build									//
-// Only exists still for submission purposes											//
-//////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+//	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose	:		CGameInstance was a templated singleton in which we would handle most game logic					//	
+//					such as player death, item collected, going to next level, game states, etc;						//	
+//					But after the first tutorial with Zaf, it was decided this was not the best approach 				//
+//					and all this logic has since been moved to the CManicLayer class									//
+//																														//
+//					Completely commented out and excluded from the build in project settings							//
+//					Only exists still for submission purposes															//
+//																														//
+// See Also	:		CManicLayer.h																						//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 
 
 //#ifndef _CGAMEINSTANCE_H_

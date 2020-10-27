@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////////////
+// Gamer Camp 2020 / Henrique & Bib													//
+//////////////////////////////////////////////////////////////////////////////////////
+
 #ifndef _CPLAYER_H_
 #define _CPLAYER_H_
 
@@ -28,7 +32,7 @@ class CPlayer
 private:
 
 
-	// MOVEMENT PROPERTIES	//////////////////////////////////////////////////////////
+	// MOVEMENT PROPERTIES	////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Keeps track of the direction player is heading towards [ horizontal only ]
 	EPlayerDirection m_ePlayerDirection;				
@@ -59,16 +63,31 @@ private:
 	// ( might happen because of multiple collisions )
 	bool									m_bIsAlive;
 
-	// 
+	// Horizontal velocity for when player is moving sideways
 	float									m_fWalkSpeed;
+
+	// Instant vertical velocity for when player jumps
 	float									m_fJumpSpeed;
-	const float								m_kfGravitionalPull;			// The gravitational force that affects the player for jumping purposes
-	//
-	int										m_iSensorContactCount;			// Number of sensors that are overlapping with the Player's "feet" sensor at any given frame
-	int										m_iHardContactCount;			// Number of hard contacts the player collision has at any given frame, sensor contacts are excluded
 
+	// Specific gravitational acceleration for the player
+	const float								m_kfGravitionalPull;
+	
 
+	// COLLISION PROPERTIES	////////////////////////////////////////////////////////////////////////////////////////
+
+	// Expresses the current number of "Soft Contacts"
+	// How many unique sensors is our "Feet" sensor overlapping with during this frame
+	int										m_iSensorContactCount;
+	
+	// Expresses the current number of "Hard Contacts"
+	// How many fixtures is our player touching during this frame
+	// Does not include any sensor fixtures
+	int										m_iHardContactCount;			
+
+	// Stores the Y coordinate of when Willy left the surface
+	// Functionality not yet implemented, but this will be needed for fall damage / death
 	float									m_fLastYPosition;
+
 	// Life logic
 	int										m_iMaxLives;					// The maximum life of the player
     int										m_iLives;						// The current life of the player
@@ -82,16 +101,33 @@ public:
 
 
 	//////////////////////////////////////////////////////////////////////////
-	// overridden virtuals from the game object interface
+	// Overridden virtuals from the game object interface
 	//////////////////////////////////////////////////////////////////////////
-	// This will be called exactly once for each CGCObject derived class instance 
-	// registered with CGCObjectManager as soon as the TGB level file has stopped 
-	// loading- it is an "explicit constructor".
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	// Function: VOnResourceAcquire																	//
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	// No params																					//
+	////////////////////////////////////////////////////////////////////////////////////////////////// 
+	// +Info:																						//
+	//																								//
+	// Virtual override of CGCObjSpritePhysics::VOnResourceAcquire									//
+	//																								//
+	// Calls CGCObjSpritePhysics::VOnResourceAcquire and sets m_pcControllerActionToKeyMap			//
+	//////////////////////////////////////////////////////////////////////////////////////////////////
 	virtual void VOnResourceAcquire(void);
+
+
+
 	virtual void VOnResurrected(void) override;
 	virtual void VOnUpdate(f32 fTimeStep);
 	virtual void VOnResourceRelease(void);
-	//////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	// End of game object interface overrides														//
+	//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	// Update and movement functions
