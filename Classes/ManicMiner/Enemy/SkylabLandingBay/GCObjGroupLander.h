@@ -49,11 +49,10 @@ private:
 	void	CreateLanders	();
 	void	DestroyLanders	();
 		
-	//int AllocateRandomLanders(int iNumberToAllocate);
 	void KillLandersNotRequiredAtLevelStartup();
 	void RegisterLanderCollision(GCTypeID idLander);
-
 	void ActivateLanders(float fTimeStamp);
+	int AllocateRandomLanders(int iNumberToAllocate);
 
 	bool m_bFirstPassDone;
 	
@@ -82,6 +81,9 @@ private:
 	std::vector<LanderConfig> LanderConfig;
 
 	std::unordered_map<GCTypeID, int> LanderGCTypeIDLookup ;
+
+	// Note not used in current implementation - as required for the earlier 'random' option.
+	std::vector<bool> vLanderActivators;
 
 public:
 	

@@ -126,45 +126,46 @@ void CGCObjGroupLander::KillLandersNotRequiredAtLevelStartup()
 
 }
 
+//////////////////////////////////////////////////////////////////////////
 // Function to initialise the Lander Activator array to represent random lander(s).
 // (ie, Keep iterating through the vector until 'iNumberToAllocate' have been chosen).
 // Algorithim written this way to avoid any left/right bias to the allocation.
 // Function returns the last allocation position made (usefull when when called with
 // iNumberToAllocate equal to 1).
-
+//
+// eg to help visualise the Skylab landing bay level:
+//      oo    = Lander Anchor points.
+//		XXXXX = platform.
 // -------------------------------------------------------------------------------------------
-//        oo         oo         oo         oo        oo       oo        oo       oo      oo //
+//        oo         oo         oo         oo        oo       oo        oo       oo      oo 
 //
 //                                                                    XXXXX
 //
 //                                       XXXXX
 //        XXXXX                     
+//
+int CGCObjGroupLander::AllocateRandomLanders(int iNumberToAllocate)
+{
+	CCAssert((iNumberToAllocate > 0 || (iNumberToAllocate <= k_iMaxLanderAnchorPoints)),
+		"CGCObjectGroupLander: AllocateRandomLander has been called with an out of range input parameter.");
 
-
-//int CGCObjGroupLander::AllocateRandomLanders(int iNumberToAllocate)
-//{
-
-
-	//CCAssert((iNumberToAllocate > 0 || (iNumberToAllocate <= k_iMaxLanderAnchorPoints)),
-		//"CGCObjectGroupLander: AllocateRandomLander has been called with an out of range input parameter.");
-
-	//int iTotalPicked = 0;
-	//int iReturnValue = 0;
-//	while (iTotalPicked < iNumberToAllocate)
-//{
+	int iTotalPicked = 0;
+	int iReturnValue = 0;
+	while (iTotalPicked < iNumberToAllocate)
+{
 		//pick a random anchor point 
-		//int iRand = cocos2d::RandomHelper::random_int(0, k_iMaxLanderAnchorPoints - 1);
+		int iRand = cocos2d::RandomHelper::random_int(0, k_iMaxLanderAnchorPoints - 1);
 
-		// if that anchor point not already been chosen then set it True and advance total picked.
-		//if (!vLanderActivators[iRand])
-		//{
-		//	vLanderActivators[iRand] = true;
-		//	iTotalPicked++;
-		//}
-		//iReturnValue = iRand;
-	//}
-	//return iReturnValue;
-//}
+		//if that anchor point not already been chosen then set it True and advance total picked.
+		if (!vLanderActivators[iRand])
+		{
+			vLanderActivators[iRand] = true;
+			iTotalPicked++;
+		}
+		iReturnValue = iRand;
+	}
+	return iReturnValue;
+}
 
 void CGCObjGroupLander::VOnGroupResourceAcquire()
 {

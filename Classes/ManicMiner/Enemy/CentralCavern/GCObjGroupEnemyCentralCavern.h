@@ -7,7 +7,7 @@
 #include "ManicMiner/Enemy/GCObjGroupEnemy.h"
 
 //////////////////////////////////////////////////////////////////////////
-//  This class is a sub class of the base CGCObjGroupEnemy.  
+//  This class is a sub class of the abstract base CGCObjGroupEnemy.  
 //  Its purpose is to: 
 //         - instantiate all enemies required for level 1 (Central Cavern).
 //         - create and attach an animation loop to each enemy via operation
@@ -20,16 +20,11 @@
 class CGCObjGroupEnemyCentralCavern
 : public CGCObjGroupEnemy
 {
-
 public:
 	CGCObjGroupEnemyCentralCavern();		
-	virtual ~CGCObjGroupEnemyCentralCavern();
-
-	virtual void VOnGroupResourceAcquire_PostObject() override;
-	virtual void VOnGroupResourceAcquire() override;
-
-	virtual GCTypeID VGetTypeId() override;
-
-
+	virtual ~CGCObjGroupEnemyCentralCavern			();
+	virtual void VOnGroupResourceAcquire_PostObject	() override;
+	virtual void VOnGroupResourceAcquire			() override;
+	virtual GCTypeID VGetTypeId						() override;
 };
 #endif

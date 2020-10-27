@@ -1,5 +1,3 @@
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // (C) Gamer Camp / Dave O'Dwyer October 2020
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -10,22 +8,25 @@
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 
 // Static Creation Params lifted out of GCObjEnemy to here to allow GCObjEnemy to be a class which can represent differnt Enemy sprites/animations/physics.
+// This may need to change for module 2 depending on how the new framework works.
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
 //////////////////////////////////////////////////////////////////////////
-//
+// Constructor
 //////////////////////////////////////////////////////////////////////////
 CGCObjGroupEnemyCentralCavern::CGCObjGroupEnemyCentralCavern()
 {}
 
 //////////////////////////////////////////////////////////////////////////
-// virtual 
+// Destructor
+//////////////////////////////////////////////////////////////////////////
+// Virtual function
 //////////////////////////////////////////////////////////////////////////
 CGCObjGroupEnemyCentralCavern::~CGCObjGroupEnemyCentralCavern()
 {}
 
 //////////////////////////////////////////////////////////////////////////
-// virtual - overrides base class CGCObjGroupEnemy
+// Function to override pure virtual base class function.
 // This function allocates an animation to an enemy.
 // First the enemy type is queried via the function GetEnemyIdentifier() 
 // (this identifier was passed into the enemy when it was instantiated).
@@ -33,9 +34,21 @@ CGCObjGroupEnemyCentralCavern::~CGCObjGroupEnemyCentralCavern()
 // Enemy Identifiers against the associated animation.
 // Note the commented out code below shows how the system would be expanded for 
 // a level with more than one enemey.
+//
+// Final note:  when the game art was delivered on the last day of module 1,
+// only one static sprite was delivered with no animation frames.
+// Because the art looked so much better than the animated koopa troopa, we
+// decided to sacrifice the demonstration of animation frames and use the 
+// art delivered from the art team with no animation.
+// Because of this the below code for the animation has been commented out,
+// it is however fully operational for when animation frame art is delivered 
+// at module 2.
+//
+//////////////////////////////////////////////////////////////////////////
+// Virtual function
+//////////////////////////////////////////////////////////////////////////
 void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire_PostObject()
 {
-	
 	// set up animations for pAnimation group 1
 	//const char* pszPlist2 = "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist";
 	//const char* pszAnim_Fly2 = "Fly";
@@ -75,19 +88,17 @@ void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire_PostObject()
 }
 
 //////////////////////////////////////////////////////////////////////////
-// virtual - overrides base class CGCObjGroupEnemy
 // This function instantiates all required enemies for the Central Cavern level.
-//
-
+//////////////////////////////////////////////////////////////////////////
+// Virtual function
+//////////////////////////////////////////////////////////////////////////
 void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire() 
 {
 	// Central Cavern requires only one enemy.
 
-	float ptm = 60.0f;
-	CGCObjEnemy* pcEnemy = new CGCObjEnemy(EnemyTypes::EMovementAxis::EMovementAxis_LeftRight, cocos2d::Vec2(30.0f + ptm * 8.0f, 30.0f + ptm * 7.0f ), 30.0f + ptm * 7.0f, 0.0f, true, 3.0f, true, EnemyTypes::EEnemyId::EDuck, s_cCreationParams_CGCObj_EDuck);
-	//pEnemy->SetName("E1");
+	float fPtm = 60.0f;  // Pixel to metre ratio.  This definition needs to be removed from here and instead referenced from a common area at module 2.
+	CGCObjEnemy* pcEnemy = new CGCObjEnemy(EnemyTypes::EMovementAxis::EMovementAxis_LeftRight, cocos2d::Vec2(30.0f + fPtm * 8.0f, 30.0f + fPtm * 7.0f ), 30.0f + fPtm * 7.0f, 0.0f, true, 3.0f, true, EnemyTypes::EEnemyId::EDuck, s_cCreationParams_CGCObj_EDuck);
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 // Fucntion to return the typeid of the GCObjectGroup derived class
