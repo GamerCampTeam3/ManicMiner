@@ -1,10 +1,13 @@
 #include "CDCreatorCentralCavern.h"
-#include "CDoorCreator.h"
-#include "ManicMiner/Doors/CDoor.h"
 
+#include "ManicMiner/Doors/CDoor.h"
+#include "CDoorCreator.h"
+
+
+// News a door at wanted location
 void CDCreatorCentralCavern::CreateDoor()
 {
-	CDoor* CentralCavernDoor = new CDoor( m_rManicLayer, m_cCreationParams, cocos2d::Vec2( 1800.f, 120.f ));
+	CDoor* CentralCavernDoor = new CDoor( m_rManicLayer, m_cCreationParams, m_v2Position);
 
 }
 
@@ -23,5 +26,3 @@ void CDCreatorCentralCavern::VOnGroupResourceRelease()
 	CGCObjectGroup::VOnGroupResourceRelease();
 	DeleteDoor();
 }
-
-

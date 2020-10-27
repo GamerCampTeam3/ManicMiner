@@ -1,3 +1,8 @@
+//////////////////
+/// Bib
+//////////////////
+/// DEPRECATED CODE
+
 #ifndef _CCOLLECTIBLEOLD_H_
 #define _CCOLLECTIBLEOLD_H_
 

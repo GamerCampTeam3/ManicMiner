@@ -8,19 +8,16 @@
 #include "GamerCamp/GCCocosInterface/GB2ShapeCache-x.h"
 
 #include <string>
-
-#include "ManicMiner/Helpers/Helpers.h"
 USING_NS_CC;
 
 CHUD::CHUD( CPlayer& cPlayer, CManicLayer& cLayer, CCollectiblesGroup& collectiblesGroup )
 	: CGCObject( GetGCTypeIDOf( CHUD ) )
-	, m_pLivesLabel(nullptr)
-	, m_pScoreLabel(nullptr)
-	, m_pcPlayer( &cPlayer )
-	, m_pglOwnerGameLayer( &cLayer )
-	, m_pCollectiblesGroup( &collectiblesGroup )
+	, m_pLivesLabel			( nullptr  )
+	, m_pScoreLabel			( nullptr  )
+	, m_pcPlayer			( &cPlayer )
+	, m_pglOwnerGameLayer	( &cLayer  )
+	, m_pCollectiblesGroup	( &collectiblesGroup )
 {
-
 }
 
 
@@ -40,10 +37,11 @@ void CHUD::VOnReset()
 
 void CHUD::UpdateLabel()
 {
-	
+	// Step 1: clear text
 	m_pglOwnerGameLayer->removeChild( m_pLivesLabel );
 	m_pglOwnerGameLayer->removeChild( m_pScoreLabel );
-	
+
+	// Step 2: Update content
 	m_pLivesLabel = Label::createWithTTF( "LIVES: " + std::to_string( m_pcPlayer->GetLives() ), "fonts/arial.ttf", 20 );
 	m_pLivesLabel->setGlobalZOrder( 3.f );
 	m_pLivesLabel->setPosition( cocos2d::Vec2( 50.f, 1030.f ) );
@@ -52,6 +50,7 @@ void CHUD::UpdateLabel()
 	m_pScoreLabel->setGlobalZOrder( 3.f );
 	m_pScoreLabel->setPosition( cocos2d::Vec2( 300.f, 1030.f ) );
 
+	// Step 3: Draw text
 	m_pglOwnerGameLayer->addChild( m_pLivesLabel, 2 );
 	m_pglOwnerGameLayer->addChild( m_pScoreLabel, 2 );
 }
