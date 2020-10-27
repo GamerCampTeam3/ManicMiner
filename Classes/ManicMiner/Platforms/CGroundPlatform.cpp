@@ -13,7 +13,7 @@
 CGroundPlatform::CGroundPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
 	: CPlatform( CreationParams, ResetPosition )
 {
-	m_ePlatformType = EPlatformType::EPT_Ground;
+	m_ePlatformType = EPlatformType::Ground;
 }
 
 void CGroundPlatform::VOnResourceAcquire()

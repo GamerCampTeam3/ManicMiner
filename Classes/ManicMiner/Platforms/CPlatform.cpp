@@ -15,7 +15,7 @@ CPlatform::CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 Re
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlatform))
 	, m_FactoryCreationParams(CreationParams)
 	, m_v2ResetPosition(ResetPosition)
-	, m_ePlatformType( EPlatformType::EPT_Regular )
+	, m_ePlatformType( EPlatformType::Regular )
 	, m_bCollisionEnabled( false )
 	, m_bTriggersHardContactEvent ( false )
 
@@ -41,11 +41,6 @@ void CPlatform::VOnReset()
 	m_v2ResetPosition = cocos2d::Vec2(0.f, 0.f);
 	m_bCollisionEnabled = false;
 	m_bTriggersHardContactEvent = false;
-}
-
-EPlatformType CPlatform::GetPlatformType()
-{
-	return m_ePlatformType;
 }
 
 bool CPlatform::GetCollisionEnabled()

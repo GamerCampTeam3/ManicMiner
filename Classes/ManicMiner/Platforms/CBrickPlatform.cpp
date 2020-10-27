@@ -13,7 +13,7 @@
 CBrickPlatform::CBrickPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
 	: CPlatform( CreationParams, ResetPosition )
 {
-	m_ePlatformType = EPlatformType::EPT_Brick;
+	m_ePlatformType = EPlatformType::Brick;
 }
 
 void CBrickPlatform::VOnResourceAcquire()
