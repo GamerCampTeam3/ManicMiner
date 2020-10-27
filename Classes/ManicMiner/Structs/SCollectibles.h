@@ -1,3 +1,8 @@
+//////////////////
+/// Bib
+//////////////////
+/// DEPRECATED CODE
+
 #ifndef _SCOLLECTIBLES_
 #define _SCOLLECTIBLES_
 

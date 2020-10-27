@@ -1,9 +1,6 @@
 #include "CDoorCreator.h"
 
-void CDoorCreator::CreateDoor()
-{
-	
-}
+// Handles the CDoor objects
 
 GCTypeID CDoorCreator::VGetTypeId()
 {
@@ -15,6 +12,7 @@ bool CDoorCreator::VHandlesThisTypeId(GCTypeID idQueryType)
 	return(GetGCTypeIDOf( CDoor ) == idQueryType);
 }
 
+// On Resource Acquire, create the door.
 void CDoorCreator::VOnGroupResourceAcquire()
 {
 	CGCObjectGroup::VOnGroupResourceAcquire();
@@ -26,11 +24,11 @@ void CDoorCreator::VOnGroupResourceAcquire_PostObject()
 	CGCObjectGroup::VOnGroupResourceAcquire_PostObject();
 }
 
+// On Delete, destroy objects
 void CDoorCreator::VOnGroupResourceRelease()
 {
 	CGCObjectGroup::VOnGroupResourceRelease();
-	DestroyItems();
-	
+	DestroyItems();	
 }
 
 
@@ -42,11 +40,3 @@ void CDoorCreator::DestroyItems()
 		GCASSERT( GetGCTypeIDOf( CDoor ) == pObject->GetGCTypeID(), "wrong type!" );
 	} );
 }
-
-
-
-
-
-
-
-// static CGCFactoryCreationParams s_cCreationParamsKey( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );

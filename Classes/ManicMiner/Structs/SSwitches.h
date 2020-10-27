@@ -1,3 +1,8 @@
+//////////////////
+/// Bib
+//////////////////
+/// DEPRECATED CODE
+
 #ifndef _SSWITCHES_
 #define _SSWITCHES_
 

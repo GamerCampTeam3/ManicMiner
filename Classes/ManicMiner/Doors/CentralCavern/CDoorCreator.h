@@ -1,3 +1,7 @@
+//////////////////
+/// Bib
+//////////////////
+
 #ifndef _CDOORCREATOR_H_
 #define _CDOORCREATOR_H_
 
@@ -8,9 +12,11 @@ class CDoorCreator
 	: public CGCObjectGroup
 {
 protected:
+	// The door to is spawned by the door creator.
 	CManicLayer* m_rManicLayer;
 
-	virtual void CreateDoor();
+	// Virtual function that is overriden by child of this class to spawn the door in.
+	virtual void CreateDoor() {};
 	
 public:
 	CDoorCreator( CManicLayer& cLayer)
@@ -18,16 +24,13 @@ public:
 	{		
 	}
 
-	virtual void DestroyItems( void );
-
+	// Virtual functions
+	virtual void		DestroyItems( void );
 	virtual bool		VHandlesThisTypeId( GCTypeID idQueryType );
-
-	// must return the typeid of the CGCObjectGroup derived class
 	virtual GCTypeID	VGetTypeId( void );
 	virtual void		VOnGroupResourceAcquire_PostObject( void );
 	virtual void		VOnGroupResourceAcquire() override;
 	virtual void		VOnGroupResourceRelease( void );
 };
-
 
 #endif // #ifndef _CDOORCREATOR_H_

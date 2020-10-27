@@ -1,3 +1,8 @@
+//////////////////
+/// Bib
+//////////////////
+/// DEPRECATED CODE
+
 #ifndef _CCOLLECTIBLEMANAGER_H_
 #define _CCOLLECTIBLEMANAGER_H_
 #include <array>
