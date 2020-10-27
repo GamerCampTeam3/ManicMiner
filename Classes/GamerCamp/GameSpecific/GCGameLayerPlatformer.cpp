@@ -9,7 +9,7 @@
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
-#include "MenuScene.h"
+#include "ManicMiner/Layers/MenuScene.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GameSpecific/Player/GCObjPlayer.h"
@@ -264,8 +264,8 @@ void CGCGameLayerPlatformer::VOnCreate()
 	Vec2 v2MarioStartPos = v2ScreenCentre_Pixels;
 
 	// create player object
-	m_pcGCOPlayer = new CPlayer();
-	m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
+	// m_pcGCOPlayer = new CPlayer();
+	// m_pcGCOPlayer->SetResetPosition( v2MarioStartPos );
 
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. invaders are added by the invader object group
