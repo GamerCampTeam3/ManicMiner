@@ -162,9 +162,6 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MenuScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GamerCamp\Debug\GLES-Render.cpp">
       <Filter>Classes\GamerCamp\DebugTools</Filter>
     </ClCompile>
@@ -348,6 +345,9 @@
     <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp">
       <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp">
+      <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -357,9 +357,6 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppMacros.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MenuScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GamerCamp\Collections\NoAllocList.h">
@@ -589,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h">
       <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h">
+      <Filter>Classes\ManicMiner\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

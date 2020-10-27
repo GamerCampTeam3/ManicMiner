@@ -2,12 +2,8 @@
 #define _CPLAYER_H_
 
 
-#ifndef _GCOBJSPRITEPHYSICS_H_
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
-#endif
-
 #include "ManicMiner/Enums/EPlayerMovement.h"
-//#include "ManicMiner/Enums/EPlayerActions.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -31,39 +27,56 @@ class CPlayer
 {
 private:
 
-	// Constant values
-	const float								m_kfGravitionalPull;			// The gravitational force that affects the player for jumping purposes
 
-	// Our Movement Related variables
-	EPlayerDirection						m_ePlayerDirection;				// This stores the current direction the player is at
-	EPlayerDirection						m_eLastPlayerDirection;			// This stores the last direction of the player, used for the jump lock
-	EPlayerDirection						m_ePendingDirection;			// This stores the direction the player should go, assigned by the last conveyor belt it came in contact with
+	// MOVEMENT PROPERTIES	//////////////////////////////////////////////////////////
+	
+	// Keeps track of the direction player is heading towards [ horizontal only ]
+	EPlayerDirection m_ePlayerDirection;				
+	
+	// Pending direction, assigned by the last contacted CMovingPlatform
+	EPlayerDirection m_ePendingDirection;
 
-	bool									m_bCanJump;						// This regulates the player's ability to jump again
-	bool									m_bCanBeControlled;				// This disables input of the X-axis directional movement of the player while jumping (or on a conveyor belt)
-	bool									m_bIsPendingDirection;			// This is so the player can walk on the opposite direction of the conveyor belt, if landed in that direction at first
-	bool									m_bIsGrounded;					// Is walking on platform?
+	// Enables / Disables ability to Jump
+	// Toggled when Player lands on / leaves the ground surface
+	bool m_bCanJump;						
+	
+	// Enables / Disables ability to change horizontal direction
+	// Only set to false when Player is on top of a CMovingPlatform, and his walking direction is locked.
+	bool m_bCanBeControlled;
+	
+	// Tells us if the Player is pending a direction change
+	// We use this to allow the Player to keep walking against the CMovingPlatform
+	// Until he tries to change direction. This will force the Player to go in the direction
+	// Of the conveyor belt, and will set m_bCanBeControlled to true, effectively locking horizontal movement
+	bool									m_bIsPendingDirection;
+
+	// Tells us if the Player is standing on a surface
+	// This implies that m_iHardContactCount > 0
+	bool									m_bIsGrounded;
+
+	// Tells us if the player is alive this frame
+	// We use this to avoid multiple deaths during the same frame
+	// ( might happen because of multiple collisions )
 	bool									m_bIsAlive;
+
+	// 
+	float									m_fWalkSpeed;
+	float									m_fJumpSpeed;
+	const float								m_kfGravitionalPull;			// The gravitational force that affects the player for jumping purposes
+	//
 	int										m_iSensorContactCount;			// Number of sensors that are overlapping with the Player's "feet" sensor at any given frame
 	int										m_iHardContactCount;			// Number of hard contacts the player collision has at any given frame, sensor contacts are excluded
 
-	float									m_fMovementSpeed;
-	float									m_fJumpSpeed;
-	float									m_fLastYPosition;
-	cocos2d::Vec2							m_v2Movement;					// Used to move the player
 
+	float									m_fLastYPosition;
 	// Life logic
 	int										m_iMaxLives;					// The maximum life of the player
     int										m_iLives;						// The current life of the player
 
-	// Pointers
-	CManicLayer*							m_pcManicLayer;
 	TGCActionToKeyMap< EPlayerActions >*	m_pcControllerActionToKeyMap;
 
 public:
-	//CPlayer();
-	CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos);
-	//CPlayer( CManicLayer &cLayer, const cocos2d::Vec2& startingPos,const int startingLives);
+	CPlayer( const cocos2d::Vec2& startingPos);
 
 	virtual ~CPlayer()	{}
 
@@ -82,9 +95,8 @@ public:
 
 
 	// Update and movement functions
-	void UpdateMovement			();
 	void KeyboardInput			();
-	void ApplyDirectionChange	( EPlayerDirection eNewDirection, float fHorizontalVelocity, float fVerticalVelocity );
+	void ApplyDirectionChange	( const EPlayerDirection eNewDirection, const bool bResetVerticalVelocity = false );
 	void JumpEvent				();
 
 	// Damage / Death logic
@@ -95,7 +107,7 @@ public:
 	void SetCanJump			(bool canJump)		{ m_bCanJump = canJump; }
 	bool GetCanBeControlled	() const			{ return m_bCanBeControlled; }
 	void SetCanBeControlled	(bool canControl)	{ m_bCanBeControlled = canControl; }
-	bool GetIsGrounded		()					{ return m_bIsGrounded; }
+	bool GetIsGrounded();
 
 	bool GetIsOnConveyorBelt();
 	//void SetIsGrounded( bool bIsGrounded ) { m_bIsGrounded = bIsGrounded; }
@@ -123,8 +135,7 @@ public:
 
 	void IncrementLives	()			{ m_iLives++; }
 	void DecrementLives	()			{ m_iLives--; }
-	bool IsInMidAir()				{ return ( !m_bIsGrounded); }
-	float GetMovementSpeed()		{ return m_fMovementSpeed; }
+	float GetMovementSpeed()		{ return m_fWalkSpeed; }
 
 
 	// Avoid calling SetDirection unless you absolutely must do something to the player.
@@ -145,12 +156,9 @@ public:
 	void BumpedWithBricks();
 
 	void ForceConveyorBeltMovement();
-	//void EndConveyorBeltMovement()								{ m_bCanBeControlled = true; }
-
-	//void MountedLadder			(EPlayerDirection yAxisLock)	{ m_ePlayerDirection = yAxisLock; m_bIsOnLadder = true; }
-	//void UnMountedLadder		()								{ m_bIsOnLadder = false; }
 
 	// Returns the current movement direction of the player
-	EPlayerDirection GetDirection() { return m_ePlayerDirection; };
+	EPlayerDirection GetCurrentDirection() const;
+
 };
 #endif // #ifndef _CPLAYER_H_

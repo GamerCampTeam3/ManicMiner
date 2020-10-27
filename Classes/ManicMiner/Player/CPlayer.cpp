@@ -1,52 +1,27 @@
-#include <memory.h>
+//#include <memory.h>
 
+#include "Classes/ManicMiner/Player/CPlayer.h"
+//#include "GamerCamp/GCObject/GCObjectManager.h"
 #include "AppDelegate.h"
-#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-#include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-#include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GameController/GCController.h"
 #include "ManicMiner/Helpers/Helpers.h"
 
 
-#include "Classes/ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 
 USING_NS_CC;
 
-static int testnum = 0;
 // action map arrays must match in length - in the templated controller class we use they map from the user define enum to cocos2d::Controller::Key 
 static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,								EPlayerActions::EPA_AxisMove_Y,								EPlayerActions::EPA_Jump };
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
 
 //////////////////////////////////////////////////////////////////////////
-/// Base constructor that initializes player with typical values
-//CPlayer::CPlayer()
-//	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
-//	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
-//	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
-//	, m_bCanJump						( true )
-//	, m_bCanBeControlled				( true )
-//	, m_bIsOnLadder						( false )
-//	, m_bIsAlive						( true )
-//	, m_fMovementSpeed					( -4.f )
-//	, m_fJumpForce						( 10.0f )
-//	, m_v2Movement						( 0.0f, 0.0f )
-//	, m_iMaxLives						( 3 )
-//	, m_iLives							( m_iMaxLives )
-//	, m_pcManicLayer					( nullptr )
-//	, m_pcControllerActionToKeyMap		( nullptr )
-//{
-//
-//}
-
-//////////////////////////////////////////////////////////////////////////
-/// Overloaded constructor that takes in a reference to the layer and Vec2
-CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
+/// Constructor that takes a Vec2 for starting position
+CPlayer::CPlayer( const cocos2d::Vec2& startingPos )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
 	, m_kfGravitionalPull				( 2.3f )
-	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
-	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
-	, m_ePendingDirection				( EPlayerDirection::EPD_Static )
+	, m_ePlayerDirection				( EPlayerDirection::Static )
+	, m_ePendingDirection				( EPlayerDirection::Static )
 	, m_bCanJump						( true )
 	, m_bCanBeControlled				( true )
 	, m_bIsPendingDirection				( false )
@@ -54,38 +29,15 @@ CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos )
 	, m_bIsAlive						( true )
 	, m_iSensorContactCount				( 0 )
 	, m_iHardContactCount				( 0 )
-	, m_v2Movement						( 0.0f, 0.0f )
-	, m_fMovementSpeed					( -4.f )
+	, m_fWalkSpeed						( 4.0f )
 	, m_fJumpSpeed						( 10.6f )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
-	, m_pcManicLayer					( &cLayer )
 	, m_pcControllerActionToKeyMap		( nullptr )
 {
 	SetResetPosition( startingPos );
 }
 
-////////////////////////////////////////////////////////////////////////////
-///// Overloaded constructor that takes in a reference to the layer, V2 and lives
-//CPlayer::CPlayer( CManicLayer& cLayer, const cocos2d::Vec2& startingPos, const int startingLives )
-//	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
-//	, m_ePlayerDirection				( EPlayerDirection::EPD_Static )
-//	, m_eLastPlayerDirection			( EPlayerDirection::EPD_Static )
-//	, m_bCanJump						( true )
-//	, m_bCanBeControlled				( true )
-//	, m_bIsOnLadder						( false )
-//	, m_bIsAlive						( true )
-//	, m_v2Movement						( 0.0f, 0.0f )
-//	, m_fMovementSpeed					( -4.f )
-//	, m_fJumpForce						( 10.0f )
-//	, m_iMaxLives						( startingLives )
-//	, m_iLives							( m_iMaxLives )
-//	, m_pcManicLayer					( &cLayer )
-//	, m_pcControllerActionToKeyMap		( nullptr )
-//{
-//	SetResetPosition( startingPos );
-//}
-//
 
 //////////////////////////////////////////////////////////////////////////
 // //virtual 
@@ -97,13 +49,6 @@ void CPlayer::VOnResourceAcquire()
 
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
-	const char* pszAnim_marioJog = "Jog";
-
-	// animate!
-	//ValueMap dicPList = GCCocosHelpers::CreateDictionaryFromPlist( GetFactoryCreationParams()->strPlistFile );
-	//RunAction( GCCocosHelpers::CreateAnimationActionLoop( GCCocosHelpers::CreateAnimation( dicPList, pszAnim_marioJog ) ) );
-
-
 	// because we're just storing a vanilla pointer we must call delete on it in VOnResourceRelease or leak memory 
 	// 
 	// n.b. m_pcControllerActionToKeyMap is a "perfect use case" for std::unique_ptr...
@@ -112,41 +57,45 @@ void CPlayer::VOnResourceAcquire()
 	m_pcControllerActionToKeyMap = TCreateActionToKeyMap( s_aePlayerActions, s_aeKeys );
 }
 
+void CPlayer::VOnResourceRelease()
+{
+	safeDelete( m_pcControllerActionToKeyMap );
+
+	CGCObjSpritePhysics::VOnResourceRelease();
+}
+
 void CPlayer::VOnResurrected( void )
 {
 	CGCObjSpritePhysics::VOnResurrected();
 
-	// reset velocity and flip state
+	// Reset sprite orientation
 	SetFlippedX( false );
 	SetFlippedY( false );
 
+	// Reset all member variable flags
 	m_bIsAlive = true;
 	m_bCanJump = true;
 	m_bCanBeControlled = true;
+	m_bIsGrounded = true;
+	m_bIsPendingDirection = false;
 
-	// reset
+
+	// Reset physics body related components
 	if( GetPhysicsBody() )
 	{
 		Vec2 v2SpritePos = GetSpritePosition();
-		ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+		ApplyDirectionChange( EPlayerDirection::Static, true );
 		GetPhysicsBody()->SetTransform( IGCGameLayer::B2dPixelsToWorld( b2Vec2( v2SpritePos.x, v2SpritePos.y ) ), 0.0f );
 		GetPhysicsBody()->SetFixedRotation( true );
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 	}
 }
-//////////////////////////////////////////////////////////////////////////
 
-void CPlayer::VOnResourceRelease()
-{
-	CGCObjSpritePhysics::VOnResourceRelease();
-	safeDelete( m_pcControllerActionToKeyMap );
-}
-
-//////////////////////////////////////////////////////////////////////////
-/// Main function called when the player takes damage
-/// First checks if it can take damage to avoid multi function calls during frame
-/// Then reduces lives and checks if it should reset or die accordingly
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+// Called when player takes damage, instantly dies										//
+// Decrements the lives count, and sets m_bIsAlive to false								//
+// so that we're sure this function will not run twice before the level is reset		//
+//////////////////////////////////////////////////////////////////////////////////////////
 void CPlayer::Die()
 {
 	if ( m_bIsAlive )
@@ -213,49 +162,68 @@ void CPlayer::LandedOnWalkablePlatform()
 	m_bIsGrounded = true;
 	m_bIsPendingDirection = false;
 
-	//ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
-
 	// Run another check for player input
 	KeyboardInput();
 }
 
 void CPlayer::LandedOnConveyorBelt( EPlayerDirection eDirectionLock )
 {
-	testnum++;
-	if( testnum == 3 )
-	{
- 		int z = 0;
-	}
+	// Debug print out
 	CCLOG( "Landed on Conveyor Belt" );
+
+	// The player is grounded, can jump
 	m_bCanJump = true;
 	m_bIsGrounded = true;
 
-
+	// Set new pending direction
 	m_ePendingDirection = eDirectionLock;
-	// Now we must check the player input
+
+	// Check player input state:
+
+	// If as soon as Willy lands on the conveyor belt
+	// the player is trying to agaisn't it, Willy should be able to
+	// If not, we force the direction and lock it so Willy is no longer allowed to change direction ( until he lands once again )
+
+	// Get input manager
 	const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
 	TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, ( *m_pcControllerActionToKeyMap ) );
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// JUMP INPUT																																	//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) ) )
-	{
+	{	
+		// Perform Jump
 		m_bCanBeControlled = true;
 		m_bIsPendingDirection = true;
 		JumpEvent();
 	}
-	else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left  ) ) && ( eDirectionLock == EPlayerDirection::EPD_Right ) )
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//	LEFT INPUT																																	//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left  ) ) && ( eDirectionLock == EPlayerDirection::Right ) )
 	{
-		ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, 0.0f );
+		ApplyDirectionChange( EPlayerDirection::Left, true );
 		m_bCanBeControlled = true;
 		m_bIsPendingDirection = true;
 	}
-	else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) ) && ( eDirectionLock == EPlayerDirection::EPD_Left ) )
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//	RIGHT INPUT																																	//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) ) && ( eDirectionLock == EPlayerDirection::Left ) )
 	{
-		ApplyDirectionChange( EPlayerDirection::EPD_Right, m_fMovementSpeed * -1.0f, 0.0f );
+		ApplyDirectionChange( EPlayerDirection::Right, true);
 		m_bCanBeControlled = true;
 		m_bIsPendingDirection = true;
 	}
-	// Not trying to move -> force
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//	NO INPUT																																	//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	else
 	{
+		// Force Direction
 		m_bCanBeControlled = true;
 		m_bIsPendingDirection = true;
 		ForceConveyorBeltMovement();
@@ -264,27 +232,27 @@ void CPlayer::LandedOnConveyorBelt( EPlayerDirection eDirectionLock )
 
 void CPlayer::ForceConveyorBeltMovement( )
 {
+	// Debug
 	CCLOG( "Forced Conveyor Direction" );
+	
+	// Set as grounded, can jump, cannot be controlled (direction locked), and no longer pending direction
 	m_bIsGrounded = true;
 	m_bCanJump = true;
 	m_bCanBeControlled = false;
 	m_bIsPendingDirection = false;
 
-	switch( m_ePendingDirection )
-	{
-		case EPlayerDirection::EPD_Left:
-		{
-			ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, 0.0f );
-		}
-		break;
+	// Set new direction
+	ApplyDirectionChange( m_ePendingDirection, true );
+}
 
-		case EPlayerDirection::EPD_Right:
-		{
-			ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed * -1.0f, 0.0f );
-		}
-		break;
-	}	
+EPlayerDirection CPlayer::GetCurrentDirection() const
+{
+	return m_ePlayerDirection;
+}
 
+bool CPlayer::GetIsGrounded()
+{
+	return m_bIsGrounded;
 }
 
 void CPlayer::LeftGround()
@@ -300,8 +268,7 @@ void CPlayer::LeftGround()
 		CCLOG( "Dropping straight down" );
 		m_bCanJump = false;
 
-		m_eLastPlayerDirection = m_ePlayerDirection;
-		m_ePlayerDirection = EPlayerDirection::EPD_Static;
+		m_ePlayerDirection = EPlayerDirection::Static;
 	}
 	m_bIsGrounded = false;
 	m_bIsPendingDirection = false;
@@ -313,33 +280,43 @@ void CPlayer::BumpedWithBricks()
 	// Make sure player is not standing in conveyor belt
 	if ( !GetIsOnConveyorBelt() )
 	{
-		ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, GetVelocity().y );
+		ApplyDirectionChange( EPlayerDirection::Static );
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 
+//	VOnUpdate															//
+//		Checks Player Input												//
+//		Prints out debug info if uncommented							//
 //////////////////////////////////////////////////////////////////////////
-//virtual 
 void CPlayer::VOnUpdate( f32 fTimeStep )
 {
+	// Get player input and change movement if needed
 	KeyboardInput();
 
-	//std::string string1 = std::to_string( m_iHardContactCount );
-	//char const* pchar1 = string1.c_str();
 
-	//CCLOG( "Hard Count:" );	
-	//CCLOG( pchar1 );	
-	//
-	//std::string string2 = std::to_string( m_iSensorContactCount );
-	//char const* pchar2 = string2.c_str();
-	//CCLOG( "Soft Count:" );
-	//CCLOG( pchar2 );
-
-
-	//UpdateMovement( fTimeStep );
+	// DEBUG SECTION /////////////////////////////////////////////////////////////////
+																					//
+	//////////////// Number of Hard Contacts this frame	//////////////////			//
+	//																	//			//
+	std::string string1 = std::to_string( m_iHardContactCount );		//			//
+	char const* pchar1 = string1.c_str();								//			//
+	CCLOG( "Hard Count:" );												//			//
+	CCLOG( pchar1 );													//			//
+	//																	//			//
+	//////////////////////////////////////////////////////////////////////			//
+																					//
+	//////////////// Number of Soft Contacts this frame	//////////////////			//
+	//																	//			//
+	std::string string2 = std::to_string( m_iSensorContactCount );		//			//
+	char const* pchar2 = string2.c_str();								//			//
+	CCLOG( "Soft Count:" );												//			//
+	CCLOG( pchar2 );													//			//
+	//																	//			//
+	//////////////////////////////////////////////////////////////////////			//
+																					//
+	// END OF DEBUG SECTION //////////////////////////////////////////////////////////
 }
-
 
 // Reads the keyboard input and moves the player accordingly
 void CPlayer::KeyboardInput()
@@ -364,9 +341,9 @@ void CPlayer::KeyboardInput()
 		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Left )))
 		{
 			// If can be controlled and is grounded
-			if ( m_bCanBeControlled && !IsInMidAir())
+			if ( m_bCanBeControlled && m_bIsGrounded )
 			{
-				ApplyDirectionChange( EPlayerDirection::EPD_Left, m_fMovementSpeed, GetVelocity().y );
+				ApplyDirectionChange( EPlayerDirection::Left );
 			}
 		}
 
@@ -375,56 +352,24 @@ void CPlayer::KeyboardInput()
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Right )))
 		{
-			if( m_bCanBeControlled && !IsInMidAir() )
+			if( m_bCanBeControlled && m_bIsGrounded )
 			{
-				ApplyDirectionChange( EPlayerDirection::EPD_Right, abs( m_fMovementSpeed ), GetVelocity().y );
+				ApplyDirectionChange( EPlayerDirection::Right );
 			}
 		}
-
-		//////////////////////////////////////////////////////////////////////////////////////////////////
-		// LADDER SPECIFIC																				//
-		//////////////////////////////////////////////////////////////////////////////////////////////////
-		//else if( m_bIsOnLadder )
-		//{
-		//	if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Up ) )
-		//	{
-		//		ApplyDirectionChange( EPlayerDirection::EPD_Up, 0.0f, abs( m_fMovementSpeed ) );
-		//	}
-		//	else if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Down ) )
-		//	{
-		//		ApplyDirectionChange( EPlayerDirection::EPD_Down, 0.0f, m_fMovementSpeed );
-		//	}
-		//}
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// STATIC																						//
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		else
 		{
-			if( m_bCanBeControlled && !IsInMidAir() )
+			if( m_bCanBeControlled && m_bIsGrounded )
 			{
-				ApplyDirectionChange( EPlayerDirection::EPD_Static, 0.0f, 0.0f );
+				ApplyDirectionChange( EPlayerDirection::Static, true );
 			}
 		}
 	}
 
-}
-
-//////////////////////////////////////////////////////////////////////////
-///	 Switch case used for the player movement
-void CPlayer::UpdateMovement( )
-{
-	SetVelocity( m_v2Movement );
-	switch (m_ePlayerDirection)
-	{
-		case EPlayerDirection::EPD_Right:
-			SetFlippedX( true );
-			break;
-
-		case EPlayerDirection::EPD_Left:
-			SetFlippedX( false );
-			break;
-	}
 }
 
 // Movement Functions called by Input/Jump
@@ -440,18 +385,15 @@ void CPlayer::JumpEvent()
 	{
 		switch( m_ePendingDirection )
 		{
-		case EPlayerDirection::EPD_Right:
-			SetVelocity( cocos2d::Vec2( m_fMovementSpeed * -1.0f, m_fJumpSpeed ) );
+		case EPlayerDirection::Right:
+			SetVelocity( cocos2d::Vec2( m_fWalkSpeed, m_fJumpSpeed ) );
 			break;
-		case EPlayerDirection::EPD_Left:
-			SetVelocity( cocos2d::Vec2( m_fMovementSpeed, m_fJumpSpeed ) );
+		case EPlayerDirection::Left:
+			SetVelocity( cocos2d::Vec2( m_fWalkSpeed * -1.0f, m_fJumpSpeed ) );
 			break;
 		}
-		m_eLastPlayerDirection = m_ePlayerDirection;
 		m_ePlayerDirection = m_ePendingDirection;
 	}
-	//m_eLastPlayerDirection = m_ePlayerDirection;
-	//m_ePlayerDirection = EPlayerDirection::EPD_Jumping;
 
 	m_bCanJump = false;
 
@@ -459,43 +401,88 @@ void CPlayer::JumpEvent()
 	m_bCanBeControlled = true;
 }
 
-
-void CPlayer::ApplyDirectionChange( EPlayerDirection eNewDirection, float fHorizontalVelocity, float fVerticalVelocity )
+void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const bool bResetVerticalVelocity )
 {
-	// If changing direction
+	// If changing from current direction
 	if( eNewDirection != m_ePlayerDirection )
 	{
-
-		// If on conveyor belt and the new direction is not the same as belt movement
+		// If on conveyor belt and the new direction is not the same as the pending conveyor belt direction
 		if( m_bIsPendingDirection && eNewDirection != m_ePendingDirection )
 		{
 			ForceConveyorBeltMovement();
 		}
-
-		// Else, walking on normal platform
+		
+		// Else, walking normally on a regular platform
 		else
 		{
+			// Set new vertical speed according to the ``bResetVerticalVelocity`` argument
+			float fVerticalSpeed = GetVelocity().y;
+			if( bResetVerticalVelocity )
+			{
+				fVerticalSpeed = 0.0f;
+			}
+			// Set new horizontal speed according to the ``eNewDirection`` argument
+			float fHorizontalSpeed;
+		
+			//////////////////////////////////////////////////////////////////////////////////////////////////
+			// Switch on eNewDirection																		//
+			//////////////////////////////////////////////////////////////////////////////////////////////////
 			switch( eNewDirection )
 			{
-			case EPlayerDirection::EPD_Static:
-				CCLOG( "static" );
+			//////////////////////////////////////////////////////////////////////////////////////////////////
+			// STATIC																						//
+			//////////////////////////////////////////////////////////////////////////////////////////////////
+			case EPlayerDirection::Static:
+				
+				// Debug new direction
+				CCLOG( "Player going Static" );
+				
+				// Static -> no speed
+				fHorizontalSpeed = 0.0f;
+				
 				break;
-			case EPlayerDirection::EPD_Right:
-				CCLOG( "right" );
+			//////////////////////////////////////////////////////////////////////////////////////////////////
+			// RIGHT																						//
+			//////////////////////////////////////////////////////////////////////////////////////////////////
+			case EPlayerDirection::Right:
+				
+				// Debug new direction
+				CCLOG( "Player going Right" );
+				
+				// Right -> move with walk speed
+				fHorizontalSpeed = m_fWalkSpeed;
+
+				// Adjust sprite orientation
+				SetFlippedX( true );
+				
 				break;
-			case EPlayerDirection::EPD_Left:
-				CCLOG( "left" );
+			//////////////////////////////////////////////////////////////////////////////////////////////////
+			// LEFT																							//
+			//////////////////////////////////////////////////////////////////////////////////////////////////
+			case EPlayerDirection::Left:
+				
+				// Debug new direction
+				CCLOG( "Player going Left" );
+
+				// Right -> move with negative value of walk speed
+				fHorizontalSpeed = m_fWalkSpeed * -1.0f;
+
+				// Adjust sprite orientation
+				SetFlippedX( false );
+				
 				break;
+			////////////////////////////////////////////////////////////////////////////////////////////////////
+			//
+			// End of switch
 			}
 
-			// Change velocity
-			const Vec2 v2NewVelocity( fHorizontalVelocity, fVerticalVelocity );
-			m_v2Movement = v2NewVelocity;
 
-			m_eLastPlayerDirection = m_ePlayerDirection;
+			// Set new player direction enum
 			m_ePlayerDirection = eNewDirection;
-		
-			UpdateMovement();
+
+			// Change current velocity
+			const Vec2 v2NewVelocity( fHorizontalSpeed, fVerticalSpeed );
+			SetVelocity( v2NewVelocity );
 		}
 	}
 }

@@ -1,8 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// (C) Gamer Camp / Alex Darby 2018
-// Distributed under the MIT license - see readme.md
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "MenuScene.h"
+#include "ManicMiner/Layers/MenuScene.h"
 
 #include "ManicMiner/LevelManager/CLevelManager.h"
 
@@ -108,9 +104,6 @@ bool CMenuLayer::init()
     ///
     ///////////////////////////////////////////////////////////////////////////
 
-    /////////////////////////////
-    // 3. add your codes below...
-
     // add "HelloWorld" splash screen"
     Sprite* pSprite = Sprite::create("Loose/HelloWorld.png");
 
@@ -124,19 +117,17 @@ bool CMenuLayer::init()
 }
 
 //////////////////////////////////////////////////////////////////////////
-//
+//	
 //////////////////////////////////////////////////////////////////////////
 void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 {
 	PreloadSoundEffect( ESoundName::ESN_KeyCollected );
-	PreloadSoundEffect( ESoundName::BabyShark );
 	PlaySoundEffect( ESoundName::BabyShark );
+
 	m_pcLevelManager->EnterCavern();
 }
 
-void CMenuLayer::CB_OnGameExitButton(Ref* pSender)
+void CMenuLayer::CB_OnGameExitButton( Ref* pSender )
 {
-    // add code to release anything that needs to be released before exiting the game
-
     exit(0);
 }

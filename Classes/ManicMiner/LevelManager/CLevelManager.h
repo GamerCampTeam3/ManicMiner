@@ -14,8 +14,6 @@ public:
 	CLevelManager( cocos2d::Director& rcDirector );
 	virtual ~CLevelManager();
 
-	void Init();
-
 	void GoToMainMenu();
 	void GoToNextLevel();
 

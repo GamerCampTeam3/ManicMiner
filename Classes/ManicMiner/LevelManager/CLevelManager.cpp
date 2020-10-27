@@ -5,7 +5,7 @@
 #include "cocos2d/cocos/base/CCDirector.h"
 
 // Include Menu Scene
-#include "MenuScene.h"
+#include "ManicMiner/Layers/MenuScene.h"
 
 // Include ManicLayers
 // Super Class
@@ -30,11 +30,6 @@ CLevelManager::CLevelManager( cocos2d::Director& rcDirector )
 
 CLevelManager::~CLevelManager()
 {}
-
-void CLevelManager::Init()
-{
-
-}
 
 void CLevelManager::GoToNextLevel()
 {
