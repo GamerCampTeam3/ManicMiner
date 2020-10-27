@@ -11,7 +11,7 @@
 //					Completely commented out and excluded from the build in project settings							//
 //					Only exists still for submission purposes															//
 //																														//
-// See Also	:		CManicLayer.h																						//
+// See Also	:		CManicLayer.h & TSingleton.h																		//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
