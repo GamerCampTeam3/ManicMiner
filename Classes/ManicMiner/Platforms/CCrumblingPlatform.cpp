@@ -14,9 +14,9 @@ CCrumblingPlatform::CCrumblingPlatform( CGCFactoryCreationParams& CreationParams
 	: CPlatform( CreationParams, ResetPosition )
 	, m_bInitiatedCrumbling(false)
 	, m_fCurrentCrumblingTimer(1.f)
-	, m_eCrumbleState(ECS_0)
+	, m_eCrumbleState(ECrumbleState::Stage_0)
 {
-	m_ePlatformType = EPlatformType::EPT_Crumbling;
+	m_ePlatformType = EPlatformType::Crumbling;
 }
 
 void CCrumblingPlatform::VOnResourceAcquire()
@@ -25,9 +25,7 @@ void CCrumblingPlatform::VOnResourceAcquire()
 
 	m_pcDirector = cocos2d::Director::getInstance();
 
-	// use for loop
-	LoadAnimations();
-	
+	LoadAnimations();	
 }
 
 void CCrumblingPlatform::VOnUpdate(float fTimeStep)
@@ -37,27 +35,30 @@ void CCrumblingPlatform::VOnUpdate(float fTimeStep)
 	if (m_bInitiatedCrumbling)
 	{
 		// the amount to reduce the crumblingtimer by on every frame
-		m_fReduceCrumblingTimerBy = 1.f / m_pcDirector->getFrameRate();
+		m_fReduceCrumblingTimerBy = (1.f / m_pcDirector->getFrameRate());
 
 		// 
 		m_fCurrentCrumblingTimer -= m_fReduceCrumblingTimerBy;
 		
 		if (m_fCurrentCrumblingTimer <= 0.75f && m_fCurrentCrumblingTimer >= 0.56f)
 		{
-			UpdateCrumblingPlatform(ECrumbleState::ECS_1);
+			UpdateCrumblingPlatform(ECrumbleState::Stage_1);
 		}
 		else if (m_fCurrentCrumblingTimer <= 0.5f && m_fCurrentCrumblingTimer >= 0.26f)
 		{
-			UpdateCrumblingPlatform(ECrumbleState::ECS_2);
+			UpdateCrumblingPlatform(ECrumbleState::Stage_2);
 		}
 		else if (m_fCurrentCrumblingTimer <= 0.25f && m_fCurrentCrumblingTimer >= 0.01f)
 		{
-			UpdateCrumblingPlatform(ECrumbleState::ECS_3);
+			UpdateCrumblingPlatform(ECrumbleState::Stage_3);
 		}
 		else if (m_fCurrentCrumblingTimer <= 0.0f)
 		{
 			// destroy platform - doesn't destroy it, just disables the physicsbody of the respective crumbling platform
-			UpdateCrumblingPlatform(ECrumbleState::ECS_Destroy);
+			UpdateCrumblingPlatform(ECrumbleState::Stage_Destroy);
+
+			// stop timer calculations and all these if checks, as these aren't needed anymore
+			m_bInitiatedCrumbling = false;
 		}
 		
 	}
@@ -71,11 +72,29 @@ void CCrumblingPlatform::VOnReset()
 
 	m_bInitiatedCrumbling = false;
 	m_fCurrentCrumblingTimer = 1.f;
-	m_eCrumbleState = ECrumbleState::ECS_0;
+	m_eCrumbleState = ECrumbleState::Stage_0;
 
 	RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[0]));
 }
 
+void CCrumblingPlatform::VOnResourceRelease()
+{
+	CPlatform::VOnResourceRelease();
+
+	// release in reverse order
+	int iCounter = 5;
+	// release all animations when killed
+	for (auto* Animations : m_pcAnimations)
+	{
+		m_pcAnimations[iCounter]->release();
+
+		if(m_pcAnimations[iCounter] != nullptr)
+		{
+			m_pcAnimations[iCounter] = nullptr;
+		}
+		iCounter--;
+	}
+}
 
 
 void CCrumblingPlatform::InitiateCrumbling()
@@ -96,20 +115,9 @@ void CCrumblingPlatform::StopCrumbling()
 	}
 }
 
-void CCrumblingPlatform::VOnResourceRelease()
-{
-	CPlatform::VOnResourceRelease();
-	
-	int iCounter = 0;
-	// release all animations when killed
-	for(auto* Animations : m_pcAnimations)
-	{
-		m_pcAnimations[iCounter]->release();
-	}
-}
-
 void CCrumblingPlatform::LoadAnimations()
 {
+	// no need for idle state, because stage 00 is actually the same animation as idle
 	m_pszAnimations[0] = "Crumble_Stage_Idle";
 	m_pszAnimations[1] = "Crumble_Stage_00";
 	m_pszAnimations[2] = "Crumble_Stage_01";
@@ -136,25 +144,26 @@ void CCrumblingPlatform::UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState)
 		// for extra functionality - playing sound on each crumble
 		switch (eNewCrumbleState)
 		{
-		case ECS_0:
-			m_eCrumbleState = ECrumbleState::ECS_0;
+		case ECrumbleState::Stage_0:
+			m_eCrumbleState = ECrumbleState::Stage_0;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[1]));
-		case ECS_1:
-			m_eCrumbleState = ECrumbleState::ECS_1;
+		case ECrumbleState::Stage_1:
+			m_eCrumbleState = ECrumbleState::Stage_1;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[2]));
 			break;
-		case ECS_2:
-			m_eCrumbleState = ECrumbleState::ECS_2;
+		case ECrumbleState::Stage_2:
+			m_eCrumbleState = ECrumbleState::Stage_2;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[3]));
 			break;
-		case ECS_3:
-			m_eCrumbleState = ECrumbleState::ECS_3;
+		case ECrumbleState::Stage_3:
+			m_eCrumbleState = ECrumbleState::Stage_3;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[4]));
 			break;
-		case ECS_Destroy:
-			m_eCrumbleState = ECrumbleState::ECS_Destroy;
-			GetPhysicsBody()->SetActive(false);
+		case ECrumbleState::Stage_Destroy:
+			m_eCrumbleState = ECrumbleState::Stage_Destroy;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[5]));
+			// Disable Physics body to allow the player to fall through the platform
+			GetPhysicsBody()->SetActive(false);
 			break;
 		}
 	}

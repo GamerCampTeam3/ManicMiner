@@ -393,7 +393,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 						////////////////////////////////////////////////////////////////////////////////
 						// MOVING																	////
 						////////////////////////////////////////////////////////////////////////////////
-					case EPT_Moving:
+					case EPlatformType::Moving:
 						{
 							// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 
 							auto pMovingPlatform = static_cast< CMovingPlatform* > ( pPlatform );
@@ -407,7 +407,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 						////////////////////////////////////////////////////////////////////////////////
 						// CRUMBLING																////
 						////////////////////////////////////////////////////////////////////////////////
-					case EPT_Crumbling:
+					case EPlatformType::Crumbling:
 						{
 							// Start Crumbling
 						auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pPlatform );
@@ -424,7 +424,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )
 						////////////////////////////////////////////////////////////////////////////////
 						// BRICK																	////
 						////////////////////////////////////////////////////////////////////////////////
-					case EPT_Brick:
+					case EPlatformType::Brick:
 						{
 						// If in mid air and sensor contacts == 0
 							if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 ) || ( m_pcPlayer->GetIsOnConveyorBelt() ) )
@@ -519,7 +519,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )
 				CCLOG( "Foot goes untoot" );
 
 				// If this platform is not a CBrickPlatform
-				if( pPlatform->GetPlatformType() != EPlatformType::EPT_Brick )
+				if( pPlatform->GetPlatformType() != EPlatformType::Brick )
 				{
 					// Deactivate this platform's collision
 					pPlatform->SetCollisionEnabled( false );
@@ -551,7 +551,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )
 
 					switch(pPlatform->GetPlatformType())
 					{
-					case EPT_Crumbling :
+					case EPlatformType::Crumbling :
 						auto pCrumblingPlatform = static_cast<CCrumblingPlatform*> (pPlatform);
 
 						if (pCrumblingPlatform != nullptr)

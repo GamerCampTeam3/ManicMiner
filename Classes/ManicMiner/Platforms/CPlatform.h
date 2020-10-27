@@ -6,48 +6,14 @@
 
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 
-//enum class EPlatformType
-//{
-//	Brick,
-//	Crumbling,
-//	Ground,
-//	Moving,
-//	Regular
-//};
-//
-//EPlatformType m_ePlatform;
-//m_ePlatform = EPlatformType::Brick;
 
-
-enum EPlatformType
+enum class EPlatformType
 {
-	EPT_Brick,
-	EPT_Crumbling,
-	EPT_Ground,
-	EPT_Moving,
-	EPT_Regular
-};
-
-enum class EPlatformSize
-{
-	EPS_1x1,
-	EPS_2x1,
-	EPS_3x1,
-	EPS_4x1,
-	EPS_8x1,
-	EPS_13x1,
-	EPS_15x1,
-	EPS_Default
-};
-
-enum ECrumbleState
-{
-	
-	ECS_0,
-	ECS_1,
-	ECS_2,
-	ECS_3,
-	ECS_Destroy
+	Brick,
+	Crumbling,
+	Ground,
+	Moving,
+	Regular
 };
 
 class CPlatform :
@@ -60,7 +26,7 @@ public:
 
 	void VOnReset() override;
 	
-	EPlatformType GetPlatformType();
+	inline EPlatformType GetPlatformType() { return m_ePlatformType; }
 
 	bool GetCollisionEnabled();
 	void SetCollisionEnabled( bool bCollisionEnabled );
@@ -73,10 +39,10 @@ protected:
 
 	CGCFactoryCreationParams& m_FactoryCreationParams;
 
+	// V2 position in the level
 	cocos2d::Vec2 m_v2ResetPosition;
 
 	EPlatformType m_ePlatformType;
-
 
 	bool m_bCollisionEnabled;
 	bool m_bTriggersHardContactEvent;

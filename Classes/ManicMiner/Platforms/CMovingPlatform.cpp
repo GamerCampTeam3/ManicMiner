@@ -15,7 +15,7 @@ CMovingPlatform::CMovingPlatform( CGCFactoryCreationParams& CreationParams, coco
 	, m_pcMovingAnim ( nullptr )
 	, m_eDirectionLock ( eDirectionLock )
 {
-	m_ePlatformType = EPlatformType::EPT_Moving;
+	m_ePlatformType = EPlatformType::Moving;
 }
 
 void CMovingPlatform::VOnResourceAcquire()
