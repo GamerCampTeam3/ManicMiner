@@ -14,9 +14,9 @@ class CDoor
 {
 private:
 
-	CManicLayer& m_cManicLayer;									// Reference to manic layer to call interact event
-	CGCFactoryCreationParams& m_FactoryCreationParams;			// This will be set in the constructor and dictate it's texture
-	cocos2d::Vec2 m_v2ResetPosition;							// The position of the door inside the level
+	CManicLayer&				m_cManicLayer;					// Reference to manic layer to call interact event
+	CGCFactoryCreationParams&	m_FactoryCreationParams;		// This will be set in the constructor and dictate it's texture
+	cocos2d::Vec2				m_v2ResetPosition;				// The position of the door inside the level
 	
 public:
 	CDoor( CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition);

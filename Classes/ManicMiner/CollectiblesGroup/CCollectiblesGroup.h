@@ -1,3 +1,6 @@
+//////////////////
+/// Bib
+//////////////////
 #ifndef _CCOLLECTIBLESGROUP_H_
 #define _CCOLLECTIBLESGROUP_H_
 
@@ -7,61 +10,62 @@
 
 #include "ManicMiner/Enums/ECollectibleTypeRequired.h"
 
+// Forward class declaration
 class CManicLayer;
 
 class CCollectiblesGroup
 : public CGCObjectGroup
 {
+private:
 	// destroy managed items
 	void DestroyItems( void );
-	
-	int m_iCollectibles;
-	int m_iSwitches;
-	int m_iMaxCollectibles;
-	int m_iMaxSwitches;
-	int m_iScore;
 
-	ECollectibleTypeRequired m_eCollectibleTypeRequired;
-	CManicLayer*			 m_pcManicLayer;
+	// Collectibles logic ints
+	int m_iCollectibles;		// Current collectibles count
+	int m_iSwitches;			// Current switches flipped
+	int m_iMaxCollectibles;		// Maximum collectibles required
+	int m_iMaxSwitches;			// Maximum switches flipped required
+	int m_iScore;				// The Current score TODO: expand on this
+
+	
+	ECollectibleTypeRequired m_eCollectibleTypeRequired; // Depending on the level, set the required type of collectible to move to next level
+	CManicLayer*			 m_pcManicLayer;			 // Pointer to the layer that instantiates this object
+
+protected:
+	virtual void GenerateCollectibles();	// this will be overriden by class that inherits from it.
 
 public:
-	CCollectiblesGroup();
-	CCollectiblesGroup( CManicLayer& cLayer );
-	CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeRequired typeCollectibles );
+	// Constructor that takes in multiple params
+	// CManicLayer: reference to the layer that instantiates this object
+	// ECollectibleTypeRequired: Set when instantiating this object, dictates if it requires Switches, collectibles or both
+	// numCollectibles: How much collectibles are required before moving in TODO: Add numSwitches for future levels
 	CCollectiblesGroup( CManicLayer& cLayer, ECollectibleTypeRequired typeCollectibles, int numCollectibles );
+
+	// Virtual Dtor
 	virtual ~CCollectiblesGroup();
 
-	void SetLayer( CManicLayer& cLayer );
-	void CollectibleEvent();
-	void SwitchEvent();
-	void CheckIfEnoughToOpenExit();
-	virtual void GenerateCollectibles();
 
-	void SetRequiredType( ECollectibleTypeRequired collectibleRequired )	{ m_eCollectibleTypeRequired = collectibleRequired; }
-	
-	int  GetCollectible()													{ return m_iCollectibles; }
-	void SetCollectibles( int collectibles )								{ m_iCollectibles = collectibles; }
-	
-	int  GetSwitches ()														{ return m_iSwitches; }
-	void SetSwitches( int switches )										{ m_iSwitches = switches; }
+	void CollectibleEvent();				// Called by collectibles when colliding
+	void SwitchEvent();						// Called by switches when colliding
+	void CheckIfEnoughToOpenExit();			// Called by previous events to check if exit should be open
 
-	int GetScore() { return m_iScore; }
+		
+	// Score functions
+	// TODO: Expand on this in M2
+	int  GetScore() { return m_iScore; }
 	void AddScore() { m_iScore += 10000; }
 	
 	//////////////////////////////////////////////////////////////////////////
 	// overrides for CGCObjectGroup public interface
 	// handles Collectibles
 	virtual bool		VHandlesThisTypeId( GCTypeID idQueryType );
-
-	// must return the typeid of the CGCObjectGroup derived class
 	virtual GCTypeID	VGetTypeId( void );
 	virtual void		VOnGroupResourceAcquire_PostObject( void );
 	virtual void		VOnGroupResourceAcquire() override;
 	virtual void		VOnGroupResourceRelease( void );
-
 	// CGCObjectGroup public interface
 	//////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////
 };
 
 #endif // #ifndef _CCOLLECTIBLESGROUP_H_

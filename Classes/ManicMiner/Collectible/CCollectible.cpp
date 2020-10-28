@@ -15,11 +15,11 @@ USING_NS_CC;
 
 CCollectible::CCollectible( CGCFactoryCreationParams& CreationParams, ECollectibleType eType, cocos2d::Vec2 ResetPosition, CCollectiblesGroup& collectibleGroup )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
-	, m_FactoryCreationParams( CreationParams )
-	, m_eCollectibleType( eType )
-	, m_bHasBeenCollected( false )
-	, m_v2ResetPosition( ResetPosition)
-	, m_pcCollectiblesGroup( &collectibleGroup )
+	, m_FactoryCreationParams			( CreationParams )
+	, m_eCollectibleType				( eType )
+	, m_bHasBeenCollected				( false )
+	, m_v2ResetPosition					( ResetPosition)
+	, m_pcCollectiblesGroup				( &collectibleGroup )
 {
 	
 }
@@ -40,7 +40,11 @@ void CCollectible::VOnReset()
 	m_bHasBeenCollected = false;
 }
 
-
+/// Main Interact Event
+/// Depending if this object is a ECollectibleType::Collectible or ECollectibleType::Switch
+/// Will have a different interact logic.
+/// if ::Collectible, it will increment score and run the collectible event then delete itself
+/// if ::Switch, it will flip it's sprite and run the switch event
 void CCollectible::InteractEvent()
 {
 	if (!m_bHasBeenCollected)
