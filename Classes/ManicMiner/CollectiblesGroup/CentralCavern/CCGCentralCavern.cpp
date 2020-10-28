@@ -4,9 +4,8 @@
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "GamerCamp/GCCocosInterface/SGCFactoryCreationParams.h"
 
-
-//static CGCFactoryCreationParams s_cCreationParamsKey( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
-
+// Generates collectibles at wanted location
+// TODO: move from magic numbers to the using H.T's PTM conversion
 void CCGCentralCavern::GenerateCollectibles()
 {
 	CCollectible* pCollectible_0 = new CCollectible( m_cCreationParams, ECollectibleType::Collectible, cocos2d::Vec2( 1740.f, 920.f ), *this );
@@ -31,5 +30,3 @@ void CCGCentralCavern::VOnGroupResourceRelease()
 	CGCObjectGroup::VOnGroupResourceRelease();
 	DeleteCollectibles();
 }
-
-
