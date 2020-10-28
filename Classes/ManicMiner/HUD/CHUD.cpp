@@ -1,13 +1,14 @@
+#include <string>
+
 #include "CHUD.h"
 
-#include "ManicMiner/Player/CPlayer.h"
-
+#include "GamerCamp/GCCocosInterface/GB2ShapeCache-x.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Layers/CManicLayer.h"
-#include "platform/CCPlatformMacros.h"
-#include "GamerCamp/GCCocosInterface/GB2ShapeCache-x.h"
+#include "ManicMiner/Player/CPlayer.h"
 
-#include <string>
+#include "platform/CCPlatformMacros.h"
+
 USING_NS_CC;
 
 CHUD::CHUD( CPlayer& cPlayer, CManicLayer& cLayer, CCollectiblesGroup& collectiblesGroup )
