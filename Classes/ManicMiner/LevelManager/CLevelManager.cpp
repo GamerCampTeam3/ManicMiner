@@ -133,7 +133,7 @@ void CLevelManager::EnterCavern()
 // Returns		:	CManicLayer&																						//
 //					reference to the currently active CManicLayer														//
 // -------------------------------------------------------------------------------------------------------------------- //
-CManicLayer& CLevelManager::GetCurrentManicLayer()
+CManicLayer& CLevelManager::GetCurrentManicLayer() const
 {
 	return *static_cast< CManicLayer* >( cocos2d::Director::getInstance()->getRunningScene()->getChildByTag( 0 ) );
 }

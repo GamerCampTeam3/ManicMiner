@@ -1,35 +1,26 @@
-#include <algorithm>
-#include <stdlib.h>
-
 #include "CManicLayer.h"
-
-#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-
-
 
 #include "AppDelegate.h"
 
+#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 
-#include "ManicMiner/Enemy/GCObjEnemy.h"
-#include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
-#include "ManicMiner/Player/CPlayer.h"
-#include "MenuScene.h"
-#include "ManicMiner/GameInstance/CGameInstance.h"
-#include "ManicMiner/LevelManager/CLevelManager.h"
-//#include "GamerCamp/GameSpecific/Platforms/GCObjPlatform.h"
+#include "ManicMiner/Doors/CDoor.h"
+#include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Helpers/Helpers.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
+#include "ManicMiner/Player/CPlayer.h"
 
 // Include different platform types for collision checks
-#include "ManicMiner/Doors/CDoor.h"
-#include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CBrickPlatform.h"
 #include "ManicMiner/Platforms/CCrumblingPlatform.h"
 #include "ManicMiner/Platforms/CGroundPlatform.h"
 #include "ManicMiner/Platforms/CMovingPlatform.h"
+#include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CRegularPlatform.h"
 
 
@@ -50,9 +41,7 @@ USING_NS_CC;
 #endif
 
 
-///////////////////////////////////////////////////////////////////////////////
-// Constructor
-///////////////////////////////////////////////////////////////////////////////
+// Constructor -------------------------------------------------------------------------------------------------------- //
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcLevelManager( nullptr )
@@ -67,9 +56,7 @@ CManicLayer::CManicLayer()
 
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Destructor
-//////////////////////////////////////////////////////////////////////////
+// Destructor  -------------------------------------------------------------------------------------------------------- //
 CManicLayer::~CManicLayer()
 {}
 
@@ -79,27 +66,6 @@ CManicLayer::~CManicLayer()
 // fixes the case where an IGCGameLayer with a different mapping was
 // pushed over this one on Director's scene stack
 //////////////////////////////////////////////////////////////////////////
-void CManicLayer::onEnter()
-{
-	IGCGameLayer::onEnter();
-
-	//////////////////////////////////////////////////////////////////////////
-	// init the actions
-	// N.B. these 
-	cocos2d::EventKeyboard::KeyCode aeKeyCodesForActions[] =
-	{
-		EventKeyboard::KeyCode::KEY_UP_ARROW,		// EPA_Up,
-		EventKeyboard::KeyCode::KEY_DOWN_ARROW,		// EPA_Down,
-		EventKeyboard::KeyCode::KEY_LEFT_ARROW,		// EPA_Left,		
-		EventKeyboard::KeyCode::KEY_RIGHT_ARROW,	// EPA_Right,
-		EventKeyboard::KeyCode::KEY_SPACE,			// EPA_Fire	
-	};
-
-	u32 uSizeOfActionArray = ( sizeof( aeKeyCodesForActions ) / sizeof( cocos2d::EventKeyboard::KeyCode ) );
-
-	// call base class function	to init the keyboard manager
-	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
-}
 
 //////////////////////////////////////////////////////////////////////////
 // on create
@@ -250,14 +216,6 @@ void CManicLayer::VOnCreate()
 
 }
 
-void CManicLayer::PlayerCollidedDoor(CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact)
-{
-	const bool isColliding = rcContact.IsTouching();
-	if (isColliding)
-	{
-		rcDoor.InteractEvent();
-	}
-}
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -298,381 +256,497 @@ void CManicLayer::VOnDestroy()
 
 	IGCGameLayer::VOnDestroy();
 }
-/// Sensor bits will go here
-///////////////////////////////////////////////////////////////////////////////
-// begin contact
-// insert any logic that relies on detecting the first frame where a 
-// contact exists
-///////////////////////////////////////////////////////////////////////////////
-//virtual 
-void CManicLayer::BeginContact( b2Contact* pB2Contact )
+
+
+
+// --- b2ContactListener Interface ------------------------------------------------------------------------------------ //
+																														//
+// BeginContact happens for the first frame of a unique collision														//
+// EndContact happens for the last frame of a unique collision															//
+																														//
+// We use these 2 functions to detect if the collision is between the player and a platform								//
+// If so, we either add or subtract to the number of platform collisions the player is detecting during this 1 frame	//
+// With that info, we know if the player is grounded or if he is in mid air												//
+																														//
+// This also allows us to detect sensor fixture overlaps, which we need to activate and deactivate						//
+// the collision on certain platforms in order for the player to jump and pass through them								//
+																														//
+void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
+{																														//
+	// Get pointers to both b2fixtures																					//
+	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();																//
+	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();																//
+																														//
+	// Get pointers to both b2bodies																					//
+	const b2Body* pBodyA = pFixtureA->GetBody();																		//
+	const b2Body* pBodyB = pFixtureB->GetBody();																		//
+																														//
+	CGCObjSpritePhysics* pGcSprPhysA = (CGCObjSpritePhysics*)pBodyA->GetUserData();										//
+	// if( this is not a GC object )																					//
+	if (pGcSprPhysA == nullptr)																							//
+	{																													//
+		return;																											//
+	}																													//
+																														//
+	CGCObjSpritePhysics* pGcSprPhysB = (CGCObjSpritePhysics*)pBodyB->GetUserData();										//
+	// if( this is not a GC object )																					//
+	if (pGcSprPhysB == nullptr)																							//
+	{																													//
+		return;																											//
+	}																													//
+																														//
+																														//
+	// Henrique Edit - Player Platforming Abilities																		//
+	// CHECK FOR PLATORM AND PLAYER COLLISION																			//
+	if (pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID())														//
+	{																													//
+		if (((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))													//
+			&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform )))												//
+			|| ((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ))												//
+			&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))))												//
+		{																												//
+																														//
+			// Get pointer to platform																					//
+			CPlatform* pPlatform = nullptr;																				//
+																														//
+			// If BodyA is player, BodyB must be platform																//
+			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )												//
+			{																											//
+				pPlatform = static_cast< CPlatform* >( pGcSprPhysB );													//
+			}																											//
+			// Else, vice versa																							//
+			else																										//
+			{																											//
+				pPlatform = static_cast< CPlatform* >( pGcSprPhysA );													//
+			}																											//
+																														//
+																														//
+																														//
+			// Check if this BeginContact is for feet + platform surface ( sensors only )								//
+			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
+			{																											//
+				CCLOG( "Foot goes toot" );																				//
+																														//
+				// Activate this platform's collision																	//
+				pPlatform->SetCollisionEnabled( true );																	//
+																														//
+																														//
+				// Increment sensor count for the player																//
+				m_pcPlayer->SensorContactEvent( true );																	//
+			}																											//
+																														//
+			// If not 2 sensors																							//
+			// Check if this BeginContact is for character + platform ( no sensors included )							//
+			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )											//
+			{																											//
+				if( pPlatform->GetCollisionEnabled() )																	//
+				{																										//
+					// Set the platform as a trigger for hard contact events											//
+					pPlatform->SetTriggersHardContactEvent( true );														//
+																														//
+					// Increment hard contact count for the player														//
+					m_pcPlayer->HardContactEvent( true );																//
+																														//
+																														//
+					// Check Platform Type																				//
+					switch( pPlatform->GetPlatformType () )																//
+					{																									//
+					////////////////////////////////////////////////////////////////////////////////					//
+					// MOVING																	////					//
+					////////////////////////////////////////////////////////////////////////////////					//
+					case EPlatformType::Moving:																			//
+					{																									//
+						// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 			//
+						auto pMovingPlatform = static_cast< CMovingPlatform* > ( pPlatform );							//
+																														//
+						if( pMovingPlatform != nullptr )																//
+						{																								//
+							m_pcPlayer->LandedOnConveyorBelt( pMovingPlatform->GetDirectionLock() );					//
+						}																								//
+					}																									//
+					break;																								//
+					////////////////////////////////////////////////////////////////////////////////					//
+					// CRUMBLING																////					//
+					////////////////////////////////////////////////////////////////////////////////					//
+					case EPlatformType::Crumbling:																		//
+					{																									//
+							// Start Crumbling																			//
+						auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pPlatform );						//
+																														//
+						if( pCrumblingPlatform != nullptr )																//
+						{																								//
+							pCrumblingPlatform->InitiateCrumbling();													//
+						}																								//
+																														//
+							// Set player as grounded																	//
+							m_pcPlayer->LandedOnWalkablePlatform();														//
+					}																									//
+					break;																								//
+					////////////////////////////////////////////////////////////////////////////////					//
+					// BRICK																	////					//
+					////////////////////////////////////////////////////////////////////////////////					//
+					case EPlatformType::Brick:																			//
+					{																									//
+						// If in mid air and sensor contacts == 0, or if on top of conveyor belt platform				//
+						if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 )			//
+							|| ( m_pcPlayer->GetIsOnConveyorBelt() ) )													//
+						{																								//
+							// Player Bumped onto brick																	//
+							m_pcPlayer->BumpedWithBricks();																//
+						}																								//
+						else																							//
+						{																								//
+							// Set player as grounded																	//
+							m_pcPlayer->LandedOnWalkablePlatform();														//
+						}																								//
+					}																									//
+					break;																								//
+					////////////////////////////////////////////////////////////////////////////////					//
+					// DEFAULT																	////					//
+					////////////////////////////////////////////////////////////////////////////////					//
+					default:																							//
+					{																									//
+						// Set player as grounded																		//
+						m_pcPlayer->LandedOnWalkablePlatform();															//
+					}																									//
+					break;																								//
+					}																									//
+				}																										//
+			}																											//
+		}																												//
+	}																													//
+}																														//
+																														//
+void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
+{																														//
+	// Get pointers to both b2fixtures																					//
+	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();																//
+	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();																//
+																														//
+	// Get pointers to both b2bodies																					//
+	const b2Body* pBodyA = pFixtureA->GetBody();																		//
+	const b2Body* pBodyB = pFixtureB->GetBody();																		//
+																														//
+	CGCObjSpritePhysics* pGcSprPhysA = ( CGCObjSpritePhysics* )pBodyA->GetUserData();									//
+	// if( this is not a GC object )																					//
+	if( pGcSprPhysA == nullptr )																						//
+	{																													//
+		return;																											//
+	}																													//
+																														//
+	CGCObjSpritePhysics* pGcSprPhysB = ( CGCObjSpritePhysics* )pBodyB->GetUserData();									//
+	// if( this is not a GC object )																					//
+	if( pGcSprPhysB == nullptr )																						//
+	{																													//
+		return;																											//
+	}																													//
+																														//
+																														//
+																														//
+	// Henrique Edit - Player Platforming Abilities																		//
+	// CHECK FOR PLATORM AND PLAYER COLLISION																			//
+	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )														//
+	{																													//
+		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )												//
+			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) ) )											//
+			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )											//
+				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )										//
+		{																												//
+			// Get pointer to platform																					//
+			CPlatform* pPlatform = nullptr;																				//
+																														//
+			// If BodyA is player, BodyB must be platform																//
+			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )												//
+			{																											//
+				pPlatform = static_cast< CPlatform* >( pGcSprPhysB );													//
+			}																											//
+			// Else, vice versa																							//
+			else																										//
+			{																											//
+				pPlatform = static_cast< CPlatform* >( pGcSprPhysA );													//
+			}																											//
+																														//
+																														//
+																														//
+			// Check if this EndContact is for feet + platform surface sensors only										//
+			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
+			{																											//
+				CCLOG( "Foot goes untoot" );																			//
+																														//
+				// If this platform is not a CBrickPlatform																//
+				if( pPlatform->GetPlatformType() != EPlatformType::Brick )												//
+				{																										//
+					// Deactivate this platform's collision																//
+					pPlatform->SetCollisionEnabled( false );															//
+				}																										//
+																														//
+				// Decrement sensor contact count																		//
+				m_pcPlayer->SensorContactEvent( false );																//
+			}																											//
+																														//
+			// If not 2 sensors																							//
+			// Check if this EndContact is for character + platform ( no sensors included )								//
+			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )											//
+			{																											//
+				if( pPlatform->GetTriggersHardContactEvent() )															//
+				{																										//
+					// Set the platform as no trigger for hard contact events											//
+					pPlatform->SetTriggersHardContactEvent( false );													//
+																														//
+					// Decrement hard contact count																		//
+					m_pcPlayer->HardContactEvent( false );																//
+																														//
+					// If feet are no longer touching any ground surface												//
+					if( !m_pcPlayer->GetHardContactCount() && m_pcPlayer->GetIsGrounded() )								//
+					{																									//
+						m_pcPlayer->LeftGround();																		//
+						CCLOG( "LeftGround()" );																		//
+					}																									//
+					// If this was a Crumbling platform, stop crumbling													//
+					switch( pPlatform->GetPlatformType() )																//
+					{																									//
+					case EPlatformType::Crumbling:																		//
+						auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pPlatform );						//
+																														//
+						if( pCrumblingPlatform != nullptr )																//
+						{																								//
+							pCrumblingPlatform->StopCrumbling();														//
+						}																								//
+						break;																							//
+					}																									//
+				}																										//
+			}																											//
+		}																												//
+	}																													//
+}																														//
+																														//
+// PreSolve happens once every frame for every collision detected														//
+// It runs before the physics engine does any calculations, so it is a great place to ignore collisions effectively		//
+// This way we ensure we bypass the physics engine for certain collisions												//
+// specifically Player & Pass-Through enabled Platforms																	//
+																														//
+void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold )										//
+{																														//
+	// Get pointers to both b2fixtures																					//
+	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();																//
+	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();																//
+																														//
+	// Get pointers to both b2bodies																					//
+	const b2Body* pBodyA = pFixtureA->GetBody();																		//
+	const b2Body* pBodyB = pFixtureB->GetBody();																		//
+																														//
+	CGCObjSpritePhysics* pGcSprPhysA = ( CGCObjSpritePhysics* )pBodyA->GetUserData();									//
+	// if( this is not a GC object )																					//
+	if( pGcSprPhysA == nullptr )																						//
+	{																													//
+		return;																											//
+	}																													//
+																														//
+	CGCObjSpritePhysics* pGcSprPhysB = ( CGCObjSpritePhysics* )pBodyB->GetUserData();									//
+	// if( this is not a GC object )																					//
+	if( pGcSprPhysB == nullptr )																						//
+	{																													//
+		return;																											//
+	}																													//
+																														//
+	// Henrique Edit - Player Platforming Abilities																		//
+	// CHECK FOR PLATORM AND PLAYER COLLISION																			//
+	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )														//
+	{																													//
+		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )												//
+			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) ) )											//
+			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )											//
+				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )										//
+		{																												//
+			// Check if this BeginContact is not running with any sensor triggers										//
+			if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )												//
+			{																											//
+				// We must check if this platform is supposed to have collision or not									//
+																														//
+				// Get pointer to platform																				//
+				CPlatform* pPlatform = nullptr;																			//
+																														//
+				// If BodyA is player, BodyB must be platform															//
+				if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )											//
+				{																										//
+					pPlatform = static_cast< CPlatform* >( pGcSprPhysB );												//
+				}																										//
+				// Else, vice versa																						//
+				else																									//
+				{																										//
+					pPlatform = static_cast< CPlatform* >( pGcSprPhysA );												//
+				}																										//
+																														//
+				// Set contact collision accordingly																	//
+				pB2Contact->SetEnabled( pPlatform->GetCollisionEnabled() );												//
+			}																											//
+																														//
+		}																												//
+	}																													//
+}																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+// ---- Object Specific Collision Handles ----------------------------------------------------------------------------- //
+																														//
+void CManicLayer::EnemyCollidedPlatform( CGCObjEnemy& rcEnemy, const b2Contact& rcContact )								//
+{																														//
+	if( rcContact.IsTouching() )																						//
+	{																													//
+		rcEnemy.BounceEnemyDirection();																					//
+	}																													//
+}																														//
+																														//
+																														//
+void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )			//
+{																														//
+	if( rcContact.IsTouching() )																						//
+	{																													//
+		OnDeath();																										//
+	}																													//
+}																														//
+																														//
+																														//
+void CManicLayer::PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact)			//
+{																														//
+	if( rcContact.IsTouching() )																						//
+	{																													//
+		OnDeath();																										//
+	}																													//
+}																														//
+																														//
+																														//
+void CManicLayer::PlayerCollidedDoor(CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact)						//
+{																														//
+	if ( rcContact.IsTouching() )																						//
+	{																													//
+		rcDoor.InteractEvent();																							//
+	}																													//
+}																														//
+																														//
+																														//
+void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact )			//
+{																														//
+	if( rcContact.IsTouching() )																						//
+	{																													//
+		rcCollectible.InteractEvent();																					//
+	}																													//
+}																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+// ---------------------------------- Getters ------------------------------------------------------------------------- //
+																														//
+CPlayer& CManicLayer::GetPlayer() const																					//
+{																														//
+	return *m_pcPlayer;																									//
+}																														//
+																														//
+																														//
+CLevelManager& CManicLayer::GetLevelManager() const																		//
+{																														//
+	return *m_pcLevelManager;																							//
+}																														//
+																														//
+																														//
+const EGameState CManicLayer::GetGameState() const																		//
+{																														//
+	return m_eGameState;																								//
+}																														//
+																														//
+																														//
+bool CManicLayer::GetWasResetRequested() const																			//
+{																														//
+	return m_bWasResetRequested;																						//
+}																														//
+																														//
+																														//
+bool CManicLayer::GetWasNextLevelRequested() const																		//
+{																														//
+	return m_bWasNextLevelRequested;																					//
+}																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+
+// ---------------------------------- Setters ------------------------------------------------------------------------- //
+void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )														//
+{																														//
+	m_pcLevelManager = &rcLevelManager;																					//
+}																														//
+																														//
+																														//
+void CManicLayer::SetGameState( const EGameState gameState ) 															//
+{ 																														//
+	m_eGameState = gameState;																							//
+}																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+void CManicLayer::onEnter()
 {
+	IGCGameLayer::onEnter();
 
-	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
-	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
-
-	const b2Body* pBodyA = pFixtureA->GetBody();
-	const b2Body* pBodyB = pFixtureB->GetBody();
-
-	CGCObjSpritePhysics* pGcSprPhysA = (CGCObjSpritePhysics*)pBodyA->GetUserData();
-	// if( this is not a GC object )
-	if (pGcSprPhysA == nullptr)
+	//////////////////////////////////////////////////////////////////////////
+	// init the actions
+	// N.B. these 
+	cocos2d::EventKeyboard::KeyCode aeKeyCodesForActions[] =
 	{
-		return;
-	}
+		EventKeyboard::KeyCode::KEY_UP_ARROW,		// EPA_Up,
+		EventKeyboard::KeyCode::KEY_DOWN_ARROW,		// EPA_Down,
+		EventKeyboard::KeyCode::KEY_LEFT_ARROW,		// EPA_Left,		
+		EventKeyboard::KeyCode::KEY_RIGHT_ARROW,	// EPA_Right,
+		EventKeyboard::KeyCode::KEY_SPACE,			// EPA_Fire	
+	};
 
-	CGCObjSpritePhysics* pGcSprPhysB = (CGCObjSpritePhysics*)pBodyB->GetUserData();
-	// if( this is not a GC object )
-	if (pGcSprPhysB == nullptr)
-	{
-		return;
-	}
+	u32 uSizeOfActionArray = ( sizeof( aeKeyCodesForActions ) / sizeof( cocos2d::EventKeyboard::KeyCode ) );
 
-
-
-
-
-	// Henrique
-	// CHECK FOR PLATORM AND PLAYER COLLISION
-	if (pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID())
-	{
-		if (((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))
-			&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform )))
-			|| ((pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ))
-			&& (pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ))))
-		{
-
-			// Get pointer to platform
-			CPlatform* pPlatform = nullptr;
-
-			// If BodyA is player, BodyB must be platform
-			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-			{
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysB );
-			}
-			// Else, vice versa
-			else
-			{
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysA );
-			}
-
-
-
-			// Check if this BeginContact is for feet + platform surface ( sensors only )
-			
-			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )
-			{
-				CCLOG( "Foot goes toot" );
-
-				// Activate this platform's collision
-				pPlatform->SetCollisionEnabled( true );
-
-
-				// Increment sensor count for the player
-				m_pcPlayer->SensorContactEvent( true );
-			}
-
-			// If not 2 sensors
-			// Check if this BeginContact is for character + platform ( no sensors included )
-			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )
-			{
-				if( pPlatform->GetCollisionEnabled() )
-				{
-
-
-					// Set the platform as a trigger for hard contact events
-					pPlatform->SetTriggersHardContactEvent( true );
-
-					// Increment hard contact count for the player
-					m_pcPlayer->HardContactEvent( true );
-
-
-					// Check Platform Type
-					switch( pPlatform->GetPlatformType () )
-					{
-						////////////////////////////////////////////////////////////////////////////////
-						// MOVING																	////
-						////////////////////////////////////////////////////////////////////////////////
-					case EPlatformType::Moving:
-						{
-							// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 
-							auto pMovingPlatform = static_cast< CMovingPlatform* > ( pPlatform );
-
-							if( pMovingPlatform != nullptr )
-							{
-								m_pcPlayer->LandedOnConveyorBelt( pMovingPlatform->GetDirectionLock() );
-							}
-						}	
-						break;
-						////////////////////////////////////////////////////////////////////////////////
-						// CRUMBLING																////
-						////////////////////////////////////////////////////////////////////////////////
-					case EPlatformType::Crumbling:
-						{
-							// Start Crumbling
-						auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pPlatform );
-
-						if( pCrumblingPlatform != nullptr )
-						{
-							pCrumblingPlatform->InitiateCrumbling();
-						}
-
-							// Set player as grounded
-							m_pcPlayer->LandedOnWalkablePlatform();
-						}
-						break;
-						////////////////////////////////////////////////////////////////////////////////
-						// BRICK																	////
-						////////////////////////////////////////////////////////////////////////////////
-					case EPlatformType::Brick:
-						{
-						// If in mid air and sensor contacts == 0
-							if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 ) || ( m_pcPlayer->GetIsOnConveyorBelt() ) )
-							{
-								// Player Bumped onto brick
-								m_pcPlayer->BumpedWithBricks();
-							}
-							else
-							{
-								// Set player as grounded
-								m_pcPlayer->LandedOnWalkablePlatform();
-							}
-						}
-					break;
-					////////////////////////////////////////////////////////////////////////////////
-					// DEFAULT																	////
-					////////////////////////////////////////////////////////////////////////////////
-					default:
-						{
-							// Set player as grounded
-							m_pcPlayer->LandedOnWalkablePlatform();
-						}
-						break;
-					}
-					
-				}
-			}
-		}
-	}
+	// call base class function	to init the keyboard manager
+	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
 }
 
 
-///////////////////////////////////////////////////////////////////////////////
-// end contact
-// insert any logic that relies on detecting the last frame where a 
-// contact exists
-///////////////////////////////////////////////////////////////////////////////
-//virtual 
-void CManicLayer::EndContact( b2Contact* pB2Contact )
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OnFinishedLooting																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+void CManicLayer::OnFinishedLooting()
 {
-	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
-	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
-
-	const b2Body* pBodyA = pFixtureA->GetBody();
-	const b2Body* pBodyB = pFixtureB->GetBody();
-
-	CGCObjSpritePhysics* pGcSprPhysA = ( CGCObjSpritePhysics* )pBodyA->GetUserData();
-	// if( this is not a GC object )
-	if( pGcSprPhysA == nullptr )
-	{
-		return;
-	}
-
-	CGCObjSpritePhysics* pGcSprPhysB = ( CGCObjSpritePhysics* )pBodyB->GetUserData();
-	// if( this is not a GC object )
-	if( pGcSprPhysB == nullptr )
-	{
-		return;
-	}
-
-
-
-
-	// CHECK FOR PLATORM AND PLAYER COLLISION
-	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )
-	{
-		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) ) )
-			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
-				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )
-		{
-
-			// Get pointer to platform
-			CPlatform* pPlatform = nullptr;
-
-			// If BodyA is player, BodyB must be platform
-			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-			{
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysB );
-			}
-			// Else, vice versa
-			else
-			{
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysA );
-			}
-
-
-
-			// Check if this EndContact is for feet + platform surface sensors only
-			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )
-			{
-				CCLOG( "Foot goes untoot" );
-
-				// If this platform is not a CBrickPlatform
-				if( pPlatform->GetPlatformType() != EPlatformType::Brick )
-				{
-					// Deactivate this platform's collision
-					pPlatform->SetCollisionEnabled( false );
-				}
-
-				// Decrement sensor contact count
-				m_pcPlayer->SensorContactEvent( false );
-			}
-
-			// If not 2 sensors
-			// Check if this EndContact is for character + platform ( no sensors included )
-			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )
-			{
-				if( pPlatform->GetTriggersHardContactEvent() )
-				{
-
-					// Set the platform as no trigger for hard contact events
-					pPlatform->SetTriggersHardContactEvent( false );
-
-					// Decrement hard contact count
-					m_pcPlayer->HardContactEvent( false );
-
-					// If feet are no longer touching any ground surface
-					if( !m_pcPlayer->GetHardContactCount() && m_pcPlayer->GetIsGrounded() )
-					{
-						m_pcPlayer->LeftGround();
-						CCLOG( "LeftGround()" );
-					}
-
-					switch(pPlatform->GetPlatformType())
-					{
-					case EPlatformType::Crumbling :
-						auto pCrumblingPlatform = static_cast<CCrumblingPlatform*> (pPlatform);
-
-						if (pCrumblingPlatform != nullptr)
-						{
-							pCrumblingPlatform->StopCrumbling();
-						}
-						break;
-					}
-				}
-			}
-		}
-	}
+	m_eGameState = EGameState::Escaping;
+	// For production phase
+	// Change enemy behaviours if needed
 }
 
 
-///////////////////////////////////////////////////////////////////////////////
-// pre solve
-// insert any logic that needs to be done before a contact is resolved
-///////////////////////////////////////////////////////////////////////////////
-//virtual 
-void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold )
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OnEscaped																							//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+void CManicLayer::OnEscaped()
 {
-	const b2Fixture* pFixtureA = pB2Contact->GetFixtureA();
-	const b2Fixture* pFixtureB = pB2Contact->GetFixtureB();
-
-	const b2Body* pBodyA = pFixtureA->GetBody();
-	const b2Body* pBodyB = pFixtureB->GetBody();
-
-	CGCObjSpritePhysics* pGcSprPhysA = ( CGCObjSpritePhysics* )pBodyA->GetUserData();
-	// if( this is not a GC object )
-	if( pGcSprPhysA == nullptr )
-	{
-		return;
-	}
-
-	CGCObjSpritePhysics* pGcSprPhysB = ( CGCObjSpritePhysics* )pBodyB->GetUserData();
-	// if( this is not a GC object )
-	if( pGcSprPhysB == nullptr )
-	{
-		return;
-	}
-
-	// Henrique
-	// CHECK FOR PLATORM AND PLAYER COLLISION
-	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )
-	{
-		if( ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-			&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) ) )
-			|| ( ( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlatform ) )
-				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )
-		{
-			// Check if this BeginContact is not running with any sensor triggers
-			if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )
-			{
-				// We must check if this platform is supposed to have collision or not
-
-				// Get pointer to platform
-				CPlatform* pPlatform = nullptr;
-
-				// If BodyA is player, BodyB must be platform
-				if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )
-				{
-					pPlatform = static_cast< CPlatform* >( pGcSprPhysB );
-				}
-				// Else, vice versa
-				else
-				{
-					pPlatform = static_cast< CPlatform* >( pGcSprPhysA );
-				}
-
-				// Set contact collision accordingly
-				pB2Contact->SetEnabled( pPlatform->GetCollisionEnabled() );
-			}
-
-		}
-	}
-}
-
-////////////////////////////////////////////////////////////////////////////
-// Object Specific Collision Handles ///////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-
-
-// Player + Enemy
-void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
-{
-	if( rcContact.IsTouching() )
-	{
-		OnDeath();
-	}
-}
-
-// Player + Hazard
-void CManicLayer::PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact)
-{
-	if( rcContact.IsTouching() )
-	{
-		OnDeath();
-	}
+	m_eGameState = EGameState::Victory;
+	// For production phase
+	// Run Time animation and points, etc
+	// when that ends, call this line:
+	RequestNextLevel();
 }
 
 
-
-void CManicLayer::EnemyCollidedPlatform( CGCObjEnemy& rcEnemy, const b2Contact& rcContact )
-{
-	if( rcContact.IsTouching() )
-	{
-		rcEnemy.BounceEnemyDirection();
-	}
-}
-
-
-// Player + Collectible
-void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact )
-{
-	if( rcContact.IsTouching() )
-	{
-		rcCollectible.InteractEvent();
-	}
-}
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OnDeath																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::OnDeath()
 {
 	m_pcPlayer->Die();
@@ -688,60 +762,77 @@ void CManicLayer::OnDeath()
 
 }
 
-void CManicLayer::OnFinishedLooting()
-{
-	m_eGameState = EGameState::Escaping;
 
-	//GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjPlatform& rPlatform, const b2Contact& rcContact ) -> void
-	//	{
-	//		if( m_eGameState == EGameState::EGS_Escaping )
-	//		{
-	//			OnEscaped();
-	//		}
-	//	} );
-}
-
-void CManicLayer::OnEscaped()
-{
-	m_eGameState = EGameState::Victory;
-	// Run Time animation and points and stuff
-	// when that ends, call this line:
-	RequestNextLevel();
-}
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OutOfLives																							//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::OutOfLives()
 {
 	m_pcLevelManager->GoToMainMenu();
 }
 
-CPlayer& CManicLayer::GetPlayer() const
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	RequestReset																						//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+void CManicLayer::RequestReset()
 {
-	return *m_pcPlayer;
+	m_bWasResetRequested = true;
 }
 
-CLevelManager& CManicLayer::GetLevelManager() const
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ResetRequestWasHandled																				//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+void CManicLayer::ResetRequestWasHandled()
 {
-	return *m_pcLevelManager;
+	m_bWasResetRequested = false;
 }
 
-void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )
-{
-	m_pcLevelManager = &rcLevelManager;
-}
 
-void CManicLayer::CB_OnGameExitButton( Ref* pSender )
-{
-	// add code to release anything that needs to be released before exiting the game
-	RequestNextLevel();
-}
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ResetLevel																							//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::ResetLevel()
 {
 	ResetRequestWasHandled();
 	VOnReset();
 }
 
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	RequestNextLevel																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::RequestNextLevel()
 {
 	m_bWasNextLevelRequested = true;
+}
+
+
+
+
+
+void CManicLayer::CB_OnGameExitButton( Ref* pSender )
+{
+	RequestNextLevel();
 }

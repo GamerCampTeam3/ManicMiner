@@ -76,7 +76,7 @@ public:
 // Returns		:	CManicLayer&																						//
 //					reference to the currently active CManicLayer														//
 // -------------------------------------------------------------------------------------------------------------------- //
-	CManicLayer& GetCurrentManicLayer();
+	CManicLayer& GetCurrentManicLayer() const;
 
 private:
 

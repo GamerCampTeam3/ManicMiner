@@ -1,186 +1,313 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	CManicLayer is a child of IGCGameLayer																//
+//					it serves as the parent class for every level, such as CMLCentralCavern.							//
+//					Each level of Manic Miner just needs to inherit from CManicLayer									//
+//					and override both VOnCreate() and VOnDestroy(), in order to set up their unique map layout			//
+//																														//
+//					CManicLayer is also a child of b2ContactListener													//
+//					meaning it is capable of handling all the collisions that happen in this layer.						//
+//					This is important because we will need to operate these collisions for essential game logic			//
+//					i.e. player death, collectible pick ups, and player-platform collisions								//
+//																														//
+// See also		:	IGCGameLayer & b2ContactListener & CMLCentralCavern & CLevelManager									//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 #ifndef _CMANICLAYER_H_
 #define _CMANICLAYER_H_
 
-#include <stdlib.h>
+#include < stdlib.h >
 
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "ManicMiner/Enums/ECollectibleTypeRequired.h"
-#include "../GameState/EGameState.h"
+#include "ManicMiner/GameState/EGameState.h"
 
 
-class CDoor;
-////////////////////////////////////////////////////////////////////////////
-// Forward Declarations													  //
-////////////////////////////////////////////////////////////////////////////
-class CGCObjEnemy;														  //
-class CGCObjHazard;														  //
-class CPlatform;														  //
-class CPlayer;															  //
-class CCollectible;														  //
-class CCollectiblesGroup;												  //
-class CLevelManager;													  //
-////////////////////////////////////////////////////////////////////////////
+// ----------------------------------------- Fwd declares ------------------------------------------------------------- //
+class CCollectible;																										//
+class CCollectiblesGroup;																								//
+class CDoor;																											//
+class CGCObjEnemy;																										//
+class CGCObjHazard;																										//
+class CLevelManager;																									//
+class CPlatform;																										//
+class CPlayer;																											//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 
 class CManicLayer: public IGCGameLayer, public b2ContactListener
 {
 private:
-	// Reference to the LevelManager in order to proceed
-	CLevelManager* m_pcLevelManager;
+// Henrique Edit ------------------------------------------------------------------------------------------------------ //
+																														//
+// Reference to the LevelManager in order to proceed																	//
+	CLevelManager*	m_pcLevelManager;																					//
+																														//
+// GameState Enum, opens door and may change enemy behaviour															//
+	EGameState		m_eGameState;																						//
+																														//
+// Handling Reset Flag																									//
+	bool			m_bWasResetRequested;																				//
+																														//
+// Handling Going to Next Level Flag																					//
+	bool			m_bWasNextLevelRequested;																			//
+																														//
+// Pointer to Background Sprite																							//
+	CGCObjSprite*	m_pcGCSprBackGround;																				//
+																														//
+// Pointer to player, for easy play access																				//
+	CPlayer*		m_pcPlayer;																							//
+// -------------------------------------------------------------------------------------------------------------------- //
 
-	// GameState Enum, opens door and may change enemy behaviour
-	EGameState m_eGameState;
 
-	// Handling Reset Flag
-	bool m_bWasResetRequested;
 
-	// Handling Going to Next Level Flag
-	bool m_bWasNextLevelRequested;
+// Bib Edit ----------------------------------------------------------------------------------------------------------- //
+																														//
+	ECollectibleTypeRequired m_eCollectibleTypeRequired;																//
+																														//
+// Number of collectibles in the level																					//
+	int m_iNumCollectiblesNeeded;																						//
+																														//
+// Number of switches in the level																						//
+	int m_iNumSwitchesNeeded;																							//
+// -------------------------------------------------------------------------------------------------------------------- //
 
-	// Pointer to Background Sprite
-	CGCObjSprite* m_pcGCSprBackGround;
-
-	// Pointer to player, for easy play access
-	CPlayer* m_pcPlayer;
-
-	ECollectibleTypeRequired m_eCollectibleTypeRequired;
-	int m_iNumCollectiblesNeeded;
-	int m_iNumSwitchesNeeded;
 
 public:
+// Constructor -------------------------------------------------------------------------------------------------------- //
 	CManicLayer( void );
+// Destructor  -------------------------------------------------------------------------------------------------------- //
 	virtual ~CManicLayer( void );
 
-	//////////////////////////////////////////////////////////////////////////
-	// player actions 
-	enum EPlayerActions
-	{
-		EPA_Up = 0,
-		EPA_Down,
-		EPA_Left,
-		EPA_Right,
-		EPA_Jump
-	};
-
-	////////////////////////////////////////////////////////////////////////////////
-	// CCNode interface onEnter -> We override to initialize the keyboard manager
-	virtual void onEnter() override;
-	////////////////////////////////////////////////////////////////////////////////
-
-	////////////////////////////////////////////////////////////////////////////////
-	// IGCGameLayer interface
-
-	virtual	void VOnCreate( void )			override;
-	virtual void VOnUpdate( f32 fTimeStep )	override;
-	virtual	void VOnDestroy( void )			override;
-
-
-	// IGCGameLayer interface
-	//////////////////////////////////////////////////////////////////////////
-
-	//////////////////////////////////////////////////////////////////////////
-	// b2ContactListener interface - see b2ContactListener for details of 
-	// when these get called and what they are
-
-	virtual void BeginContact( b2Contact* pB2Contact );
-	virtual void EndContact( b2Contact* pB2Contact );
-	virtual void PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifold );
-
-
-	////////////////////////////////////////////////////////////////////////////
-	// Getters
-	////////////////////////////////////////////////////////////////////////////
-
-	CPlayer& GetPlayer() const;
-	CLevelManager& GetLevelManager() const;
-
-	////////////////////////////////////////////////////////////////////////////
-	// Setters
-	////////////////////////////////////////////////////////////////////////////
-	void SetLevelManager( CLevelManager& rcLevelManager );
 
 
 
-	////////////////////////////////////////////////////////////////////////////
-	// Button
-	////////////////////////////////////////////////////////////////////////////
+// ------------------------------------ IGCGameLayer Interface -------------------------------------------------------- //
+	virtual	void VOnCreate		( void			)		override;														//
+	virtual void VOnUpdate		( f32 fTimeStep )		override;														//
+	virtual	void VOnDestroy		( void			)		override;														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+
+
+// ---------------------------------- b2ContactListener Interface ----------------------------------------------------- //
+	virtual void BeginContact	( b2Contact* pB2Contact );																//
+	virtual void EndContact		( b2Contact* pB2Contact );																//
+	virtual void PreSolve		( b2Contact* pB2Contact, const b2Manifold* pOldManifold );								//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+
+
+
+// ---------------------------------- Collision Event Handlers -------------------------------------------------------- //
+	void EnemyCollidedPlatform	( CGCObjEnemy&	rcEnemy,									const b2Contact& rcContact	);
+	void PlayerCollidedEnemy	( CPlayer&		rcPlayer,		CGCObjEnemy&	rcEnemy,	const b2Contact& rcContact	);
+	void PlayerCollidedHazard	( CPlayer&		rcPlayer,		CGCObjHazard&	rcHazard,	const b2Contact& rcContact	);
+	void PlayerCollidedDoor		( CPlayer&		rcPlayer,		CDoor&			rcDoor,		const b2Contact& rcContact	);
+	void ItemCollected			( CCollectible& rcCollectible,	CPlayer&		rcPlayer,	const b2Contact& rcContact	);
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+
+
+
+
+// ---------------------------------- Getters ------------------------------------------------------------------------- //
+	CPlayer&			GetPlayer()						const;															//
+	CLevelManager&		GetLevelManager()				const;															//
+	const EGameState	GetGameState()					const;															//
+	bool				GetWasResetRequested()			const;															//
+	bool				GetWasNextLevelRequested()		const;															//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+// ---------------------------------- Setters ------------------------------------------------------------------------- //
+	void SetLevelManager( CLevelManager&		rcLevelManager	);														//
+	void SetGameState	( const EGameState		gameState		); 														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+
+
+
+// ------------------------------------ Bib Edit ---------------------------------------------------------------------- //
+public:																													//
+																														//
+	//////////////////////////////////////////////////////////////////////////											//
+	// player actions 																									//
+	enum EPlayerActions																									//
+	{																													//
+		EPA_Up = 0,																										//
+		EPA_Down,																										//
+		EPA_Left,																										//
+		EPA_Right,																										//
+		EPA_Jump																										//
+	};																													//																						//
+																														//
+	////////////////////////////////////////////////////////////////////////////////									//
+	// CCNode interface onEnter -> We override to initialize the keyboard manager										//
+	virtual void onEnter() override;																					//
+	////////////////////////////////////////////////////////////////////////////////									//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+
+
+// ------------------------------------ Henrique Edit ----------------------------------------------------------------- //
+public:																													//
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// --------------------------------- Game State & Player Related Logic ------------------------------------------------ //
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+																														//
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OnFinishedLooting																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Sets m_eGameState to EGameState::Escaping, changes enemies behaviours if applicable					//
+//					Called when player finishes collecting all collectibles												//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+	void OnFinishedLooting();																							//
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OnEscaped																							//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Sets m_eGameState to EGameState::Victory															//
+//					Will also play the air manager animation and points increasing [ to be implemented ]				//
+//					Requests next level transition																		//
+//					Called when player reaches the door after finishing the looting state								//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+	void OnEscaped();																									//
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OnDeath																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Decreases player life count and then checks if should reset level or go back to Main Menu ( LOSE )	//
+//					Called when player dies ( collided with hazard or enemy or ran out of air )							//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+//																														//
+// See also		:	CPlayer																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+	void OnDeath();																										//
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OutOfLives																							//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Forces player back to the main menu																	//
+//					Called when player loses all 3 lives																//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+	void OutOfLives();																									//
+																														//
+																														//
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// --------------------------------- Level Reset Handling Logic ------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	RequestReset																						//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Sets m_bWasResetRequested to true, called when the player dies and layer needs resetting			//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+	void RequestReset();																								//
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ResetRequestWasHandled																				//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Sets m_bWasResetRequested to false, called when the layer is done resetting after a request			//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+	void ResetRequestWasHandled();																						//
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ResetLevel																							//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Effectively resets this CManicLayer, calling VOnReset() and ResetRequestWasHandled()				//
+//					Called from the update loop if level needs resetting												//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+	void ResetLevel();																									//
+																														//
+																														//
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------- Loading Next Level Handling Logic ------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	RequestNextLevel																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Sets m_bWasNextLevelRequested to true, so that by the end of this update loop						//
+//					the CLevelManager will GoToNextLevel()				 												//
+//					Called from OnEscaped() ( when player escapes through the door )									//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+	void RequestNextLevel();																							//
+																														//
+																														//
+																														//
+// End of Henrique edit ----------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+
+// Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
+// On click, request next level to be loaded
 	void CB_OnGameExitButton( Ref* pSender );
-
-
-private:
-
-
-		////////////////////////////////////////////////////////////////////////////
-		// Collision Events
-		////////////////////////////////////////////////////////////////////////////
-		void EnemyCollidedPlatform( CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
-		void PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact );
-		void PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact);
-		void PlatformCollided( CPlayer& rcPlayer, CPlatform& rcPlatform, const b2Contact& rcContact );
-		void PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact );
-		void ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact );
-	
-
-
-public:
-	
-	////////////////////////////////////////////////////////////////////////////
-	// General Game Logic
-	////////////////////////////////////////////////////////////////////////////
-	void OnDeath();
-	void OnFinishedLooting();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	////////////////////////////////////////////////////////////////////////// 
-	// reset handling
-
-
-
-	void ResetRequestWasHandled()
-	{
-		m_bWasResetRequested = false;
-	}
-
-	bool GetWasResetRequested()
-	{
-		return m_bWasResetRequested;
-	}
-
-	void ResetLevel();
-
-	////////////////////////////////////////////////////////////////////////////
-	// Go to next level handling
-
-	bool GetWasNextLevelRequested()
-	{
-		return m_bWasNextLevelRequested;
-	}
-
-
-
-public:
-	void OutOfLives();
-	void OnEscaped();
-	void RequestReset()
-	{
-		//ResetLevel();
-		m_bWasResetRequested = true;
-	}
-	void RequestNextLevel();
-	
-	void SetGameState( EGameState gameState ) { m_eGameState = gameState; }
-	EGameState GetGameState() { return m_eGameState; }
 };
 #endif // #ifndef _CMANICLAYER_H_
