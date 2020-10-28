@@ -1,27 +1,27 @@
 // -------------------------------------------------------------------------------------------------------------------- //
 // Gamer Camp 2020 / Henrique Teixeira																					//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Purpose		:	ResolutionHelper.h defines the game's PTM Ratio														//	
-//					It also includes a function that detects the resolution of the current screen display				//	
+// Purpose		:	ResolutionHelper.h defines the game's PTM Ratio														//
+//					It also includes a function that detects the resolution of the current screen display				//
 //					"GetDesktopResolution()"																			//
 //																														//
 //					This would detect the current resolution and adjust the assets and PTM accordingly					//
 //					Because some of us have 2K monitors, it would be awesome if we could play Manic Miner				//
-//					on a 2560x1440 resolution. This however was a stretch and we had no time to implement,				//	
-//					as it is quite high risk near end of pre-production, and other parts of the game					//	
+//					on a 2560x1440 resolution. This however was a stretch and we had no time to implement,				//
+//					as it is quite high risk near end of pre-production, and other parts of the game					//
 //					were definitely a priority.	Unique spritesheets have to be created for each resolution				//
 //					( FHD, WQHD and UHD ), perhaps it will be done during Production phase.								//
 //																														//
 //					At the moment, this header file isn't doing anything, but in Production phase						//
 //					any SetPosition() calls should do something like the following:										//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Implementation:	#include "ManicMiner/ResolutionHelper/ResolutionHelper.h"											//	
+// Implementation:	#include "ManicMiner/ResolutionHelper/ResolutionHelper.h"											//
 //																														//
 //					// Get current PTM																					//
 //					const float fPTM = MANIC_PTM_RATIO;																	//
 //																														//
 //					// Declare num of coins we want to spawn															//
-//					const int iNumCoins = 9;																			//					
+//					const int iNumCoins = 9;																			//
 //																														//
 //					// Loop through each coin to set positions															//
 //					for ( int iCurrentCoin = 0; iCurrentCoin < iNumCoins; iCurrentCoin++ )								//

@@ -1,23 +1,13 @@
 // -------------------------------------------------------------------------------------------------------------------- //
 // Gamer Camp 2020 / Henrique Teixeira																					//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Purpose	:		ManicAudio.h acts as a helper header file to play audio through										//	
-//					Cocos2d's SimpleAudioEngine:																		//	
+// Purpose	:		ManicAudio.h acts as a helper header file to play audio through										//
+//					Cocos2d's SimpleAudioEngine:																		//
 //					This page contains the ESoundName enums and their respective										//
 //					audio file directory pair, configured with an std::map < ESoundName, std::string >					//
 //					Just pass the right sound name to PlaySoundEffect() or PreloadSoundEffect()							//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Example	:		#include "ManicMiner/AudioHelper/ManicAudio.h"														//	
-//																														//	
-//					void CCoin::OnPickedUp()																			//
-//					{																									//
-//						// Play CoinCollected sound effect	[ would need to be added to k_mapSoundFiles ] 				//
-//						PlaySoundEffect( ESoundName::CoinCollected );													//
-//																														//
-//						// Delete coin object																			//
-//						DeleteSelf();																					//
-//					}																									//
-// -------------------------------------------------------------------------------------------------------------------- //
+
 
 
 #ifndef __MANIC_AUDIO_HELPER__
@@ -73,6 +63,17 @@ const static std::map < const ESoundName, const std::string > k_mapSoundFiles =
 //																														//
 // See also		:	ESoundName & k_mapSoundFiles																		//
 // -------------------------------------------------------------------------------------------------------------------- //
+// Example		:	#include "ManicMiner/AudioHelper/ManicAudio.h"														//	
+//																														//	
+//					void CCoin::OnPickedUp()																			//
+//					{																									//
+//						// Play CoinCollected sound effect	[ would need to be added to k_mapSoundFiles ] 				//
+//						PlaySoundEffect( ESoundName::CoinCollected );													//
+//																														//
+//						// Delete coin object																			//
+//						DeleteSelf();																					//
+//					}																									//
+// -------------------------------------------------------------------------------------------------------------------- //
 inline void PlaySoundEffect( const ESoundName eSoundName )
 {
 	// Get SimpleAudioEngine singleton
@@ -95,7 +96,7 @@ inline void PlaySoundEffect( const ESoundName eSoundName )
 // Parameters	:	const ESoundName eSoundName																			//
 //					enum value that represents the sound we want to play												//
 //																														//
-// See also		:	ESoundName & k_mapSoundFiles																		//
+// See also		:	ESoundName & k_mapSoundFiles & PlaySoundEffect														//
 // -------------------------------------------------------------------------------------------------------------------- //
 inline void PreloadSoundEffect( const ESoundName eSoundName )
 {
