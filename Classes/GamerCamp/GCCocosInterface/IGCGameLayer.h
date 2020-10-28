@@ -306,6 +306,7 @@ public:
 		}
 
 		// add IGCGameLayer to the scene
+		// Henrique Edit -> set this child to have tag = 0
 		pReturnScene->addChild( pIGCLayer, -1, 0);
 
 		return pReturnScene;
