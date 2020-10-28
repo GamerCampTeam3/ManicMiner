@@ -15,7 +15,7 @@ CDoor::CDoor(CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, coco
 // Checks if player is escaping and if so request the next level
 void CDoor::InteractEvent()
 {
-	if ( m_cManicLayer.GetGameState() == EGameState::EGS_Escaping )
+	if ( m_cManicLayer.GetGameState() == EGameState::Escaping )
 	{
 		m_cManicLayer.RequestNextLevel();
 	}

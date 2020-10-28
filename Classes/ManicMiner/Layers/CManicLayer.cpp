@@ -56,7 +56,7 @@ USING_NS_CC;
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcLevelManager( nullptr )
-	, m_eGameState( EGameState::EGS_Looting )
+	, m_eGameState( EGameState::Looting )
 	, m_bWasResetRequested( false )
 	, m_bWasNextLevelRequested( false )
 	, m_pcGCSprBackGround( nullptr )
@@ -690,7 +690,7 @@ void CManicLayer::OnDeath()
 
 void CManicLayer::OnFinishedLooting()
 {
-	m_eGameState = EGameState::EGS_Escaping;
+	m_eGameState = EGameState::Escaping;
 
 	//GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjPlatform& rPlatform, const b2Contact& rcContact ) -> void
 	//	{
@@ -703,7 +703,7 @@ void CManicLayer::OnFinishedLooting()
 
 void CManicLayer::OnEscaped()
 {
-	m_eGameState = EGameState::EGS_Victory;
+	m_eGameState = EGameState::Victory;
 	// Run Time animation and points and stuff
 	// when that ends, call this line:
 	RequestNextLevel();

@@ -1,15 +1,15 @@
 // Henrique Teixeira 05/10/2020
 
-#ifndef _EGAMESTATE_
-#define _EGAMESTATE_
+#ifndef _EGAMESTATE_H_
+#define _EGAMESTATE_H_
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Defined Game States for GameStateMachine behaviours
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 enum class EGameState
 {
-    EGS_Looting,
-    EGS_Escaping,
-    EGS_Victory
+    Looting,
+    Escaping,
+    Victory
 };
-#endif //ifndef _EGAMESTATE_		
+#endif //ifndef _EGAMESTATE_H_		

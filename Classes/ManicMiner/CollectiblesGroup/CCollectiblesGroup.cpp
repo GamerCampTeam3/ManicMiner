@@ -98,20 +98,20 @@ void CCollectiblesGroup::CheckIfEnoughToOpenExit()
 		case ECollectibleTypeRequired::Collectible:
 			if (m_iCollectibles == m_iMaxCollectibles)
 			{
-				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
+				m_pcManicLayer->SetGameState( EGameState::Escaping );
 			}
 			break;
 		case ECollectibleTypeRequired::Switch:
 			if (m_iSwitches == m_iMaxSwitches)
 			{
-				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
+				m_pcManicLayer->SetGameState( EGameState::Escaping );
 			}
 			break;
 
 		case ECollectibleTypeRequired::Both:
 			if ((m_iCollectibles == m_iMaxCollectibles) && (m_iSwitches == m_iMaxSwitches))
 			{
-				m_pcManicLayer->SetGameState( EGameState::EGS_Escaping );
+				m_pcManicLayer->SetGameState( EGameState::Escaping );
 			}
 			break;
 	}

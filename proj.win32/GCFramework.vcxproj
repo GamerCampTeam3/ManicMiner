@@ -223,7 +223,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h" />
+    <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
