@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------------------------- //
-// Gamer Camp 2020 / Henrique Teixeira																					//
+// Gamer Camp 2020 / Team 3																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Purpose		:	CManicLayer is a child of IGCGameLayer																//
 //					it serves as the parent class for every level, such as CMLCentralCavern.							//

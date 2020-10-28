@@ -1,16 +1,23 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 #include "CMLTheColdRoom.h"
-#include "ManicMiner/Player/CPlayer.h"
-#include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
-#include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
 
+#include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
+#include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
+#include "ManicMiner/Player/CPlayer.h"
+
+// Constructor -------------------------------------------------------------------------------------------------------- //
 CMLTheColdRoom::CMLTheColdRoom()
 	: CManicLayer()
-	//, m_pcGCGroupEnemyCentralCavern( nullptr )
 {}
 
+// Destructor --------------------------------------------------------------------------------------------------------- //
 CMLTheColdRoom::~CMLTheColdRoom()
 {}
 
+// CManicLayer Overrides ---------------------------------------------------------------------------------------------- //
+// VOnCreate - Define unique layout ----------------------------------------------------------------------------------- //
 void CMLTheColdRoom::VOnCreate( void )
 {
 	CManicLayer::VOnCreate();
@@ -24,11 +31,6 @@ void CMLTheColdRoom::VOnCreate( void )
 
 	// Edit Custom Layout
 	GetPlayer().SetResetPosition( v2NewStart );
-
-
-	//// Enemies for Central Cavern
-	//m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
-	//CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
 	
 	// Hazards for Central Cavern
 	m_pcGCGroupHazardCentralCavern = new CGCObjGroupHazardCentralCavern();
@@ -39,6 +41,7 @@ void CMLTheColdRoom::VOnCreate( void )
 	CGCObjectManager::ObjectGroupRegister( m_pcGroupPlatformCentralCavern );
 }
 
+// VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLTheColdRoom::VOnDestroy( void )
 {
 	CGCObjectManager::ObjectGroupUnRegister( m_pcGroupPlatformCentralCavern );

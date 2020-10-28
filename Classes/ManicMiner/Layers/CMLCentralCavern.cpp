@@ -1,16 +1,22 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Team 3																								//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 #include "CMLCentralCavern.h"
 
-#include "ManicMiner/Doors/CentralCavern/CDCreatorCentralCavern.h"
+#include "ManicMiner/AirManager/AirManager.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
-#include "ManicMiner/Player/CPlayer.h"
-#include "ManicMiner/HUD/CHUD.h"
+#include "ManicMiner/CollectiblesGroup/CentralCavern/CCGCentralCavern.h"
+#include "ManicMiner/Doors/CentralCavern/CDCreatorCentralCavern.h"
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 #include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
 #include "ManicMiner/Helpers/Helpers.h"
+#include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
-#include "ManicMiner/CollectiblesGroup/CentralCavern/CCGCentralCavern.h"
-#include "ManicMiner/AirManager/AirManager.h"
+#include "ManicMiner/Player/CPlayer.h"
 
+
+// Constructor -------------------------------------------------------------------------------------------------------- //
 CMLCentralCavern::CMLCentralCavern( )
 	: CManicLayer( )
 	, m_pcGCGroupEnemyCentralCavern(nullptr)
@@ -19,9 +25,12 @@ CMLCentralCavern::CMLCentralCavern( )
 	, m_pcCollectiblesGroupCentralCavern(nullptr)
 {}
 
+// Destructor --------------------------------------------------------------------------------------------------------- //
 CMLCentralCavern::~CMLCentralCavern()
 {}
 
+// CManicLayer Overrides ---------------------------------------------------------------------------------------------- //
+// VOnCreate - Define unique layout ----------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnCreate( void )
 {
 	CManicLayer::VOnCreate();
@@ -60,6 +69,8 @@ void CMLCentralCavern::VOnCreate( void )
 	m_pcAirManager->Init(*this);
 }
 
+
+// VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnDestroy(void)
 {
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemyCentralCavern);
