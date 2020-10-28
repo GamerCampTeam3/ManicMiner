@@ -1,3 +1,18 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+//	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose	:		CTestLayer is the copy of GCGameLayerPlatformer, used to start testing our own logic and classes	//
+//					There really is no point in even checking it out.													//																														//
+//																														//
+//					Completely commented out and excluded from the build in project settings							//
+//					Only exists still for submission purposes															//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+
+
 //#ifndef _CTESTLAYER_H_
 //#define _CTESTLAYER_H_
 //
