@@ -11,16 +11,16 @@
 
 #include <string>
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-#include "ManicMiner/Enums/EEnemyTypes.h"
+
+//////////////////////////////////////////////////////////////////////////
+//  This class defines an invidual instance of a Lander Enemy.
+// NOTE NOT COMPLETE AT MODULE 1
+//////////////////////////////////////////////////////////////////////////
 
 class CGCObjLander
 : public CGCObjSpritePhysics
 {
-
-public:
-
 private:
-	
 	cocos2d::Vec2				m_cAnchorPoint;
 	cocos2d::Vec2				m_cTotalVelocity;
 	float						m_fSpeed;
@@ -28,7 +28,7 @@ private:
 	
 public:
 
-	CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const float fSpeed, CGCFactoryCreationParams& rcParamsInput);
+	CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const float fSpeed, CGCFactoryCreationParams& rcFactoryCreationParamsInput);
 
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
@@ -36,15 +36,9 @@ public:
 	virtual ~CGCObjLander()
 	{}
 
-	//////////////////////////////////////////////////////////////////////////
-	// overridden virtuals from the game object interface
 	virtual void VOnResourceAcquire	( void ) override;
-
 	virtual void VOnResurrected		( void ) override;
-
-	virtual void CGCObjLander::VOnUpdate(float fTimeStep) override;
-
-
+	virtual void VOnUpdate(float fTimeStep) override;
 
 };
 #endif // #ifndef _GCOBJENEMY_H_

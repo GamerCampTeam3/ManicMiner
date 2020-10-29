@@ -35,9 +35,11 @@ CGCObjEnemy::~CGCObjEnemy()
 }
 
 //////////////////////////////////////////////////////////////////////////
-// This function initialises the enemies direction of velocity. 
+// This function initialises the enemies velocity, reset position and 
+// initial facing direction.
 //////////////////////////////////////////////////////////////////////////
 // virtual function
+//////////////////////////////////////////////////////////////////////////
 void CGCObjEnemy::VOnResourceAcquire( void )
 {
 
@@ -46,6 +48,7 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjEnemy );    
 	VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
 
+	// Call base class verion.
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
 	m_cTotalVelocity = Vec2::ZERO;
