@@ -1,54 +1,34 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // (C) Gamer Camp / Dave O'Dwyer October 2020
-// Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <string.h>
 #include <vector>
-
 #include "ManicMiner/Enemy/SkylabLandingBay/GCObjGroupLander.h"
-#include "GamerCamp/GCObject/GCObjectManager.h"
-#include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-#include "GamerCamp/Core/GCTypes.h"
-#include "GamerCamp/GCObject/GCObject.h"
 #include "ManicMiner/Enemy/SkylabLandingBay/GCObjLander.h"
-#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
 // Static Creation Params lifted out of GCObjEnemy to here to allow GCObjEnemy to be a class which can represent differnt Enemy sprites/animations/physics.
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_ELander("CGCObjEnemy_ELander", "TexturePacker/Sprites/Coin/Coin.plist", "coin", b2_dynamicBody, true);
 
 //////////////////////////////////////////////////////////////////////////
-// using
-using namespace cocos2d;
-
-//////////////////////////////////////////////////////////////////////////
-//
+// Constructor
 //////////////////////////////////////////////////////////////////////////
 CGCObjGroupLander::CGCObjGroupLander()
 {
-	m_v2FormationOrigin = Vec2::ZERO;
+	m_v2FormationOrigin = cocos2d::Vec2::ZERO;
 	m_bFirstPassDone = false;
-	
 	fStartupCounter = 0.0;
 }
 
 //////////////////////////////////////////////////////////////////////////
-//
+// Destructor
 //////////////////////////////////////////////////////////////////////////
-// virtual
+// Virtual function
 CGCObjGroupLander::~CGCObjGroupLander()
 {}
 
 //////////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////////
-void CGCObjGroupLander::SetFormationOrigin( Vec2 v2FormationOrigin )
-{
-	m_v2FormationOrigin = v2FormationOrigin;
-}
-
-//////////////////////////////////////////////////////////////////////////
-// only handle invaders
+// Fucntion to query the class with a GCTypeID, returning true/false depending
+// on if the class handles the GCTypeID.
 //////////////////////////////////////////////////////////////////////////
 //virtual 
 bool CGCObjGroupLander::VHandlesThisTypeId( GCTypeID idQueryType )
@@ -57,7 +37,7 @@ bool CGCObjGroupLander::VHandlesThisTypeId( GCTypeID idQueryType )
 }
 
 //////////////////////////////////////////////////////////////////////////
-// must return the typeid of the CGCObjectGroup derived class
+// Function to return the typeid of the CGCObjectGroup derived class
 //////////////////////////////////////////////////////////////////////////
 //virtual 
 GCTypeID CGCObjGroupLander::VGetTypeId()
@@ -65,6 +45,11 @@ GCTypeID CGCObjGroupLander::VGetTypeId()
 	return GetGCTypeIDOf( CGCObjGroupLander );
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Function to be called by collision detector when the Lander has impacted
+// into a platform.
+// NOTE NOT COMPLETE AT MODULE 1
+//////////////////////////////////////////////////////////////////////////
 void CGCObjGroupLander::RegisterLanderCollision(GCTypeID idLander)
 {
 	
@@ -101,13 +86,11 @@ void CGCObjGroupLander::RegisterLanderCollision(GCTypeID idLander)
 
 	//ResurrectList_AddBack
 
-
-
-
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Function to be run at initialisation to remove unwanted landers
+// NOTE NOT COMPLETE AT MODULE 1
 //////////////////////////////////////////////////////////////////////////
 void CGCObjGroupLander::KillLandersNotRequiredAtLevelStartup()
 {
@@ -126,45 +109,54 @@ void CGCObjGroupLander::KillLandersNotRequiredAtLevelStartup()
 
 }
 
+//////////////////////////////////////////////////////////////////////////
 // Function to initialise the Lander Activator array to represent random lander(s).
 // (ie, Keep iterating through the vector until 'iNumberToAllocate' have been chosen).
 // Algorithim written this way to avoid any left/right bias to the allocation.
 // Function returns the last allocation position made (usefull when when called with
 // iNumberToAllocate equal to 1).
-
+//
+// eg to help visualise the Skylab landing bay level:
+//      oo    = Lander Anchor points.
+//		XXXXX = platform.
 // -------------------------------------------------------------------------------------------
-//        oo         oo         oo         oo        oo       oo        oo       oo      oo //
+//        oo         oo         oo         oo        oo       oo        oo       oo      oo 
 //
 //                                                                    XXXXX
 //
 //                                       XXXXX
 //        XXXXX                     
+//
+// NOTE - NOT INTENDED TO BE USED AT  MODULE 2 - BUT WILL BE RETAINED FOR NOW IN CASE ENHANCEMENTS REQUIRE THIS
+//
+int CGCObjGroupLander::AllocateRandomLanders(int iNumberToAllocate)
+{
+	CCAssert((iNumberToAllocate > 0 || (iNumberToAllocate <= k_iMaxLanderAnchorPoints)),
+		"CGCObjectGroupLander: AllocateRandomLander has been called with an out of range input parameter.");
 
-
-//int CGCObjGroupLander::AllocateRandomLanders(int iNumberToAllocate)
-//{
-
-
-	//CCAssert((iNumberToAllocate > 0 || (iNumberToAllocate <= k_iMaxLanderAnchorPoints)),
-		//"CGCObjectGroupLander: AllocateRandomLander has been called with an out of range input parameter.");
-
-	//int iTotalPicked = 0;
-	//int iReturnValue = 0;
-//	while (iTotalPicked < iNumberToAllocate)
-//{
+	int iTotalPicked = 0;
+	int iReturnValue = 0;
+	while (iTotalPicked < iNumberToAllocate)
+{
 		//pick a random anchor point 
-		//int iRand = cocos2d::RandomHelper::random_int(0, k_iMaxLanderAnchorPoints - 1);
+		int iRand = cocos2d::RandomHelper::random_int(0, k_iMaxLanderAnchorPoints - 1);
 
-		// if that anchor point not already been chosen then set it True and advance total picked.
-		//if (!vLanderActivators[iRand])
-		//{
-		//	vLanderActivators[iRand] = true;
-		//	iTotalPicked++;
-		//}
-		//iReturnValue = iRand;
-	//}
-	//return iReturnValue;
-//}
+		//if that anchor point not already been chosen then set it True and advance total picked.
+		if (!vLanderActivators[iRand])
+		{
+			vLanderActivators[iRand] = true;
+			iTotalPicked++;
+		}
+		iReturnValue = iRand;
+	}
+	return iReturnValue;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// This function initialises the Lander structures.
+// NOTE NOT COMPLETE AT MODULE 1
+//////////////////////////////////////////////////////////////////////////
+// virtual function
 
 void CGCObjGroupLander::VOnGroupResourceAcquire()
 {
@@ -206,7 +198,8 @@ void CGCObjGroupLander::VOnGroupResourceAcquire()
 }
 
 //////////////////////////////////////////////////////////////////////////
-//
+//  This function allocates an animation to a Lander
+// NOTE NOT COMPLETE AT MODULE 1
 //////////////////////////////////////////////////////////////////////////
 //virtual 
 void CGCObjGroupLander::VOnGroupResourceAcquire_PostObject()
@@ -219,8 +212,8 @@ void CGCObjGroupLander::VOnGroupResourceAcquire_PostObject()
 	const char* pszPlist_Coin = "TexturePacker/Sprites/Coin/Coin.plist";
 	const char* pszAnim_Coin_Rotate = "Rotate";
 
-	ValueMap& rdicPList1 = GCCocosHelpers::CreateDictionaryFromPlist(pszPlist_Coin);
-	Animation* pAnimation1 = GCCocosHelpers::CreateAnimation(rdicPList1, pszAnim_Coin_Rotate);
+	cocos2d::ValueMap& rdicPList1 = GCCocosHelpers::CreateDictionaryFromPlist(pszPlist_Coin);
+	cocos2d::Animation* pAnimation1 = GCCocosHelpers::CreateAnimation(rdicPList1, pszAnim_Coin_Rotate);
 
 	ForEachObject( [&] ( CGCObject* pObject) -> bool
 	{
@@ -239,7 +232,7 @@ void CGCObjGroupLander::VOnGroupResourceAcquire_PostObject()
 }
 
 //////////////////////////////////////////////////////////////////////////
-//
+// Function to release the resource this group manages.
 //////////////////////////////////////////////////////////////////////////
 //virtual 
 void CGCObjGroupLander::VOnGroupResourceRelease()
@@ -249,6 +242,9 @@ void CGCObjGroupLander::VOnGroupResourceRelease()
 	DestroyLanders();
 }
 
+//////////////////////////////////////////////////////////////////////////
+// This function instantiates the Landers at level startup.
+// NOTE NOT COMPLETE AT MODULE 1
 //////////////////////////////////////////////////////////////////////////
 void CGCObjGroupLander::CreateLanders()
 {
@@ -263,15 +259,13 @@ void CGCObjGroupLander::CreateLanders()
 	}
 }
 
-void CGCObjGroupLander::VOnGroupReset()
-{
-	CGCObjectGroup::VOnGroupReset();
-}
-
-
+//////////////////////////////////////////////////////////////////////////
+// This function activates the Landers which have a corresponding fTimeStamp
+// in  their Lander config lookup.
+// NOTE NOT COMPLETE AT MODULE 1
+//////////////////////////////////////////////////////////////////////////
 void CGCObjGroupLander::ActivateLanders(float fTimeStamp)
 {
-
 	int iPosition = 0;
 	ForEachObject_InDeadList([&](CGCObject* pObject) -> bool
 		{
@@ -279,19 +273,20 @@ void CGCObjGroupLander::ActivateLanders(float fTimeStamp)
 				"CGCObject derived type mismatch!");
 			CGCObjLander* pItemObj = (CGCObjLander*)pObject;
 
-			
-			//iPosition++;
 
+			iPosition++;
 			return true;
 		});
-
-
 }
 
-
+//////////////////////////////////////////////////////////////////////////
+//Function to provide the frame update of this object
+// NOTE NOT COMPLETE AT MODULE 1
+//////////////////////////////////////////////////////////////////////////
+//virtual 
 void CGCObjGroupLander::VOnGroupUpdate(f32 fTimeStep)
 {
-
+	// Call base class version first.
 	CGCObjectGroup::VOnGroupUpdate(fTimeStep);
 	
 	// NOTE - THIS FIRST PASS CONCEPT IS A TEMPORARY SOLUTION UNTIL I DECIDE WHERE THE LANDER
@@ -310,21 +305,16 @@ void CGCObjGroupLander::VOnGroupUpdate(f32 fTimeStep)
 		{
 			ActivateLanders(StartupTimingsThresholdQueue.front());
 
-
-			
 			StartupTimingsThresholdQueue.pop();
 		}
 
 	}
-
-
-
-
 	m_bFirstPassDone = true;
 }
 
 //////////////////////////////////////////////////////////////////////////
-//
+// Function to iterate the array of registerd CGCObjects, calling the supplied
+// function then deleting them.
 //////////////////////////////////////////////////////////////////////////
 void CGCObjGroupLander::DestroyLanders()
 {

@@ -7,9 +7,11 @@
 
 USING_NS_CC;
 
+//////////////////////////////////////////////////////////////////////////
+// Constructor
+//////////////////////////////////////////////////////////////////////////
 CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
-	bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyId,
-	CGCFactoryCreationParams& ParamsInput)
+	const bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyId, CGCFactoryCreationParams& rcFactoryCreationParamsInput)
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
 	, m_eMovementAxis(EMovementAxisInput)
 	, m_eEnemyId(eEnemyId)
@@ -17,23 +19,36 @@ CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, con
 	, m_fMovementWindowLength(fMovementRange)
 	, m_fSpeed(fSpeed)
 	, m_bMovingAWayFromAnchorPoint(bMovingAwayFromAnchorPoint)
-	, m_rFactoryCreationParams(ParamsInput)
+	, m_rFactoryCreationParams(rcFactoryCreationParamsInput)
 	, m_fInitialDistanceFromAnchor (fInitialDistanceFromAnchor)
-	, m_bBounceIsLatchedDisabled(false)
+	, m_bBounceCollisionDisabled(false)
 	, m_bSpriteIsFlippable(bSpriteIsFlippable)
 {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// This function initialises an enemies direction of velocity, 
+// Destructor
 //////////////////////////////////////////////////////////////////////////
-//virtual 
+// virtual
+CGCObjEnemy::~CGCObjEnemy()
+{
+}
+
+//////////////////////////////////////////////////////////////////////////
+// This function initialises the enemies velocity, reset position and 
+// initial facing direction.
+//////////////////////////////////////////////////////////////////////////
+// virtual function
+//////////////////////////////////////////////////////////////////////////
 void CGCObjEnemy::VOnResourceAcquire( void )
 {
 
+    // Removed maco call so the reference m_rFactorCreationParams could be passed 
+	// into VHandleFactoryParms.  Pending module 2 framework his may be done differently.
 	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjEnemy );    
 	VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
 
+	// Call base class verion.
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
 	m_cTotalVelocity = Vec2::ZERO;
@@ -56,6 +71,9 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 }
 
 //////////////////////////////////////////////////////////////////////////
+// This function is called when an enemy is resurected from the dead-list to the 
+// live list.
+//////////////////////////////////////////////////////////////////////////
 //virtual function
 void CGCObjEnemy::VOnResurrected( void )
 {
@@ -64,7 +82,9 @@ void CGCObjEnemy::VOnResurrected( void )
 }
 
 //////////////////////////////////////////////////////////////////////////
-//virtual function
+// Function to detect if the current position of the enemy has passed a movement boundary.
+// Returns true if a boundary has been reached or exceeded.
+//////////////////////////////////////////////////////////////////////////
 bool CGCObjEnemy::CheckForBoundaryReached(const float fCurrentPosition, const float fAnchorPoint, const float fMovementWindowLength)
 {
 	bool bReturnResult = false;
@@ -84,11 +104,10 @@ bool CGCObjEnemy::CheckForBoundaryReached(const float fCurrentPosition, const fl
 	return bReturnResult;
 }
 
-
 //////////////////////////////////////////////////////////////////////////
 // Function to check the boundaries of the enemy movement window to detect a directional flip.
 // Returns true if a directional flip was perfomed.
-//
+//////////////////////////////////////////////////////////////////////////
 bool CGCObjEnemy::CheckForDirectionFlip()
 {
 	Vec2 CurrentPosition = GetSpritePosition();
@@ -103,10 +122,12 @@ bool CGCObjEnemy::CheckForDirectionFlip()
 }
 
 //////////////////////////////////////////////////////////////////////////
+//Function to provide the frame update of this object
+//////////////////////////////////////////////////////////////////////////
 //virtual function
-
 void CGCObjEnemy::VOnUpdate(float fTimeStep)
 {
+	// Call base class version first.
 	CGCObject::VOnUpdate(fTimeStep);
 
 	if (m_bMovingAWayFromAnchorPoint)
@@ -120,7 +141,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 	
 	if (CheckForDirectionFlip())
 	{
-		m_bBounceIsLatchedDisabled = false;
+		m_bBounceCollisionDisabled = false;
         // if the Enemy's direction has just flipped then need to change the facing orientation
 		// for left/right orientation Enemy's.
 		if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis && m_bSpriteIsFlippable)
@@ -132,9 +153,13 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 
 //////////////////////////////////////////////////////////////////////////
 // Function to set the facing orientation of the enemy sprite.
-//
+//////////////////////////////////////////////////////////////////////////
 void CGCObjEnemy::SetFacingOrientation()
 {
+	// Note the boolean k_bArtDefaultIsEnemyFacingRight is present
+	// as the programmer art from the Gamer Camp framework faces by default to the
+	// left.  However the facing direction delivered from the art team is facing right.
+
 	const bool k_bArtDefaultIsEnemyFacingRight = false;
 	SetFlippedX((k_bArtDefaultIsEnemyFacingRight && !m_bMovingAWayFromAnchorPoint) || (!k_bArtDefaultIsEnemyFacingRight && m_bMovingAWayFromAnchorPoint));
 }
@@ -151,7 +176,7 @@ void CGCObjEnemy::BounceEnemyDirection()
 	// an enemy collides with an object which restricts the enemys moviement.  During gameplay the 
 	// ojbect is removed therefore allowing greater movement of the enemy.
 
-	if (!m_bBounceIsLatchedDisabled)
+	if (!m_bBounceCollisionDisabled)
 	{
 		if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis && m_bSpriteIsFlippable)
 		{
@@ -160,5 +185,5 @@ void CGCObjEnemy::BounceEnemyDirection()
 		m_bMovingAWayFromAnchorPoint = !m_bMovingAWayFromAnchorPoint;
 	}
 	// Latch the flag to stop the enemy constantly flipping during the collisions duration.
-	m_bBounceIsLatchedDisabled = true;
+	m_bBounceCollisionDisabled = true;
 }

@@ -1,35 +1,30 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // (C) Gamer Camp / Dave O'Dwyer October 2020
-// Distributed under the MIT license - see readme.md
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <memory.h>
-
-#include "GamerCamp/GCObject/GCObjectManager.h"
-
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-
 #include "GCObjLander.h"
 
 USING_NS_CC;
 
-//////////////////////////////////////////////////////////////////////////
-// GetGCTypeIDOf uses the template in GCTypeID to generate a unique ID for 
-// this type - need this to construct our base type
-
-
-CGCObjLander::CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const float fSpeed, CGCFactoryCreationParams& rcParamsInput)
+CGCObjLander::CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const float fSpeed, CGCFactoryCreationParams& rcFactoryCreationParamsInput)
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjLander))
-	, m_rFactoryCreationParams(rcParamsInput)
+	, m_rFactoryCreationParams(rcFactoryCreationParamsInput)
 	, m_cAnchorPoint(rcAnchorPoint)
 	, m_fSpeed(fSpeed)
 {
 }
 
-//virtual 
+//////////////////////////////////////////////////////////////////////////
+// This function initialises the enemies velocity and reset position.
+// NOTE NOT COMPLETE AT MODULE 1
+//////////////////////////////////////////////////////////////////////////
+// virtual function
 void CGCObjLander::VOnResourceAcquire( void )
 {
 
+	// Removed maco call so the reference m_rFactorCreationParams could be passed 
+    // into VHandleFactoryParms.  Pending module 2 framework his may be done differently.
 	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjLander );    
 	VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
 
@@ -40,9 +35,12 @@ void CGCObjLander::VOnResourceAcquire( void )
 	m_cTotalVelocity.x = m_fSpeed;
 
 	SetResetPosition(m_cAnchorPoint);
-
 }
 
+//////////////////////////////////////////////////////////////////////////
+// This function is called when a lander is resurected from the dead-list to the 
+// live list.
+// NOTE NOT COMPLETE AT MODULE 1
 //////////////////////////////////////////////////////////////////////////
 //virtual function
 void CGCObjLander::VOnResurrected( void )
@@ -51,11 +49,13 @@ void CGCObjLander::VOnResurrected( void )
 	GetPhysicsBody()->SetGravityScale( 0.0f );
 }
 
-
+//////////////////////////////////////////////////////////////////////////
+//Function to provide the frame update of this object
+// NOTE NOT COMPLETE AT MODULE 1
 //////////////////////////////////////////////////////////////////////////
 //virtual function
 void CGCObjLander::VOnUpdate(float fTimeStep)
 {
 	CGCObject::VOnUpdate(fTimeStep);
-
+	   
 }

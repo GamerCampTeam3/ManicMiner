@@ -9,6 +9,10 @@
 
 //////////////////////////////////////////////////////////////////////////
 //
+//  This class defines an invidual instance of a Hazard.
+//  Its purpose is to provide the functionality a Hazard would require with regards to
+//  screen position and an identifier for the Hazard (EHazardID)
+//
 //////////////////////////////////////////////////////////////////////////
 
 class CGCObjHazard
@@ -23,7 +27,7 @@ private:
 
 public:
 
-	CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcParamsInput);
+	CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcFactoryCreationParamsInput);
 
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
