@@ -33,9 +33,9 @@ private:
 	cocos2d::Vec2	m_v2FormationOrigin; // origin of the formation
 
 	void	CreateInvaders	();
+	void	DestroyInvaders	();
 
 public:
-	void	DestroyInvaders	();
 	// number of invaders
 	static const u32 k_uNumProjectiles = 16;
 
@@ -53,7 +53,6 @@ public:
 	// must return the typeid of the CGCObjectGroup derived class
 	virtual GCTypeID	VGetTypeId							() override;
 
-	virtual void		VOnGroupResourceAcquire				() override;
 	virtual void		VOnGroupResourceAcquire_PostObject	() override;
 	virtual void		VOnGroupResourceRelease				() override;
 

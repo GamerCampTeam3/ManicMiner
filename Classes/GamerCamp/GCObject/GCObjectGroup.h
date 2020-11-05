@@ -183,6 +183,7 @@ protected:
 	inline u32				GetCountDead( void );
 	inline u32				GetCountRegistered( void );
 
+	inline const CGCObject*	GetRegisteredObjectAtIndex( unsigned int iIndex );
 
 	// get a dead object to resurrect
 	inline CGCObject*		GetDeadObject( void );
@@ -536,5 +537,20 @@ inline u32 CGCObjectGroup::GetCountRegistered( void )
 {
 	return m_uNumGCObjects;
 }
+
+
+//////////////////////////////////////////////////////////////////////////
+// get iIndex-th registered object
+//////////////////////////////////////////////////////////////////////////
+// protected
+inline const CGCObject*	CGCObjectGroup::GetRegisteredObjectAtIndex( unsigned int uIndex )
+{
+	if( uIndex < m_uNumGCObjects )
+	{
+		return m_apGCObjects[ uIndex ];
+	}
+	return nullptr;
+}
+
 
 #endif

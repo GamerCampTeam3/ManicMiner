@@ -34,7 +34,7 @@ class CGCObjGroupProjectilePlayer
 {
 public:
 	// number of invaders
-	static const u32 k_uNumProjectiles = 16;
+	static const u32 k_uNumInvaders = 16;
 
 	CGCObjGroupProjectilePlayer			();		
 	virtual ~CGCObjGroupProjectilePlayer()  override;

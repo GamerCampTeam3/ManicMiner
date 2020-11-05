@@ -69,21 +69,6 @@ void CGCObjGroupPlatform::VOnGroupResourceRelease( void )
 {
 	// n.b. this must happen first, as will fail if objects destroyed before 
 	CGCObjectGroup::VOnGroupResourceRelease(); 
-	DestroyPlatforms();
 }
 
-
-//////////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////////
-void CGCObjGroupPlatform::DestroyPlatforms( void )
-{
-	// this iterates the array of registered CGCObjects 
-	// calling the supplied functor then deleting them
-	DestroyObjectsReverseOrder( [&]( CGCObject* pObject )
-	{
-		// do nothing - DestroyObjectsReverseOrder calls delete!
-		GCASSERT( GetGCTypeIDOf( CGCObjPlatform ) == pObject->GetGCTypeID(), "wrong type!" );
-	});
-}
 

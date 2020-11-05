@@ -7,11 +7,14 @@
 
 #include "../GCCocosInterface/IGCGameLayer.h"
 
+#ifndef _GCLEVELLOADER_OGMO_H_
+	#include "../GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 // fwd decl
 class CGCObjSprite;
-class CPlayer;
+class CGCObjPlayer;
 class CGCObjPlatform;
 class CGCObjGroupPlatform;
 class CGCObjItem;
@@ -28,7 +31,7 @@ class CGCGameLayerPlatformer
 : public IGCGameLayer
 , public b2ContactListener 
 {
-protected:
+private:
 	// object groups
 	CGCObjGroupPlatform*			m_pcGCGroupPlatform;
 	CGCObjGroupItem*				m_pcGCGroupItem;
@@ -39,12 +42,15 @@ protected:
 	CGCObjSprite*					m_pcGCSprBackGround;
 
 	// mario
-	CPlayer*					m_pcGCOPlayer;
+	CGCObjPlayer*				m_pcGCOPlayer;
+	CGCFactoryCreationParams	m_sPlayerCreateParams;
 
+	// level loader
+	CGCLevelLoader_Ogmo		m_cLevelLoader;
 
 public:
-			CGCGameLayerPlatformer	( void );
-	virtual ~CGCGameLayerPlatformer	( void );
+	CGCGameLayerPlatformer	( void );
+	~CGCGameLayerPlatformer	( void );
 
 	//////////////////////////////////////////////////////////////////////////
 	// player actions 
@@ -98,9 +104,10 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	
 	////////////////////////////////////////////////////////////////////////// 
-	// reset handling
-protected:
+	// reset / quit handling
+private:
 	bool							m_bResetWasRequested;
+	bool							m_bQuitWasRequested;
 
 	void RequestReset()
 	{
@@ -115,6 +122,21 @@ protected:
 	bool ResetWasRequested()
 	{
 		return m_bResetWasRequested; 
+	}
+
+	void RequestQuit()
+	{
+		m_bQuitWasRequested = true; 
+	}
+
+	void QuitRequestWasHandled()
+	{
+		m_bQuitWasRequested = false; 
+	}
+
+	bool QuitWasRequested()
+	{
+		return m_bQuitWasRequested; 
 	}
 };
 

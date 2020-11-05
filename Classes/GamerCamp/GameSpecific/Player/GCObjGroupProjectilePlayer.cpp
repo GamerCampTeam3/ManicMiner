@@ -69,7 +69,7 @@ GCTypeID CGCObjGroupProjectilePlayer::VGetTypeId()
 void CGCObjGroupProjectilePlayer::CreateProjectiles()
 {
 	// n.b. these register themselves with this class on creation via CGCObject & CGCObjectManager
-	for( u32 uLoop = 0; uLoop < k_uNumProjectiles; ++uLoop )
+	for( u32 uLoop = 0; uLoop < k_uNumInvaders; ++uLoop )
 	{
 		new CGCObjProjectilePlayer(); 
 	}
@@ -78,13 +78,20 @@ void CGCObjGroupProjectilePlayer::CreateProjectiles()
 
 
 //////////////////////////////////////////////////////////////////////////
+//
+struct SArrayOfProjectiles
+{
+	u32 uCount;
+	CGCObjProjectilePlayer* apProjectiles[ CGCObjectGroup::EMaxGCObjects ];
+};
+//////////////////////////////////////////////////////////////////////////
 void CGCObjGroupProjectilePlayer::DestroyProjectiles()
 {
 	// this iterates the array of registered CGCObjects 
 	// calling the supplied functor then deleting them
 	DestroyObjectsReverseOrder( [&]( CGCObject* pObject )
 	{
-		// this is called immediately before the instance is deleted
+		// do nothing - DestroyObjectsReverseOrder calls delete!
 		GCASSERT( GetGCTypeIDOf( CGCObjProjectilePlayer ) == pObject->GetGCTypeID(), "wrong type!" );
 	});
 }

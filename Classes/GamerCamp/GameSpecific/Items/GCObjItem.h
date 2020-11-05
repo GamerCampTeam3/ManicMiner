@@ -5,24 +5,19 @@
 #ifndef _GCOBJITEMS_H_
 #define _GCOBJITEMS_H_
 
+#include "../../GCCocosInterface/GCFactory_ObjSpritePhysics.h"
 #include "../../GCCocosInterface/GCObjSpritePhysics.h"
 
 class CGCObjItem
 : public CGCObjSpritePhysics
 {
-private:
-	bool m_bHasBeenCollected;
 public:
+	GCFACTORY_DECLARE_CREATABLECLASS( CGCObjItem );
+
 
 	CGCObjItem(	void )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CGCObjItem ) )
-		, m_bHasBeenCollected(false)
 	{}
-
-	virtual void VOnResourceAcquire( void ) override;
-
-	void Collected() { m_bHasBeenCollected = true; }
-	bool GetHasBeenCollected() { return m_bHasBeenCollected; }
 };
 
 

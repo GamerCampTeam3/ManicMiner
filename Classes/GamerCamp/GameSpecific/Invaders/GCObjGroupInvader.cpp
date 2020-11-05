@@ -68,87 +68,49 @@ GCTypeID CGCObjGroupInvader::VGetTypeId()
 }
 
 
-
 //////////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////////
-//virtual 
-void CGCObjGroupInvader::VOnGroupResourceAcquire()
-{
-	CreateInvaders();
-	CGCObjectGroup::VOnGroupResourceAcquire();
-}
-
-//////////////////////////////////////////////////////////////////////////
-//
+// invaders are created from level file, we just need to init their anims
+// this has to be done after the invaders have acquired their resources
+// hence the name of this function..
 //////////////////////////////////////////////////////////////////////////
 //virtual 
-void CGCObjGroupInvader::VOnGroupResourceAcquire_PostObject()
+void CGCObjGroupInvader::VOnGroupResourceAcquire_PostObject( void )
 {
-	// we do this here because the alternative is to do it for each invader as they're created and it's
-
-	// parent class version
-	CGCObjectGroup::VOnGroupResourceAcquire_PostObject();
-
-	// set up animations for all items
-	const char* pszPlist	= "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist";
-	const char* pszAnim_Fly = "Fly";
-
-	// make an animation
-	ValueMap&	rdictPList = GCCocosHelpers::CreateDictionaryFromPlist( pszPlist );
-	Animation*	pAnimation = GCCocosHelpers::CreateAnimation( rdictPList, pszAnim_Fly );
-
-	ForEachObject( [&] ( CGCObject* pObject ) -> bool
+	if( GetCountRegistered() > 0 )
 	{
-		CCAssert( ( GetGCTypeIDOf( CGCObjInvader ) == pObject->GetGCTypeID() ),
-			"CGCObject derived type mismatch!" );
+		const CGCObjInvader* pcInvader = static_cast<const CGCObjInvader*>( GetRegisteredObjectAtIndex( 0 ) );
+		CCAssert( ( GetGCTypeIDOf( CGCObjInvader ) == pcInvader->GetGCTypeID() ),
+				  "CGCObject derived type mismatch!" );
 
-		CGCObjSprite* pItemSprite = (CGCObjSprite*)pObject;
-		pItemSprite->RunAction( GCCocosHelpers::CreateAnimationActionLoop( pAnimation ) );
-		return true;
-	} );
-}
+		// set up animations for all items - get the creation params from the first one in the group
+		const CGCFactoryCreationParams* psObjCreateParams = pcInvader->GetFactoryCreationParams();
 
-//////////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////////
-//virtual 
-void CGCObjGroupInvader::VOnGroupResourceRelease()
-{
-	// N.B. need to do this first as it clears internal lists
-	CGCObjectGroup::VOnGroupResourceRelease();
-	DestroyInvaders();
-}
+		CCAssert( psObjCreateParams, "0th object in group has no creation params" );
 
+		// make an animation
+		ValueMap	cDicPList = GCCocosHelpers::CreateDictionaryFromPlist( psObjCreateParams->strPlistFile );
+		Animation*	pAnimation = GCCocosHelpers::CreateAnimation( cDicPList, "Fly" );
 
-//////////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////////
-void CGCObjGroupInvader::CreateInvaders()
-{
-	i32	iOffsetX = 40;
-	i32	iOffsetY = 100;
-	for( u32 uLoop = 0; uLoop < k_uNumProjectiles; ++uLoop )
-	{	
-		// n.b. these register themselves with this class on creation
-		CGCObjInvader* pInvader = new CGCObjInvader(); 
-		pInvader->SetResetPosition( Vec2( m_v2FormationOrigin.x + ( iOffsetX * uLoop ), ( m_v2FormationOrigin.y + iOffsetY ) ) );
-		pInvader->SetName( "Derek" );
+		// apply it to all the objects
+		ForEachObject
+		(
+			[&] ( CGCObject* pcItemAsObject )
+			{
+				CGCObjSprite* pItemSprite = (CGCObjSprite*)pcItemAsObject;
+				pItemSprite->RunAction( GCCocosHelpers::CreateAnimationActionLoop( pAnimation ) );
+				return true;
+			}
+		);
 	}
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
-void CGCObjGroupInvader::DestroyInvaders()
+//virtual 
+void CGCObjGroupInvader::VOnGroupResourceRelease( void )
 {
-	// this iterates the array of registered CGCObjects 
-	// calling the supplied functor then deleting them
-	DestroyObjectsReverseOrder( [&]( CGCObject* pObject )
-	{
-		// do nothing - DestroyObjectsReverseOrder calls delete!
-		GCASSERT( GetGCTypeIDOf( CGCObjInvader ) == pObject->GetGCTypeID(), "wrong type!" );
-	});
+	// N.B. need to do this first as it clears internal lists
+	CGCObjectGroup::VOnGroupResourceRelease();
 }
+

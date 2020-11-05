@@ -205,7 +205,7 @@ public:
 
 	public:
 		// scale factor from meters to pixels - box2d units are all meters
-		#define IGCGAMELAYER_B2D_PIXELS_PER_METER	( 60.0f )
+		#define IGCGAMELAYER_B2D_PIXELS_PER_METER	(20.0f)
 
 		inline b2World*	B2dGetWorld				();
 		inline f32		B2dGetTimestep			();
@@ -306,8 +306,7 @@ public:
 		}
 
 		// add IGCGameLayer to the scene
-		// Henrique Edit -> set this child to have tag = 0
-		pReturnScene->addChild( pIGCLayer, -1, 0);
+		pReturnScene->addChild( pIGCLayer, -1 );
 
 		return pReturnScene;
 	}

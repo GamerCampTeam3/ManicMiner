@@ -6,10 +6,6 @@
 #define	_GCOBJECTGROUPPLATFORM_H_
 
 
-#ifndef BOX2D_H
-	#include "Box2d/Box2D.h"
-#endif
-
 #ifndef	_GCOBJECTGROUP_H_
 	#include "GamerCamp/GCObject/GCObjectGroup.h"
 #endif
@@ -26,8 +22,6 @@ class CGCObjPlatform;
 class CGCObjGroupPlatform
 : public CGCObjectGroup
 {
-	// destroy managed platforms
-	void DestroyPlatforms( void );
 
 public:
 	//// number of platforms

@@ -52,9 +52,9 @@ protected:
 
 	inline b2Body* GetPhysicsBody();
 
+public:
 	inline const CGCFactoryCreationParams* GetFactoryCreationParams()	const;
 
-public:
 							CGCObjSpritePhysics();
 	virtual					~CGCObjSpritePhysics();
 

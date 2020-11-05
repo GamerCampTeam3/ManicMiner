@@ -38,7 +38,7 @@ CGCObjectGroup::~CGCObjectGroup()
 //////////////////////////////////////////////////////////////////////////
 void CGCObjectGroup::OnObjectRegister( CGCObject* pArgObject )
 {
-	GCASSERT( ( m_uNumGCObjects < EMaxGCObjects), "you have run out of space in a GCObjectGroup! maximum objects handled is EMaxGCObjects" );
+	GCASSERT( ( m_uNumGCObjects < EMaxGCObjects), "you have run out of space in a GCObjectGroup! maximum oijects handled is EMaxGCObjects" );
 
 	// insert the GCObject at the end of m_apGCObjects
 	// N.B. post increment of object count
@@ -154,6 +154,12 @@ void CGCObjectGroup::VOnGroupResourceAcquire( void )
 //////////////////////////////////////////////////////////////////////////
 // empty default implementation
 // called after VOnObjectResourceAcquire from CGCObjectManager::Initialise
+//
+// this is specifically provided to allow groups of objects to init their 
+// anims efficiently, which has to be done after they've acquired their 
+// resources hence the name of this function...
+//
+//virtual 
 //////////////////////////////////////////////////////////////////////////
 void CGCObjectGroup::VOnGroupResourceAcquire_PostObject( void )
 {}

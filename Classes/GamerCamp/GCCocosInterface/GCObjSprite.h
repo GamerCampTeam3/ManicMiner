@@ -49,7 +49,7 @@ private:
 	cocos2d::Vec2				m_v2InitialPosition;
 
 	// used to hold the current scale value of the sprite
-	cocos2d::Vec2                m_v2SpriteScale;
+	cocos2d::Vec2               m_v2SpriteScale;
 
 protected:
 	CGCObjSprite( GCTypeID idDerivedType );
@@ -100,7 +100,7 @@ public:
 	// global z-order accessors
 	inline void        SetSpriteGlobalZOrder( float fZOrder );
 	inline float    GetSpriteGlobalZOrder() const;
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// Sprite Parent Cleanup Functions added by Umeer Rama & Henrique Teixeira
 	///////////////////////////////////////////////////////////////////////////
