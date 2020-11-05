@@ -164,13 +164,27 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjInvader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjGroupItem.cpp" />
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjItem.cpp" />
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjGroupPlatform.cpp" />
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjPlatform.cpp" />
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjGroupProjectilePlayer.cpp" />
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjPlayer.cpp" />
-    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjProjectilePlayer.cpp" />
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjGroupItem.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjItem.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjGroupPlatform.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjPlatform.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjGroupProjectilePlayer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjPlayer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjProjectilePlayer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\GB2ShapeCache-x.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\GCCallFuncStatic.cpp" />
     <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\GCCocosHelpers.cpp" />
@@ -245,13 +259,27 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Invaders\GCObjInvader.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjGroupItem.h" />
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjItem.h" />
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjGroupPlatform.h" />
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjPlatform.h" />
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjGroupProjectilePlayer.h" />
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjPlayer.h" />
-    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjProjectilePlayer.h" />
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjGroupItem.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Items\GCObjItem.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjGroupPlatform.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Platforms\GCObjPlatform.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjGroupProjectilePlayer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjPlayer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GameSpecific\Player\GCObjProjectilePlayer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\GB2ShapeCache-x.h" />
     <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\GCCallFuncStatic.h" />
     <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\GCCocosHelpers.h" />
