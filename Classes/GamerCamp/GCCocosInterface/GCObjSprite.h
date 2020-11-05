@@ -112,6 +112,7 @@ public:
 	inline cocos2d::Sprite* GetSprite() const;
 
 
+
 	// accessor for the sprite's rect
 	inline cocos2d::Rect GetBoundingBox() const;
 
@@ -264,7 +265,6 @@ inline cocos2d::Vec2 CGCObjSprite::GetSpritePosition() const
 	return cocos2d::Vec2( cPosition.x, cPosition.y );
 }
 
-
 //////////////////////////////////////////////////////////////////////////
 // 
 //////////////////////////////////////////////////////////////////////////
@@ -333,7 +333,6 @@ inline cocos2d::Sprite* CGCObjSprite::GetSprite() const
 {
 	return m_pcSprite;
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 // accessor for the sprite's bounding box
