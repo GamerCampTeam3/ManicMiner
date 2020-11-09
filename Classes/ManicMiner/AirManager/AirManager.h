@@ -94,6 +94,8 @@ private:
 	cocos2d::Point m_pOrigin;
 	cocos2d::Size m_visibleSize;
 
+	float m_fDrainAirMultiplier;
+
 private:
 	
 	// updates air (timer) per frame and returns a bool stating whether there is any air left or not

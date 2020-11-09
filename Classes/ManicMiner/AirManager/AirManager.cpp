@@ -34,7 +34,7 @@ CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	, m_bInitialized			( false )
 	, m_pOrigin				( pOrigin )
 	, m_visibleSize			( visibleSize )
-
+	, m_fDrainAirMultiplier	(1.0f)
 {}
 
 CAirManager::~CAirManager()
@@ -218,12 +218,13 @@ bool CAirManager::GetHasInitialized()
 
 void CAirManager::DrainAir()
 {
-	m_fReduceAirByAmountPerFrame = 0.8f;
+	m_fDrainAirMultiplier = 40.f;
 	m_eAirDrainedState = EAirDrainedState::LevelCompleted;
 }
 
 bool CAirManager::UpdateAirTimer()
 {
+	
 	bool bHasAirLeft = true;
 	if( m_fRemainingAirAmount <= 0.0f )													// if no air left return false
 	{
@@ -236,7 +237,7 @@ bool CAirManager::UpdateAirTimer()
 		bHasAirLeft = false;
 	}
 
-	m_fReduceAirByAmountPerFrame = 1.f / m_pdDirector->getFrameRate();					// using framerate for division allows 
+	m_fReduceAirByAmountPerFrame = (1.f / m_pdDirector->getFrameRate()) * m_fDrainAirMultiplier;	// using framerate for division allows 
 
 	m_fRemainingAirAmount -= m_fReduceAirByAmountPerFrame;								// reduce air by 1 second / framerate every frame - example: for 60 frames the equation would
 																						// like this: 1 / 60 and the result would be 0.0166666666666667f
