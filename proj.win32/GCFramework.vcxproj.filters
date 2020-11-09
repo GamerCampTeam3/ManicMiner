@@ -154,6 +154,9 @@
     <Filter Include="Classes\ManicMiner\CollectiblesGroup\CentralCavern">
       <UniqueIdentifier>{9873ba2f-793b-4929-a7e3-063fe81a987b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\GamerCamp\GCCocosInterface\LevelLoader">
+      <UniqueIdentifier>{c16b8887-df0b-4b2a-8bef-c52798932dfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -347,6 +350,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp">
       <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\LevelLoader\GCLevelLoader_Ogmo.cpp">
+      <Filter>Classes\GamerCamp\GCCocosInterface\LevelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\GCFactory_ObjSpritePhysics.cpp">
+      <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -586,6 +595,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h">
       <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\LevelLoader\GCLevelLoader_Ogmo.h">
+      <Filter>Classes\GamerCamp\GCCocosInterface\LevelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\GCFactory_ObjSpritePhysics.h">
+      <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
