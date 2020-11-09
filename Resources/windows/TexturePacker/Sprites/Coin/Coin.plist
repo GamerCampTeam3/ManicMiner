@@ -70,7 +70,7 @@
             <key>size</key>
             <string>{32,64}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:2a68b1f838259f9487732874462caf9f:a03c833343f0b97acf729f59e89d5cac:d6709a9a3254a418412be156f7d00f00$</string>
+            <string>$TexturePacker:SmartUpdate:d646e558c98179fde97a7aeb065b4c0e:a03c833343f0b97acf729f59e89d5cac:d6709a9a3254a418412be156f7d00f00$</string>
             <key>textureFileName</key>
             <string>Coin.png</string>
         </dict>

@@ -24,11 +24,13 @@ CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	, m_pcGCSprAirBar			( nullptr )
 	, m_plAirLabel				( nullptr )
 	, m_pcGCSprAirVignette		( nullptr )
+	, m_pcAirBar				( nullptr )
 	, m_fMaxAir						( 108.0f )
 	, m_fRemainingAirAmount			( m_fMaxAir )
 	, m_fConsumedAirAmount			( 0.0f )
 	, m_fReduceAirByAmountPerFrame	( 0.0f )
-	, m_iRemainingAirPercentage		( 0.0f )
+	, m_fRemainingAirPercentage		( 0.0f )
+	, m_iRemainingAirPercentage		( 0 )
 	, m_iConsumedAirPercentage		( 0.0f )
 	, m_v2AirLabelPos			( 0.0f, 0.0f )
 	, m_bInitialized			( false )
@@ -52,6 +54,7 @@ CAirManager::~CAirManager()
 	m_fRemainingAirAmount = 0.f;
 	m_fConsumedAirAmount = 0.f;
 	m_fReduceAirByAmountPerFrame = 0.f;
+	m_fRemainingAirPercentage = 0;
 	m_iRemainingAirPercentage = 0;
 	m_iConsumedAirPercentage = 0;
 	m_v2AirLabelPos = cocos2d::Vec2( 0.f, 0.f );
@@ -76,6 +79,13 @@ CAirManager::~CAirManager()
 		delete m_pcGCSprAirVignette;
 		m_pcGCSprAirVignette = nullptr;
 	}
+
+	if( m_pcAirBar )
+	{
+		m_pcAirBar->release();
+		delete m_pcAirBar;
+		m_pcAirBar = nullptr;
+	}
 }
 
 void CAirManager::VOnReset()
@@ -97,7 +107,7 @@ void CAirManager::LeavingLevel( CManicLayer& rNewManicLayer )
 		m_pcGCSprAirVignette->GetSprite()->retain();
 		m_pcGCSprAirVignette->RemoveFromParent();
 	}
-
+	
 	// We know that all the assets were automatically released
 	// Which means the Air Bar Sprite, Vignette Sprite and the Air Label no longer exist in memory
 	// Therefore, AirLabel needs to be set to nullptr
@@ -135,6 +145,7 @@ void CAirManager::Init( class CMLCentralCavern& rglOwnerGameLayer )
 
 			//
 		// returns a value from 0-1 therefore it has to be multiplied by 100 to get a range from 0-100 for the percentage
+		m_fRemainingAirPercentage = ( m_fRemainingAirAmount * 100) / m_fMaxAir;
 		m_iRemainingAirPercentage = ( m_fRemainingAirAmount * 100) / m_fMaxAir;
 
 		// initialize and store the active instance of the director
@@ -168,6 +179,20 @@ void CAirManager::Init( class CMLCentralCavern& rglOwnerGameLayer )
 			}
 		}
 
+		if (nullptr == m_pcAirBar)
+		{
+			m_pcAirBar = new ui::LoadingBar();
+		}
+
+		if (nullptr != m_pcAirBar)
+		{
+			m_pcAirBar = ui::LoadingBar::create("ui/AirBar/AirBar.png");
+			m_pcAirBar->setDirection(ui::LoadingBar::Direction::LEFT);
+			m_pcAirBar->setPercent(100.f);
+			m_pcAirBar->setPosition(Vec2((m_pOrigin).x + 1000.f, ((m_pOrigin).y + (m_visibleSize).height) - 24));
+			rglOwnerGameLayer.addChild(m_pcAirBar, 2);
+		}
+		
 		// initialize and add Air Bar Sprite to the screen
 		const char* pszPlist_Air = "TexturePacker/Air/Air.plist";
 		const char* pszSpr_AirBar = "AirBar";
@@ -186,7 +211,7 @@ void CAirManager::Init( class CMLCentralCavern& rglOwnerGameLayer )
 				}
 
 				m_pcGCSprAirBar->SetSpriteGlobalZOrder( 3.f );
-				m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 120.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 24 ) );
+				m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 1000.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 24 ) );
 				m_pcGCSprAirBar->GetSprite()->setPosition( m_pcGCSprAirBar->GetResetPosition() );
 				m_pcGCSprAirBar->SetParent( &rglOwnerGameLayer );
 				m_pcGCSprAirBar->SetSpriteScale( 1.f, 1.f );
@@ -236,7 +261,7 @@ bool CAirManager::UpdateAirTimer()
 		}
 		bHasAirLeft = false;
 	}
-
+	
 	m_fReduceAirByAmountPerFrame = (1.f / m_pdDirector->getFrameRate()) * m_fDrainAirMultiplier;	// using framerate for division allows 
 
 	m_fRemainingAirAmount -= m_fReduceAirByAmountPerFrame;								// reduce air by 1 second / framerate every frame - example: for 60 frames the equation would
@@ -245,8 +270,10 @@ bool CAirManager::UpdateAirTimer()
 	m_fConsumedAirAmount += m_fReduceAirByAmountPerFrame;	     						//
 	m_iConsumedAirPercentage = ( m_fConsumedAirAmount * 100.f ) / m_fMaxAir ;
 
-	m_iRemainingAirPercentage = ( m_fRemainingAirAmount * 100.f) / m_fMaxAir;			// Air Remaining / Max Air returns a value from 0-1 therefore it has to be multiplied by 100 to
+	m_fRemainingAirPercentage = ( m_fRemainingAirAmount * 100.f) / m_fMaxAir;			// Air Remaining / Max Air returns a value from 0-1 therefore it has to be multiplied by 100 to
 																						// get a range from 0-100 for the percentage
+
+	m_iRemainingAirPercentage = m_fRemainingAirPercentage;
 	
 	return bHasAirLeft;
 }
@@ -266,12 +293,10 @@ void CAirManager::UpdateAirUIElements()
 		// add the pAirLabel as a child to this layer
 		m_pglOwnerGameLayer->addChild( m_plAirLabel, 2 );
 
-		if( 0 <= m_pcGCSprAirBar->GetSpriteScale().x )
+		if(0.0f <= m_pcAirBar->getPercent())
 		{
-			float fNewWidth = m_fRemainingAirAmount / m_fMaxAir; 
-			m_pcGCSprAirBar->SetSpriteScale( fNewWidth, 1.f );
+			m_pcAirBar->setPercent(m_fRemainingAirPercentage);
 		}
-
 
 		if( 0 <= m_pcGCSprAirVignette->GetSpriteOpacity() && nullptr != m_pcGCSprAirVignette )
 		{

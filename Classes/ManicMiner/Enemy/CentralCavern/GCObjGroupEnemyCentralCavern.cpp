@@ -9,7 +9,9 @@
 
 // Static Creation Params lifted out of GCObjEnemy to here to allow GCObjEnemy to be a class which can represent differnt Enemy sprites/animations/physics.
 // This may need to change for module 2 depending on how the new framework works.
-static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
+//static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
+static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist", "cc_enemy_duck", b2_dynamicBody, true);
+
 
 //////////////////////////////////////////////////////////////////////////
 // Constructor
@@ -96,8 +98,8 @@ void CGCObjGroupEnemyCentralCavern::VOnGroupResourceAcquire()
 {
 	// Central Cavern requires only one enemy.
 
-	float fPtm = 60.0f;  // Pixel to metre ratio.  This definition needs to be removed from here and instead referenced from a common area at module 2.
-	CGCObjEnemy* pcEnemy = new CGCObjEnemy(EnemyTypes::EMovementAxis::EMovementAxis_LeftRight, cocos2d::Vec2(30.0f + fPtm * 8.0f, 30.0f + fPtm * 7.0f ), 30.0f + fPtm * 7.0f, 0.0f, true, 3.0f, true, EnemyTypes::EEnemyId::EDuck, s_cCreationParams_CGCObj_EDuck);
+	//float fPtm = 60.0f;  // Pixel to metre ratio.  This definition needs to be removed from here and instead referenced from a common area at module 2.
+	//CGCObjEnemy* pcEnemy = new CGCObjEnemy(EnemyTypes::EMovementAxis::EMovementAxis_LeftRight, cocos2d::Vec2(30.0f + fPtm * 8.0f, 30.0f + fPtm * 7.0f ), 30.0f + fPtm * 7.0f, 0.0f, true, 4.0f, true, EnemyTypes::EEnemyId::EDuck, s_cCreationParams_CGCObj_EDuck);
 }
 
 //////////////////////////////////////////////////////////////////////////

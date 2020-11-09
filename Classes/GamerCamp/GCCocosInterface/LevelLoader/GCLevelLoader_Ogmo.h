@@ -92,6 +92,16 @@ public:
 
 	// destroy objects
 	void			DestroyObjects();
+
+
+
+
+
+	// XML node currently processing when the factory is asked to create an instance
+	static const tinyxml2::XMLElement* sm_pCurrentObjectXmlData;
+
+
+
 };
 
 

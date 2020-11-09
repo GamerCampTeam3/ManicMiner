@@ -5,11 +5,35 @@
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 #include "GCObjEnemy.h"
 
+
+
+
+
+
+
+#ifndef TINYXML2_INCLUDED
+    #include "external\tinyxml2\tinyxml2.h"
+#endif
+
+
+
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+    #include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
+
+
+
+
 USING_NS_CC;
+
+GCFACTORY_IMPLEMENT_CREATEABLECLASS( CGCObjEnemy );
 
 //////////////////////////////////////////////////////////////////////////
 // Constructor
 //////////////////////////////////////////////////////////////////////////
+/*
 CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
 	const bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyId, CGCFactoryCreationParams& rcFactoryCreationParamsInput)
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
@@ -24,7 +48,19 @@ CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, con
 	, m_bBounceCollisionDisabled(false)
 	, m_bSpriteIsFlippable(bSpriteIsFlippable)
 {
+
+	pAnimation = nullptr;
+	
 }
+*/
+
+CGCObjEnemy::CGCObjEnemy()
+	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
+	, m_pCustomCreationParams(nullptr)
+{
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // Destructor
@@ -46,10 +82,46 @@ void CGCObjEnemy::VOnResourceAcquire( void )
     // Removed maco call so the reference m_rFactorCreationParams could be passed 
 	// into VHandleFactoryParms.  Pending module 2 framework his may be done differently.
 	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjEnemy );    
-	VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
+	//VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
 
 	// Call base class verion.
 	CGCObjSpritePhysics::VOnResourceAcquire();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// Set up Animations
+
+	pszPlist = "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist";
+	pszAnim_Fly = "Fly";
+
+	cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(pszPlist);
+	pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, pszAnim_Fly);
+	pAnimation->retain();
+
+	RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
+
+	//////////////////////////
+
 
 	m_cTotalVelocity = Vec2::ZERO;
 
@@ -186,4 +258,57 @@ void CGCObjEnemy::BounceEnemyDirection()
 	}
 	// Latch the flag to stop the enemy constantly flipping during the collisions duration.
 	m_bBounceCollisionDisabled = true;
+}
+
+
+void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
+{
+	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
+
+	if (nullptr != CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData)
+	{
+
+
+
+		
+
+		//const tinyxml2::XMLAttribute* pName = CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData->FindAttribute("name");
+
+		//CCLOG((nullptr == pName) ? "BOB NOT FOUND!" : pName->Value());
+
+		
+		//const tinyxml2::XMLAttribute* pCustomPlistPath = CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData->FindAttribute("customplist");
+
+
+
+		//if ((nullptr != pCustomPlistPath)
+			//&& (0 != strlen(pCustomPlistPath->Value())))
+		//{
+			
+		
+		    m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(
+				
+				rCreationParams.strClassName.c_str(),
+				rCreationParams.strPlistFile.c_str(),
+				//pCustomPlistParams->Value(),
+				rCreationParams.strPhysicsShape.c_str(),
+				rCreationParams.eB2dBody_BodyType,
+				rCreationParams.bB2dBody_FixedRotation
+			
+			);
+
+			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
+
+
+			
+
+		}
+	//}
+
+	CGCObjSpritePhysics::VHandleFactoryParams((*pParamsToPassToBaseClass), v2InitialPosition);
+
+
+
+
+
 }
