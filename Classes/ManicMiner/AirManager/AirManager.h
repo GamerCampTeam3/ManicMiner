@@ -4,6 +4,8 @@
 
 #include "base/CCDirector.h"
 #include "GamerCamp/GCObject/GCObject.h"
+#include "ui/CocosGUI.h"
+
 class CManicLayer;
 
 namespace cocos2d {
@@ -63,6 +65,11 @@ private:
 	
 	// Vignette On Screen Effect
 	CGCObjSprite* m_pcGCSprAirVignette;
+
+	// AirBar
+	cocos2d::ui::LoadingBar* m_pcAirBar;
+
+	cocos2d::Texture2D* m_pcAirBarTexture;
 	
 	///////////////////////////////////////////
 	/// Calculation variables
@@ -80,7 +87,8 @@ private:
 	float m_fReduceAirByAmountPerFrame;
 
 	// the amount of air the player has left in percent
-	int m_iRemainingAirPercentage;
+	float m_fRemainingAirPercentage;
+	int	  m_iRemainingAirPercentage;
 
 	// the amount of air the player has consumed in percent
 	int m_iConsumedAirPercentage;
@@ -112,7 +120,7 @@ public:
 	inline float fGetConsumedAirAmount()			  { return m_fConsumedAirAmount; }
 	inline float fGetReduceAirByAmountPerFrame() 	  { return m_fReduceAirByAmountPerFrame; }
 	inline float fGetFrameRate()					  { return m_pdDirector->getFrameRate(); }
-	inline int	 iGetRemainingAirPercentage()		  { return m_iRemainingAirPercentage; }
+	inline float fGetRemainingAirPercentage()		  { return m_fRemainingAirPercentage; }
 	inline int	 iGetConsumedAirPercentage()		  { return m_iConsumedAirPercentage; }
 	inline EAirState  eGetAirState()                  { return m_eAirState; }
 	
