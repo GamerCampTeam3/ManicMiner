@@ -122,7 +122,7 @@ void CLevelManager::GoToNextLevel()
 
 		// Assign its pointer to this CLevelManager
 		newManicLayer->SetLevelManager( *this );
-		//newManicLayer->SetGameManager( *m_pcCGameManager );
+		newManicLayer->SetGameManager( *m_pcCGameManager );
 
 		// Begin transition
 		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionPageTurn::create( 1.0f, pScene, false ) );

@@ -17,6 +17,7 @@
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Helpers/Helpers.h"
+#include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
 
 // Include different platform types for collision checks
@@ -26,6 +27,7 @@
 #include "ManicMiner/Platforms/CMovingPlatform.h"
 #include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CRegularPlatform.h"
+#include "ManicMiner/Switch/CSwitch.h"
 
 #include "ManicMiner/Player/CPlayer.h"
 
@@ -50,6 +52,7 @@ USING_NS_CC;
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcLevelManager( nullptr )
+	, m_pcGameManager( nullptr )
 	, m_eGameState( EGameState::Looting )
 	, m_bWasResetRequested( false )
 	, m_bWasNextLevelRequested( false )
@@ -667,6 +670,14 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 		rcCollectible.InteractEvent();																					//
 	}																													//
 }																														//
+																														//
+void CManicLayer::SwitchInteracted(CSwitch& rcSwitch, CPlayer& rcPlayer, const b2Contact& rcContact)					//
+{																														//
+	if (rcContact.IsTouching())																							//
+	{																													//
+		rcSwitch.InteractEvent();																						//
+	}																													//
+}																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -716,6 +727,11 @@ void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )														
 void CManicLayer::SetGameState( const EGameState gameState ) 															//
 { 																														//
 	m_eGameState = gameState;																							//
+}																														//
+																														//
+void CManicLayer::SetGameManager(CGameManager& rcGameManager)															//
+{																														//
+	m_pcGameManager = &rcGameManager;																					//
 }																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 

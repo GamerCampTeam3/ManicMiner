@@ -29,14 +29,15 @@
 
 
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
-class CCollectible;																										//
-class CCollectiblesGroup;																								//
+class CCollectible;																										//																							
 class CDoor;																											//
+class CGameManager;																									    //
 class CGCObjEnemy;																										//
 class CGCObjHazard;																										//
 class CLevelManager;																									//
 class CPlatform;																										//
 class CPlayer;																											//
+class CSwitch;																											//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -47,6 +48,7 @@ private:
 																														//
 // Reference to the LevelManager in order to proceed																	//
 	CLevelManager*		m_pcLevelManager;																				//
+	CGameManager*		m_pcGameManager;																				//
 																														//
 // Level Loader Instance																								//	
 	CGCLevelLoader_Ogmo	m_cLevelLoader;																					//
@@ -117,6 +119,7 @@ public:
 	void PlayerCollidedHazard	( CPlayer&		rcPlayer,		CGCObjHazard&	rcHazard,	const b2Contact& rcContact	);
 	void PlayerCollidedDoor		( CPlayer&		rcPlayer,		CDoor&			rcDoor,		const b2Contact& rcContact	);
 	void ItemCollected			( CCollectible& rcCollectible,	CPlayer&		rcPlayer,	const b2Contact& rcContact	);
+	void SwitchInteracted		( CSwitch&		rcSwitch,		CPlayer& rcPlayer,			const b2Contact& rcContact	);
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -137,7 +140,8 @@ public:
 
 // ---------------------------------- Setters ------------------------------------------------------------------------- //
 	void SetLevelManager( CLevelManager&		rcLevelManager	);														//
-	void SetGameState	( const EGameState		gameState		); 														//
+	void SetGameState	( const EGameState		gameState		);														//
+	void SetGameManager	( CGameManager&			rcGameManager );														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -316,5 +320,8 @@ public:																													//
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
 	void CB_OnGameExitButton( Ref* pSender );
+
+protected:
+	virtual void InitParams() {};
 };
 #endif // #ifndef _CMANICLAYER_H_
