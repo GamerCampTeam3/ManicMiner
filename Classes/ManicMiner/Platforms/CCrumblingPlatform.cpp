@@ -39,28 +39,38 @@ void CCrumblingPlatform::VOnUpdate(float fTimeStep)
 
 		// 
 		m_fCurrentCrumblingTimer -= m_fReduceCrumblingTimerBy;
-		
-		if (m_fCurrentCrumblingTimer <= 0.75f && m_fCurrentCrumblingTimer >= 0.56f)
-		{
-			UpdateCrumblingPlatform(ECrumbleState::Stage_1);
-		}
-		else if (m_fCurrentCrumblingTimer <= 0.5f && m_fCurrentCrumblingTimer >= 0.26f)
-		{
-			UpdateCrumblingPlatform(ECrumbleState::Stage_2);
-		}
-		else if (m_fCurrentCrumblingTimer <= 0.25f && m_fCurrentCrumblingTimer >= 0.01f)
-		{
-			UpdateCrumblingPlatform(ECrumbleState::Stage_3);
-		}
-		else if (m_fCurrentCrumblingTimer <= 0.0f)
-		{
-			// destroy platform - doesn't destroy it, just disables the physicsbody of the respective crumbling platform
-			UpdateCrumblingPlatform(ECrumbleState::Stage_Destroy);
 
-			// stop timer calculations and all these if checks, as these aren't needed anymore
-			m_bInitiatedCrumbling = false;
-		}
-		
+		switch(m_eCrumbleState)
+		{
+		case ECrumbleState::Stage_0 :
+			if (m_fCurrentCrumblingTimer <= 0.75f && m_fCurrentCrumblingTimer >= 0.56f)
+			{
+				UpdateCrumblingPlatform(ECrumbleState::Stage_1);
+			}
+			break;
+		case ECrumbleState::Stage_1 :
+			if (m_fCurrentCrumblingTimer <= 0.5f && m_fCurrentCrumblingTimer >= 0.26f)
+			{
+				UpdateCrumblingPlatform(ECrumbleState::Stage_2);
+			}
+			break;
+		case ECrumbleState::Stage_2 :
+			if (m_fCurrentCrumblingTimer <= 0.25f && m_fCurrentCrumblingTimer >= 0.01f)
+			{
+				UpdateCrumblingPlatform(ECrumbleState::Stage_3);
+			}
+			break;
+		case ECrumbleState::Stage_3 :
+			if (m_fCurrentCrumblingTimer <= 0.0f)
+			{
+				// destroy platform - doesn't destroy it, just disables the physicsbody of the respective crumbling platform
+				UpdateCrumblingPlatform(ECrumbleState::Stage_Destroy);
+
+				// stop timer calculations and all these if checks, as these aren't needed anymore
+				m_bInitiatedCrumbling = false;
+			}
+			break;
+		}		
 	}
 }
 
@@ -83,7 +93,7 @@ void CCrumblingPlatform::VOnResourceRelease()
 
 	// release in reverse order
 	int iCounter = 5;
-	// release all animations when killed
+	// release all animations from memory and set to nullptr
 	for (auto* Animations : m_pcAnimations)
 	{
 		m_pcAnimations[iCounter]->release();

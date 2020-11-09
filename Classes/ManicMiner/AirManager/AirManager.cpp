@@ -18,6 +18,7 @@ USING_NS_CC;
 CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	: CGCObject(GetGCTypeIDOf(CAirManager))
 	, m_eAirState( EAirState::EAS_HasAirLeft )
+	, m_eAirDrainedState(EAirDrainedState::AirDrained)
 	, m_pglOwnerGameLayer		( nullptr )
 	, m_pdDirector				( nullptr )
 	, m_pcGCSprAirBar			( nullptr )
@@ -33,14 +34,19 @@ CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	, m_bInitialized			( false )
 	, m_pOrigin				( pOrigin )
 	, m_visibleSize			( visibleSize )
-
+	, m_fDrainAirMultiplier	(1.0f)
 {}
 
 CAirManager::~CAirManager()
 {
-	m_pglOwnerGameLayer = nullptr;
-	m_pdDirector = nullptr;
+	if (nullptr != m_pglOwnerGameLayer && nullptr != m_pdDirector)
+	{
+		m_pglOwnerGameLayer = nullptr;
+		m_pdDirector = nullptr;
+	}
 
+
+	
 	// empty variables
 	m_fMaxAir = 0.f;
 	m_fRemainingAirAmount = 0.f;
@@ -71,78 +77,6 @@ CAirManager::~CAirManager()
 		m_pcGCSprAirVignette = nullptr;
 	}
 }
-
-//CAirManager::CAirManager(class IGCGameLayer* pglOwnerGamerLayer, cocos2d::Size* pv2VisibleSize, cocos2d::Point* ppOrigin) : CGCObject(GetGCTypeIDOf(CAirManager))
-//{
-//	// add checks for pv2VisibleSize and ppOrigin too
-//	
-//	m_pglOwnerGameLayer = pglOwnerGamerLayer;
-//	if(nullptr != m_pglOwnerGameLayer)	// only initialize if a pointer to a gamelayer was provided to the constructor
-//	{
-//		// initialize member variables
-//		// 
-//		// the air lasts for 108 seconds
-//		m_fMaxAir = 108.f;
-//		
-//		// remaining air amount should always start with max amount
-//		m_fRemainingAirAmount = m_fMaxAir;
-//
-//		// consumed air should always start at 0 - because the player hasn't consumed any air yet during the construction phase
-//		m_fConsumedAirAmount = 0.f;
-//		
-//		// returns a value from 0-1 therefore it has to be multiplied by 100 to get a range from 0-100 for the percentage
-//		m_iRemainingAirPercentage = (m_fRemainingAirAmount / m_fMaxAir) * 100;
-//
-//		// initialize and store the active instance of the director
-//		m_pdDirector = cocos2d::Director::getInstance();
-//
-//
-//		// initialize and add Air Vignette Sprite to the screen
-//		const char* pszPlist_AirVignette = "TexturePacker/Air/AirVignette.plist";
-//		const char* pszSpr_AirVignette = "AirVignette";
-//		{
-//			// create new Sprite Object for Air Bar
-//			m_pcGCSprAirVignette = new CGCObjSprite();
-//			if (nullptr != m_pcGCSprAirVignette)
-//			{
-//				m_pcGCSprAirVignette->CreateSprite(pszPlist_AirVignette);
-//				m_pcGCSprAirVignette->SetResetPosition(Vec2(((*pv2VisibleSize).width / 2), ((*pv2VisibleSize).height / 2)));
-//				m_pcGCSprAirVignette->SetParent(IGCGameLayer::ActiveInstance());
-//				m_pcGCSprAirVignette->SetSpriteScale(1.f, 1.f);
-//				m_pcGCSprAirVignette->SetSpriteOpacity(0);
-//				m_pcGCSprAirVignette->SetSpriteGlobalZOrder(2.f);
-//			}
-//		}
-//
-//		// initialize and add Air Bar Sprite to the screen
-//		const char* pszPlist_Air = "TexturePacker/Air/Air.plist";
-//		const char* pszSpr_AirBar = "AirBar";
-//		{
-//			// create new Sprite Object for Air Bar
-//			m_pcGCSprAirBar = new CGCObjSprite();
-//			if (nullptr != m_pcGCSprAirBar)
-//			{
-//				m_pcGCSprAirBar->CreateSprite(pszPlist_Air);
-//				m_pcGCSprAirBar->SetResetPosition(Vec2((*ppOrigin).x + 120.f, ((*ppOrigin).y + (*pv2VisibleSize).height) - 24));
-//				m_pcGCSprAirBar->SetParent(IGCGameLayer::ActiveInstance());
-//				m_pcGCSprAirBar->SetSpriteScale(1.f, 1.f);
-//				m_pcGCSprAirBar->SetSpriteGlobalZOrder(3.f);
-//			}
-//		}
-//
-//
-//		// create and initialize label for air and the percentage
-//		m_plAirLabel = Label::createWithTTF("AIR " + std::to_string(m_iRemainingAirPercentage) + "%", "fonts/arial.ttf", 24);
-//
-//		m_v2AirLabelPos = Vec2((*ppOrigin).x + 60.f, ((*ppOrigin).y + (*pv2VisibleSize).height) - 24);
-//		// position pAirLabel in the top left corner
-//		m_plAirLabel->setPosition(m_v2AirLabelPos);
-//		m_plAirLabel->setGlobalZOrder(3.f);
-//		// add the pAirLabel as a child to this layer
-//		pglOwnerGamerLayer->addChild(m_plAirLabel, 2);
-//	}
-//}
-
 
 void CAirManager::VOnReset()
 {
@@ -185,99 +119,95 @@ void CAirManager::VOnUpdate( float fTimeStep )
 
 void CAirManager::Init( class CMLCentralCavern& rglOwnerGameLayer )
 {
-	//if( !m_bInitialized )
+	m_pglOwnerGameLayer = &rglOwnerGameLayer;
+	if( nullptr != m_pglOwnerGameLayer )	// only initialize if a pointer to a game layer was provided to the constructor
 	{
-		// add checks for pv2VisibleSize and ppOrigin too
+		// initialize member variables
+		// 
+		// timer runs out after 108 seconds
+		m_fMaxAir = 108.f;
 
-		m_pglOwnerGameLayer = &rglOwnerGameLayer;
-		if( nullptr != m_pglOwnerGameLayer )	// only initialize if a pointer to a game layer was provided to the constructor
+		// timer should always start with the max amount of seconds left
+		m_fRemainingAirAmount = m_fMaxAir;
+
+		// consumed air should always start at 0 - because the player hasn't consumed any air yet when the AirManager is initialized
+		m_fConsumedAirAmount = 0.f;
+
+			//
+		// returns a value from 0-1 therefore it has to be multiplied by 100 to get a range from 0-100 for the percentage
+		m_iRemainingAirPercentage = ( m_fRemainingAirAmount * 100) / m_fMaxAir;
+
+		// initialize and store the active instance of the director
+		m_pdDirector = cocos2d::Director::getInstance();
+
+
+		// initialize and add Air Vignette Sprite to the screen
+		const char* pszPlist_AirVignette = "TexturePacker/Air/AirVignette.plist";
+		const char* pszSpr_AirVignette = "AirVignette";
 		{
-			// initialize member variables
-			// 
-			// the air lasts for 108 seconds
-			m_fMaxAir = 108.f;
-
-			// remaining air amount should always start with max amount
-			m_fRemainingAirAmount = m_fMaxAir;
-
-			// consumed air should always start at 0 - because the player hasn't consumed any air yet during the construction phase
-			m_fConsumedAirAmount = 0.f;
-
-			// returns a value from 0-1 therefore it has to be multiplied by 100 to get a range from 0-100 for the percentage
-			m_iRemainingAirPercentage = ( m_fRemainingAirAmount / m_fMaxAir ) * 100;
-
-			// initialize and store the active instance of the director
-			m_pdDirector = cocos2d::Director::getInstance();
-
-
-			// initialize and add Air Vignette Sprite to the screen
-			const char* pszPlist_AirVignette = "TexturePacker/Air/AirVignette.plist";
-			const char* pszSpr_AirVignette = "AirVignette";
+			// create new Sprite Object for Air Bar
+			if( m_pcGCSprAirVignette == nullptr )
 			{
-				// create new Sprite Object for Air Bar
-				if( m_pcGCSprAirVignette == nullptr )
-				{
-					m_pcGCSprAirVignette = new CGCObjSprite();
-					
-				}
-
-				if( nullptr != m_pcGCSprAirVignette )
-				{
-					if( m_pcGCSprAirVignette->GetSprite() == nullptr )
-					{
-						m_pcGCSprAirVignette->CreateSprite( pszPlist_AirVignette );
-					}
-
-					m_pcGCSprAirVignette->SetSpriteScale( 1.f, 1.f );
-					m_pcGCSprAirVignette->SetSpriteGlobalZOrder( 2.f );
-					m_pcGCSprAirVignette->SetResetPosition( Vec2( ( ( m_visibleSize ).width / 2 ), ( ( m_visibleSize ).height / 2 ) ) );
-					m_pcGCSprAirVignette->GetSprite()->setPosition( m_pcGCSprAirVignette->GetResetPosition() );
-					m_pcGCSprAirVignette->SetParent( &rglOwnerGameLayer );
-					m_pcGCSprAirVignette->SetSpriteOpacity( 0 );
-				}
+				m_pcGCSprAirVignette = new CGCObjSprite();
+				
 			}
 
-			// initialize and add Air Bar Sprite to the screen
-			const char* pszPlist_Air = "TexturePacker/Air/Air.plist";
-			const char* pszSpr_AirBar = "AirBar";
+			if( nullptr != m_pcGCSprAirVignette )
 			{
-				// create new Sprite Object for Air Bar
-				if( m_pcGCSprAirBar == nullptr )
+				if( m_pcGCSprAirVignette->GetSprite() == nullptr )
 				{
-					m_pcGCSprAirBar = new CGCObjSprite();
+					m_pcGCSprAirVignette->CreateSprite( pszPlist_AirVignette );
 				}
 
-				if( nullptr != m_pcGCSprAirBar )
-				{
-					if( m_pcGCSprAirBar->GetSprite() == nullptr )
-					{
-						m_pcGCSprAirBar->CreateSprite( pszPlist_Air );
-					}
-
-					m_pcGCSprAirBar->SetSpriteGlobalZOrder( 3.f );
-					m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 120.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 24 ) );
-					m_pcGCSprAirBar->GetSprite()->setPosition( m_pcGCSprAirBar->GetResetPosition() );
-					m_pcGCSprAirBar->SetParent( &rglOwnerGameLayer );
-					m_pcGCSprAirBar->SetSpriteScale( 1.f, 1.f );
-				}
+				m_pcGCSprAirVignette->SetSpriteScale( 1.f, 1.f );
+				m_pcGCSprAirVignette->SetSpriteGlobalZOrder( 2.f );
+				m_pcGCSprAirVignette->SetResetPosition( Vec2( ( ( m_visibleSize ).width / 2 ), ( ( m_visibleSize ).height / 2 ) ) );
+				m_pcGCSprAirVignette->GetSprite()->setPosition( m_pcGCSprAirVignette->GetResetPosition() );
+				m_pcGCSprAirVignette->SetParent( &rglOwnerGameLayer );
+				m_pcGCSprAirVignette->SetSpriteOpacity( 0 );
 			}
-
-
-			// create and initialize label for air and the percentage
-			if( m_plAirLabel == nullptr )
-			{
-				m_plAirLabel = Label::createWithTTF( "AIR " + std::to_string( m_iRemainingAirPercentage ) + "%", "fonts/arial.ttf", 24 );
-				m_plAirLabel->setGlobalZOrder( 3.f );
-			}
-
-			m_v2AirLabelPos = Vec2( ( m_pOrigin ).x + 60.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 24 );
-			// position pAirLabel in the top left corner
-			m_plAirLabel->setPosition( m_v2AirLabelPos );
-			// add the pAirLabel as a child to this layer
-			rglOwnerGameLayer.addChild( m_plAirLabel, 2 );
 		}
-		m_bInitialized = true;
+
+		// initialize and add Air Bar Sprite to the screen
+		const char* pszPlist_Air = "TexturePacker/Air/Air.plist";
+		const char* pszSpr_AirBar = "AirBar";
+		{
+			// create new Sprite Object for Air Bar
+			if( m_pcGCSprAirBar == nullptr )
+			{
+				m_pcGCSprAirBar = new CGCObjSprite();
+			}
+
+			if( nullptr != m_pcGCSprAirBar )
+			{
+				if( m_pcGCSprAirBar->GetSprite() == nullptr )
+				{
+					m_pcGCSprAirBar->CreateSprite( pszPlist_Air );
+				}
+
+				m_pcGCSprAirBar->SetSpriteGlobalZOrder( 3.f );
+				m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 120.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 24 ) );
+				m_pcGCSprAirBar->GetSprite()->setPosition( m_pcGCSprAirBar->GetResetPosition() );
+				m_pcGCSprAirBar->SetParent( &rglOwnerGameLayer );
+				m_pcGCSprAirBar->SetSpriteScale( 1.f, 1.f );
+			}
+		}
+
+
+		// create and initialize label for air and the percentage
+		if( m_plAirLabel == nullptr )
+		{
+			m_plAirLabel = Label::createWithTTF( "AIR " + std::to_string( m_iRemainingAirPercentage ) + "%", "fonts/arial.ttf", 24 );
+			m_plAirLabel->setGlobalZOrder( 3.f );
+		}
+
+		m_v2AirLabelPos = Vec2( ( m_pOrigin ).x + 60.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 24 );
+		// position pAirLabel in the top left corner
+		m_plAirLabel->setPosition( m_v2AirLabelPos );
+		// add the pAirLabel as a child to this layer
+		rglOwnerGameLayer.addChild( m_plAirLabel, 2 );
 	}
+	m_bInitialized = true;
 }
 
 
@@ -286,26 +216,39 @@ bool CAirManager::GetHasInitialized()
 	return m_bInitialized;
 }
 
+void CAirManager::DrainAir()
+{
+	m_fDrainAirMultiplier = 40.f;
+	m_eAirDrainedState = EAirDrainedState::LevelCompleted;
+}
+
 bool CAirManager::UpdateAirTimer()
 {
-	if( m_fRemainingAirAmount <= 0.0f ) // if no air left return false
+	
+	bool bHasAirLeft = true;
+	if( m_fRemainingAirAmount <= 0.0f )													// if no air left return false
 	{
-		m_pglOwnerGameLayer->OnDeath();
-		return false;
+		switch (m_eAirDrainedState)
+		{
+		case EAirDrainedState::AirDrained :
+			m_pglOwnerGameLayer->OnDeath();
+			break;
+		}
+		bHasAirLeft = false;
 	}
 
-	m_fReduceAirByAmountPerFrame = 1 / m_pdDirector->getFrameRate();	   // using framerate for division allows 
+	m_fReduceAirByAmountPerFrame = (1.f / m_pdDirector->getFrameRate()) * m_fDrainAirMultiplier;	// using framerate for division allows 
 
-	m_fRemainingAirAmount -= m_fReduceAirByAmountPerFrame;			       // reduce air by 1 second / framerate every frame - example: for 60 frames the equation would
-																		   // like this: 1 / 60 and the result would be 0.0166666666666667f
+	m_fRemainingAirAmount -= m_fReduceAirByAmountPerFrame;								// reduce air by 1 second / framerate every frame - example: for 60 frames the equation would
+																						// like this: 1 / 60 and the result would be 0.0166666666666667f
 
-	m_fConsumedAirAmount += m_fReduceAirByAmountPerFrame;	     		   //
-	m_iConsumedAirPercentage = ( m_fConsumedAirAmount / m_fMaxAir ) * 100;
+	m_fConsumedAirAmount += m_fReduceAirByAmountPerFrame;	     						//
+	m_iConsumedAirPercentage = ( m_fConsumedAirAmount * 100.f ) / m_fMaxAir ;
 
-	m_iRemainingAirPercentage = ( m_fRemainingAirAmount / m_fMaxAir ) * 100; // Air Remaining / Max Air returns a value from 0-1 therefore it has to be multiplied by 100 to
-																		   // get a range from 0-100 for the percentage
-
-	return true;
+	m_iRemainingAirPercentage = ( m_fRemainingAirAmount * 100.f) / m_fMaxAir;			// Air Remaining / Max Air returns a value from 0-1 therefore it has to be multiplied by 100 to
+																						// get a range from 0-100 for the percentage
+	
+	return bHasAirLeft;
 }
 
 void CAirManager::UpdateAirUIElements()
@@ -325,13 +268,14 @@ void CAirManager::UpdateAirUIElements()
 
 		if( 0 <= m_pcGCSprAirBar->GetSpriteScale().x )
 		{
-			float fNewWidth = m_fRemainingAirAmount / m_fMaxAir; // store this in a variable so that it doesn't have to be calculated multiple times
+			float fNewWidth = m_fRemainingAirAmount / m_fMaxAir; 
 			m_pcGCSprAirBar->SetSpriteScale( fNewWidth, 1.f );
 		}
 
+
 		if( 0 <= m_pcGCSprAirVignette->GetSpriteOpacity() && nullptr != m_pcGCSprAirVignette )
 		{
-			int iNewOpacity = ( m_fConsumedAirAmount / m_fMaxAir ) * 250;
+			int iNewOpacity = ( m_fConsumedAirAmount * 250 / m_fMaxAir );
 			m_pcGCSprAirVignette->SetSpriteOpacity( iNewOpacity );
 		}
 	}

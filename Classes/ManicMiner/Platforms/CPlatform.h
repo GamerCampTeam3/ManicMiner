@@ -21,8 +21,11 @@ class CPlatform :
 {
 public:
 	CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
-
+	~CPlatform();
+	
 	void VOnResourceAcquire() override;
+
+	void VOnResourceRelease() override;
 
 	void VOnReset() override;
 	

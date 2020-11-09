@@ -16,6 +16,12 @@ enum EAirState
 	EAS_HasAirLeft
 };
 
+enum class EAirDrainedState
+{
+	AirDrained,
+	LevelCompleted
+};
+
 class CAirManager : public CGCObject
 {
 public:
@@ -24,11 +30,7 @@ public:
 	//CAirManager(class IGCGameLayer* pglOwnerGameLayer, cocos2d::Size* pv2VisibleSize, cocos2d::Point* ppOrigin);	// overloaded constructor
 	virtual ~CAirManager();
 
-	//void Reset();
-
 	void LeavingLevel( CManicLayer& rNewManicLayer );
-
-	//void Update(float fTimeStep);
 
 	void VOnUpdate(float fTimeStep) override;
 
@@ -37,9 +39,14 @@ public:
 	void Init( class CMLCentralCavern& rglOwnerGameLayer );
 	
 	bool GetHasInitialized();
+
+	void DrainAir();
+	
 private:
 
 	EAirState m_eAirState;
+
+	EAirDrainedState m_eAirDrainedState;
 	
 	class CMLCentralCavern* m_pglOwnerGameLayer;
 
@@ -87,6 +94,8 @@ private:
 	cocos2d::Point m_pOrigin;
 	cocos2d::Size m_visibleSize;
 
+	float m_fDrainAirMultiplier;
+
 private:
 	
 	// updates air (timer) per frame and returns a bool stating whether there is any air left or not
@@ -106,6 +115,9 @@ public:
 	inline int	 iGetRemainingAirPercentage()		  { return m_iRemainingAirPercentage; }
 	inline int	 iGetConsumedAirPercentage()		  { return m_iConsumedAirPercentage; }
 	inline EAirState  eGetAirState()                  { return m_eAirState; }
+	
+	inline void eSetAirDrainedState(EAirDrainedState eAirDrainedState)		{ m_eAirDrainedState = eAirDrainedState; }
+	inline EAirDrainedState eGetAirDrainedState()							{ m_eAirDrainedState; }
 	
 };
 #endif
