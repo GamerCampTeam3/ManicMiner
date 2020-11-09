@@ -154,6 +154,12 @@
     <Filter Include="Classes\ManicMiner\CollectiblesGroup\CentralCavern">
       <UniqueIdentifier>{9873ba2f-793b-4929-a7e3-063fe81a987b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Switch">
+      <UniqueIdentifier>{44c6012d-5434-4f04-a119-235e9daa5469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\GameManager">
+      <UniqueIdentifier>{f5cf0e59-f53c-4ae3-a9b9-80d5236f2663}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -270,9 +276,6 @@
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp">
       <Filter>Classes\ManicMiner\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitch.cpp">
-      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.cpp">
       <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClCompile>
@@ -281,9 +284,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Collectible\CCollectible.cpp">
       <Filter>Classes\ManicMiner\Collectible</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleOLD.cpp">
-      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms</Filter>
@@ -347,6 +347,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp">
       <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitchOLD.cpp">
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Switch\CSwitch.cpp">
+      <Filter>Classes\ManicMiner\Switch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Collectibles\CCollectibleOLD.cpp">
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\GameManager\CGameManager.cpp">
+      <Filter>Classes\ManicMiner\GameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -479,9 +491,6 @@
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\I_Interactible.h">
       <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CSwitch.h">
-      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Collectibles\CCollectibleManager.h">
       <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClInclude>
@@ -586,6 +595,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h">
       <Filter>Classes\ManicMiner\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Collectibles\CSwitchOLD.h">
+      <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Switch\CSwitch.h">
+      <Filter>Classes\ManicMiner\Switch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\GameManager\CGameManager.h">
+      <Filter>Classes\ManicMiner\GameManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

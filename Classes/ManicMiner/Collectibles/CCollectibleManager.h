@@ -36,7 +36,7 @@ public:
 private:
 	// TODO: clean up the structs
 	SCollectibles	m_asCollectibles[m_kiMaxCollectiblesToGenerate];
-	SSwitches		m_asSwitches[m_kiMaxSwitchesToGenerate];
+	//SSwitches		m_asSwitches[m_kiMaxSwitchesToGenerate];
 
 	int			    m_iCollected;
 	int				m_iCollectiblesNeeded;
@@ -71,7 +71,7 @@ public:
 	void IncrementCollectible();
 	void RemoveCollectible(CCollectibleOLD& collectible);
 	void IncrementSwitches();
-	void FlipSwitch(CSwitch& cswitch);
+	// void FlipSwitch(CSwitch& cswitch);
 	void ResetCurrentCollectibles();
 
 	// Checks if level can be completed

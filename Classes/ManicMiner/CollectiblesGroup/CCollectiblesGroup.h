@@ -53,7 +53,7 @@ public:
 	// Score functions
 	// TODO: Expand on this in M2
 	int  GetScore() { return m_iScore; }
-	void AddScore() { m_iScore += 10000; }
+	void AddScore() { m_iScore += 100; }
 	
 	//////////////////////////////////////////////////////////////////////////
 	// overrides for CGCObjectGroup public interface
