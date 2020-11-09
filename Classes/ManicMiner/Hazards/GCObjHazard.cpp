@@ -5,15 +5,62 @@
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 #include "GCObjHazard.h"
 
+
+
+
+
+
+
+
+#ifndef TINYXML2_INCLUDED
+#include "external\tinyxml2\tinyxml2.h"
+#endif
+
+
+
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
+
+
+
+
+
+
+
+
+
+
 USING_NS_CC;
 
-CGCObjHazard::CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcFactoryCreationParamsInput)
+
+
+GCFACTORY_IMPLEMENT_CREATEABLECLASS(CGCObjHazard);
+
+
+
+
+//CGCObjHazard::CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcFactoryCreationParamsInput)
+//	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjHazard))
+//	, m_rFactoryCreationParams(rcFactoryCreationParamsInput)
+//	, m_cAnchorPoint(rcAnchorPoint)
+//	, m_eHazardIdentifier(eHazardId)
+//{
+//}
+
+
+
+
+
+CGCObjHazard::CGCObjHazard()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjHazard))
-	, m_rFactoryCreationParams(rcFactoryCreationParamsInput)
-	, m_cAnchorPoint(rcAnchorPoint)
-	, m_eHazardIdentifier(eHazardId)
+//	, m_pCustomCreationParams(nullptr)
 {
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // This function initialises an enemies direction of velocity, 
@@ -24,11 +71,18 @@ void CGCObjHazard::VOnResourceAcquire( void )
 	// Removed maco call so the reference m_rFactorCreationParams could be passed 
 	// into VHandleFactoryParms.  Pending module 2 framework his may be done differently.
 	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjHazard );    
-	VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
+	//VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
+
 
 	CGCObjSpritePhysics::VOnResourceAcquire();
 	
-	SetResetPosition(m_cAnchorPoint);
+
+
+
+
+
+
+	//SetResetPosition(m_cAnchorPoint);
 
 }
 

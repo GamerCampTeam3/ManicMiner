@@ -4,6 +4,13 @@
 #ifndef _GCOBJHAZARD_H_
 #define _GCOBJHAZARD_H_
 
+
+#ifndef _GCFACTORY_OBJSPRITEPHYSICS_H_
+#include "../../GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
+#endif
+
+
+
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "ManicMiner/Enums/EHazardTypes.h"
 
@@ -23,11 +30,18 @@ public:
 private:
 	HazardTypes::EHazardId	    m_eHazardIdentifier;
 	cocos2d::Vec2				m_cAnchorPoint;
-	CGCFactoryCreationParams&	m_rFactoryCreationParams;
+	//CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
 public:
 
-	CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcFactoryCreationParamsInput);
+	CGCObjHazard();
+
+	//CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcFactoryCreationParamsInput);
+
+
+
+	GCFACTORY_DECLARE_CREATABLECLASS(CGCObjHazard);
+
 
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 

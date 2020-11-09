@@ -8,7 +8,7 @@
 
 #include "GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
 
-#include "GCLevelLoader_Ogmo.h"
+//#include "GCLevelLoader_Ogmo.h"
 
 using namespace std;
 USING_NS_CC;
@@ -33,6 +33,10 @@ static const char* k_pszXmlAttr_StartPos_Y				= "y";
 static const char* k_pszB2BodyType_Dynamic		= "b2_dynamicBody";
 static const char* k_pszB2BodyType_Static		= "b2_staticBody";
 static const char* k_pszB2BodyType_Kinematic	= "b2_kinematicBody";
+
+
+
+const tinyxml2::XMLElement* CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData = nullptr;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -156,7 +160,30 @@ inline bool CGCLevelLoader_Ogmo::AddFactoryDataForXMLElementAndCreateInstance( c
 		CCAssert( ( m_vecFactoryCreatedObjects.size() < EMAX_HANDLED_OBJECTS ),
 				  "You need to reserve more space in CGCLevelLoader_Ogmo::m_vecFactoryCreatedObjects! Make CGCLevelLoader_Ogmo::EMAX_HANDLED_OBJECTS bigger!" );
 
+
+
+		// filthy hack
+		sm_pCurrentObjectXmlData = &rxmlElement;
+		// filthy hack
+
+
+
+
+
 		m_vecFactoryCreatedObjects.push_back( rClassFactory.CreateInstance( ( *pParams ), v2Pos ) );
+
+
+
+
+
+		// filthy hack
+		sm_pCurrentObjectXmlData = nullptr;
+		// filthy hack
+
+
+
+
+
 
 		return true;
 	}

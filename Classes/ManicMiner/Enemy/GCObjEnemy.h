@@ -4,8 +4,21 @@
 #ifndef _GCOBJENEMY_H_
 #define _GCOBJENEMY_H_
 
+
+
+
+#ifndef _GCFACTORY_OBJSPRITEPHYSICS_H_
+#include "../../GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
+#endif
+
+
+
+
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "ManicMiner/Enums/EEnemyTypes.h"
+
+
+
 
 //////////////////////////////////////////////////////////////////////////
 //  This class defines an invidual instance of an enemy character.
@@ -31,17 +44,46 @@ private:
 	bool                        m_bBounceCollisionDisabled;
 	bool						m_bSpriteIsFlippable;
 	bool						m_bHasBeenCollided;
-	CGCFactoryCreationParams&	m_rFactoryCreationParams;
+	//CGCFactoryCreationParams&	m_rFactoryCreationParams;
+
+
+
+	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
+
+
+	
+	const char* pszPlist;
+	const char* pszAnim_Fly;
+
+	
+	cocos2d::Animation* pAnimation;
+	
+
+
+
+
+
 
 	bool CheckForBoundaryReached(const float fCurrentPosition, const float fAnchorPoint, const float fMovementWindowLength);
 	bool CheckForDirectionFlip	();
 	void SetFacingOrientation	();
 		
 public:
-	CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
-		bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyIdentifier,
-		CGCFactoryCreationParams& ParamsInput);
 
+	CGCObjEnemy();
+
+//GCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
+	//bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyIdentifier,
+		//CGCFactoryCreationParams& ParamsInput);
+
+	
+
+
+	GCFACTORY_DECLARE_CREATABLECLASS(CGCObjEnemy);
+
+
+
+	
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
 	// this class to delete derived types.
@@ -53,6 +95,11 @@ public:
 	virtual void VOnResurrected		( void ) override;
 	virtual void VOnUpdate			(float fTimeStep) override;
 	void BounceEnemyDirection();
+
+
+
+
+	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 
 	inline  EnemyTypes::EEnemyId GetEnemyIdentifier()
 	{
