@@ -23,6 +23,10 @@
 #include "ManicMiner/Enums/ECollectibleTypeRequired.h"
 #include "ManicMiner/GameState/EGameState.h"
 
+#ifndef _GCLEVELLOADER_OGMO_H_
+#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
 
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CCollectible;																										//
@@ -42,22 +46,25 @@ private:
 // Henrique Edit ------------------------------------------------------------------------------------------------------ //
 																														//
 // Reference to the LevelManager in order to proceed																	//
-	CLevelManager*	m_pcLevelManager;																					//
+	CLevelManager*		m_pcLevelManager;																				//
+																														//
+// Level Loader Instance																								//	
+	CGCLevelLoader_Ogmo	m_cLevelLoader;																					//
 																														//
 // GameState Enum, opens door and may change enemy behaviour															//
-	EGameState		m_eGameState;																						//
+	EGameState			m_eGameState;																					//
 																														//
 // Handling Reset Flag																									//
-	bool			m_bWasResetRequested;																				//
+	bool				m_bWasResetRequested;																			//
 																														//
 // Handling Going to Next Level Flag																					//
-	bool			m_bWasNextLevelRequested;																			//
+	bool				m_bWasNextLevelRequested;																		//
 																														//
 // Pointer to Background Sprite																							//
-	CGCObjSprite*	m_pcGCSprBackGround;																				//
+	CGCObjSprite*		m_pcGCSprBackGround;																			//
 																														//
 // Pointer to player, for easy play access																				//
-	CPlayer*		m_pcPlayer;																							//
+	CPlayer*			m_pcPlayer;																						//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 

@@ -7,6 +7,7 @@
 #include "AppDelegate.h"
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
+#include "GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 
@@ -17,7 +18,6 @@
 #include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
-#include "ManicMiner/Player/CPlayer.h"
 
 // Include different platform types for collision checks
 #include "ManicMiner/Platforms/CBrickPlatform.h"
@@ -27,6 +27,7 @@
 #include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CRegularPlatform.h"
 
+#include "ManicMiner/Player/CPlayer.h"
 
 USING_NS_CC;
 
@@ -186,6 +187,33 @@ void CManicLayer::VOnCreate()
 	groundBody->CreateFixture( &groundBox, 0 );
 
 
+
+	///////////////////////////////////////////////////////////////////////////
+	// N.B. this is where you would load a level file, using the factory to
+	// create the class instances specified by the level file by passing their
+	// class names and init data
+	//
+	// In order to ensure stuff is correctly cleaned up you will need to either:
+	//
+	// 1) cache pointers to all created CGCObjSpritePhysics created via the factory and destroy them on shutdown / level unload, or
+	//
+	// 2) make sure all the CGCObjSpritePhysics derived instances you create are in an object group and have the groups destroy them
+	//
+	// Personally I favour option 1, as I reckon it's a) more elegant and b) more philosophically 'correct'.
+	//
+	///////////////////////////////////////////////////////////////////////////
+
+	// load level data from Ogmo Editor
+
+	// read the oel file for level 0
+	m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( "OgmoEditor/AirBush.oel" ) ).c_str() );
+	m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
+
+	// note: we have now created all the items, platforms, & invaders specified in the level file
+
+
+
+
 	///////////////////////////////////////////////////////////////////////////
 	// add player
 	///////////////////////////////////////////////////////////////////////////
@@ -257,7 +285,10 @@ void CManicLayer::VOnDestroy()
 	///
 	//safeDelete( m_pcPlayer );
 	//safeDelete( m_pcGCSprBackGround );
-
+	
+	// Clean up the level
+	m_cLevelLoader.DestroyObjects();
+	
 	IGCGameLayer::VOnDestroy();
 }
 
@@ -611,7 +642,7 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 }																														//
 																														//
 																														//
-void CManicLayer::PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact)			//
+void CManicLayer::PlayerCollidedHazard( CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact )			//
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
@@ -620,7 +651,7 @@ void CManicLayer::PlayerCollidedHazard(CPlayer& rcPlayer, CGCObjHazard& rcHazard
 }																														//
 																														//
 																														//
-void CManicLayer::PlayerCollidedDoor(CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact)						//
+void CManicLayer::PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact )						//
 {																														//
 	if ( rcContact.IsTouching() )																						//
 	{																													//
@@ -763,7 +794,6 @@ void CManicLayer::OnDeath()
 	{
 		OutOfLives();
 	}
-
 }
 
 
