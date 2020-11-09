@@ -18,6 +18,7 @@ USING_NS_CC;
 CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	: CGCObject(GetGCTypeIDOf(CAirManager))
 	, m_eAirState( EAirState::EAS_HasAirLeft )
+	, m_eAirDrainedState(EAirDrainedState::AirDrained)
 	, m_pglOwnerGameLayer		( nullptr )
 	, m_pdDirector				( nullptr )
 	, m_pcGCSprAirBar			( nullptr )
@@ -215,12 +216,23 @@ bool CAirManager::GetHasInitialized()
 	return m_bInitialized;
 }
 
+void CAirManager::DrainAir()
+{
+	m_fReduceAirByAmountPerFrame = 0.8f;
+	m_eAirDrainedState = EAirDrainedState::LevelCompleted;
+}
+
 bool CAirManager::UpdateAirTimer()
 {
 	bool bHasAirLeft = true;
 	if( m_fRemainingAirAmount <= 0.0f )													// if no air left return false
 	{
-		m_pglOwnerGameLayer->OnDeath();
+		switch (m_eAirDrainedState)
+		{
+		case EAirDrainedState::AirDrained :
+			m_pglOwnerGameLayer->OnDeath();
+			break;
+		}
 		bHasAirLeft = false;
 	}
 

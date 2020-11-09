@@ -16,6 +16,12 @@ enum EAirState
 	EAS_HasAirLeft
 };
 
+enum class EAirDrainedState
+{
+	AirDrained,
+	LevelCompleted
+};
+
 class CAirManager : public CGCObject
 {
 public:
@@ -33,9 +39,14 @@ public:
 	void Init( class CMLCentralCavern& rglOwnerGameLayer );
 	
 	bool GetHasInitialized();
+
+	void DrainAir();
+	
 private:
 
 	EAirState m_eAirState;
+
+	EAirDrainedState m_eAirDrainedState;
 	
 	class CMLCentralCavern* m_pglOwnerGameLayer;
 
@@ -102,6 +113,9 @@ public:
 	inline int	 iGetRemainingAirPercentage()		  { return m_iRemainingAirPercentage; }
 	inline int	 iGetConsumedAirPercentage()		  { return m_iConsumedAirPercentage; }
 	inline EAirState  eGetAirState()                  { return m_eAirState; }
+	
+	inline void eSetAirDrainedState(EAirDrainedState eAirDrainedState)		{ m_eAirDrainedState = eAirDrainedState; }
+	inline EAirDrainedState eGetAirDrainedState()							{ m_eAirDrainedState; }
 	
 };
 #endif
