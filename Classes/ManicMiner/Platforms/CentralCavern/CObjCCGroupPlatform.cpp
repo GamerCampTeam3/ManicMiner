@@ -56,8 +56,9 @@ GCTypeID CObjCCGroupPlatform::VGetTypeId()
 
 void CObjCCGroupPlatform::VOnGroupResourceAcquire()
 {
-	//s_cCreationParams_Platform_1x1.strPlistFile;
+
 	CGCObjectGroup::VOnGroupResourceAcquire();
+	
 	CreatePlatforms();
 }
 
@@ -65,7 +66,6 @@ void CObjCCGroupPlatform::VOnGroupResourceAcquire_PostObject()
 {
 	CGCObjectGroup::VOnGroupResourceAcquire_PostObject();
 
-	//cocos2d::ValueMap dicPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
 }
 
 void CObjCCGroupPlatform::VOnGroupResourceRelease()
@@ -78,14 +78,19 @@ void CObjCCGroupPlatform::VOnGroupResourceRelease()
 
 void CObjCCGroupPlatform::CreatePlatforms()
 {
+		// ground platform
 	CPlatform* pcGroundPlatform = new CGroundPlatform(s_cCreationParams_Platform_Ground, cocos2d::Vec2(960.f,30.f) );
 
+		// regular platform
 	CPlatform* pcPlatform1st = new CRegularPlatform(s_cCreationParams_Platform_15x1, cocos2d::Vec2(750.f, 150.f) );
 
+		// brick platform
 	CPlatform* pcWallLeft = new CBrickPlatform(s_cCreationParams_Platform_Brick_1x16, cocos2d::Vec2(30.f, 480.f));
 
+		// brick platform
 	CPlatform* pcWallRight = new CBrickPlatform(s_cCreationParams_Platform_Brick_1x16, cocos2d::Vec2(1890.f, 480.f) );
 
+		// brick platform
 	CPlatform* pcBrickPlatform1st = new CBrickPlatform(s_cCreationParams_Platform_Brick_3x1, cocos2d::Vec2(1290.f, 210.f) );
 
         // crumbling platform
@@ -95,19 +100,19 @@ void CObjCCGroupPlatform::CreatePlatforms()
 	CPlatform* pcCrumblingPlatform4th = new CCrumblingPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1590.f, 210.f) );
 	CPlatform* pcCrumblingPlatform5th = new CCrumblingPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1650.f, 210.f) );
 
+		// regular platform	
 	CPlatform* pcPlatformRegular2nd = new CRegularPlatform(s_cCreationParams_Platform_3x1, cocos2d::Vec2(1770.f, 210.0f) );
-
 	CPlatform* pcPlatformRegular3rd = new CRegularPlatform(s_cCreationParams_Platform_2x1, cocos2d::Vec2(1800.f, 330.f) );
 
         // moving platform
 	CPlatform* pcPlatformMoving1st = new CMovingPlatform(s_cCreationParams_Platform_Moving_20x1, cocos2d::Vec2(1080.f, 390.f), EPlayerDirection::Left );
 
+		// brick platform
 	CPlatform* pcPlatformBrick2nd = new CBrickPlatform(s_cCreationParams_Platform_Brick_3x1, cocos2d::Vec2(1110.f, 450.f));
 
+		// regular platform
 	CPlatform* pcPlatformRegular4th = new CRegularPlatform(s_cCreationParams_Platform_4x1, cocos2d::Vec2(180.f, 390.f) );
-
 	CPlatform* pcPlatformRegular5th = new CRegularPlatform(s_cCreationParams_Platform_3x1, cocos2d::Vec2(150.f, 510.f) );
-
 	CPlatform* pcPlatformRegular6th = new CRegularPlatform(s_cCreationParams_Platform_13x1, cocos2d::Vec2(450.f, 630.f) );
 
         // crumbling platform
@@ -123,7 +128,8 @@ void CObjCCGroupPlatform::CreatePlatforms()
 	CPlatform* pcCrumblingPlatform11th = new CCrumblingPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1230.f, 630.f));
 	CPlatform* pcCrumblingPlatform12th = new CCrumblingPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1290.f, 630.f));
 	CPlatform* pcCrumblingPlatform13th = new CCrumblingPlatform(s_cCreationParams_Platform_Crumbling_1x1, cocos2d::Vec2(1350.f, 630.f));
-																							
+
+		// regular platform
 	CPlatform* pcPlatformRegular8th = new CRegularPlatform(s_cCreationParams_Platform_8x1, cocos2d::Vec2(1620.f, 630.f) );
 }
 

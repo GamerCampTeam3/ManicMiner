@@ -24,11 +24,7 @@ public:
 	//CAirManager(class IGCGameLayer* pglOwnerGameLayer, cocos2d::Size* pv2VisibleSize, cocos2d::Point* ppOrigin);	// overloaded constructor
 	virtual ~CAirManager();
 
-	//void Reset();
-
 	void LeavingLevel( CManicLayer& rNewManicLayer );
-
-	//void Update(float fTimeStep);
 
 	void VOnUpdate(float fTimeStep) override;
 

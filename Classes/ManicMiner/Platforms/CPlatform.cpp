@@ -22,6 +22,14 @@ CPlatform::CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 Re
 {
 }
 
+CPlatform::~CPlatform()
+{
+	if (nullptr != m_pcDirector)
+	{
+		m_pcDirector = nullptr;
+	}
+}
+
 void CPlatform::VOnResourceAcquire()
 {
 	VHandleFactoryParams(m_FactoryCreationParams, GetResetPosition());
@@ -33,6 +41,16 @@ void CPlatform::VOnResourceAcquire()
 	m_pcDirector = cocos2d::Director::getInstance();
 
 }
+
+void CPlatform::VOnResourceRelease()
+{
+	CGCObjSpritePhysics::VOnResourceRelease();
+	
+	m_v2ResetPosition = cocos2d::Vec2(0.f, 0.f);
+	m_bCollisionEnabled = false;
+	m_bTriggersHardContactEvent = false;
+}
+
 
 void CPlatform::VOnReset()
 {
