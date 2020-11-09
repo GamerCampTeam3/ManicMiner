@@ -24,6 +24,7 @@
 #include "ManicMiner/GameState/EGameState.h"
 
 
+class CGameManager;
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CCollectible;																										//
 class CCollectiblesGroup;																								//
@@ -32,7 +33,8 @@ class CGCObjEnemy;																										//
 class CGCObjHazard;																										//
 class CLevelManager;																									//
 class CPlatform;																										//
-class CPlayer;																											//
+class CPlayer;
+class CSwitch;																											//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -42,8 +44,10 @@ private:
 // Henrique Edit ------------------------------------------------------------------------------------------------------ //
 																														//
 // Reference to the LevelManager in order to proceed																	//
-	CLevelManager*	m_pcLevelManager;																					//
-																														//
+	CLevelManager*	m_pcLevelManager;
+protected:
+	CGameManager*	m_pcGameManager;//
+private:																										//
 // GameState Enum, opens door and may change enemy behaviour															//
 	EGameState		m_eGameState;																						//
 																														//
@@ -72,6 +76,7 @@ private:
 // Number of switches in the level																						//
 	int m_iNumSwitchesNeeded;																							//
 // -------------------------------------------------------------------------------------------------------------------- //
+
 
 
 public:
@@ -110,6 +115,7 @@ public:
 	void PlayerCollidedHazard	( CPlayer&		rcPlayer,		CGCObjHazard&	rcHazard,	const b2Contact& rcContact	);
 	void PlayerCollidedDoor		( CPlayer&		rcPlayer,		CDoor&			rcDoor,		const b2Contact& rcContact	);
 	void ItemCollected			( CCollectible& rcCollectible,	CPlayer&		rcPlayer,	const b2Contact& rcContact	);
+	void SwitchInteract			( CSwitch& 		rcSwitch,		CPlayer&		rcPlayer,	const b2Contact& rcContact  );
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -129,8 +135,9 @@ public:
 
 
 // ---------------------------------- Setters ------------------------------------------------------------------------- //
-	void SetLevelManager( CLevelManager&		rcLevelManager	);														//
-	void SetGameState	( const EGameState		gameState		); 														//
+	void SetLevelManager	( CLevelManager&		rcLevelManager	);														//
+	void SetGameState	( const EGameState		gameState	);
+	void SetGameManager	( CGameManager& 		rcGameManager	);
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -309,5 +316,8 @@ public:																													//
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
 	void CB_OnGameExitButton( Ref* pSender );
+
+protected:
+	virtual void InitParams() {};
 };
 #endif // #ifndef _CMANICLAYER_H_

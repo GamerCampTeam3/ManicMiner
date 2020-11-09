@@ -5,6 +5,7 @@
 #include "CMLCentralCavern.h"
 
 #include "ManicMiner/AirManager/AirManager.h"
+#include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/CollectiblesGroup/CentralCavern/CCGCentralCavern.h"
 #include "ManicMiner/Doors/CentralCavern/CDCreatorCentralCavern.h"
@@ -14,6 +15,8 @@
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
 #include "ManicMiner/Player/CPlayer.h"
+#include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
 
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
@@ -43,7 +46,7 @@ void CMLCentralCavern::VOnCreate( void )
 	// Edit Custom Layout
 	GetPlayer().SetResetPosition( v2NewStart );
 
-
+	
 	// Enemies for Central Cavern
 	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
 	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
@@ -63,10 +66,26 @@ void CMLCentralCavern::VOnCreate( void )
 	m_pcCDCreatorCentralCavern = new CDCreatorCentralCavern( *this );
 	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
 
+	auto test = CGCFactoryCreationParams( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
+	// CCollectible* pCollectible_4 = new CCollectible(test, cocos2d::Vec2( 690.f, 920.f ),  );
+	
 	m_pCHUD = new CHUD( GetPlayer() , *this , *m_pcCollectiblesGroupCentralCavern);
+
+
+	
+	 //GetLevelManager().AccessGameManager()->SetCHUD( m_pCHUD );
+	 //
+	 //GetPlayer().SetLives( GetLevelManager().AccessGameManager()->GetCurrentLives() );
+	
 
 	m_pcAirManager = new CAirManager(origin, visibleSize);
 	m_pcAirManager->Init(*this);
+
+}
+
+void CMLCentralCavern::InitParams()
+{
+
 }
 
 

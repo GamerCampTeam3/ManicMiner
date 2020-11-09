@@ -8,19 +8,19 @@
 
 
 #include "ManicMiner/AudioHelper/ManicAudio.h"
+#include "ManicMiner/GameManager/CGameManager.h"
 
 USING_NS_CC;
 
 
 
-CCollectible::CCollectible( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, CCollectiblesGroup& collectibleGroup )
+CCollectible::CCollectible( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, CGameManager& GameManager )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
 	, m_FactoryCreationParams			( CreationParams )
 	, m_bHasBeenCollected				( false )
 	, m_v2ResetPosition					( ResetPosition)
-	, m_pcCollectiblesGroup				( &collectibleGroup )
-{
-	
+	, m_pcGameManager					( &GameManager )
+{	
 }
 
 
@@ -50,8 +50,7 @@ void CCollectible::InteractEvent()
 	{
 		PlaySoundEffect( ESoundName::KeyCollected );
 
-		m_pcCollectiblesGroup->CollectibleEvent();
-		m_pcCollectiblesGroup->AddScore();
+		m_pcGameManager->CCollectibleInteractEvent();
 		CGCObjectManager::ObjectKill( this );
 		
 		m_bHasBeenCollected = true;

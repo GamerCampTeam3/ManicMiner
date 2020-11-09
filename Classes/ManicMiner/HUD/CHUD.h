@@ -22,11 +22,16 @@ public:
 	// Constructor that takes in a collectibles group and layer reference
 	// which are used to update the HUD
 	CHUD(CPlayer& cPlayer, CManicLayer& cLayer, CCollectiblesGroup& collectiblesGroup);
+
+	void UpdateScore(int score);
+	void UpdateHighScore(int highscore);
+	void UpdateLives(int lives);
 	
 private:
 	// Member Variables
 	cocos2d::Label*		m_pLivesLabel;			// Lives text
 	cocos2d::Label*		m_pScoreLabel;			// Score text
+	cocos2d::Label*		m_pHighScoreLabel;		// HighScore text
 	CPlayer*			m_pcPlayer;				// Player pointer
 	CManicLayer*		m_pglOwnerGameLayer;	// manic layer pointer
 	CCollectiblesGroup*	m_pCollectiblesGroup;	// Collectibles group pointer

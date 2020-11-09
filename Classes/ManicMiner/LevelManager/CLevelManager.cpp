@@ -7,6 +7,9 @@
 // Include general cocos2d framework
 #include "cocos2d/cocos/base/CCDirector.h"
 
+// Include Helpers ( safe delete )
+#include "ManicMiner/Helpers/Helpers.h"
+
 // Include IGCGameLayer ( parent of CManicLayer )
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
@@ -15,6 +18,9 @@
 
 // Include CManicLayer ( level super class )
 #include "ManicMiner/Layers/CManicLayer.h"
+
+// Include CGameManager ( for game elements management )
+#include "ManicMiner/GameManager/CGameManager.h"
 
 // Include levels
 #include "ManicMiner/Layers/CMLCentralCavern.h"
@@ -25,10 +31,18 @@ USING_NS_CC;
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CLevelManager::CLevelManager( cocos2d::Director& rcDirector )
-	: m_iCurrentLevelIndex( 0 )
+	: m_iCurrentLevelIndex	( 0 )
+	, m_pcCGameManager		( nullptr )
 {
 	// Create CMenuLayer, assign a pointer to this CLevelManager instance
 	Scene* pScene = CMenuLayer::scene( *this );
+
+	m_pcCGameManager = new CGameManager(*this );
+
+	// Debug stuff
+	AccessGameManager().GetHighScore();
+
+	
 
 	// Run CMenuLayer as main scene
 	rcDirector.runWithScene( pScene );
@@ -36,7 +50,9 @@ CLevelManager::CLevelManager( cocos2d::Director& rcDirector )
 
 // Destructor  -------------------------------------------------------------------------------------------------------- //
 CLevelManager::~CLevelManager()
-{}
+{
+	safeDelete( m_pcCGameManager );
+}
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	GoToMainMenu																						//
@@ -47,7 +63,7 @@ CLevelManager::~CLevelManager()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CLevelManager::GoToMainMenu()
 {
-	// Reset level index to 0
+	// Reset level index to 0 
 	m_iCurrentLevelIndex = 0;
 
 	// Create and run CMenuLayer
@@ -75,11 +91,18 @@ void CLevelManager::GoToNextLevel()
 
 	// Select next level
 	// Runs the template function CreateScene(), and assigns created scene to pScene
+	// TODO: BIB>> Add amount of collectibles / switches required by the levels.
+	// As an example, for a level that would require Collectibles, you'd do something like:
+	// InitLevelEndRequirements( ECollectibleTypeRequired::Collectible, 5 );
+	// For a level that would require Switches as well, it would be:
+	// InitLevelEndRequirements( ECollectibleTypeRequired::Both, 5, 2 );
 	switch( m_iCurrentLevelIndex )
 	{
 	case 0:
 		// CENTRAL CAVERN
 		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
+		m_pcCGameManager->InitLevelEndRequirements( ECollectibleTypeRequired::Collectible, 5 );
+
 		break;
 	case 1:
 		// THE COLD ROOM
@@ -99,6 +122,7 @@ void CLevelManager::GoToNextLevel()
 
 		// Assign its pointer to this CLevelManager
 		newManicLayer->SetLevelManager( *this );
+		//newManicLayer->SetGameManager( *m_pcCGameManager );
 
 		// Begin transition
 		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionPageTurn::create( 1.0f, pScene, false ) );
@@ -106,6 +130,9 @@ void CLevelManager::GoToNextLevel()
 
 	// Increment Level Identifier Index
 	m_iCurrentLevelIndex++;
+
+	// Stores the high score
+	m_pcCGameManager->WriteHighScore();
 }
 
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -136,4 +163,9 @@ void CLevelManager::EnterCavern()
 CManicLayer& CLevelManager::GetCurrentManicLayer() const
 {
 	return *static_cast< CManicLayer* >( cocos2d::Director::getInstance()->getRunningScene()->getChildByTag( 0 ) );
+}
+
+CGameManager& CLevelManager::AccessGameManager() const
+{
+	return *m_pcCGameManager;
 }

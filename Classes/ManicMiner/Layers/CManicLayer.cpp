@@ -27,6 +27,10 @@
 #include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CRegularPlatform.h"
 
+#include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
+#include "ManicMiner/Switch/CSwitch.h"
+
 
 USING_NS_CC;
 
@@ -49,6 +53,7 @@ USING_NS_CC;
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcLevelManager( nullptr )
+        , m_pcGameManager(nullptr)
 	, m_eGameState( EGameState::Looting )
 	, m_bWasResetRequested( false )
 	, m_bWasNextLevelRequested( false )
@@ -582,7 +587,7 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 				}																										//
 																														//
 				// Set contact collision accordingly																	//
-				pB2Contact->SetEnabled( pPlatform->GetCollisionEnabled() );												//
+				pB2Contact->SetEnabled( pPlatform->GetCollisionEnabled() );											//
 			}																											//
 																														//
 		}																												//
@@ -636,6 +641,14 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 		rcCollectible.InteractEvent();																					//
 	}																													//
 }																														//
+																														//
+void CManicLayer::SwitchInteract(CSwitch& rcSwitch, CPlayer& rcPlayer, const b2Contact& rcContact)						//
+{																														//
+	if (rcContact.IsTouching())																							//
+	{																													//
+		rcSwitch.InteractEvent();																						//
+	}																													//
+}																														// 
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -680,7 +693,12 @@ void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )														
 {																														//
 	m_pcLevelManager = &rcLevelManager;																					//
 }																														//
-																														//
+
+void CManicLayer::SetGameManager(CGameManager &rcGameManager)
+{
+	m_pcGameManager = &rcGameManager;
+}
+//
 																														//
 void CManicLayer::SetGameState( const EGameState gameState ) 															//
 { 																														//
@@ -758,11 +776,14 @@ void CManicLayer::OnDeath()
 	if( m_pcPlayer->GetLives() > 0 )
 	{
 		RequestReset();
+		//GetLevelManager().AccessGameManager().SetLives( GetPlayer().GetLives() );
+		//GetLevelManager().AccessGameManager().UpdateLives();
 	}
 	else
 	{
 		OutOfLives();
 	}
+
 
 }
 
@@ -776,6 +797,9 @@ void CManicLayer::OnDeath()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::OutOfLives()
 {
+	// Stores the high score
+	//GetLevelManager().AccessGameManager().WriteHighScore();
+	
 	m_pcLevelManager->GoToMainMenu();
 }
 
