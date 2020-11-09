@@ -3,8 +3,8 @@
 //////////////////
 /// DEPRECATED CODE
 /// 
-#ifndef _SWITCH_H_
-#define _SWITCH_H_
+#ifndef _SWITCHOLD_H_
+#define _SWITCHOLD_H_
 
 #ifndef _GCOBJSPRITEPHYSICS_H_
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
@@ -16,7 +16,7 @@
 
 class CCollectibleManager;
 
-class CSwitch
+class CSwitchOLD
 	: public CGCObjSpritePhysics, public I_Interactible
 {
 private:
@@ -24,15 +24,15 @@ private:
 	CCollectibleManager* m_rcCollectibleManager;
 
 public:
-	CSwitch();
-	CSwitch(CCollectibleManager& collectibleManager);
-	CSwitch(cocos2d::Vec2 initialPos);
+	CSwitchOLD();
+	CSwitchOLD(CCollectibleManager& collectibleManager);
+	CSwitchOLD(cocos2d::Vec2 initialPos);
 
 
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
 	// this class to delete derived types.
-	virtual ~CSwitch()
+	virtual ~CSwitchOLD()
 	{}
 	//////////////////////////////////////////////////////////////////////////
 	// overridden virtuals from the game object interface
@@ -56,4 +56,4 @@ public:
 
 
 
-#endif // #ifndef _SWITCH_H_
+#endif // #ifndef _SWITCHOLD_H_

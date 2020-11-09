@@ -1,10 +1,12 @@
+#include "CSwitchOLD.h"
+
 #include <memory.h>
 
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 
 #include "CCollectibleManager.h"
-#include "CSwitch.h"
+
 
 
 USING_NS_CC;
@@ -15,7 +17,7 @@ USING_NS_CC;
 // N.B. this is super important!
 //
 //////////////////////////////////////////////////////////////////////////
-CSwitch::CSwitch()
+CSwitchOLD::CSwitchOLD()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CSwitch))
 	, m_iIndex(0)
 	, m_rcCollectibleManager(nullptr)
@@ -23,7 +25,7 @@ CSwitch::CSwitch()
 
 }
 
-CSwitch::CSwitch(cocos2d::Vec2 startPos)
+CSwitchOLD::CSwitchOLD(cocos2d::Vec2 startPos)
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CSwitch))
 	, m_iIndex(0)
 	, m_rcCollectibleManager(nullptr)
@@ -32,17 +34,17 @@ CSwitch::CSwitch(cocos2d::Vec2 startPos)
 
 }
 
-CSwitch::CSwitch(CCollectibleManager& collectibleManager)
+CSwitchOLD::CSwitchOLD(CCollectibleManager& collectibleManager)
 	: m_iIndex(0)
 	, m_rcCollectibleManager(nullptr)
 {
 	m_rcCollectibleManager = &collectibleManager;
 }
 
-void CSwitch::InteractEvent()
+void CSwitchOLD::InteractEvent()
 {
 	m_rcCollectibleManager->IncrementSwitches();
-	m_rcCollectibleManager->FlipSwitch(*this);
+	//m_rcCollectibleManager->FlipSwitch(*this);
 }
 
 
@@ -51,7 +53,7 @@ void CSwitch::InteractEvent()
 // CGCObject interface
 IN_CPP_CREATION_PARAMS_DECLARE(CCollectible, "TexturePacker/Sprites/Egg/Egg.plist", "egg", b2_dynamicBody, true);
 //virtual 
-void CSwitch::VOnResourceAcquire()
+void CSwitchOLD::VOnResourceAcquire()
 {
 	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE(CCollectible);
 	CGCObjSpritePhysics::VOnResourceAcquire();
@@ -59,11 +61,11 @@ void CSwitch::VOnResourceAcquire()
 //////////////////////////////////////////////////////////////////////////
 //  virtual
 //////////////////////////////////////////////////////////////////////////
-void CSwitch::VOnReset()
+void CSwitchOLD::VOnReset()
 {
 	CGCObjSpritePhysics::VOnReset();
 }
-void CSwitch::VOnUpdate(f32 fTimeStep)
+void CSwitchOLD::VOnUpdate(f32 fTimeStep)
 {
 	GetPhysicsBody()->SetGravityScale(0.0f);
 }

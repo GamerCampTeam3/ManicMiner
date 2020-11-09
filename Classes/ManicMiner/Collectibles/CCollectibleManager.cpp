@@ -1,6 +1,6 @@
 #include "CCollectibleManager.h"
 #include "CCollectibleOLD.h"
-#include "CSwitch.h"
+
 
 #include "GamerCamp/Core/GCTypes.h"
 #include "GamerCamp/GCObject/GCObject.h"
@@ -25,9 +25,9 @@ CCollectibleManager::CCollectibleManager()
     }
     for (int i = 0; i < m_kiMaxSwitchesToGenerate; i++)
     {
-        m_asSwitches[i].p_cSwitch = new CSwitch();
-        m_asSwitches[i].p_cSwitch->SetIndex(i);
-        m_asSwitches[i].b_IsActive = false;
+       //m_asSwitches[i].p_cSwitch = new CSwitch();
+       //m_asSwitches[i].p_cSwitch->SetIndex(i);
+       //m_asSwitches[i].b_IsActive = false;
     }
 }
 
@@ -75,9 +75,9 @@ CCollectibleManager::CCollectibleManager(cocos2d::Vec2 spawnPosition[], int numT
     // Simply creates the switches to be used at later levels
     for (int i = 0; i < m_kiMaxSwitchesToGenerate; i++)
     {
-        m_asSwitches[i].p_cSwitch = new CSwitch();
-        m_asSwitches[i].p_cSwitch->SetIndex(i);
-        m_asSwitches[i].b_IsActive = false;
+        //m_asSwitches[i].p_cSwitch = new CSwitch();
+        //m_asSwitches[i].p_cSwitch->SetIndex(i);
+        //m_asSwitches[i].b_IsActive = false;
     }
 }
 
@@ -113,9 +113,9 @@ void CCollectibleManager::GenerateNewCSwitches(int numToSpawn, cocos2d::Vec2 spa
     SetNeededNumofSwitchesFlipped(switchesNeeded);
     for (int i = 0; i < numToSpawn; i++)
     {
-        m_asSwitches[i].p_cSwitch->SetSpritePosition(spawnPos[i]);
-        m_asSwitches[i].p_cSwitch->SetVisible(true);
-        m_asSwitches[i].b_IsActive = true;
+       //m_asSwitches[i].p_cSwitch->SetSpritePosition(spawnPos[i]);
+       //m_asSwitches[i].p_cSwitch->SetVisible(true);
+       //m_asSwitches[i].b_IsActive = true;
     }
 }
 
@@ -151,10 +151,10 @@ void CCollectibleManager::RemoveCollectible( CCollectibleOLD& collectible)
 }
 
 
-void CCollectibleManager::FlipSwitch(CSwitch& cswitch)
-{
-    cswitch.SetFlippedX(true);
-}
+// void CCollectibleManager::FlipSwitch(CSwitch& cswitch)
+// {
+//     cswitch.SetFlippedX(true);
+// }
 
 // Upon level end, reset every objects, ready to be called by next level
 void CCollectibleManager::ResetCollectibles()
@@ -168,13 +168,13 @@ void CCollectibleManager::ResetCollectibles()
         m_as_collectible.b_IsActive = false;
     }
 
-    for (SSwitches m_as_switch : m_asSwitches)
-    {
-        m_as_switch.p_cSwitch->SetVisible(false);
-        m_as_switch.p_cSwitch->SetSpritePosition(cocos2d::Vec2(-99999.f, -99999.f));
-        m_as_switch.p_cSwitch->SetIndex(0);
-        m_as_switch.b_IsActive = false;
-    }
+    //for (SSwitches m_as_switch : m_asSwitches)
+    //{
+    //    m_as_switch.p_cSwitch->SetVisible(false);
+    //    m_as_switch.p_cSwitch->SetSpritePosition(cocos2d::Vec2(-99999.f, -99999.f));
+    //    m_as_switch.p_cSwitch->SetIndex(0);
+    //    m_as_switch.b_IsActive = false;
+    //}
 
     m_iCollected = 0;
 }
@@ -199,8 +199,8 @@ CCollectibleManager::~CCollectibleManager()
         m_as_collectible.p_cCollectible = nullptr;
     }
 
-    for (SSwitches m_as_switch : m_asSwitches)
-    {
-        m_as_switch.p_cSwitch = nullptr;
-    }
+    //for (SSwitches m_as_switch : m_asSwitches)
+    //{
+    //    m_as_switch.p_cSwitch = nullptr;
+    //}
 }
