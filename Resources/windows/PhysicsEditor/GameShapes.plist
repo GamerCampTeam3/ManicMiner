@@ -179,7 +179,7 @@
 			<key>CN_Platform_Crumbling_1x1</key>
 			<dict>
 				<key>anchorpoint</key>
-                <string>{ 0.0000,0.1530 }</string>
+                <string>{ 0.0000,0.1228 }</string>
 				<key>fixtures</key>
 				<array>
 
@@ -707,10 +707,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 27.992,57.976 }</string>	
+								<string>{ 29.992,57.976 }</string>	
 								<string>{ -28.008,57.976 }</string>	
 								<string>{ -28.008,-60.024 }</string>	
-								<string>{ 26.992,-60.024 }</string>
+								<string>{ 29.992,-60.024 }</string>
 							</array>
 						</array>
                     </dict>
@@ -728,10 +728,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -30.008,-60.024 }</string>	
-								<string>{ -30.008,-90.024 }</string>	
-								<string>{ 29.992,-90.024 }</string>	
-								<string>{ 29.992,-60.024 }</string>
+								<string>{ -29.008,-60.024 }</string>	
+								<string>{ -29.008,-90.024 }</string>	
+								<string>{ 30.992,-90.024 }</string>	
+								<string>{ 30.992,-60.024 }</string>
 							</array>
 						</array>
                     </dict>
