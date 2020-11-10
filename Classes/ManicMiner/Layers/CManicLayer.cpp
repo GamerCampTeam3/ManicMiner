@@ -224,7 +224,7 @@ void CManicLayer::VOnCreate()
 	// starting position
 	const Vec2 v2PlayerStartPos = v2ScreenCentre_Pixels;
 	// create player object
-	m_pcPlayer = new CPlayer( *B2dGetWorld(), v2PlayerStartPos );
+	m_pcPlayer = new CPlayer( *this, v2PlayerStartPos );
 
 
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
@@ -299,10 +299,6 @@ void CManicLayer::VOnDestroy()
 void CManicLayer::VOnReset( void )
 {
 	IGCGameLayer::VOnReset();
-	
-	//// Reset Keyboard State
-	//CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
-	//pKeyManager->Reset();
 }
 
 // --- b2ContactListener Interface ------------------------------------------------------------------------------------ //

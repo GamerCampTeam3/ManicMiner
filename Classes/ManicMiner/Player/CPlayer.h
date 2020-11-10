@@ -35,6 +35,9 @@ private:
 																														//
 // Reference to the world, needed for raycasting on jump																//
 	b2World& m_rcB2World;																								//
+
+
+	CManicLayer& m_rcManicLayer;																						//
 																														//
 // Instance of a CPlayerB2RayCastCallBack, needed for the jump															//
 	CPlayerB2RayCastCallBack m_cRayCastCallBack;																		//
@@ -93,7 +96,8 @@ private:
 	const float	m_kfGravitionalPull;																					//
 // -------------------------------------------------------------------------------------------------------------------- //
 																														
-																														
+	const float m_kfMaxFallDistance;
+// -------------------------------------------------------------------------------------------------------------------- //
 // -------------- Collision Properties -------------------------------------------------------------------------------- //
 																														//
 // Expresses the current number of "Soft Contacts"																		//
@@ -131,7 +135,7 @@ private:
 																														
 public:																													
 // Constructor -------------------------------------------------------------------------------------------------------- // 
-	CPlayer( b2World& rcB2World, const cocos2d::Vec2& startingPos);
+	CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos);
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
 	virtual ~CPlayer();

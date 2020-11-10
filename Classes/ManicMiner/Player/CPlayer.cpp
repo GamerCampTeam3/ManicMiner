@@ -18,10 +18,10 @@ static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,	
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
-CPlayer::CPlayer( b2World& rcB2World, const cocos2d::Vec2& startingPos )
+CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
-	, m_rcB2World						( rcB2World )
-	, m_kfGravitionalPull				( 2.3f )
+	, m_rcB2World						( *rcManicLayer.B2dGetWorld() )
+	, m_rcManicLayer					( rcManicLayer )
 	, m_ePlayerDirection				( EPlayerDirection::Static )
 	, m_ePendingDirection				( EPlayerDirection::Static )
 	, m_bCanJump						( true )
@@ -35,6 +35,8 @@ CPlayer::CPlayer( b2World& rcB2World, const cocos2d::Vec2& startingPos )
 	, m_fLastHighestY					( 0.0f )
 	, m_fWalkSpeed						( 4.0f )
 	, m_fJumpSpeed						( 10.6f )
+	, m_kfGravitionalPull				( 2.3f )
+	, m_kfMaxFallDistance				( 4.7f )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcControllerActionToKeyMap		( nullptr )
@@ -185,9 +187,9 @@ void CPlayer::VOnResurrected()																													//
 	}																																			//
 
 // Reset Keyboard State
-	CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
-	pKeyManager->Update();
-	pKeyManager->Reset();
+	//CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
+	//pKeyManager->Update();
+	//pKeyManager->Reset();
 }																																				//
 																																				//
 // -------------------------------------------------------------------------------------------------------------------- //						//
@@ -212,7 +214,7 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 		{
 			m_fLastHighestY = fCurrentY;
 		}
-		
+
 		// If player is moving sideways
 		// && player is below the initial jumping position
 		if( m_ePlayerDirection != EPlayerDirection::Static && fCurrentY < m_fLastGroundedY - 0.15f )
@@ -534,11 +536,24 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 
 void CPlayer::OnLanded()
 {
-	CCLOG( "Landed" );
-
-	// The player is grounded, can jump
-	m_bCanJump = true;
-	m_bIsGrounded = true;
+	// Check fall damage / death
+	// Store last grounded Y coordinate
+	float currentY = GetPhysicsTransform().p.y;
+	float heightDelta = m_fLastHighestY - currentY;
+	// If height difference exceeded the max fall distance
+	if( heightDelta >= m_kfMaxFallDistance )
+	{
+		CCLOG( "Died from fall x(" );
+		m_rcManicLayer.OnDeath();
+	}
+	//Else, not dead
+	else
+	{
+		CCLOG( "Landed" );
+		// The player is grounded, can jump
+		m_bCanJump = true;
+		m_bIsGrounded = true;
+	}
 }
 
 // -------------------------------------------------------------------------------------------------------------------- //
