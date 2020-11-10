@@ -37,7 +37,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 // Finally tell the CHUD to update it's text
 void  CGameManager::IncreaseScore()
 {
-	m_iCurrentScore += m_kiScoreIncrements;
+	m_iCurrentScore += m_kIScoreIncrement;
 	
 	CheckHighScore();
 	UpdateScore();
@@ -60,7 +60,7 @@ void CGameManager::CheckHighScore()
 void CGameManager::ExtraLifeCheck() const
 {
 	static int counter;
-	counter += m_kiScoreIncrements;
+	counter += m_kIScoreIncrement;
 
 	if ( counter >= m_kiExtraLifeThreshold )
 	{
@@ -298,7 +298,7 @@ void CGameManager::DrainAirForScore()
 
 void CGameManager::DrainToScore()
 {
-	m_iCurrentScore += m_kiScoreIncrements;
+	m_iCurrentScore += m_kiScorePerTimeLeft;
 	UpdateScore();
 	CheckHighScore();
 	ExtraLifeCheck();
