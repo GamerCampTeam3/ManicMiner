@@ -10,6 +10,7 @@
 #include "GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
+#include "GamerCamp/Win32Input/GCKeyboardManager.h"
 
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
@@ -203,7 +204,7 @@ void CManicLayer::VOnCreate()
 	// Personally I favour option 1, as I reckon it's a) more elegant and b) more philosophically 'correct'.
 	//
 	///////////////////////////////////////////////////////////////////////////
-
+	
 	// load level data from Ogmo Editor
 
 	// read the oel file for level 0
@@ -221,9 +222,8 @@ void CManicLayer::VOnCreate()
 
 	// starting position
 	const Vec2 v2PlayerStartPos = v2ScreenCentre_Pixels;
-
 	// create player object
-	m_pcPlayer = new CPlayer( v2PlayerStartPos );
+	m_pcPlayer = new CPlayer( *B2dGetWorld(), v2PlayerStartPos );
 
 
 
@@ -296,6 +296,15 @@ void CManicLayer::VOnDestroy()
 }
 
 
+
+void CManicLayer::VOnReset( void )
+{
+	IGCGameLayer::VOnReset();
+	
+	//// Reset Keyboard State
+	//CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
+	//pKeyManager->Reset();
+}
 
 // --- b2ContactListener Interface ------------------------------------------------------------------------------------ //
 																														//
@@ -432,7 +441,8 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 							// Player Bumped onto brick																	//
 							m_pcPlayer->BumpedWithBricks();																//
 						}																								//
-						else																							//
+						// Else, is in mid-air? If so, land on platform													//
+						else if ( !m_pcPlayer->GetIsGrounded() )														//
 						{																								//
 							// Set player as grounded																	//
 							m_pcPlayer->LandedOnWalkablePlatform();														//

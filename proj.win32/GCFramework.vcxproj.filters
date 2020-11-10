@@ -163,6 +163,9 @@
     <Filter Include="Classes\ManicMiner\GameManager">
       <UniqueIdentifier>{f5cf0e59-f53c-4ae3-a9b9-80d5236f2663}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Physics">
+      <UniqueIdentifier>{9b64c24d-8d6b-4940-a5f6-1cbdb17e01bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -368,6 +371,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\GameManager\CGameManager.cpp">
       <Filter>Classes\ManicMiner\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.cpp">
+      <Filter>Classes\ManicMiner\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -620,11 +626,8 @@
     <ClInclude Include="..\Classes\ManicMiner\GameManager\CGameManager.h">
       <Filter>Classes\ManicMiner\GameManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleRequirements.h">
-      <Filter>Classes\ManicMiner\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelValues.h">
-      <Filter>Classes\ManicMiner\Structs</Filter>
+    <ClInclude Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.h">
+      <Filter>Classes\ManicMiner\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

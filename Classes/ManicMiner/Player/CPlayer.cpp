@@ -5,9 +5,11 @@
 #include "Classes/ManicMiner/Player/CPlayer.h"
 
 #include "AppDelegate.h"
+#include "Box2D/Dynamics/b2Fixture.h" 
 #include "GamerCamp/GameController/GCController.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Layers/CManicLayer.h"
+#include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
 USING_NS_CC;
 
@@ -16,8 +18,9 @@ static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,	
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
-CPlayer::CPlayer( const cocos2d::Vec2& startingPos )
+CPlayer::CPlayer( b2World& rcB2World, const cocos2d::Vec2& startingPos )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
+	, m_rcB2World						( rcB2World )
 	, m_kfGravitionalPull				( 2.3f )
 	, m_ePlayerDirection				( EPlayerDirection::Static )
 	, m_ePendingDirection				( EPlayerDirection::Static )
@@ -28,6 +31,8 @@ CPlayer::CPlayer( const cocos2d::Vec2& startingPos )
 	, m_bIsAlive						( true )
 	, m_iSensorContactCount				( 0 )
 	, m_iHardContactCount				( 0 )
+	, m_fLastGroundedY					( 0.0f )
+	, m_fLastHighestY					( 0.0f )
 	, m_fWalkSpeed						( 4.0f )
 	, m_fJumpSpeed						( 10.6f )
 	, m_iMaxLives						( 3 )
@@ -114,10 +119,6 @@ void CPlayer::SetLives( const int iLives )																				//
 	m_iLives = iLives;																									//
 }																														//
 																														//
-void CPlayer::SetLastYPos( const float fYPos )																			//
-{																														//
-	m_fLastYPosition = fYPos;																							//
-}																														//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -182,6 +183,11 @@ void CPlayer::VOnResurrected()																													//
 		GetPhysicsBody()->SetFixedRotation( true );																								//
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );																				//
 	}																																			//
+
+// Reset Keyboard State
+	CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
+	pKeyManager->Update();
+	pKeyManager->Reset();
 }																																				//
 																																				//
 // -------------------------------------------------------------------------------------------------------------------- //						//
@@ -195,24 +201,45 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 {																																				//
 // Get player input and change movement if needed																								//
 	CheckKeyboardInput();																														//
+			
+	// If player is in mid-air movement
+	if( !GetIsGrounded() )
+	{
+		float fCurrentY = GetPhysicsTransform().p.y;
+
+		// Update m_fLastHighestY if needed
+		if( fCurrentY > m_fLastHighestY )
+		{
+			m_fLastHighestY = fCurrentY;
+		}
+		
+		// If player is moving sideways
+		// && player is below the initial jumping position
+		if( m_ePlayerDirection != EPlayerDirection::Static && fCurrentY < m_fLastGroundedY - 0.15f )
+		{
+			// End arch-like movement  - >   just drop straight down from now on
+			ApplyDirectionChange( EPlayerDirection::Static );
+		}
+	}
+	
 																																				//
 	// DEBUG SECTION -------------------------------------------------------------- //															//
 																					//															//
 	// ---------- Number of Hard Contacts this frame ------------------ //			//															//
 	//																	//			//															//
-	std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
-	char const* pchar1 = string1.c_str();								//			//															//
-	CCLOG( "Hard Count:" );												//			//															//
-	CCLOG( pchar1 );													//			//															//
-	//																	//			//															//
-	// ---------------------------------------------------------------- //			//															//
-																					//															//
-	// ----------- Number of Soft Contacts this frame ----------------- //			//															//
-	//																	//			//															//
-	std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
-	char const* pchar2 = string2.c_str();								//			//															//
-	CCLOG( "Soft Count:" );												//			//															//
-	CCLOG( pchar2 );													//			//															//
+	//std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
+	//char const* pchar1 = string1.c_str();								//			//															//
+	//CCLOG( "Hard Count:" );												//			//															//
+	//CCLOG( pchar1 );													//			//															//
+	////																	//			//															//
+	//// ---------------------------------------------------------------- //			//															//
+	//																				//															//
+	//// ----------- Number of Soft Contacts this frame ----------------- //			//															//
+	////																	//			//															//
+	//std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
+	//char const* pchar2 = string2.c_str();								//			//															//
+	//CCLOG( "Soft Count:" );												//			//															//
+	//CCLOG( pchar2 );													//			//															//
 	//																	//			//															//
 	// ---------------------------------------------------------------- //			//															//
 																					//															//
@@ -240,28 +267,28 @@ void CPlayer::CheckKeyboardInput()
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	// JUMP																							//
 	//////////////////////////////////////////////////////////////////////////////////////////////////
-		if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump )))
+		if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) ) )
 		{
-		//CCLOG( "jump input received" );
+			//CCLOG( "jump input received" );
 			JumpEvent();
 		}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	// LEFT																							//
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Left )))
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// LEFT																							//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left ) ) )
 		{
-		// If can be controlled and is grounded
-			if ( m_bCanBeControlled && m_bIsGrounded )
+			// If can be controlled and is grounded
+			if( m_bCanBeControlled && m_bIsGrounded )
 			{
 				ApplyDirectionChange( EPlayerDirection::Left );
 			}
 		}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	// RIGHT																						//
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Right )))
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// RIGHT																						//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) ) )
 		{
 			if( m_bCanBeControlled && m_bIsGrounded )
 			{
@@ -280,7 +307,6 @@ void CPlayer::CheckKeyboardInput()
 			}
 		}
 	}
-
 }
 
 
@@ -388,30 +414,70 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::JumpEvent()
 {
-// If on normal platform, jump normally
-	if( !m_bIsPendingDirection )
+// Raycast to check if can jump
+// Start from centre of player body
+	b2Vec2 v2RayStart ( GetPhysicsTransform().p );
+// We just want to check the immediate block above player head
+// Because the player is 2 blocks high, and we start from its centre
+// We will need a raycast length of 1.5 blocks
+// This way our raycast ends in the centre of the block above the head
+	float fRayLength = 1.5f;
+	b2Vec2 v2RayEnd	= v2RayStart + b2Vec2( 0.0f, fRayLength );
+
+// We will need to check on both extremities of the player
+// As if we're shooting a raycast off of both shoulders
+	b2Vec2 v2HorizontalOffset( 0.5f, 0.0f );
+
+// Another possible approach would be AABB querying
+// We could check a whole rectangle area above the player's head
+// But because everything is axis aligned, we're fine with just 2 vertical lines
+// For more info check	http://www.iforce2d.net/b2dtut/raycasting
+//					and http://www.iforce2d.net/b2dtut/world-querying
+
+// Perform RayCasts -> a flag will be set in case any hits occur
+
+	// Reset RayCast Hit Flag
+	m_cRayCastCallBack.ResetFlag();
+
+	// Right Side
+	m_rcB2World.RayCast( &m_cRayCastCallBack, ( v2RayStart + v2HorizontalOffset ), ( v2RayEnd + v2HorizontalOffset ) );
+	// Left Side
+	m_rcB2World.RayCast( &m_cRayCastCallBack, ( v2RayStart - v2HorizontalOffset ), ( v2RayEnd - v2HorizontalOffset ) );
+
+	if( m_cRayCastCallBack.GetDidRayHit() )
 	{
-		SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpSpeed ) );
+		CCLOG( "Head Bumped, Jump Cancelled" );
+		ApplyDirectionChange( EPlayerDirection::Static );
 	}
-// Else, on top of conveyor, jump that way
 	else
 	{
-		switch( m_ePendingDirection )
+	// If on normal platform, jump normally
+		if( !m_bIsPendingDirection )
 		{
-		case EPlayerDirection::Right:
-			SetVelocity( cocos2d::Vec2( m_fWalkSpeed, m_fJumpSpeed ) );
-			break;
-		case EPlayerDirection::Left:
-			SetVelocity( cocos2d::Vec2( m_fWalkSpeed * -1.0f, m_fJumpSpeed ) );
-			break;
+			SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpSpeed ) );
 		}
-		m_ePlayerDirection = m_ePendingDirection;
+	// Else, on top of conveyor, jump that way
+		else
+		{
+			switch( m_ePendingDirection )
+			{
+			case EPlayerDirection::Right:
+				SetVelocity( cocos2d::Vec2( m_fWalkSpeed, m_fJumpSpeed ) );
+				break;
+			case EPlayerDirection::Left:
+				SetVelocity( cocos2d::Vec2( m_fWalkSpeed * -1.0f, m_fJumpSpeed ) );
+				break;
+			}
+			m_ePlayerDirection = m_ePendingDirection;
+		}
+
+		m_bCanJump = false;
+
+	// Unlock from conveyor belt always
+		m_bCanBeControlled = true;
+
+		CCLOG( "Jumped" );
 	}
-
-	m_bCanJump = false;
-
-// Unlock from conveyor belt always
-	m_bCanBeControlled = true;
 }
 
 
@@ -466,6 +532,15 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 }
 
 
+void CPlayer::OnLanded()
+{
+	CCLOG( "Landed" );
+
+	// The player is grounded, can jump
+	m_bCanJump = true;
+	m_bIsGrounded = true;
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -475,10 +550,9 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LandedOnWalkablePlatform()
 {
-	CCLOG( "Landed" );
-	m_bCanJump = true;
+	OnLanded();
+
 	m_bCanBeControlled = true;
-	m_bIsGrounded = true;
 	m_bIsPendingDirection = false;
 
 // Run another check for player input
@@ -496,20 +570,23 @@ void CPlayer::LandedOnWalkablePlatform()
 void CPlayer::LeftGround()
 {
 	CCLOG( "Left the Ground" );
+
+	m_bIsPendingDirection = false;
+	m_bIsGrounded = false;
+
 // If player did not initiate jump
 	if( m_bCanJump )
 	{
 	// Drop straight down
-		auto v2CurrentVelocity = GetVelocity();
-		SetVelocity( cocos2d::Vec2( 0.0f, v2CurrentVelocity.y ) );
-	
+		ApplyDirectionChange( EPlayerDirection::Static );
 		CCLOG( "Dropping straight down" );
 		m_bCanJump = false;
-
-		m_ePlayerDirection = EPlayerDirection::Static;
 	}
-	m_bIsGrounded = false;
-	m_bIsPendingDirection = false;
+
+	// Store last grounded Y coordinate
+	m_fLastGroundedY = GetPhysicsTransform().p.y;
+	// Set last highest Y to be this current coordinate
+	m_fLastHighestY = m_fLastGroundedY;
 }
 
 
@@ -540,12 +617,10 @@ void CPlayer::BumpedWithBricks()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 {
-// Debug print out
-	CCLOG( "Landed on Conveyor Belt" );
+	OnLanded();
 
-// The player is grounded, can jump
-	m_bCanJump = true;
-	m_bIsGrounded = true;
+// Debug print out
+	CCLOG( "          on Conveyor Belt" );
 
 // Set new pending direction
 	m_ePendingDirection = eDirectionLock;
