@@ -440,7 +440,8 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 							// Player Bumped onto brick																	//
 							m_pcPlayer->BumpedWithBricks();																//
 						}																								//
-						else																							//
+						// Else, is in mid-air? If so, land on platform													//
+						else if ( !m_pcPlayer->GetIsGrounded() )														//
 						{																								//
 							// Set player as grounded																	//
 							m_pcPlayer->LandedOnWalkablePlatform();														//
