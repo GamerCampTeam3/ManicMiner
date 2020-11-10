@@ -629,6 +629,12 @@
     <ClInclude Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.h">
       <Filter>Classes\ManicMiner\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleRequirements.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelValues.h">
+      <Filter>Classes\ManicMiner\Structs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -52,15 +52,14 @@ USING_NS_CC;
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
-	, m_pcLevelManager( nullptr )
-	, m_pcGameManager( nullptr )
-	, m_eGameState( EGameState::Looting )
-	, m_bWasResetRequested( false )
-	, m_bWasNextLevelRequested( false )
-	, m_pcGCSprBackGround( nullptr )
-	, m_pcPlayer( nullptr )
-	, m_eCollectibleTypeRequired( ECollectibleTypeRequired::Collectible )
-	, m_iNumCollectiblesNeeded( 4 )
+	, m_pcLevelManager				( nullptr )
+	, m_pcGameManager				( nullptr )
+	, m_eGameState					( EGameState::Looting )
+	, m_bWasResetRequested			( false )
+	, m_bWasNextLevelRequested		( false )
+	, m_pcGCSprBackGround			( nullptr )
+	, m_pcPlayer					( nullptr )
+	, m_sLevelValues				( ECollectibleRequirements::Collectible, 5 )
 {
 }
 
@@ -227,6 +226,7 @@ void CManicLayer::VOnCreate()
 	m_pcPlayer = new CPlayer( *this, v2PlayerStartPos );
 
 
+
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
 		{
 			ItemCollected( rcCollectible, rcPlayer, rcContact );
@@ -270,6 +270,7 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 	// Go to next level if requested
 	if( GetWasNextLevelRequested() )
 	{
+		
 		m_bWasNextLevelRequested = false;
 		m_pcLevelManager->GoToNextLevel();
 	}
@@ -654,16 +655,18 @@ void CManicLayer::PlayerCollidedHazard( CPlayer& rcPlayer, CGCObjHazard& rcHazar
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
-		OnDeath();																										//
+		OnDeath();
+		m_pcGameManager->UpdateLives();//
 	}																													//
 }																														//
 																														//
 																														//
-void CManicLayer::PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact )						//
+void CManicLayer::PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact )					//
 {																														//
 	if ( rcContact.IsTouching() )																						//
 	{																													//
-		rcDoor.InteractEvent();																							//
+		//rcDoor.InteractEvent();
+		m_pcGameManager->EndLevel();
 	}																													//
 }																														//
 																														//
@@ -673,6 +676,7 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 	if( rcContact.IsTouching() )																						//
 	{																													//
 		rcCollectible.InteractEvent();																					//
+		m_pcGameManager->CCollectibleInteractEvent();																	//
 	}																													//
 }																														//
 																														//
@@ -681,6 +685,7 @@ void CManicLayer::SwitchInteracted(CSwitch& rcSwitch, CPlayer& rcPlayer, const b
 	if (rcContact.IsTouching())																							//
 	{																													//
 		rcSwitch.InteractEvent();																						//
+		m_pcGameManager->CSwitchInteractEvent();																		//
 	}																													//
 }																														//
 // -------------------------------------------------------------------------------------------------------------------- //

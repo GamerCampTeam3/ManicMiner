@@ -7,8 +7,6 @@
 
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 
-// Forward class decleration
-class CCollectiblesGroup;
 
 class CSwitch
 	: public CGCObjSpritePhysics
@@ -17,7 +15,6 @@ private:
 	CGCFactoryCreationParams&	m_FactoryCreationParams;		// Reference to creation params that will be set via the collectible group
 	bool						m_bHasBeenCollected;			// Used to stop multi function calls in one frame 
 	cocos2d::Vec2				m_v2ResetPosition;				// Used to set the initial position of the collectible
-	CCollectiblesGroup*			m_pcCollectiblesGroup;			// Pointer to a group to call on it score and collectible tracking functions
 
 
 	// Overrides from CGCObjSpritePhysics
@@ -30,8 +27,7 @@ public:
 	// @param							ResetPosition		The original/reset position of this sprite
 	// @param							CollectibleGroup	Reference to the collectibles group
 	CSwitch( CGCFactoryCreationParams&	CreationParams, 
-			 cocos2d::Vec2				ResetPosition, 
-			 CCollectiblesGroup&		CollectibleGroup );
+			 cocos2d::Vec2				ResetPosition   );
 
 
 	// The interact event called in collision
