@@ -93,10 +93,10 @@ public:
 
 
 // ------------------------------------ IGCGameLayer Interface -------------------------------------------------------- //
-	virtual	void VOnCreate		( void			)		override;														//
-	virtual void VOnUpdate		( f32 fTimeStep )		override;														//
-	virtual	void VOnDestroy		( void			)		override;														//
-	virtual void VOnReset		( void			)		override;
+	virtual void VOnUpdate		( f32 fTimeStep )	override;															//
+	virtual	void VOnCreate		( void )			override;															//
+	virtual	void VOnDestroy		( void )			override;															//
+	virtual void VOnReset		( void )			override;															//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 

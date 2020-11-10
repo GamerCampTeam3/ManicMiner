@@ -109,7 +109,9 @@ private:
 																														//
 // Stores the Y coordinate of when Willy left the surface																//
 // Functionality not yet implemented, but this will be needed for fall damage / death									//
-	float	m_fLastYPosition;																							//
+	float	m_fLastGroundedY;																							//
+
+	float	m_fLastHighestY;																							//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -313,6 +315,8 @@ public:
 // See Also		:	HardContactEvent & CManicLayer's b2ContactListener Interface functions								//
 // -------------------------------------------------------------------------------------------------------------------- //
 	void SensorContactEvent( const bool bBeganContact );																//
+
+	void OnLanded();
 																														//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //

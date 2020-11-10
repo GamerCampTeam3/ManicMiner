@@ -31,6 +31,8 @@ CPlayer::CPlayer( b2World& rcB2World, const cocos2d::Vec2& startingPos )
 	, m_bIsAlive						( true )
 	, m_iSensorContactCount				( 0 )
 	, m_iHardContactCount				( 0 )
+	, m_fLastGroundedY					( 0.0f )
+	, m_fLastHighestY					( 0.0f )
 	, m_fWalkSpeed						( 4.0f )
 	, m_fJumpSpeed						( 10.6f )
 	, m_iMaxLives						( 3 )
@@ -117,10 +119,6 @@ void CPlayer::SetLives( const int iLives )																				//
 	m_iLives = iLives;																									//
 }																														//
 																														//
-void CPlayer::SetLastYPos( const float fYPos )																			//
-{																														//
-	m_fLastYPosition = fYPos;																							//
-}																														//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -203,10 +201,26 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 {																																				//
 // Get player input and change movement if needed																								//
 	CheckKeyboardInput();																														//
-														
-	b2Vec2 v2RayStart = GetPhysicsTransform().p;
-	b2Vec2 v2RayEnd = v2RayStart + b2Vec2( 0.0f, 1.5f );
-	//draw a line
+			
+	// If player is in mid-air movement
+	if( !GetIsGrounded() )
+	{
+		float fCurrentY = GetPhysicsTransform().p.y;
+
+		// Update m_fLastHighestY if needed
+		if( fCurrentY > m_fLastHighestY )
+		{
+			m_fLastHighestY = fCurrentY;
+		}
+		
+		// If player is moving sideways
+		// && player is below the initial jumping position
+		if( m_ePlayerDirection != EPlayerDirection::Static && fCurrentY < m_fLastGroundedY - 0.15f )
+		{
+			// End arch-like movement  - >   just drop straight down from now on
+			ApplyDirectionChange( EPlayerDirection::Static );
+		}
+	}
 	
 																																				//
 	// DEBUG SECTION -------------------------------------------------------------- //															//
@@ -518,6 +532,15 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 }
 
 
+void CPlayer::OnLanded()
+{
+	CCLOG( "Landed" );
+
+	// The player is grounded, can jump
+	m_bCanJump = true;
+	m_bIsGrounded = true;
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -527,10 +550,9 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LandedOnWalkablePlatform()
 {
-	CCLOG( "Landed" );
-	m_bCanJump = true;
+	OnLanded();
+
 	m_bCanBeControlled = true;
-	m_bIsGrounded = true;
 	m_bIsPendingDirection = false;
 
 // Run another check for player input
@@ -548,20 +570,23 @@ void CPlayer::LandedOnWalkablePlatform()
 void CPlayer::LeftGround()
 {
 	CCLOG( "Left the Ground" );
+
+	m_bIsPendingDirection = false;
+	m_bIsGrounded = false;
+
 // If player did not initiate jump
 	if( m_bCanJump )
 	{
 	// Drop straight down
-		auto v2CurrentVelocity = GetVelocity();
-		SetVelocity( cocos2d::Vec2( 0.0f, v2CurrentVelocity.y ) );
-	
+		ApplyDirectionChange( EPlayerDirection::Static );
 		CCLOG( "Dropping straight down" );
 		m_bCanJump = false;
-
-		m_ePlayerDirection = EPlayerDirection::Static;
 	}
-	m_bIsGrounded = false;
-	m_bIsPendingDirection = false;
+
+	// Store last grounded Y coordinate
+	m_fLastGroundedY = GetPhysicsTransform().p.y;
+	// Set last highest Y to be this current coordinate
+	m_fLastHighestY = m_fLastGroundedY;
 }
 
 
@@ -592,12 +617,10 @@ void CPlayer::BumpedWithBricks()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 {
-// Debug print out
-	CCLOG( "Landed on Conveyor Belt" );
+	OnLanded();
 
-// The player is grounded, can jump
-	m_bCanJump = true;
-	m_bIsGrounded = true;
+// Debug print out
+	CCLOG( "          on Conveyor Belt" );
 
 // Set new pending direction
 	m_ePendingDirection = eDirectionLock;
