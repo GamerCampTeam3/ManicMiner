@@ -7,9 +7,6 @@
 
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 
-class CGameManager;
-// Forward class decleration
-class CCollectiblesGroup;
 
 class CCollectible
 : public CGCObjSpritePhysics
@@ -18,8 +15,6 @@ private:
 	CGCFactoryCreationParams&	m_FactoryCreationParams;		// Reference to creation params that will be set via the collectible group
 	bool						m_bHasBeenCollected;			// Used to stop multi function calls in one frame 
 	cocos2d::Vec2				m_v2ResetPosition;				// Used to set the initial position of the collectible
-	//CCollectiblesGroup*			m_pcCollectiblesGroup;			// Pointer to a group to call on it score and collectible tracking functions
-	CGameManager*				m_pcGameManager;
 
 
 public:
@@ -29,7 +24,7 @@ public:
 	// Collectible Type: Determines if it is either a switch or a collectible
 	// Vector 2: Sets its initial and reset position
 	// CollectibleGroup: Reference to it to allow it to call functions on it
-	CCollectible( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, CGameManager& GameManager );
+	CCollectible( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 
 	// Overrides from CGCObjSpritePhysics
 	virtual void VOnResourceAcquire( void ) override;

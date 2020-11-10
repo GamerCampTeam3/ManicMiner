@@ -36,6 +36,9 @@ CMLCentralCavern::~CMLCentralCavern()
 // VOnCreate - Define unique layout ----------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnCreate( void )
 {
+	// Set the inherited structs, it will be fed into the game manager
+	m_sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 1 );
+	
 	CManicLayer::VOnCreate();
 
 
@@ -67,25 +70,26 @@ void CMLCentralCavern::VOnCreate( void )
 	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
 
 	auto test = CGCFactoryCreationParams( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
-	// CCollectible* pCollectible_4 = new CCollectible(test, cocos2d::Vec2( 690.f, 920.f ),  );
+	CCollectible* pCollectible_4 = new CCollectible(test, cocos2d::Vec2( 690.f, 60.f ));
 	
-	m_pCHUD = new CHUD( GetPlayer() , *this , *m_pcCollectiblesGroupCentralCavern);
-
-
-	
-	 //GetLevelManager().AccessGameManager()->SetCHUD( m_pCHUD );
-	 //
-	 //GetPlayer().SetLives( GetLevelManager().AccessGameManager()->GetCurrentLives() );
-	
+	m_pCHUD = new CHUD(*this );
+		
 
 	m_pcAirManager = new CAirManager(origin, visibleSize);
 	m_pcAirManager->Init(*this);
 
+
+	
 }
 
 void CMLCentralCavern::InitParams()
 {
-
+	// Sets the references required by the player
+	m_pcGameManager->SetCHUD( m_pCHUD );
+	m_pcGameManager->SetCPlayer( &GetPlayer() );
+	m_pcGameManager->SetCAirManager( m_pcAirManager );
+	m_pcAirManager->SetGameManager( m_pcGameManager );
+	m_pcGameManager->SetLevelRequirements( m_sLevelValues );
 }
 
 

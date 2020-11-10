@@ -12,21 +12,20 @@
 
 USING_NS_CC;
 
+static CGCFactoryCreationParams test1( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
 
-
-CCollectible::CCollectible( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, CGameManager& GameManager )
+CCollectible::CCollectible( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
 	, m_FactoryCreationParams			( CreationParams )
 	, m_bHasBeenCollected				( false )
 	, m_v2ResetPosition					( ResetPosition)
-	, m_pcGameManager					( &GameManager )
 {	
 }
 
 
 void CCollectible::VOnResourceAcquire( void )
 {
-	VHandleFactoryParams( m_FactoryCreationParams, GetResetPosition() );
+	VHandleFactoryParams( test1, GetResetPosition() );
 	CGCObjSpritePhysics::VOnResourceAcquire();
 	SetResetPosition( m_v2ResetPosition );
 }
@@ -50,7 +49,6 @@ void CCollectible::InteractEvent()
 	{
 		PlaySoundEffect( ESoundName::KeyCollected );
 
-		m_pcGameManager->CCollectibleInteractEvent();
 		CGCObjectManager::ObjectKill( this );
 		
 		m_bHasBeenCollected = true;

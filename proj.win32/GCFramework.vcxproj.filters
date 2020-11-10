@@ -156,7 +156,7 @@
     </Filter>
     <Filter Include="Classes\GamerCamp\GCCocosInterface\LevelLoader">
       <UniqueIdentifier>{c16b8887-df0b-4b2a-8bef-c52798932dfa}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="Classes\ManicMiner\Switch">
       <UniqueIdentifier>{44c6012d-5434-4f04-a119-235e9daa5469}</UniqueIdentifier>
     </Filter>
@@ -356,7 +356,7 @@
     </ClCompile>
     <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\GCFactory_ObjSpritePhysics.cpp">
       <Filter>Classes\GamerCamp\GCCocosInterface</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Collectibles\CSwitchOLD.cpp">
       <Filter>Classes\ManicMiner\OLD_Collectibles</Filter>
     </ClCompile>
@@ -619,6 +619,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\GameManager\CGameManager.h">
       <Filter>Classes\ManicMiner\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleRequirements.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelValues.h">
+      <Filter>Classes\ManicMiner\Structs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

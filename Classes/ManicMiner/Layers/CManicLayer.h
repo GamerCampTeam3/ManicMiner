@@ -20,8 +20,8 @@
 #include < stdlib.h >
 
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
-#include "ManicMiner/Enums/ECollectibleTypeRequired.h"
 #include "ManicMiner/GameState/EGameState.h"
+#include "ManicMiner/Structs/SLevelValues.h"
 
 #ifndef _GCLEVELLOADER_OGMO_H_
 #include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
@@ -43,12 +43,19 @@ class CSwitch;																											//
 
 class CManicLayer: public IGCGameLayer, public b2ContactListener
 {
+// Bib Edit ----------------------------------------------------------------------------------------------------------- //
+protected:																												//
+	CGameManager*		m_pcGameManager;																				//
+	SLevelValues		m_sLevelValues;																					//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+	
 private:
 // Henrique Edit ------------------------------------------------------------------------------------------------------ //
 																														//
 // Reference to the LevelManager in order to proceed																	//
 	CLevelManager*		m_pcLevelManager;																				//
-	CGameManager*		m_pcGameManager;																				//
+																														//
 																														//
 // Level Loader Instance																								//	
 	CGCLevelLoader_Ogmo	m_cLevelLoader;																					//
@@ -71,16 +78,7 @@ private:
 
 
 
-// Bib Edit ----------------------------------------------------------------------------------------------------------- //
-																														//
-	ECollectibleTypeRequired m_eCollectibleTypeRequired;																//
-																														//
-// Number of collectibles in the level																					//
-	int m_iNumCollectiblesNeeded;																						//
-																														//
-// Number of switches in the level																						//
-	int m_iNumSwitchesNeeded;																							//
-// -------------------------------------------------------------------------------------------------------------------- //
+
 
 
 public:
@@ -321,7 +319,7 @@ public:																													//
 // On click, request next level to be loaded
 	void CB_OnGameExitButton( Ref* pSender );
 
-protected:
+public:
 	virtual void InitParams() {};
 };
 #endif // #ifndef _CMANICLAYER_H_
