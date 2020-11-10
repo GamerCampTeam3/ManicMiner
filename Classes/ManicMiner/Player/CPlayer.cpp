@@ -5,9 +5,11 @@
 #include "Classes/ManicMiner/Player/CPlayer.h"
 
 #include "AppDelegate.h"
+#include "Box2D/Dynamics/b2Fixture.h" 
 #include "GamerCamp/GameController/GCController.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Layers/CManicLayer.h"
+#include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
 USING_NS_CC;
 
@@ -16,8 +18,9 @@ static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,	
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
-CPlayer::CPlayer( const cocos2d::Vec2& startingPos )
+CPlayer::CPlayer( b2World& rcB2World, const cocos2d::Vec2& startingPos )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
+	, m_rcB2World						( rcB2World )
 	, m_kfGravitionalPull				( 2.3f )
 	, m_ePlayerDirection				( EPlayerDirection::Static )
 	, m_ePendingDirection				( EPlayerDirection::Static )
@@ -182,6 +185,11 @@ void CPlayer::VOnResurrected()																													//
 		GetPhysicsBody()->SetFixedRotation( true );																								//
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );																				//
 	}																																			//
+
+// Reset Keyboard State
+	CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
+	pKeyManager->Update();
+	pKeyManager->Reset();
 }																																				//
 																																				//
 // -------------------------------------------------------------------------------------------------------------------- //						//
@@ -195,24 +203,29 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 {																																				//
 // Get player input and change movement if needed																								//
 	CheckKeyboardInput();																														//
+														
+	b2Vec2 v2RayStart = GetPhysicsTransform().p;
+	b2Vec2 v2RayEnd = v2RayStart + b2Vec2( 0.0f, 1.5f );
+	//draw a line
+	
 																																				//
 	// DEBUG SECTION -------------------------------------------------------------- //															//
 																					//															//
 	// ---------- Number of Hard Contacts this frame ------------------ //			//															//
 	//																	//			//															//
-	std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
-	char const* pchar1 = string1.c_str();								//			//															//
-	CCLOG( "Hard Count:" );												//			//															//
-	CCLOG( pchar1 );													//			//															//
-	//																	//			//															//
-	// ---------------------------------------------------------------- //			//															//
-																					//															//
-	// ----------- Number of Soft Contacts this frame ----------------- //			//															//
-	//																	//			//															//
-	std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
-	char const* pchar2 = string2.c_str();								//			//															//
-	CCLOG( "Soft Count:" );												//			//															//
-	CCLOG( pchar2 );													//			//															//
+	//std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
+	//char const* pchar1 = string1.c_str();								//			//															//
+	//CCLOG( "Hard Count:" );												//			//															//
+	//CCLOG( pchar1 );													//			//															//
+	////																	//			//															//
+	//// ---------------------------------------------------------------- //			//															//
+	//																				//															//
+	//// ----------- Number of Soft Contacts this frame ----------------- //			//															//
+	////																	//			//															//
+	//std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
+	//char const* pchar2 = string2.c_str();								//			//															//
+	//CCLOG( "Soft Count:" );												//			//															//
+	//CCLOG( pchar2 );													//			//															//
 	//																	//			//															//
 	// ---------------------------------------------------------------- //			//															//
 																					//															//
@@ -240,28 +253,28 @@ void CPlayer::CheckKeyboardInput()
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	// JUMP																							//
 	//////////////////////////////////////////////////////////////////////////////////////////////////
-		if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump )))
+		if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) ) )
 		{
-		//CCLOG( "jump input received" );
+			//CCLOG( "jump input received" );
 			JumpEvent();
 		}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	// LEFT																							//
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Left )))
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// LEFT																							//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left ) ) )
 		{
-		// If can be controlled and is grounded
-			if ( m_bCanBeControlled && m_bIsGrounded )
+			// If can be controlled and is grounded
+			if( m_bCanBeControlled && m_bIsGrounded )
 			{
 				ApplyDirectionChange( EPlayerDirection::Left );
 			}
 		}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	// RIGHT																						//
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-		else if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Right )))
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// RIGHT																						//
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) ) )
 		{
 			if( m_bCanBeControlled && m_bIsGrounded )
 			{
@@ -280,7 +293,6 @@ void CPlayer::CheckKeyboardInput()
 			}
 		}
 	}
-
 }
 
 
@@ -388,30 +400,70 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::JumpEvent()
 {
-// If on normal platform, jump normally
-	if( !m_bIsPendingDirection )
+// Raycast to check if can jump
+// Start from centre of player body
+	b2Vec2 v2RayStart ( GetPhysicsTransform().p );
+// We just want to check the immediate block above player head
+// Because the player is 2 blocks high, and we start from its centre
+// We will need a raycast length of 1.5 blocks
+// This way our raycast ends in the centre of the block above the head
+	float fRayLength = 1.5f;
+	b2Vec2 v2RayEnd	= v2RayStart + b2Vec2( 0.0f, fRayLength );
+
+// We will need to check on both extremities of the player
+// As if we're shooting a raycast off of both shoulders
+	b2Vec2 v2HorizontalOffset( 0.5f, 0.0f );
+
+// Another possible approach would be AABB querying
+// We could check a whole rectangle area above the player's head
+// But because everything is axis aligned, we're fine with just 2 vertical lines
+// For more info check	http://www.iforce2d.net/b2dtut/raycasting
+//					and http://www.iforce2d.net/b2dtut/world-querying
+
+// Perform RayCasts -> a flag will be set in case any hits occur
+
+	// Reset RayCast Hit Flag
+	m_cRayCastCallBack.ResetFlag();
+
+	// Right Side
+	m_rcB2World.RayCast( &m_cRayCastCallBack, ( v2RayStart + v2HorizontalOffset ), ( v2RayEnd + v2HorizontalOffset ) );
+	// Left Side
+	m_rcB2World.RayCast( &m_cRayCastCallBack, ( v2RayStart - v2HorizontalOffset ), ( v2RayEnd - v2HorizontalOffset ) );
+
+	if( m_cRayCastCallBack.GetDidRayHit() )
 	{
-		SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpSpeed ) );
+		CCLOG( "Head Bumped, Jump Cancelled" );
+		ApplyDirectionChange( EPlayerDirection::Static );
 	}
-// Else, on top of conveyor, jump that way
 	else
 	{
-		switch( m_ePendingDirection )
+	// If on normal platform, jump normally
+		if( !m_bIsPendingDirection )
 		{
-		case EPlayerDirection::Right:
-			SetVelocity( cocos2d::Vec2( m_fWalkSpeed, m_fJumpSpeed ) );
-			break;
-		case EPlayerDirection::Left:
-			SetVelocity( cocos2d::Vec2( m_fWalkSpeed * -1.0f, m_fJumpSpeed ) );
-			break;
+			SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpSpeed ) );
 		}
-		m_ePlayerDirection = m_ePendingDirection;
+	// Else, on top of conveyor, jump that way
+		else
+		{
+			switch( m_ePendingDirection )
+			{
+			case EPlayerDirection::Right:
+				SetVelocity( cocos2d::Vec2( m_fWalkSpeed, m_fJumpSpeed ) );
+				break;
+			case EPlayerDirection::Left:
+				SetVelocity( cocos2d::Vec2( m_fWalkSpeed * -1.0f, m_fJumpSpeed ) );
+				break;
+			}
+			m_ePlayerDirection = m_ePendingDirection;
+		}
+
+		m_bCanJump = false;
+
+	// Unlock from conveyor belt always
+		m_bCanBeControlled = true;
+
+		CCLOG( "Jumped" );
 	}
-
-	m_bCanJump = false;
-
-// Unlock from conveyor belt always
-	m_bCanBeControlled = true;
 }
 
 

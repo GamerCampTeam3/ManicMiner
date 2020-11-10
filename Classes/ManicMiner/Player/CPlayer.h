@@ -8,6 +8,7 @@
 
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 #include "ManicMiner/Enums/EPlayerMovement.h"
+#include "ManicMiner/Physics/PlayerB2RayCastCallBack.h"
 
 
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
@@ -29,6 +30,17 @@ class CPlayer
 	: public CGCObjSpritePhysics
 {
 private:
+
+// --------------- Physics -------------------------------------------------------------------------------------------- //
+																														//
+// Reference to the world, needed for raycasting on jump																//
+	b2World& m_rcB2World;																								//
+																														//
+// Instance of a CPlayerB2RayCastCallBack, needed for the jump															//
+	CPlayerB2RayCastCallBack m_cRayCastCallBack;																		//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 
 
 // -------------- Movement Properties --------------------------------------------------------------------------------- //
@@ -117,7 +129,7 @@ private:
 																														
 public:																													
 // Constructor -------------------------------------------------------------------------------------------------------- // 
-	CPlayer( const cocos2d::Vec2& startingPos);
+	CPlayer( b2World& rcB2World, const cocos2d::Vec2& startingPos);
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
 	virtual ~CPlayer();

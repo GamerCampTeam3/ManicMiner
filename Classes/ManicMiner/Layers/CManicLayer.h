@@ -96,6 +96,7 @@ public:
 	virtual	void VOnCreate		( void			)		override;														//
 	virtual void VOnUpdate		( f32 fTimeStep )		override;														//
 	virtual	void VOnDestroy		( void			)		override;														//
+	virtual void VOnReset		( void			)		override;
 // -------------------------------------------------------------------------------------------------------------------- //
 
 

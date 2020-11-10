@@ -232,6 +232,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.cpp" />
@@ -341,6 +342,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h" />
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h" />
