@@ -115,14 +115,12 @@ void  CGameManager::WriteHighScore()
 	}
 	else
 	{
+		unsigned int tempScore = m_iHighScore;				// Sec the temporary int to be the current high score
+		unsigned int comparisonScore = tempScore;			// We then also store it in another variable
 
-		int tempScore = m_iHighScore;						// Sec the temporary int to be the current high score
-		int comparisonScore = tempScore;					// We then also store it in another variable
+		tempScore = tempScore << 16;						// We shift the bits here by 8
 
-		tempScore = tempScore << 8;							// We shift the bits here by 8
-		tempScore = tempScore * 4;							// then we multiply it by 4, this is done so the high score isn't edited easily.
-
-		comparisonScore = comparisonScore << 1;				// The second variable is shifted with a different number (so they aren't both the same)
+		comparisonScore = comparisonScore << 5;				// The second variable is shifted with a different number (so they aren't both the same)
 
 
 		highScoreFile << tempScore;							// We then write the first value to the file
@@ -146,13 +144,13 @@ void  CGameManager::ReadHighScore()
 		// TODO: Add a prompt saying file not found, therefore reset.
 	}
 
-	int tempScore = 0;					
-	int comparisonScore = 0;
+	unsigned int tempScore = 0;
+	unsigned int comparisonScore = 0;
 	highScoreFile >> tempScore >> comparisonScore;			// We read the file and store the values
 	
-	tempScore = tempScore / 4;								// We then decrypt it with a division operation
-	tempScore = tempScore >> 8;								// then shift 8 bits back
-	comparisonScore = comparisonScore >> 1;					// Reverse the operation on comparison as well
+	// We then decrypt it with a division operation
+	tempScore = tempScore >> 16;								// then shift 8 bits back
+	comparisonScore = comparisonScore >> 5;					// Reverse the operation on comparison as well
 
 	if ( tempScore != comparisonScore)						// Finally we compare the value to see if any where user touched.
 	{
@@ -160,7 +158,7 @@ void  CGameManager::ReadHighScore()
 	}
 	else
 	{
-		m_iHighScore = tempScore;							// Otherwise, it's all good!
+		m_iHighScore = static_cast<int>(tempScore);							// Otherwise, it's all good!
 	}	
 }
 
