@@ -19,7 +19,7 @@ private:
 	
 public:
 	CDoor();
-	CGCFactoryCreationParams* m_pCustomCreationParams;
+	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
 	
 	GCFACTORY_DECLARE_CREATABLECLASS( CDoor );
 
