@@ -22,10 +22,7 @@
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLCentralCavern::CMLCentralCavern( )
 	: CManicLayer( )
-	, m_pcGCGroupEnemyCentralCavern(nullptr)
-	, m_pcGCGroupHazardCentralCavern(nullptr)
 	, m_pcGroupPlatformCentralCavern(nullptr)
-	, m_pcCollectiblesGroupCentralCavern(nullptr)
 {}
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
@@ -50,21 +47,11 @@ void CMLCentralCavern::VOnCreate( void )
 	GetPlayer().SetResetPosition( v2NewStart );
 
 	
-	// Enemies for Central Cavern
-	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
-	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
-
-	// Hazards for Central Cavern
-	m_pcGCGroupHazardCentralCavern = new CGCObjGroupHazardCentralCavern();
-	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupHazardCentralCavern);
-
 	// Platforms for Central Cavern
 	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();
 	CGCObjectManager::ObjectGroupRegister(m_pcGroupPlatformCentralCavern);
 
 
-	m_pcCollectiblesGroupCentralCavern = new CCGCentralCavern(*this, ECollectibleTypeRequired::Collectible, 5);	
-	CGCObjectManager::ObjectGroupRegister( m_pcCollectiblesGroupCentralCavern );
 
 	m_pcCDCreatorCentralCavern = new CDCreatorCentralCavern( *this );
 	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
@@ -85,25 +72,17 @@ void CMLCentralCavern::VOnCreate( void )
 void CMLCentralCavern::InitParams()
 {
 	// Sets the references required by the player
-	m_pcGameManager->SetCHUD( m_pCHUD );
-	m_pcGameManager->SetCPlayer( &GetPlayer() );
-	m_pcGameManager->SetCAirManager( m_pcAirManager );
-	m_pcAirManager->SetGameManager( m_pcGameManager );
-	m_pcGameManager->SetLevelRequirements( m_sLevelValues );
+	m_pcGameManager	->SetCHUD( m_pCHUD );
+	m_pcGameManager	->SetCPlayer( &GetPlayer() );
+	m_pcGameManager	->SetCAirManager( m_pcAirManager );
+	m_pcAirManager	->SetGameManager( m_pcGameManager );
+	m_pcGameManager	->SetLevelRequirements( m_sLevelValues );
 }
 
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnDestroy(void)
 {
-	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupEnemyCentralCavern);
-	safeDelete( m_pcGCGroupEnemyCentralCavern );
-
-	CGCObjectManager::ObjectGroupUnRegister(m_pcGCGroupHazardCentralCavern);
-	safeDelete(m_pcGCGroupHazardCentralCavern);
-
-	CGCObjectManager::ObjectGroupUnRegister( m_pcCollectiblesGroupCentralCavern );
-	safeDelete( m_pcCollectiblesGroupCentralCavern );
 
 	m_pcGroupPlatformCentralCavern->DestroyPlatforms();
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);

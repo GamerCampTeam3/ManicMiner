@@ -34,8 +34,6 @@ static const char* k_pszB2BodyType_Dynamic		= "b2_dynamicBody";
 static const char* k_pszB2BodyType_Static		= "b2_staticBody";
 static const char* k_pszB2BodyType_Kinematic	= "b2_kinematicBody";
 
-
-
 const tinyxml2::XMLElement* CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData = nullptr;
 
 
