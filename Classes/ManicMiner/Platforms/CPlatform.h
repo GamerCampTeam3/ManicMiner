@@ -20,8 +20,9 @@ class CPlatform :
     public CGCObjSpritePhysics
 {
 public:
-	CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
-	~CPlatform();
+	CPlatform();
+	//CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
+	virtual ~CPlatform();
 	
 	void VOnResourceAcquire() override;
 
@@ -39,8 +40,8 @@ public:
 
 	
 protected:
-
-	CGCFactoryCreationParams& m_FactoryCreationParams;
+	
+	//CGCFactoryCreationParams& m_FactoryCreationParams;
 
 	// V2 position in the level
 	cocos2d::Vec2 m_v2ResetPosition;
@@ -50,6 +51,7 @@ protected:
 	bool m_bCollisionEnabled;
 	bool m_bTriggersHardContactEvent;
 
+	cocos2d::Vec2	m_cAnchorPoint;
 
 	cocos2d::Director* m_pcDirector;
 };

@@ -11,6 +11,13 @@
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
 
+CPlatform::CPlatform()
+	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlatform))
+{
+	
+}
+
+/*
 CPlatform::CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlatform))
 	, m_FactoryCreationParams(CreationParams)
@@ -20,7 +27,7 @@ CPlatform::CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 Re
 	, m_bTriggersHardContactEvent ( false )
 
 {
-}
+}*/
 
 CPlatform::~CPlatform()
 {
@@ -32,11 +39,11 @@ CPlatform::~CPlatform()
 
 void CPlatform::VOnResourceAcquire()
 {
-	VHandleFactoryParams(m_FactoryCreationParams, GetResetPosition());
+	//VHandleFactoryParams(m_FactoryCreationParams, GetResetPosition());
 	
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
-	SetResetPosition(m_v2ResetPosition);
+	//SetResetPosition(m_v2ResetPosition);
 
 	m_pcDirector = cocos2d::Director::getInstance();
 

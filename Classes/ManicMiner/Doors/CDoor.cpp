@@ -1,32 +1,49 @@
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 
-// Constructor that initializes all values.
-// The references are fed in by the door managers.
-CDoor::CDoor(CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition)
-	: CGCObjSpritePhysics( GetGCTypeIDOf( CDoor ) )
-	, m_cManicLayer						( cLayer )
-	, m_FactoryCreationParams			( CreationParams )
-	, m_v2ResetPosition					( ResetPosition )
-{	
-}
+
+#ifndef TINYXML2_INCLUDED
+#include "external\tinyxml2\tinyxml2.h"
+#endif
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
+USING_NS_CC;
+
+GCFACTORY_IMPLEMENT_CREATEABLECLASS( CDoor );
 
 
-// Checks if player is escaping and if so request the next level
-void CDoor::InteractEvent()
+//// Constructor that initializes all values.
+//// The references are fed in by the door managers.
+//CDoor::CDoor(CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition)
+//	: CGCObjSpritePhysics( GetGCTypeIDOf( CDoor ) )
+//	, m_cManicLayer						( cLayer )
+//	, m_FactoryCreationParams			( CreationParams )
+//	, m_v2ResetPosition					( ResetPosition )
+//{	
+//}
+
+CDoor::CDoor()
+	: CGCObjSpritePhysics( GetGCTypeIDOf ( CDoor) )
 {
-	if ( m_cManicLayer.GetGameState() == EGameState::Escaping )
-	{
-		m_cManicLayer.RequestNextLevel();
-	}
+
 }
+
+void CDoor::VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition )
+{
+
+
+
+	CGCObjSpritePhysics::VHandleFactoryParams( rCreationParams, v2InitialPosition );
+}
+
 
 // Sets the sprites as well as reset position
 void CDoor::VOnResourceAcquire()
 {
-	VHandleFactoryParams( m_FactoryCreationParams, GetResetPosition() );
 	CGCObjSpritePhysics::VOnResourceAcquire();
-	SetResetPosition( m_v2ResetPosition );
 }
 
 // Calls parent Reset 

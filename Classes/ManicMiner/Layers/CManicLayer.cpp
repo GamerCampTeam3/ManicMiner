@@ -665,7 +665,6 @@ void CManicLayer::PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2
 {																														//
 	if ( rcContact.IsTouching() )																						//
 	{																													//
-		//rcDoor.InteractEvent();
 		m_pcGameManager->EndLevel();
 	}																													//
 }																														//

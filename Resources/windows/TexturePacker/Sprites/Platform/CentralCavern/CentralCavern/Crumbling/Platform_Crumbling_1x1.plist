@@ -8,6 +8,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,4}</string>
                 <key>spriteSize</key>
@@ -23,6 +25,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,6}</string>
                 <key>spriteSize</key>
@@ -38,6 +42,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,10}</string>
                 <key>spriteSize</key>
@@ -53,6 +59,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,11}</string>
                 <key>spriteSize</key>
@@ -68,6 +76,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0,1}</string>
                 <key>spriteOffset</key>
                 <string>{-28.5,28.5}</string>
                 <key>spriteSize</key>
@@ -83,6 +93,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -98,6 +110,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -123,7 +137,7 @@
             <key>size</key>
             <string>{62,253}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3f7e1c36f3effb0dc78ad55621c06e72:2c90cdd8683c58692943c447a4aa440b:d67b179265fda25b1c903969a56a167b$</string>
+            <string>$TexturePacker:SmartUpdate:fd6a812c6015e5efd4e2d4882b39a7b4:2c90cdd8683c58692943c447a4aa440b:d67b179265fda25b1c903969a56a167b$</string>
             <key>textureFileName</key>
             <string>CN_Platform_Crumbling_1x1.png</string>
         </dict>
