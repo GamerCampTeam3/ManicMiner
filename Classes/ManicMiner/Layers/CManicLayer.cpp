@@ -10,6 +10,7 @@
 #include "GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
+#include "GamerCamp/Win32Input/GCKeyboardManager.h"
 
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
@@ -17,6 +18,7 @@
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Helpers/Helpers.h"
+#include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
 
 // Include different platform types for collision checks
@@ -26,6 +28,7 @@
 #include "ManicMiner/Platforms/CMovingPlatform.h"
 #include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CRegularPlatform.h"
+#include "ManicMiner/Switch/CSwitch.h"
 
 #include "ManicMiner/Player/CPlayer.h"
 
@@ -49,16 +52,15 @@ USING_NS_CC;
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
-	, m_pcLevelManager( nullptr )
-	, m_eGameState( EGameState::Looting )
-	, m_bWasResetRequested( false )
-	, m_bWasNextLevelRequested( false )
-	, m_pcGCSprBackGround( nullptr )
-	, m_pcPlayer( nullptr )
-	, m_eCollectibleTypeRequired( ECollectibleTypeRequired::Collectible )
-	, m_iNumCollectiblesNeeded( 4 )
+	, m_pcLevelManager				( nullptr )
+	, m_pcGameManager				( nullptr )
+	, m_eGameState					( EGameState::Looting )
+	, m_bWasResetRequested			( false )
+	, m_bWasNextLevelRequested		( false )
+	, m_pcGCSprBackGround			( nullptr )
+	, m_pcPlayer					( nullptr )
+	, m_sLevelValues				( ECollectibleRequirements::Collectible, 5 )
 {
-
 }
 
 // Destructor  -------------------------------------------------------------------------------------------------------- //
@@ -202,7 +204,7 @@ void CManicLayer::VOnCreate()
 	// Personally I favour option 1, as I reckon it's a) more elegant and b) more philosophically 'correct'.
 	//
 	///////////////////////////////////////////////////////////////////////////
-
+	
 	// load level data from Ogmo Editor
 
 	// read the oel file for level 0
@@ -220,9 +222,9 @@ void CManicLayer::VOnCreate()
 
 	// starting position
 	const Vec2 v2PlayerStartPos = v2ScreenCentre_Pixels;
-
 	// create player object
-	m_pcPlayer = new CPlayer( v2PlayerStartPos );
+	m_pcPlayer = new CPlayer( *this, v2PlayerStartPos );
+
 
 
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
@@ -268,6 +270,7 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 	// Go to next level if requested
 	if( GetWasNextLevelRequested() )
 	{
+		
 		m_bWasNextLevelRequested = false;
 		m_pcLevelManager->GoToNextLevel();
 	}
@@ -293,6 +296,11 @@ void CManicLayer::VOnDestroy()
 }
 
 
+
+void CManicLayer::VOnReset( void )
+{
+	IGCGameLayer::VOnReset();
+}
 
 // --- b2ContactListener Interface ------------------------------------------------------------------------------------ //
 																														//
@@ -429,7 +437,8 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 							// Player Bumped onto brick																	//
 							m_pcPlayer->BumpedWithBricks();																//
 						}																								//
-						else																							//
+						// Else, is in mid-air? If so, land on platform													//
+						else if ( !m_pcPlayer->GetIsGrounded() )														//
 						{																								//
 							// Set player as grounded																	//
 							m_pcPlayer->LandedOnWalkablePlatform();														//
@@ -646,16 +655,18 @@ void CManicLayer::PlayerCollidedHazard( CPlayer& rcPlayer, CGCObjHazard& rcHazar
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
-		OnDeath();																										//
+		OnDeath();
+		m_pcGameManager->UpdateLives();//
 	}																													//
 }																														//
 																														//
 																														//
-void CManicLayer::PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact )						//
+void CManicLayer::PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact )					//
 {																														//
 	if ( rcContact.IsTouching() )																						//
 	{																													//
-		rcDoor.InteractEvent();																							//
+		//rcDoor.InteractEvent();
+		m_pcGameManager->EndLevel();
 	}																													//
 }																														//
 																														//
@@ -665,6 +676,16 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 	if( rcContact.IsTouching() )																						//
 	{																													//
 		rcCollectible.InteractEvent();																					//
+		m_pcGameManager->CCollectibleInteractEvent();																	//
+	}																													//
+}																														//
+																														//
+void CManicLayer::SwitchInteracted(CSwitch& rcSwitch, CPlayer& rcPlayer, const b2Contact& rcContact)					//
+{																														//
+	if (rcContact.IsTouching())																							//
+	{																													//
+		rcSwitch.InteractEvent();																						//
+		m_pcGameManager->CSwitchInteractEvent();																		//
 	}																													//
 }																														//
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -716,6 +737,11 @@ void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )														
 void CManicLayer::SetGameState( const EGameState gameState ) 															//
 { 																														//
 	m_eGameState = gameState;																							//
+}																														//
+																														//
+void CManicLayer::SetGameManager(CGameManager& rcGameManager)															//
+{																														//
+	m_pcGameManager = &rcGameManager;																					//
 }																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 

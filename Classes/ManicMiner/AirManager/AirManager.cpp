@@ -11,6 +11,8 @@
 #include "../GameInstance/CGameInstance.h"
 #include "../Layers/CMLCentralCavern.h"
 
+#include "ManicMiner/GameManager/CGameManager.h"
+
 USING_NS_CC;
 
 
@@ -19,12 +21,12 @@ CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	: CGCObject(GetGCTypeIDOf(CAirManager))
 	, m_eAirState( EAirState::EAS_HasAirLeft )
 	, m_eAirDrainedState(EAirDrainedState::AirDrained)
-	, m_pglOwnerGameLayer		( nullptr )
-	, m_pdDirector				( nullptr )
-	, m_pcGCSprAirBar			( nullptr )
-	, m_plAirLabel				( nullptr )
-	, m_pcGCSprAirVignette		( nullptr )
-	, m_pcAirBar				( nullptr )
+	, m_pglOwnerGameLayer			( nullptr )
+	, m_pdDirector					( nullptr )
+	, m_pcGCSprAirBar				( nullptr )
+	, m_plAirLabel					( nullptr )
+	, m_pcGCSprAirVignette			( nullptr )
+	, m_pcAirBar					( nullptr )
 	, m_fMaxAir						( 108.0f )
 	, m_fRemainingAirAmount			( m_fMaxAir )
 	, m_fConsumedAirAmount			( 0.0f )
@@ -32,11 +34,13 @@ CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	, m_fRemainingAirPercentage		( 0.0f )
 	, m_iRemainingAirPercentage		( 0 )
 	, m_iConsumedAirPercentage		( 0.0f )
-	, m_v2AirLabelPos			( 0.0f, 0.0f )
-	, m_bInitialized			( false )
-	, m_pOrigin				( pOrigin )
-	, m_visibleSize			( visibleSize )
-	, m_fDrainAirMultiplier	(1.0f)
+	, m_v2AirLabelPos				( 0.0f, 0.0f )
+	, m_bInitialized				( false )
+	, m_pOrigin						( pOrigin )
+	, m_visibleSize					( visibleSize )
+	, m_fDrainAirMultiplier			( 1.0f )
+	, m_bDrainComplete				( false )
+	, m_pcGameManager				( nullptr )
 {}
 
 CAirManager::~CAirManager()
@@ -258,8 +262,11 @@ bool CAirManager::UpdateAirTimer()
 		case EAirDrainedState::AirDrained :
 			m_pglOwnerGameLayer->OnDeath();
 			break;
+		case EAirDrainedState::LevelCompleted :
+			break;
 		}
 		bHasAirLeft = false;
+		m_bDrainComplete = true;
 	}
 	
 	m_fReduceAirByAmountPerFrame = (1.f / m_pdDirector->getFrameRate()) * m_fDrainAirMultiplier;	// using framerate for division allows 
@@ -274,9 +281,22 @@ bool CAirManager::UpdateAirTimer()
 																						// get a range from 0-100 for the percentage
 
 	m_iRemainingAirPercentage = m_fRemainingAirPercentage;
+
+	// Not really a great way of doing this, since AirManager doesn't necessarily need to know about the CGameManager
+	// But it does work, ideally I will replicate later the per frame thing Umeer has done.
+	if (m_pcGameManager->GetCanDrainToScore())
+	{
+		m_pcGameManager->DrainToScore();
+	}
 	
 	return bHasAirLeft;
 }
+
+void CAirManager::SetGameManager(CGameManager* pcGameManager)
+{
+	m_pcGameManager = pcGameManager;
+}
+
 
 void CAirManager::UpdateAirUIElements()
 {
@@ -298,10 +318,14 @@ void CAirManager::UpdateAirUIElements()
 			m_pcAirBar->setPercent(m_fRemainingAirPercentage);
 		}
 
-		if( 0 <= m_pcGCSprAirVignette->GetSpriteOpacity() && nullptr != m_pcGCSprAirVignette )
+		// Bib Edit: Disable vignette fade if leaving the level
+		if (m_pglOwnerGameLayer->GetGameState() != EGameState::Escaping)
 		{
-			int iNewOpacity = ( m_fConsumedAirAmount * 250 / m_fMaxAir );
-			m_pcGCSprAirVignette->SetSpriteOpacity( iNewOpacity );
+			if (0 <= m_pcGCSprAirVignette->GetSpriteOpacity() && nullptr != m_pcGCSprAirVignette)
+			{
+				int iNewOpacity = (m_fConsumedAirAmount * 250 / m_fMaxAir);
+				m_pcGCSprAirVignette->SetSpriteOpacity( iNewOpacity );
+			}
 		}
 	}
 }

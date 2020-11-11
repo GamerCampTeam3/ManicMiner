@@ -232,6 +232,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.cpp" />
@@ -318,6 +319,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjGroupLander.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleRequirements.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleType.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleTypeRequired.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h" />
@@ -341,6 +343,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h" />
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h" />
@@ -351,6 +354,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelValues.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SSwitches.h" />
     <ClInclude Include="..\Classes\ManicMiner\Switch\CSwitch.h" />
     <ClInclude Include="main.h" />

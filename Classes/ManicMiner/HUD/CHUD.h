@@ -16,27 +16,24 @@ namespace cocos2d
 }
 
 class CHUD
-	: public CGCObject
 {
 public:
 	// Constructor that takes in a collectibles group and layer reference
 	// which are used to update the HUD
-	CHUD(CPlayer& cPlayer, CManicLayer& cLayer, CCollectiblesGroup& collectiblesGroup);
+	CHUD ( CManicLayer& cLayer );
+	~CHUD() { };
+
+	void UpdateScore(int score);
+	void UpdateHighScore(int highScore);
+	void UpdateLives(int lives);
 	
 private:
 	// Member Variables
 	cocos2d::Label*		m_pLivesLabel;			// Lives text
 	cocos2d::Label*		m_pScoreLabel;			// Score text
-	CPlayer*			m_pcPlayer;				// Player pointer
+	cocos2d::Label*		m_pHighScoreLabel;		// HighScore text
 	CManicLayer*		m_pglOwnerGameLayer;	// manic layer pointer
-	CCollectiblesGroup*	m_pCollectiblesGroup;	// Collectibles group pointer
 
-	// Object Overrides
-	void VOnUpdate( float fTimeStep ) override;
-	void VOnReset() override;
-
-	// Updates the text
-	void UpdateLabel();
 };
 
 #endif // #ifndef _CHUD_H_

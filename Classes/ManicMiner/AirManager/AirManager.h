@@ -6,6 +6,7 @@
 #include "GamerCamp/GCObject/GCObject.h"
 #include "ui/CocosGUI.h"
 
+class CGameManager;
 class CManicLayer;
 
 namespace cocos2d {
@@ -104,6 +105,10 @@ private:
 
 	float m_fDrainAirMultiplier;
 
+	// Bib Edit:
+	bool m_bDrainComplete;
+	CGameManager* m_pcGameManager;
+
 private:
 	
 	// updates air (timer) per frame and returns a bool stating whether there is any air left or not
@@ -123,9 +128,11 @@ public:
 	inline float fGetRemainingAirPercentage()		  { return m_fRemainingAirPercentage; }
 	inline int	 iGetConsumedAirPercentage()		  { return m_iConsumedAirPercentage; }
 	inline EAirState  eGetAirState()                  { return m_eAirState; }
+	inline bool	 GetDrainComplete()					  { return m_bDrainComplete; }
 	
 	inline void eSetAirDrainedState(EAirDrainedState eAirDrainedState)		{ m_eAirDrainedState = eAirDrainedState; }
 	inline EAirDrainedState eGetAirDrainedState()							{ m_eAirDrainedState; }
+	void SetGameManager ( CGameManager* pcGameManager );
 	
 };
 #endif

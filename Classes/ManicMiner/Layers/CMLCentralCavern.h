@@ -59,5 +59,7 @@ private:
 
 // --- Air Manager ---------------------------------------------------------------------------------------------------- //
 	CAirManager*					m_pcAirManager;
+
+	virtual void InitParams() override;
 };
 #endif //#ifndef _CMANICLAYER_H_

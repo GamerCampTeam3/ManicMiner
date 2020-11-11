@@ -20,8 +20,8 @@
 #include < stdlib.h >
 
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
-#include "ManicMiner/Enums/ECollectibleTypeRequired.h"
 #include "ManicMiner/GameState/EGameState.h"
+#include "ManicMiner/Structs/SLevelValues.h"
 
 #ifndef _GCLEVELLOADER_OGMO_H_
 #include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
@@ -29,24 +29,33 @@
 
 
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
-class CCollectible;																										//
-class CCollectiblesGroup;																								//
+class CCollectible;																										//																							
 class CDoor;																											//
+class CGameManager;																									    //
 class CGCObjEnemy;																										//
 class CGCObjHazard;																										//
 class CLevelManager;																									//
 class CPlatform;																										//
 class CPlayer;																											//
+class CSwitch;																											//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
 class CManicLayer: public IGCGameLayer, public b2ContactListener
 {
+// Bib Edit ----------------------------------------------------------------------------------------------------------- //
+protected:																												//
+	CGameManager*		m_pcGameManager;																				//
+	SLevelValues		m_sLevelValues;																					//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+	
 private:
 // Henrique Edit ------------------------------------------------------------------------------------------------------ //
 																														//
 // Reference to the LevelManager in order to proceed																	//
 	CLevelManager*		m_pcLevelManager;																				//
+																														//
 																														//
 // Level Loader Instance																								//	
 	CGCLevelLoader_Ogmo	m_cLevelLoader;																					//
@@ -69,16 +78,7 @@ private:
 
 
 
-// Bib Edit ----------------------------------------------------------------------------------------------------------- //
-																														//
-	ECollectibleTypeRequired m_eCollectibleTypeRequired;																//
-																														//
-// Number of collectibles in the level																					//
-	int m_iNumCollectiblesNeeded;																						//
-																														//
-// Number of switches in the level																						//
-	int m_iNumSwitchesNeeded;																							//
-// -------------------------------------------------------------------------------------------------------------------- //
+
 
 
 public:
@@ -91,9 +91,10 @@ public:
 
 
 // ------------------------------------ IGCGameLayer Interface -------------------------------------------------------- //
-	virtual	void VOnCreate		( void			)		override;														//
-	virtual void VOnUpdate		( f32 fTimeStep )		override;														//
-	virtual	void VOnDestroy		( void			)		override;														//
+	virtual void VOnUpdate		( f32 fTimeStep )	override;															//
+	virtual	void VOnCreate		( void )			override;															//
+	virtual	void VOnDestroy		( void )			override;															//
+	virtual void VOnReset		( void )			override;															//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -117,6 +118,7 @@ public:
 	void PlayerCollidedHazard	( CPlayer&		rcPlayer,		CGCObjHazard&	rcHazard,	const b2Contact& rcContact	);
 	void PlayerCollidedDoor		( CPlayer&		rcPlayer,		CDoor&			rcDoor,		const b2Contact& rcContact	);
 	void ItemCollected			( CCollectible& rcCollectible,	CPlayer&		rcPlayer,	const b2Contact& rcContact	);
+	void SwitchInteracted		( CSwitch&		rcSwitch,		CPlayer& rcPlayer,			const b2Contact& rcContact	);
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -137,7 +139,8 @@ public:
 
 // ---------------------------------- Setters ------------------------------------------------------------------------- //
 	void SetLevelManager( CLevelManager&		rcLevelManager	);														//
-	void SetGameState	( const EGameState		gameState		); 														//
+	void SetGameState	( const EGameState		gameState		);														//
+	void SetGameManager	( CGameManager&			rcGameManager );														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -316,5 +319,8 @@ public:																													//
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
 	void CB_OnGameExitButton( Ref* pSender );
+
+public:
+	virtual void InitParams() {};
 };
 #endif // #ifndef _CMANICLAYER_H_

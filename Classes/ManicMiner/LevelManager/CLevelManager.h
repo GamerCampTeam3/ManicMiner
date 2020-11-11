@@ -13,6 +13,7 @@
 
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CManicLayer;																										//
+class CGameManager;																										//
 namespace cocos2d																										//
 {																														//
 	class Director;																										//
@@ -41,6 +42,7 @@ public:
 // See also		:	CMenuLayer																							//
 // -------------------------------------------------------------------------------------------------------------------- //
 	void GoToMainMenu();
+
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	GoToNextLevel																						//
@@ -84,5 +86,7 @@ private:
 	// 0 for Menu, 1 for CentralCaver, 2 for ColdRoom, and so on
 	// Used in GoToNextLevel() for the switch case that selects which level should be loaded next
 	int m_iCurrentLevelIndex;
+
+	CGameManager* m_pcCGameManager;
 };
 #endif //#ifndef _CLEVELMANAGER_H_
