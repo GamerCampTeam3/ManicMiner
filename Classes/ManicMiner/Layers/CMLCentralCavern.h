@@ -12,9 +12,6 @@
 #define _CMLCENTRALCAVERN_H_
 
 #include "ManicMiner/Layers/CManicLayer.h"
-#include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
-#include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
-
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CAirManager;																										//
 class CCGCentralCavern;																									//
@@ -39,17 +36,9 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 
 private:
-// --- Enemy Group ---------------------------------------------------------------------------------------------------- //
-	CGCObjGroupEnemyCentralCavern*	m_pcGCGroupEnemyCentralCavern;
-
-// --- Hazard Group --------------------------------------------------------------------------------------------------- //
-	CGCObjGroupHazardCentralCavern* m_pcGCGroupHazardCentralCavern;
 
 // --- Platform Group ------------------------------------------------------------------------------------------------- //
 	CObjCCGroupPlatform*			m_pcGroupPlatformCentralCavern;
-
-// --- Collectibles Group --------------------------------------------------------------------------------------------- //
-	CCGCentralCavern*				m_pcCollectiblesGroupCentralCavern;
 
 // --- Door Creator --------------------------------------------------------------------------------------------------- //
 	CDCreatorCentralCavern*			m_pcCDCreatorCentralCavern;
