@@ -74,6 +74,8 @@ private:
 
 	/// Crumbling Platforms
 	////////////////////////////////////////////////////////////////////////
+
+	bool IsInRange(float NumToCompare, float MinRange, float MaxRange);
 	
 };
 
