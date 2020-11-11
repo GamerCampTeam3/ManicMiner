@@ -37,9 +37,6 @@ public:
 
 private:
 
-// --- Platform Group ------------------------------------------------------------------------------------------------- //
-	CObjCCGroupPlatform*			m_pcGroupPlatformCentralCavern;
-
 // --- Door Creator --------------------------------------------------------------------------------------------------- //
 	CDCreatorCentralCavern*			m_pcCDCreatorCentralCavern;
 
