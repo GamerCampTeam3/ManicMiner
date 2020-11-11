@@ -10,12 +10,30 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
-CMovingPlatform::CMovingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition, const EPlayerDirection eDirectionLock )
-	: CPlatform( CreationParams, ResetPosition )
+
+#ifndef TINYXML2_INCLUDED
+#include "external\tinyxml2\tinyxml2.h"
+#endif
+
+
+
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
+GCFACTORY_IMPLEMENT_CREATEABLECLASS(CMovingPlatform);
+
+CMovingPlatform::CMovingPlatform()
+	: CPlatform()
 	, m_pcMovingAnim ( nullptr )
-	, m_eDirectionLock ( eDirectionLock )
 {
 	m_ePlatformType = EPlatformType::Moving;
+}
+
+void CMovingPlatform::InitDirectionalLock(const EPlayerDirection eDirectionLock)
+{
+	m_eDirectionLock = eDirectionLock;
 }
 
 void CMovingPlatform::VOnResourceAcquire()
@@ -24,7 +42,7 @@ void CMovingPlatform::VOnResourceAcquire()
 
 	const char* pszAnim_Move = "MoveLeft";
 
-	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
 	m_pcMovingAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Move);
 	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcMovingAnim));
 }
@@ -33,6 +51,7 @@ void CMovingPlatform::VOnReset()
 {
 	CPlatform::VOnReset();
 }
+
 
 const EPlayerDirection CMovingPlatform::GetDirectionLock()
 {

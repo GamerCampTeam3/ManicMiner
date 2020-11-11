@@ -8,6 +8,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0.5,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -15,7 +17,7 @@
                 <key>spriteSourceSize</key>
                 <string>{1200,60}</string>
                 <key>textureRect</key>
-                <string>{{1,65},{1200,60}}</string>
+                <string>{{1,67},{1200,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -23,6 +25,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0.5,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -30,7 +34,7 @@
                 <key>spriteSourceSize</key>
                 <string>{1200,60}</string>
                 <key>textureRect</key>
-                <string>{{1,127},{1200,60}}</string>
+                <string>{{1,129},{1200,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -38,6 +42,8 @@
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0.5,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -45,22 +51,24 @@
                 <key>spriteSourceSize</key>
                 <string>{1200,60}</string>
                 <key>textureRect</key>
-                <string>{{1,189},{1200,60}}</string>
+                <string>{{1,191},{1200,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>Platform_Moving_20x1.png</key>
+            <key>Platform_Moving_Ogmo.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0.5,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{1202,62}</string>
+                <string>{1204,64}</string>
                 <key>spriteSourceSize</key>
-                <string>{1202,62}</string>
+                <string>{1204,64}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{1202,62}}</string>
+                <string>{{1,1},{1204,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -76,9 +84,9 @@
             <key>realTextureFileName</key>
             <string>Platform_Moving_20x1.png</string>
             <key>size</key>
-            <string>{1204,250}</string>
+            <string>{1206,252}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:541b3c2254493229082a46516c9b6bd1:a06e725e79f479ab8a958a78fc8d95ff:54073c059a1ec5741e1dd767ce633667$</string>
+            <string>$TexturePacker:SmartUpdate:9eda645dcb9489dd3fcce160fe5506f1:87f5ae57d855a70d4bd44b852ed1322a:54073c059a1ec5741e1dd767ce633667$</string>
             <key>textureFileName</key>
             <string>Platform_Moving_20x1.png</string>
         </dict>

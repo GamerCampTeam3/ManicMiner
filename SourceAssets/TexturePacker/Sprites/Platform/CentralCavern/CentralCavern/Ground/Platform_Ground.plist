@@ -4,10 +4,12 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>CN_Platform_Ground.png</key>
+            <key>cc_platform_ground.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
+                <key>anchor</key>
+                <string>{0.5,0}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -29,13 +31,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>CN_Platform_Ground.png</string>
+            <string>Platform_Ground.png</string>
             <key>size</key>
             <string>{1802,62}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0c0a8f3f84f9b2209f283ff495b5fd3f:e240fa20a9f13187f17f5517de185c0d:ab2576ec1a6d129792d8ba0e33ac65d3$</string>
+            <string>$TexturePacker:SmartUpdate:7d599801eecaf78759f6c5d6bc9c433b:93205bd161f0564721af834747e3e456:3824f5deb5e6f3f3529db23813b93ef1$</string>
             <key>textureFileName</key>
-            <string>CN_Platform_Ground.png</string>
+            <string>Platform_Ground.png</string>
         </dict>
     </dict>
 </plist>
