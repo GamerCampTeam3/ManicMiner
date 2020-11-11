@@ -2,6 +2,14 @@
 // Gamer Camp 2020 / Henrique & Bib													//
 //////////////////////////////////////////////////////////////////////////////////////
 
+
+//#define PLAYER_DEBUG_DIRECTION
+//#define PLAYER_DEBUG_CONTACTS
+#define PLAYER_DEBUG_LANDING
+
+
+
+
 #include "Classes/ManicMiner/Player/CPlayer.h"
 
 #include "AppDelegate.h"
@@ -224,28 +232,43 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 		}
 	}
 	
+	CCLOG( "Current Vx: %f", GetVelocity().x );
+	switch( m_ePlayerDirection )
+	{
+	case EPlayerDirection::Static:
+		CCLOG( "Static" );
+		break;
+	case EPlayerDirection::Right:
+		CCLOG( "Right" );
+		break;
+	case EPlayerDirection::Left:
+		CCLOG( "Left" );
+		break;
+	}
+
+
 																																				//
 	// DEBUG SECTION -------------------------------------------------------------- //															//
-																					//															//
+#ifdef PLAYER_DEBUG_CONTACTS														//															//
 	// ---------- Number of Hard Contacts this frame ------------------ //			//															//
 	//																	//			//															//
-	//std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
-	//char const* pchar1 = string1.c_str();								//			//															//
-	//CCLOG( "Hard Count:" );												//			//															//
-	//CCLOG( pchar1 );													//			//															//
-	////																	//			//															//
-	//// ---------------------------------------------------------------- //			//															//
-	//																				//															//
-	//// ----------- Number of Soft Contacts this frame ----------------- //			//															//
-	////																	//			//															//
-	//std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
-	//char const* pchar2 = string2.c_str();								//			//															//
-	//CCLOG( "Soft Count:" );												//			//															//
-	//CCLOG( pchar2 );													//			//															//
+	std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
+	char const* pchar1 = string1.c_str();								//			//															//
+	CCLOG( "Hard Count:" );												//			//															//
+	CCLOG( pchar1 );													//			//															//
 	//																	//			//															//
 	// ---------------------------------------------------------------- //			//															//
 																					//															//
+	// ----------- Number of Soft Contacts this frame ----------------- //			//															//
+	//																	//			//															//
+	std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
+	char const* pchar2 = string2.c_str();								//			//															//
+	CCLOG( "Soft Count:" );												//			//															//
+	CCLOG( pchar2 );													//			//															//
+	//																	//			//															//
+	// ---------------------------------------------------------------- //			//															//
 																					//															//
+#endif																				//															//
 	// END OF DEBUG SECTION ------------------------------------------------------- //															//
 }																																				//
 																																				//
@@ -355,8 +378,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 			case EPlayerDirection::Static:
 				
 				// Debug new direction
+#ifdef PLAYER_DEBUG_DIRECTION
 				CCLOG( "Player going Static" );
-				
+#endif
 				// Static -> no speed
 				fHorizontalSpeed = 0.0f;
 				
@@ -367,8 +391,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 			case EPlayerDirection::Right:
 				
 				// Debug new direction
+#ifdef PLAYER_DEBUG_DIRECTION
 				CCLOG( "Player going Right" );
-				
+#endif				
 				// Right -> move with walk speed
 				fHorizontalSpeed = m_fWalkSpeed;
 
@@ -382,8 +407,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 			case EPlayerDirection::Left:
 				
 			// Debug new direction
+#ifdef PLAYER_DEBUG_DIRECTION
 				CCLOG( "Player going Left" );
-
+#endif
 			// Right -> move with negative value of walk speed
 				fHorizontalSpeed = m_fWalkSpeed * -1.0f;
 
@@ -496,17 +522,20 @@ void CPlayer::HardContactEvent( const bool bBeganContact )
 	if ( bBeganContact )
 	{
 		++m_iHardContactCount;
+		CCLOG( "Started Touching Platform, Hard Count is now %d", m_iHardContactCount );
 	}
 // Else, a contact came to an end, decrement the sum
 	else
 	{
 		--m_iHardContactCount;
+		CCLOG( "Ended Touching Platform, Hard Count is now %d", m_iHardContactCount );
 	}
 
 // Might happen because of bricks
 	if ( m_iHardContactCount < 0 )
 	{
 	// Count should never be less than 0
+		CCLOG( " HARD COUNT < 0 " );
 		m_iHardContactCount = 0;
 	}
 }
@@ -525,11 +554,13 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 	if( bBeganContact )
 	{
 		++m_iSensorContactCount;
+		CCLOG( "Entered Sensor, Sensor Count is now %d", m_iSensorContactCount );
 	}
 // Else, a contact came to an end, decrement the sum
 	else
 	{
 		--m_iSensorContactCount;
+		CCLOG( "Left Sensor, Sensor Count is now %d", m_iSensorContactCount );
 	}
 }
 
@@ -549,7 +580,12 @@ void CPlayer::OnLanded()
 	//Else, not dead
 	else
 	{
-		CCLOG( "Landed" );
+#ifdef PLAYER_DEBUG_LANDING
+		if( m_iHardContactCount == 1 )
+		{
+			CCLOG( "Landed" );
+		}
+#endif
 		// The player is grounded, can jump
 		m_bCanJump = true;
 		m_bIsGrounded = true;
@@ -584,7 +620,9 @@ void CPlayer::LandedOnWalkablePlatform()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LeftGround()
 {
-	CCLOG( "Left the Ground" );
+#ifdef PLAYER_DEBUG_LANDING
+	CCLOG( "LEFT THE GROUND" );
+#endif
 
 	m_bIsPendingDirection = false;
 	m_bIsGrounded = false;
@@ -635,8 +673,9 @@ void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 	OnLanded();
 
 // Debug print out
+#ifdef PLAYER_DEBUG_LANDING
 	CCLOG( "          on Conveyor Belt" );
-
+#endif
 // Set new pending direction
 	m_ePendingDirection = eDirectionLock;
 

@@ -367,9 +367,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 																														//
 			// Check if this BeginContact is for feet + platform surface ( sensors only )								//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
-			{																											//
-				CCLOG( "Foot goes toot" );																				//
-																														//
+			{																											//																														//
 				// Activate this platform's collision																	//
 				pPlatform->SetCollisionEnabled( true );																	//
 																														//
@@ -389,8 +387,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 																														//
 					// Increment hard contact count for the player														//
 					m_pcPlayer->HardContactEvent( true );																//
-																														//
-																														//
+																														//																														//
 					// Check Platform Type																				//
 					switch( pPlatform->GetPlatformType () )																//
 					{																									//
@@ -514,9 +511,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 																														//
 			// Check if this EndContact is for feet + platform surface sensors only										//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
-			{																											//
-				CCLOG( "Foot goes untoot" );																			//
-																														//
+			{																											//																														//
 				// If this platform is not a CBrickPlatform																//
 				if( pPlatform->GetPlatformType() != EPlatformType::Brick )												//
 				{																										//
@@ -544,7 +539,6 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					if( !m_pcPlayer->GetHardContactCount() && m_pcPlayer->GetIsGrounded() )								//
 					{																									//
 						m_pcPlayer->LeftGround();																		//
-						CCLOG( "LeftGround()" );																		//
 					}																									//
 					// If this was a Crumbling platform, stop crumbling													//
 					switch( pPlatform->GetPlatformType() )																//

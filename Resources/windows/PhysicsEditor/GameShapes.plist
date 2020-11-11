@@ -179,7 +179,7 @@
 			<key>CN_Platform_Crumbling_1x1</key>
 			<dict>
 				<key>anchorpoint</key>
-                <string>{ 0.0000,0.1228 }</string>
+                <string>{ 0.0000,0.1230 }</string>
 				<key>fixtures</key>
 				<array>
 
@@ -197,10 +197,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 62.000,-31.059 }</string>	
-								<string>{ 62.000,28.941 }</string>	
-								<string>{ 0.000,28.941 }</string>	
-								<string>{ 0.000,-31.059 }</string>
+								<string>{ 60.000,-31.119 }</string>	
+								<string>{ 60.000,28.881 }</string>	
+								<string>{ 0.000,28.881 }</string>	
+								<string>{ 0.000,-31.119 }</string>
 							</array>
 						</array>
                     </dict>
@@ -218,10 +218,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 0.000,34.941 }</string>	
-								<string>{ 0.000,28.941 }</string>	
-								<string>{ 62.000,28.941 }</string>	
-								<string>{ 62.000,34.941 }</string>
+								<string>{ 0.000,34.881 }</string>	
+								<string>{ 0.000,28.881 }</string>	
+								<string>{ 60.000,28.881 }</string>	
+								<string>{ 60.000,34.881 }</string>
 							</array>
 						</array>
                     </dict>
@@ -299,8 +299,8 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 31.000,-31.000 }</string>	
-								<string>{ 31.000,29.000 }</string>	
+								<string>{ 29.000,-31.000 }</string>	
+								<string>{ 29.000,29.000 }</string>	
 								<string>{ -31.000,29.000 }</string>	
 								<string>{ -31.000,-31.000 }</string>
 							</array>
@@ -320,8 +320,8 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 31.000,29.000 }</string>	
-								<string>{ 31.000,35.000 }</string>	
+								<string>{ 29.000,29.000 }</string>	
+								<string>{ 29.000,35.000 }</string>	
 								<string>{ -31.000,35.000 }</string>	
 								<string>{ -31.000,29.000 }</string>
 							</array>
@@ -728,10 +728,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -29.008,-60.024 }</string>	
-								<string>{ -29.008,-90.024 }</string>	
-								<string>{ 30.992,-90.024 }</string>	
-								<string>{ 30.992,-60.024 }</string>
+								<string>{ -50.008,-50.024 }</string>	
+								<string>{ -50.008,-90.024 }</string>	
+								<string>{ 49.992,-90.024 }</string>	
+								<string>{ 49.992,-50.024 }</string>
 							</array>
 						</array>
                     </dict>
