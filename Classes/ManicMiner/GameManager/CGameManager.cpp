@@ -17,9 +17,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_iHighScore				( 0 )
 	, m_iCurrentLives			( m_kiStartingLives )
 	, m_iCurrentCollectibles	( 0 )
-	, m_iRequiredCollectibles	( 0 )
 	, m_iCurrentSwitches		( 0 )
-	, m_iRequiredSwitches		( 0 )
 	, m_bDrainToScore			( false )
 	, m_pcAirManager			( nullptr )
 	, m_pcCHUD					( nullptr )
@@ -39,14 +37,14 @@ void  CGameManager::IncreaseScore()
 {
 	m_iCurrentScore += m_kIScoreIncrement;
 	
-	CheckHighScore();
+	CheckHighScoreForUpdate();
 	UpdateScore();
 	ExtraLifeCheck();
 }
 
-void CGameManager::CheckHighScore()
+void CGameManager::CheckHighScoreForUpdate()
 {
-	if (CheckScore())
+	if (IsScoreGreaterThanHighscore())
 	{
 		m_iHighScore = m_iCurrentScore;
 		m_pcCHUD->UpdateHighScore( m_iHighScore );
@@ -71,24 +69,24 @@ void CGameManager::ExtraLifeCheck() const
 }
 
 // Checks if score exceeds high score.
-bool  CGameManager::CheckScore() const
+bool  CGameManager::IsScoreGreaterThanHighscore() const
 {
 	return m_iCurrentScore > m_iHighScore;
 }
 
 // Upon interacting, checks if enough has been reached.
-const bool CGameManager::CheckIfEnoughReached() const
+bool CGameManager::CheckIfLevelRequirementsAreMet() const
 {
 	bool enoughReached = false;
 
 	switch (m_sLevelValues.collectibleRequirements)
 	{
 		case ECollectibleRequirements::Collectible:
-			enoughReached = (m_iCurrentCollectibles == m_iRequiredCollectibles);
+			enoughReached = (m_iCurrentCollectibles == m_sLevelValues.numCollectibles);
 			break;
 
 		case ECollectibleRequirements::Collectible_And_Switches:
-			enoughReached = ((m_iCurrentCollectibles == m_iRequiredCollectibles) && (m_iCurrentSwitches == m_iRequiredSwitches));
+			enoughReached = ((m_iCurrentCollectibles == m_sLevelValues.numCollectibles) && (m_iCurrentSwitches == m_sLevelValues.numSwitches));
 			break;
 	}
 
@@ -224,7 +222,7 @@ void CGameManager::CCollectibleInteractEvent()
 	IncreaseScore();
 	m_iCurrentCollectibles++;
 	
-	if (CheckIfEnoughReached() )
+	if (CheckIfLevelRequirementsAreMet() )
 	{
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
@@ -233,7 +231,7 @@ void CGameManager::CCollectibleInteractEvent()
 void CGameManager::CSwitchInteractEvent()
 {
 	m_iCurrentSwitches++;
-	if (CheckIfEnoughReached())
+	if (CheckIfLevelRequirementsAreMet() )
 	{
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
@@ -241,30 +239,18 @@ void CGameManager::CSwitchInteractEvent()
 
 #pragma endregion Collectible/Switch Events
 
-
+#pragma region Level_Related_Calls
 void CGameManager::SetLevelRequirements( const SLevelValues& rsLevelValues )
 {
 	m_sLevelValues = rsLevelValues;
-
-	switch (m_sLevelValues.collectibleRequirements)
-	{
-		case ECollectibleRequirements::Collectible:
-			m_iRequiredCollectibles = m_sLevelValues.numCollectibles;
-			break;
-		
-		case ECollectibleRequirements::Collectible_And_Switches:
-			m_iRequiredSwitches = m_sLevelValues.numSwitches;
-			break;
-	}
 }
 
 void CGameManager::ResetValues()
 {
-	m_iCurrentCollectibles = 0;
-	m_iCurrentSwitches = 0;
-	m_iRequiredCollectibles = 0;
-	m_iRequiredSwitches = 0;
-	m_bDrainToScore = false;
+	m_iCurrentCollectibles	= 0;
+	m_iCurrentSwitches		= 0;
+	m_bDrainToScore			= false;
+	m_sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 0 );
 }
 
 void CGameManager::EndLevel() 
@@ -278,13 +264,7 @@ void CGameManager::EndLevel()
 void CGameManager::DrainAirForScore() 
 {
 	m_pcAirManager->DrainAir();
-
-	//float x = m_pcAirManager->fGetRemainingAirAmount() * 10.0f;
-	//	
-	//m_iCurrentScore = m_iCurrentScore * static_cast<int>(x);
-							
-																						
-	
+																
 	if (m_pcAirManager->GetDrainComplete())
 	{
 		m_pcLevelManager->GetCurrentManicLayer().RequestNextLevel();
@@ -300,10 +280,12 @@ void CGameManager::DrainToScore()
 {
 	m_iCurrentScore += m_kiScorePerTimeLeft;
 	UpdateScore();
-	CheckHighScore();
+	CheckHighScoreForUpdate();
 	ExtraLifeCheck();
 	UpdateLives();
 }
+
+#pragma endregion Level_Related_Calls
 
 
 CGameManager::~CGameManager()

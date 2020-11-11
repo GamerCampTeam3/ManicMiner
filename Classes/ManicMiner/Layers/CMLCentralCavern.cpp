@@ -52,10 +52,6 @@ void CMLCentralCavern::VOnCreate( void )
 	CGCObjectManager::ObjectGroupRegister(m_pcGroupPlatformCentralCavern);
 
 
-
-	m_pcCDCreatorCentralCavern = new CDCreatorCentralCavern( *this );
-	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
-
 	auto test = CGCFactoryCreationParams( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
 	CCollectible* pCollectible_4 = new CCollectible(test, cocos2d::Vec2( 690.f, 60.f ));
 	
@@ -72,11 +68,11 @@ void CMLCentralCavern::VOnCreate( void )
 void CMLCentralCavern::InitParams()
 {
 	// Sets the references required by the player
-	m_pcGameManager	->SetCHUD( m_pCHUD );
-	m_pcGameManager	->SetCPlayer( &GetPlayer() );
-	m_pcGameManager	->SetCAirManager( m_pcAirManager );
-	m_pcAirManager	->SetGameManager( m_pcGameManager );
-	m_pcGameManager	->SetLevelRequirements( m_sLevelValues );
+	m_pcGameManager	->SetCHUD				( m_pCHUD		  );
+	m_pcGameManager	->SetCPlayer			( &GetPlayer()	  );
+	m_pcGameManager	->SetCAirManager		( m_pcAirManager  );
+	m_pcAirManager	->SetGameManager		( m_pcGameManager );
+	m_pcGameManager	->SetLevelRequirements	( m_sLevelValues  );
 }
 
 
@@ -87,9 +83,6 @@ void CMLCentralCavern::VOnDestroy(void)
 	m_pcGroupPlatformCentralCavern->DestroyPlatforms();
 	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);
 	safeDelete( m_pcGroupPlatformCentralCavern );
-
-	CGCObjectManager::ObjectGroupUnRegister( m_pcCDCreatorCentralCavern );
-	safeDelete( m_pcCDCreatorCentralCavern );
 
 	safeDelete( m_pCHUD );
 
