@@ -49,6 +49,11 @@ class CGCLevelLoader_Ogmo
 	// as ogmo's coords are top left 0,0 & cocos are bottom left 0,0
 	b2Vec2				m_v2LevelDimensions;
 
+
+	// XML node currently processing when the factory is asked to create an instance
+	static const tinyxml2::XMLElement* sm_pCurrentObjectXmlData;
+
+
 	// vector of all unique parameter setups read from the level file
 	// and used to create objects
 	std::vector< const CGCFactoryCreationParams* >	m_vecFactoryCreationParams;
@@ -84,6 +89,11 @@ public:
 	CGCLevelLoader_Ogmo( void );
 	~CGCLevelLoader_Ogmo( void );
 
+	static const tinyxml2::XMLElement* GetCurrentObjectXmlData()
+	{
+		return sm_pCurrentObjectXmlData;
+	}
+
 	// load level file (level_x.oel)
 	bool			LoadLevelFile( const char* pszOelFile );
 
@@ -92,14 +102,6 @@ public:
 
 	// destroy objects
 	void			DestroyObjects();
-
-
-
-
-
-	// XML node currently processing when the factory is asked to create an instance
-	static const tinyxml2::XMLElement* sm_pCurrentObjectXmlData;
-
 
 
 };

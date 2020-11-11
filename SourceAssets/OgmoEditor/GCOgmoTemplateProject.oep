@@ -16,7 +16,7 @@
     <Width>1920</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>C:\Git\ManicMiner\SourceAssets\OgmoEditor\GCOgmoTemplateProject.oep</Filename>
+  <Filename>D:\MSc_GitHub_Branch\ManicMiner\SourceAssets\OgmoEditor\GCOgmoTemplateProject.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -119,6 +119,45 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="Enemy" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>0</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\KoopaTrooper\Frames\Fly\00.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CGCObjEnemy" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="koopa" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_dynamicBody</string>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="AnimationName" Default="Fly" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="MovementRange" Default="10" Min="0" Max="100" Round="0.1" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="InitialDistanceFromAnchor" Default="0" Min="0" Max="100" Round="0.1" />
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="MovingAwayFromAnchorPoint" Default="true" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="Speed" Default="0" Min="0" Max="100" Round="0.1" />
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="SpriteIsFlippable" Default="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="MovementAxis">
+          <Elements>
+            <string>Horizontal</string>
+            <string>Vertical</string>
+          </Elements>
+        </ValueDefinition>
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>

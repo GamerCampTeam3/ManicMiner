@@ -2,36 +2,24 @@
 // (C) Gamer Camp / Dave O'Dwyer October 2020
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <string.h>
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 #include "GCObjEnemy.h"
-
-
-
-
-
-
 
 #ifndef TINYXML2_INCLUDED
     #include "external\tinyxml2\tinyxml2.h"
 #endif
 
-
-
-
 #ifndef _GCLEVELLOADER_OGMO_H_
     #include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
 #endif
-
-
-
-
 
 USING_NS_CC;
 
 GCFACTORY_IMPLEMENT_CREATEABLECLASS( CGCObjEnemy );
 
 //////////////////////////////////////////////////////////////////////////
-// Constructor
+// Constructor (module 1)
 //////////////////////////////////////////////////////////////////////////
 /*
 CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
@@ -50,17 +38,14 @@ CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, con
 {
 
 	pAnimation = nullptr;
-	
 }
 */
 
 CGCObjEnemy::CGCObjEnemy()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
-	, m_pCustomCreationParams(nullptr)
+	//, m_pCustomCreationParams(nullptr)
 {
 }
-
-
 
 //////////////////////////////////////////////////////////////////////////
 // Destructor
@@ -87,46 +72,30 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	// Call base class verion.
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
+	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
 
+	/////////////////////////////////////////////
+	// Set up Animations.
+	// For module 2:
+	// Commented out until animations available for Duck enemy.
+	// std::string m_pszPlist = pcCreateParams->strPlistFile;
+	// Note m_pszAnimation is sourced from the data file so not set here.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// Set up Animations
-
-	pszPlist = "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist";
-	pszAnim_Fly = "Fly";
-
-	cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(pszPlist);
-	pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, pszAnim_Fly);
-	pAnimation->retain();
-
-	RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
+	//cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
+	//pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
+	//pAnimation->retain();
+	   
+    //RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 
 	//////////////////////////
-
-
+	
 	m_cTotalVelocity = Vec2::ZERO;
 
-	Vec2 AnchorPointAndOffset = m_cAnchorPoint;
-	if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis)
+	Vec2 AnchorPointAndOffset = GetResetPosition();
+	m_cAnchorPoint = GetResetPosition();
+
+
+	if (EnemyTypes::EMovementAxis::EMovementAxis_Horizontal == m_eMovementAxis)
 	{
 		m_cTotalVelocity.x = m_fSpeed;
 		AnchorPointAndOffset.x += m_fInitialDistanceFromAnchor;
@@ -141,6 +110,63 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 	SetFacingOrientation();
 }
+
+//////////////////////////////////////////////////////////////////////////
+
+void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
+{
+	// Call base class version first.	
+	CGCObjSpritePhysics::VHandleFactoryParams(rCreationParams, v2InitialPosition);
+
+	//Fetch a pointer into the OGMO Xml edtior element containing the data.
+	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
+
+	if (nullptr != pCurrentObjectXmlData)
+	{
+		// Read in all Enemy specific values defined for the Enemy entity in the OGMO file and assign to member values.
+
+		const tinyxml2::XMLAttribute* pAnimationName = pCurrentObjectXmlData->FindAttribute("AnimationName");
+		CCLOG((nullptr == pAnimationName) ? "AnimationName not found for Enemy!" : pAnimationName->Value());
+		m_pszAnimation = pAnimationName->Value();
+		
+		const tinyxml2::XMLAttribute* pMovementRange = pCurrentObjectXmlData->FindAttribute("MovementRange");
+		CCLOG((nullptr == pMovementRange) ? "MovementRange not found for Enemy!" : pMovementRange->Value());
+		m_fMovementWindowLength = pMovementRange->FloatValue();
+
+				
+		const tinyxml2::XMLAttribute* pInitialDistanceFromAnchor = pCurrentObjectXmlData->FindAttribute("InitialDistanceFromAnchor");
+		CCLOG((nullptr == pInitialDistanceFromAnchor) ? "InitialDistanceFromAnchor not found for Enemy!" : pInitialDistanceFromAnchor->Value());
+		m_fInitialDistanceFromAnchor = pInitialDistanceFromAnchor->FloatValue();
+
+
+		const tinyxml2::XMLAttribute* pMovingAwayFromAnchorPoint = pCurrentObjectXmlData->FindAttribute("MovingAwayFromAnchorPoint");
+		CCLOG((nullptr == pMovingAwayFromAnchorPoint) ? "MovingAwayFromAnchorPoint not found for Enemy!" : pMovingAwayFromAnchorPoint->Value());
+		m_bMovingAwayFromAnchorPoint = pMovingAwayFromAnchorPoint->BoolValue();
+		
+		const tinyxml2::XMLAttribute* pSpeed = pCurrentObjectXmlData->FindAttribute("Speed");
+		CCLOG((nullptr == pMovingAwayFromAnchorPoint) ? "Speed not found for Enemy!" : pSpeed->Value());
+		m_fSpeed = pSpeed->FloatValue();
+				
+		const tinyxml2::XMLAttribute* pSpriteIsFlippable = pCurrentObjectXmlData->FindAttribute("SpriteIsFlippable");
+		CCLOG((nullptr == pMovingAwayFromAnchorPoint) ? "SpriteIsFlippable not found for Enemy!" : pSpriteIsFlippable->Value());
+		m_bSpriteIsFlippable = pSpriteIsFlippable->BoolValue();
+			
+		const tinyxml2::XMLAttribute* pMovementAxis = pCurrentObjectXmlData->FindAttribute("MovementAxis");
+		CCLOG((nullptr == pMovementAxis) ? "SpriteIsFlippable not found for Enemy!" : pMovementAxis->Value());
+		
+		if (!strcmp(pMovementAxis->Value(),"Horizontal"))
+		{
+			m_eMovementAxis = EnemyTypes::EMovementAxis::EMovementAxis_Horizontal;
+		}
+		else
+		{
+			m_eMovementAxis = EnemyTypes::EMovementAxis::EMovementAxis_Vertical;
+		}
+
+	}
+	
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 // This function is called when an enemy is resurected from the dead-list to the 
@@ -162,15 +188,15 @@ bool CGCObjEnemy::CheckForBoundaryReached(const float fCurrentPosition, const fl
 	bool bReturnResult = false;
 
 	// Test right or upper side boundary limit passed and flip to moving back to start if required.
-	if (m_bMovingAWayFromAnchorPoint && (fCurrentPosition >= fAnchorPoint + fMovementWindowLength))
+	if (m_bMovingAwayFromAnchorPoint && (fCurrentPosition >= fAnchorPoint + fMovementWindowLength))
 	{
-		m_bMovingAWayFromAnchorPoint = false;
+		m_bMovingAwayFromAnchorPoint = false;
 		bReturnResult = true;
 	}
 	// Test left or lower side boundary limit passed and flip to moving away from start if required.
-	else if (!m_bMovingAWayFromAnchorPoint && (fCurrentPosition <= fAnchorPoint))
+	else if (!m_bMovingAwayFromAnchorPoint && (fCurrentPosition <= fAnchorPoint))
 	{
-		m_bMovingAWayFromAnchorPoint = true;
+		m_bMovingAwayFromAnchorPoint = true;
 		bReturnResult = true;
 	}
 	return bReturnResult;
@@ -183,7 +209,7 @@ bool CGCObjEnemy::CheckForBoundaryReached(const float fCurrentPosition, const fl
 bool CGCObjEnemy::CheckForDirectionFlip()
 {
 	Vec2 CurrentPosition = GetSpritePosition();
-	if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis)
+	if (EnemyTypes::EMovementAxis::EMovementAxis_Horizontal == m_eMovementAxis)
 	{
 		return CheckForBoundaryReached(CurrentPosition.x, m_cAnchorPoint.x, m_fMovementWindowLength);
 	}
@@ -202,7 +228,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 	// Call base class version first.
 	CGCObject::VOnUpdate(fTimeStep);
 
-	if (m_bMovingAWayFromAnchorPoint)
+	if (m_bMovingAwayFromAnchorPoint)
 	{
 		SetVelocity(m_cTotalVelocity);
 	}
@@ -216,7 +242,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 		m_bBounceCollisionDisabled = false;
         // if the Enemy's direction has just flipped then need to change the facing orientation
 		// for left/right orientation Enemy's.
-		if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis && m_bSpriteIsFlippable)
+		if (EnemyTypes::EMovementAxis::EMovementAxis_Horizontal == m_eMovementAxis && m_bSpriteIsFlippable)
 		{
 			SetFacingOrientation();
 		}
@@ -233,7 +259,7 @@ void CGCObjEnemy::SetFacingOrientation()
 	// left.  However the facing direction delivered from the art team is facing right.
 
 	const bool k_bArtDefaultIsEnemyFacingRight = false;
-	SetFlippedX((k_bArtDefaultIsEnemyFacingRight && !m_bMovingAWayFromAnchorPoint) || (!k_bArtDefaultIsEnemyFacingRight && m_bMovingAWayFromAnchorPoint));
+	SetFlippedX((k_bArtDefaultIsEnemyFacingRight && !m_bMovingAwayFromAnchorPoint) || (!k_bArtDefaultIsEnemyFacingRight && m_bMovingAwayFromAnchorPoint));
 }
 //////////////////////////////////////////////////////////////////////////
 // Function to flip the enemies current direction of travel when it has collided with an object
@@ -250,65 +276,12 @@ void CGCObjEnemy::BounceEnemyDirection()
 
 	if (!m_bBounceCollisionDisabled)
 	{
-		if (EnemyTypes::EMovementAxis::EMovementAxis_LeftRight == m_eMovementAxis && m_bSpriteIsFlippable)
+		if (EnemyTypes::EMovementAxis::EMovementAxis_Horizontal == m_eMovementAxis && m_bSpriteIsFlippable)
 		{
-			SetFlippedX(!m_bMovingAWayFromAnchorPoint);
+			SetFlippedX(!m_bMovingAwayFromAnchorPoint);
 		}
-		m_bMovingAWayFromAnchorPoint = !m_bMovingAWayFromAnchorPoint;
+		m_bMovingAwayFromAnchorPoint = !m_bMovingAwayFromAnchorPoint;
 	}
 	// Latch the flag to stop the enemy constantly flipping during the collisions duration.
 	m_bBounceCollisionDisabled = true;
-}
-
-
-void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
-{
-	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
-
-	if (nullptr != CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData)
-	{
-
-
-
-		
-
-		//const tinyxml2::XMLAttribute* pName = CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData->FindAttribute("name");
-
-		//CCLOG((nullptr == pName) ? "BOB NOT FOUND!" : pName->Value());
-
-		
-		//const tinyxml2::XMLAttribute* pCustomPlistPath = CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData->FindAttribute("customplist");
-
-
-
-		//if ((nullptr != pCustomPlistPath)
-			//&& (0 != strlen(pCustomPlistPath->Value())))
-		//{
-			
-		
-		    m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(
-				
-				rCreationParams.strClassName.c_str(),
-				rCreationParams.strPlistFile.c_str(),
-				//pCustomPlistParams->Value(),
-				rCreationParams.strPhysicsShape.c_str(),
-				rCreationParams.eB2dBody_BodyType,
-				rCreationParams.bB2dBody_FixedRotation
-			
-			);
-
-			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
-
-
-			
-
-		}
-	//}
-
-	CGCObjSpritePhysics::VHandleFactoryParams((*pParamsToPassToBaseClass), v2InitialPosition);
-
-
-
-
-
 }
