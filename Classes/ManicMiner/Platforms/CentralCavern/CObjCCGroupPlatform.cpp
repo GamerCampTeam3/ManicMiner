@@ -78,6 +78,7 @@ void CObjCCGroupPlatform::VOnGroupResourceRelease()
 
 void CObjCCGroupPlatform::CreatePlatforms()
 {
+	/*
 		// ground platform
 	CPlatform* pcGroundPlatform = new CGroundPlatform(s_cCreationParams_Platform_Ground, cocos2d::Vec2(960.f,30.f) );
 
@@ -131,6 +132,7 @@ void CObjCCGroupPlatform::CreatePlatforms()
 
 		// regular platform
 	CPlatform* pcPlatformRegular8th = new CRegularPlatform(s_cCreationParams_Platform_8x1, cocos2d::Vec2(1620.f, 630.f) );
+	*/
 }
 
 void CObjCCGroupPlatform::DestroyPlatforms()

@@ -10,10 +10,23 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
-CRegularPlatform::CRegularPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
-	: CPlatform(CreationParams, ResetPosition )
-{
+#ifndef TINYXML2_INCLUDED
+#include "external\tinyxml2\tinyxml2.h"
+#endif
 
+
+
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
+GCFACTORY_IMPLEMENT_CREATEABLECLASS(CRegularPlatform);
+
+CRegularPlatform::CRegularPlatform()
+	: CPlatform()
+{
+	m_ePlatformType = EPlatformType::Regular;
 }
 
 void CRegularPlatform::VOnResourceAcquire()

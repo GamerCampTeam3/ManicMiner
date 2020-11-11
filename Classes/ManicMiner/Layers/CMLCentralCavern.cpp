@@ -22,7 +22,6 @@
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLCentralCavern::CMLCentralCavern( )
 	: CManicLayer( )
-	, m_pcGroupPlatformCentralCavern(nullptr)
 {}
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
@@ -45,11 +44,6 @@ void CMLCentralCavern::VOnCreate( void )
 
 	// Edit Custom Layout
 	GetPlayer().SetResetPosition( v2NewStart );
-
-	
-	// Platforms for Central Cavern
-	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();
-	CGCObjectManager::ObjectGroupRegister(m_pcGroupPlatformCentralCavern);
 
 
 	auto test = CGCFactoryCreationParams( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
@@ -80,9 +74,6 @@ void CMLCentralCavern::InitParams()
 void CMLCentralCavern::VOnDestroy(void)
 {
 
-	m_pcGroupPlatformCentralCavern->DestroyPlatforms();
-	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);
-	safeDelete( m_pcGroupPlatformCentralCavern );
 
 	safeDelete( m_pCHUD );
 

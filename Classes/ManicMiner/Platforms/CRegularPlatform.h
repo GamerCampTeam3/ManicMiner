@@ -4,14 +4,22 @@
 #ifndef _CREGULARPLATFORM_H_
 #define _CREGULARPLATFORM_H_
 
+#ifndef _GCFACTORY_OBJSPRITEPHYSICS_H_
+#include "../../GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
+#endif
+
 #include "CPlatform.h"
+
+
 
 class CRegularPlatform : public CPlatform
 {
 public:
 
-	CRegularPlatform(CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
+	CRegularPlatform();
 
+	GCFACTORY_DECLARE_CREATABLECLASS(CRegularPlatform);
+	
 	void VOnResourceAcquire() override;
 
 	void VOnReset() override;
