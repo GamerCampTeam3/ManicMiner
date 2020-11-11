@@ -1,0 +1,7 @@
+<level width="1024" height="768">
+  <enemies />
+  <items />
+  <platforms>
+    <enemy id="0" x="352" y="448" class="CGCObjEnemy" shape="koopa" PlistFile="TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist" B2DBodyType="b2_dynamicBody" HasFixedRotation="True" AnimName="Fly" />
+  </platforms>
+</level>

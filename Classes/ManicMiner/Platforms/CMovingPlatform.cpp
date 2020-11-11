@@ -22,6 +22,8 @@
 #include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
 #endif
 
+#include "ManicMiner/Enums/EPlayerMovement.h"
+
 GCFACTORY_IMPLEMENT_CREATEABLECLASS(CMovingPlatform);
 
 CMovingPlatform::CMovingPlatform()
@@ -45,6 +47,8 @@ void CMovingPlatform::VOnResourceAcquire()
 	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
 	m_pcMovingAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Move);
 	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcMovingAnim));
+
+	InitDirectionalLock(EPlayerDirection::Left);
 }
 
 void CMovingPlatform::VOnReset()
