@@ -51,12 +51,12 @@ void CMLCentralCavern::VOnCreate( void )
 
 	
 	// Enemies for Central Cavern
-	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
-	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
+//	m_pcGCGroupEnemyCentralCavern = new CGCObjGroupEnemyCentralCavern();
+//	CGCObjectManager::ObjectGroupRegister( m_pcGCGroupEnemyCentralCavern );
 
 	// Hazards for Central Cavern
-	m_pcGCGroupHazardCentralCavern = new CGCObjGroupHazardCentralCavern();
-	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupHazardCentralCavern);
+//	m_pcGCGroupHazardCentralCavern = new CGCObjGroupHazardCentralCavern();
+//	CGCObjectManager::ObjectGroupRegister(m_pcGCGroupHazardCentralCavern);
 
 	// Platforms for Central Cavern
 	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();

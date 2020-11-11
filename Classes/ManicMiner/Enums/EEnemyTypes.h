@@ -18,8 +18,8 @@ public:
 	};
 	
 	enum class EMovementAxis {
-		EMovementAxis_UpDown, 
-		EMovementAxis_LeftRight 
+		EMovementAxis_Vertical, 
+		EMovementAxis_Horizontal 
 	};
 
 };

@@ -1,19 +1,20 @@
 <level width="1920" height="960">
   <Platforms>
-    <Hazard id="0" x="420" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="1" x="600" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="2" x="780" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="3" x="960" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="4" x="1140" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="5" x="1320" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="6" x="420" y="360" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="7" x="420" y="420" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="8" x="420" y="480" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="9" x="420" y="540" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="10" x="420" y="240" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="11" x="420" y="180" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="12" x="420" y="120" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <Hazard id="13" x="420" y="60" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
+    <Hazard id="0" x="420" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="1" x="600" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="2" x="780" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="3" x="960" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="4" x="1140" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="5" x="1320" y="300" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="6" x="420" y="360" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="7" x="420" y="420" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="8" x="420" y="480" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="9" x="420" y="540" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="10" x="420" y="240" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="11" x="420" y="180" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="12" x="420" y="120" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Hazard id="13" x="420" y="60" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
+    <Enemy id="14" x="530" y="475" class="CGCObjEnemy" shape="cc_enemy_duck" PlistFile="TexturePacker/Sprites/Duck/Duck.plist" B2DBodyType="b2_DynamicBody" HasFixedRotation="True" AnimationName="Fly" MovementRange="420" InitialDistanceFromAnchor="0" MovingAwayFromAnchorPoint="true" Speed="4" SpriteIsFlippable="true" MovementAxis="Horizontal" />
   </Platforms>
   <Enemies />
   <Hazards />

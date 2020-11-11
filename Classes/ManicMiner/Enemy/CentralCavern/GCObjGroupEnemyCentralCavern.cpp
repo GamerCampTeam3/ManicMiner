@@ -10,7 +10,7 @@
 // Static Creation Params lifted out of GCObjEnemy to here to allow GCObjEnemy to be a class which can represent differnt Enemy sprites/animations/physics.
 // This may need to change for module 2 depending on how the new framework works.
 //static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
-static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist", "cc_enemy_duck", b2_dynamicBody, true);
+//static CGCFactoryCreationParams s_cCreationParams_CGCObj_EDuck("CGCObjEnemy_EDuck", "TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
 
 //////////////////////////////////////////////////////////////////////////
