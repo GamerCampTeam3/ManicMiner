@@ -39,7 +39,12 @@ private:
 	std::string                 m_pszPlist;
 	//CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
-	//std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
+	cocos2d::Vec2				m_cDest;
+	cocos2d::Vec2				m_cCurrentPos;
+
+	float m_fMoveDelta;
+
+	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
 	
 	cocos2d::Animation* pAnimation;
 
