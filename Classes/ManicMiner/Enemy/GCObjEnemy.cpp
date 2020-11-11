@@ -43,8 +43,9 @@ CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, con
 
 CGCObjEnemy::CGCObjEnemy()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
-	//, m_pCustomCreationParams(nullptr)
+	, m_pCustomCreationParams(nullptr)
 {
+	m_fMoveDelta = 0.0;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -53,6 +54,7 @@ CGCObjEnemy::CGCObjEnemy()
 // virtual
 CGCObjEnemy::~CGCObjEnemy()
 {
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -89,7 +91,14 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 	//////////////////////////
 	
+
+	
+
+
 	m_cTotalVelocity = Vec2::ZERO;
+	
+
+
 
 	Vec2 AnchorPointAndOffset = GetResetPosition();
 	m_cAnchorPoint = GetResetPosition();
@@ -109,15 +118,27 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	SetResetPosition(AnchorPointAndOffset);
 
 	SetFacingOrientation();
+
+
+
+	//Alternative movement solution.
+	m_cDest = Vec2(m_cAnchorPoint.x+30.0, m_cAnchorPoint.y);
+
+
+	m_cCurrentPos = m_cAnchorPoint;
+
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
 {
-	// Call base class version first.	
-	CGCObjSpritePhysics::VHandleFactoryParams(rCreationParams, v2InitialPosition);
 
+	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
+
+
+
+	
 	//Fetch a pointer into the OGMO Xml edtior element containing the data.
 	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
 
@@ -163,8 +184,27 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 			m_eMovementAxis = EnemyTypes::EMovementAxis::EMovementAxis_Vertical;
 		}
 
+
+		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
+
+
+		if ((nullptr != pCustomPlistPath)
+			&& (0 != strlen(pCustomPlistPath->Value())))
+		{
+			m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(rCreationParams.strClassName.c_str(),
+				pCustomPlistPath->Value(),
+				rCreationParams.strPhysicsShape.c_str(),
+				rCreationParams.eB2dBody_BodyType,
+				rCreationParams.bB2dBody_FixedRotation);
+
+			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
+		}
+
 	}
-	
+
+	// Call base class version 	
+	CGCObjSpritePhysics::VHandleFactoryParams((*pParamsToPassToBaseClass), v2InitialPosition);
+
 }
 
 
@@ -227,6 +267,21 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 {
 	// Call base class version first.
 	CGCObject::VOnUpdate(fTimeStep);
+	   	 
+	/*cocos2d::Vec2 diff =  m_cAnchorPoint - m_cDest;
+    float mag = diff.length();
+
+    m_fMoveDelta = m_fMoveDelta + fTimeStep;
+	
+	//m_cCurrentPos.lerp(m_cDest, fTimeStep);
+	//m_cCurrentPos.x = m_cCurrentPos.x + fTimeStep;
+
+	//MoveToPixelPosition(m_cCurrentPos);
+
+
+	*/
+
+
 
 	if (m_bMovingAwayFromAnchorPoint)
 	{
@@ -247,6 +302,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 			SetFacingOrientation();
 		}
 	}
+	
 }
 
 //////////////////////////////////////////////////////////////////////////

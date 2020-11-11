@@ -158,6 +158,7 @@
             <string>Vertical</string>
           </Elements>
         </ValueDefinition>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>

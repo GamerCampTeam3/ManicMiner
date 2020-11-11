@@ -14,7 +14,8 @@
     <Hazard id="11" x="420" y="180" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
     <Hazard id="12" x="420" y="120" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
     <Hazard id="13" x="420" y="60" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="true" />
-    <Enemy id="14" x="530" y="475" class="CGCObjEnemy" shape="cc_enemy_duck" PlistFile="TexturePacker/Sprites/Duck/Duck.plist" B2DBodyType="b2_DynamicBody" HasFixedRotation="True" AnimationName="Fly" MovementRange="420" InitialDistanceFromAnchor="0" MovingAwayFromAnchorPoint="true" Speed="4" SpriteIsFlippable="true" MovementAxis="Horizontal" />
+    <Enemy id="14" x="530" y="475" class="CGCObjEnemy" shape="cc_enemy_duck" PlistFile="TexturePacker/Sprites/Duck/Duck.plist" B2DBodyType="b2_DynamicBody" HasFixedRotation="True" AnimationName="Fly" MovementRange="420" InitialDistanceFromAnchor="0" MovingAwayFromAnchorPoint="true" Speed="4" SpriteIsFlippable="true" MovementAxis="Horizontal" CustomPlist="TexturePacker/Sprites/Duck/Duck.plist" />
+    <Enemy id="15" x="530" y="400" class="CGCObjEnemy" shape="cc_enemy_duck" PlistFile="TexturePacker/Sprites/Duck/Duck.plist" B2DBodyType="b2_DynamicBody" HasFixedRotation="True" AnimationName="Fly" MovementRange="350" InitialDistanceFromAnchor="30" MovingAwayFromAnchorPoint="true" Speed="5" SpriteIsFlippable="true" MovementAxis="Horizontal" CustomPlist="TexturePacker/Sprites/Egg/Egg.plist" />
   </Platforms>
   <Enemies />
   <Hazards />
