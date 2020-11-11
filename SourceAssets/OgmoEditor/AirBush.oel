@@ -64,12 +64,12 @@
     <RegularPlatform id="71" x="1680" y="720" class="CRegularPlatform" shape="CN_Platform_Regular_1x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_1x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
     <RegularPlatform id="72" x="1740" y="720" class="CRegularPlatform" shape="CN_Platform_Regular_1x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_1x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
     <RegularPlatform id="73" x="1800" y="720" class="CRegularPlatform" shape="CN_Platform_Regular_1x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_1x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <BrickPlatform id="74" x="1200" y="720" class="CBrickPlatform" shape="CN_Platform_Brick_3x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/Platform_Brick_3x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
-    <BrickPlatform id="1" x="1020" y="480" class="CBrickPlatform" shape="CN_Platform_Brick_3x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/Platform_Brick_3x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
     <Hazard id="2" x="1620" y="240" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
     <Hazard id="3" x="1380" y="240" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
     <Hazard id="5" x="660" y="720" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
     <Hazard id="4" x="1230" y="480" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
+    <BrickPlatform id="1" x="1200" y="720" class="CBrickPlatform" shape="CN_Platform_Brick_3x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/Platform_Brick_3x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
+    <BrickPlatform id="6" x="1020" y="480" class="CBrickPlatform" shape="CN_Platform_Brick_3x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/Platform_Brick_3x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" />
   </Platforms>
   <Enemies />
   <Hazards />
