@@ -35,6 +35,10 @@ void CMLCentralCavern::VOnCreate( void )
 	// Set the inherited structs, it will be fed into the game manager
 	m_sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 1 );
 	
+	// We set the background here, if m_pczBackGround is a nullptr, the background will be black.
+	// It's important to call this before the parent's VOnCreate, otherwise the texture will never be loaded in.
+	m_pczBackGround = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+	
 	CManicLayer::VOnCreate();
 
 

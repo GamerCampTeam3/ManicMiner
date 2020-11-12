@@ -47,8 +47,19 @@ class CManicLayer: public IGCGameLayer, public b2ContactListener
 protected:																												//
 	CGameManager*		m_pcGameManager;																				//
 	SLevelValues		m_sLevelValues;																					//
+	char*				m_pczBackGround;																				//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
+
+
+		//const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist";
+	//{
+	//	m_pcGCSprBackGround = new CGCObjSprite();
+	//	m_pcGCSprBackGround->CreateSprite( pszPlist_background );
+	//	m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, ( visibleSize.height / 2 ) - 60.f ) );
+	//	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
+	//}
+
 	
 private:
 // Henrique Edit ------------------------------------------------------------------------------------------------------ //
@@ -315,7 +326,6 @@ public:																													//
 
 private:
 	void PlayerBeganContactWithPlatform( CPlatform& rcPlatform );
-
 
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
