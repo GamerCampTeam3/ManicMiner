@@ -5,18 +5,10 @@
 #include "CMLCentralCavern.h"
 
 #include "ManicMiner/AirManager/AirManager.h"
-#include "ManicMiner/Collectible/CCollectible.h"
-#include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
-#include "ManicMiner/CollectiblesGroup/CentralCavern/CCGCentralCavern.h"
-#include "ManicMiner/Doors/CentralCavern/CDCreatorCentralCavern.h"
-#include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
-#include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
-#include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
-#include "ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/GameManager/CGameManager.h"
-#include "ManicMiner/LevelManager/CLevelManager.h"
+
 
 
 // Constructor -------------------------------------------------------------------------------------------------------- //

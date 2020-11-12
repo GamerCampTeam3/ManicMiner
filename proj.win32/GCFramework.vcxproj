@@ -225,8 +225,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Hazards\GCObjHazard.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\HUD\CHUD.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheMenagerie.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -336,8 +338,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Helpers\Helpers.h" />
     <ClInclude Include="..\Classes\ManicMiner\HUD\CHUD.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheMenagerie.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
