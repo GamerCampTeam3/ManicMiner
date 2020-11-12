@@ -332,8 +332,8 @@
         <Height>120</Height>
       </Size>
       <Origin>
-        <X>0</X>
-        <Y>0</Y>
+        <X>60</X>
+        <Y>60</Y>
       </Origin>
       <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Door\Door.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
@@ -360,8 +360,8 @@
         <Height>60</Height>
       </Size>
       <Origin>
-        <X>0</X>
-        <Y>0</Y>
+        <X>30</X>
+        <Y>30</Y>
       </Origin>
       <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Key\Key.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
