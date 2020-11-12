@@ -217,6 +217,7 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 	if( m_fVerticalSpeedAdjust != 0.0f )
 	{
 		Vec2 v2ExpectedVelocity = Vec2( GetVelocity().x, GetVelocity().y - m_fVerticalSpeedAdjust );
+		CCLOG( "Fixing velocity to %f", v2ExpectedVelocity.y );
 		SetVelocity( v2ExpectedVelocity );
 		m_fVerticalSpeedAdjust = 0.0f;
 	}
@@ -620,9 +621,11 @@ void CPlayer::OnLanded()
 	float fNewHeight = fCurrentHeight;
 	fNewHeight += 0.5f;
 	fNewHeight = floor( fNewHeight );
-	if( fNewHeight != fCurrentHeight )
+	// If landed on an inferior y than expected
+	// IE landed and now is on 4.99836f instead of 5.0f or above
+	if( fNewHeight > fCurrentHeight )
 	{
-		float fHeightDelta = fNewHeight - fCurrentHeight + 0.001f;
+		float fHeightDelta = fNewHeight - fCurrentHeight + 0.0005f;
 
 		// v = ( p1 - p0 ) / t
 		//cocos2d::Vec2 v2VelocityToMoveByDeltaInOneFrame = ( v2PosDeltaB2d / IGCGameLayer::ActiveInstance()->B2dGetTimestep() );

@@ -13,6 +13,7 @@
 
 CPlatform::CPlatform()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlatform))
+	, m_pcCustomCreationParams	( nullptr )
 {
 	
 }
@@ -49,6 +50,12 @@ void CPlatform::VOnResourceAcquire()
 
 	m_pcDirector = cocos2d::Director::getInstance();
 
+}
+
+void CPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
+{
+
+	CGCObjSpritePhysics::VHandleFactoryParams(rCreationParams, v2InitialPosition);
 }
 
 void CPlatform::VOnResourceRelease()

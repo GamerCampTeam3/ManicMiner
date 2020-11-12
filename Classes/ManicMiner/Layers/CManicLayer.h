@@ -47,6 +47,7 @@ class CManicLayer: public IGCGameLayer, public b2ContactListener
 protected:																												//
 	CGameManager*		m_pcGameManager;																				//
 	SLevelValues		m_sLevelValues;																					//
+	char*				m_pczBackGround;																				//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 	
@@ -315,7 +316,7 @@ public:																													//
 
 private:
 	void PlayerBeganContactWithPlatform( CPlatform& rcPlatform );
-
+	void InitializeBackground( const cocos2d::Size&  rSize );
 
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded

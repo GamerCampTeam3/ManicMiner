@@ -4,20 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>CN_Platform_Brick_1x16.png</key>
+            <key>cc_platform_regular_8x1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0,1}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{62,962}</string>
+                <string>{480,60}</string>
                 <key>spriteSourceSize</key>
-                <string>{62,962}</string>
+                <string>{480,60}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{62,962}}</string>
+                <string>{{1,1},{480,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -31,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>CN_Platform_Brick_16x1.png</string>
+            <string>CN_Platform_Regular_8x1.png</string>
             <key>size</key>
-            <string>{64,964}</string>
+            <string>{482,62}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bbb26e983d123ef557936fffc9d9feed:5d4674e98c81684ce625a1a64f5999c7:f06703197550500f1af84e113746dd8c$</string>
+            <string>$TexturePacker:SmartUpdate:2541c21bf1cb018bc0c622e6ebd4b97b:36a158f93ce3b076325a9ffcb9cd2c94:a61a2b4b43a497c707a0b20e55426c8f$</string>
             <key>textureFileName</key>
-            <string>CN_Platform_Brick_16x1.png</string>
+            <string>CN_Platform_Regular_8x1.png</string>
         </dict>
     </dict>
 </plist>

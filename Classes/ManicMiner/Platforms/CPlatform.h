@@ -4,8 +4,9 @@
 #ifndef _CPLATFORM_H_
 #define _CPLATFORM_H_
 
-#include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
-
+#ifndef _GCFACTORY_OBJSPRITEPHYSICS_H_
+#include "../../GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
+#endif
 
 enum class EPlatformType
 {
@@ -23,8 +24,12 @@ public:
 	CPlatform();
 	//CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
 	virtual ~CPlatform();
+
+	GCFACTORY_DECLARE_CREATABLECLASS(CPlatform);
 	
 	void VOnResourceAcquire() override;
+
+	void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 
 	void VOnResourceRelease() override;
 
@@ -47,7 +52,8 @@ public:
 protected:
 	
 	//CGCFactoryCreationParams& m_FactoryCreationParams;
-
+	std::unique_ptr<CGCFactoryCreationParams> m_pcCustomCreationParams;
+	
 	// V2 position in the level
 	cocos2d::Vec2 m_v2ResetPosition;
 

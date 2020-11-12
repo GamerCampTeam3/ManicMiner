@@ -54,14 +54,15 @@ USING_NS_CC;
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
-	, m_pcLevelManager				( nullptr )
 	, m_pcGameManager				( nullptr )
+	, m_pczBackGround				( nullptr )
+	, m_sLevelValues				( ECollectibleRequirements::Collectible, 5 )
+	, m_pcLevelManager				( nullptr )
 	, m_eGameState					( EGameState::Looting )
 	, m_bWasResetRequested			( false )
 	, m_bWasNextLevelRequested		( false )
 	, m_pcGCSprBackGround			( nullptr )
 	, m_pcPlayer					( nullptr )
-	, m_sLevelValues				( ECollectibleRequirements::Collectible, 5 )
 {
 }
 
@@ -125,14 +126,13 @@ void CManicLayer::VOnCreate()
 	// types of objects that the group handles
 	///////////////////////////////////////////////////////////////////////////
 
-	// add "CGCGameLayerPlatformer" splash screen"
-	const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist";
+	// Adds the background
+	// Make sure to set the value of m_pczBackGround before this is ran otherwise it will never have a texture.
+	if (m_pczBackGround != nullptr )
 	{
-		m_pcGCSprBackGround = new CGCObjSprite();
-		m_pcGCSprBackGround->CreateSprite( pszPlist_background );
-		m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, ( visibleSize.height / 2 ) - 60.f ) );
-		m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
+		InitializeBackground( visibleSize );
 	}
+
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -252,6 +252,13 @@ void CManicLayer::VOnCreate()
 
 }
 
+void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
+{
+	m_pcGCSprBackGround = new CGCObjSprite();
+	m_pcGCSprBackGround->CreateSprite( m_pczBackGround );
+	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, (rSize.height / 2) - 60.f ) );
+	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
+}
 
 
 //////////////////////////////////////////////////////////////////////////
