@@ -55,8 +55,9 @@ USING_NS_CC;
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcGameManager				( nullptr )
-	, m_pczBackGround				( nullptr )
 	, m_sLevelValues				( ECollectibleRequirements::Collectible, 5 )
+	, m_pczBackGround				( nullptr )
+	, m_sLevelPath					( "")
 	, m_pcLevelManager				( nullptr )
 	, m_eGameState					( EGameState::Looting )
 	, m_bWasResetRequested			( false )
@@ -208,9 +209,11 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 	
 	// load level data from Ogmo Editor
-
+	//( std::string( "OgmoEditor/AirBush.oel" ) ).c_str() );
 	// read the oel file for level 0
-	m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( "OgmoEditor/AirBush.oel" ) ).c_str() );
+	// TODO: add a check to see if its not an empty string
+	
+	m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( m_sLevelPath ) ).c_str() );
 	m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
 
 	// note: we have now created all the items, platforms, & invaders specified in the level file

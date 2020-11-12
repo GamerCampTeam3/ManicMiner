@@ -48,6 +48,7 @@ protected:																												//
 	CGameManager*		m_pcGameManager;																				//
 	SLevelValues		m_sLevelValues;																					//
 	char*				m_pczBackGround;																				//
+	std::string			m_sLevelPath;																					//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 	
