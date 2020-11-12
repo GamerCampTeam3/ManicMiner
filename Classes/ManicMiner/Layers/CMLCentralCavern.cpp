@@ -53,10 +53,7 @@ void CMLCentralCavern::VOnCreate( void )
 		
 
 	m_pcAirManager = new CAirManager(origin, visibleSize);
-	m_pcAirManager->Init(*this);
-
-
-	
+	m_pcAirManager->Init(*this);	
 }
 
 void CMLCentralCavern::InitParams()
@@ -73,8 +70,6 @@ void CMLCentralCavern::InitParams()
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnDestroy(void)
 {
-
-
 	safeDelete( m_pCHUD );
 
 	// Call base class last

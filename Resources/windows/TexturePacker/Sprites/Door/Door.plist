@@ -15,7 +15,7 @@
                 <key>spriteSourceSize</key>
                 <string>{120,120}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{120,120}}</string>
+                <string>{{0,0},{120,120}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -31,9 +31,9 @@
             <key>realTextureFileName</key>
             <string>Door.png</string>
             <key>size</key>
-            <string>{122,122}</string>
+            <string>{120,120}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:d96c7bf980ce582e042967642f124428:47d958d183798f693299c96f5e980a9e:cda7c2666d2827883042e1c152d14b51$</string>
+            <string>$TexturePacker:SmartUpdate:0c14beac7df862b4594ebc607d241abc:47d958d183798f693299c96f5e980a9e:cda7c2666d2827883042e1c152d14b51$</string>
             <key>textureFileName</key>
             <string>Door.png</string>
         </dict>
