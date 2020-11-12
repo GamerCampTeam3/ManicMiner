@@ -38,6 +38,8 @@ USING_NS_CC;
 // this just demos how simple it is to turn on/off logging on a define....
 #define ENABLE_COLLISION_TEST_LOGGING
 
+//#define PLAYER_DEBUG_VIRTUAL_CONTACTS
+
 #if defined (ENABLE_COLLISION_TEST_LOGGING)
 
 #define COLLISIONTESTLOG( str )		CCLOG( str )
@@ -209,7 +211,7 @@ void CManicLayer::VOnCreate()
 
 	// read the oel file for level 0
 	m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( "OgmoEditor/AirBush.oel" ) ).c_str() );
-	m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
+	//m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
 
 	// note: we have now created all the items, platforms, & invaders specified in the level file
 
@@ -368,94 +370,31 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 			// Check if this BeginContact is for feet + platform surface ( sensors only )								//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
 			{																											//
-				CCLOG( "Foot goes toot" );																				//
-																														//
+				// Check if this platform was already overlapping in terms of hard contact
+				bool bShouldStartHardContact = ( pPlatform->GetIsInContact() && !pPlatform->GetCollisionEnabled() ) && m_pcPlayer->GetHardContactCount();
+
 				// Activate this platform's collision																	//
 				pPlatform->SetCollisionEnabled( true );																	//
 																														//
 																														//
 				// Increment sensor count for the player																//
 				m_pcPlayer->SensorContactEvent( true );																	//
+
+				pPlatform->SetIsSensorOverlapped( true );
+				
+				if( bShouldStartHardContact )
+				{
+					CCLOG( "Forcing a ghosted hard contact start, due to sensor contact now but hard fixtures were already overlapping." );
+					PlayerBeganContactWithPlatform( *pPlatform );
+				}
+
 			}																											//
 																														//
 			// If not 2 sensors																							//
 			// Check if this BeginContact is for character + platform ( no sensors included )							//
 			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )											//
 			{																											//
-				if( pPlatform->GetCollisionEnabled() )																	//
-				{																										//
-					// Set the platform as a trigger for hard contact events											//
-					pPlatform->SetTriggersHardContactEvent( true );														//
-																														//
-					// Increment hard contact count for the player														//
-					m_pcPlayer->HardContactEvent( true );																//
-																														//
-																														//
-					// Check Platform Type																				//
-					switch( pPlatform->GetPlatformType () )																//
-					{																									//
-					////////////////////////////////////////////////////////////////////////////////					//
-					// MOVING																	////					//
-					////////////////////////////////////////////////////////////////////////////////					//
-					case EPlatformType::Moving:																			//
-					{																									//
-						// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 			//
-						auto pMovingPlatform = static_cast< CMovingPlatform* > ( pPlatform );							//
-																														//
-						if( pMovingPlatform != nullptr )																//
-						{																								//
-							m_pcPlayer->LandedOnConveyorBelt( pMovingPlatform->GetDirectionLock() );					//
-						}																								//
-					}																									//
-					break;																								//
-					////////////////////////////////////////////////////////////////////////////////					//
-					// CRUMBLING																////					//
-					////////////////////////////////////////////////////////////////////////////////					//
-					case EPlatformType::Crumbling:																		//
-					{																									//
-							// Start Crumbling																			//
-						auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pPlatform );						//
-																														//
-						if( pCrumblingPlatform != nullptr )																//
-						{																								//
-							pCrumblingPlatform->InitiateCrumbling();													//
-						}																								//
-																														//
-							// Set player as grounded																	//
-							m_pcPlayer->LandedOnWalkablePlatform();														//
-					}																									//
-					break;																								//
-					////////////////////////////////////////////////////////////////////////////////					//
-					// BRICK																	////					//
-					////////////////////////////////////////////////////////////////////////////////					//
-					case EPlatformType::Brick:																			//
-					{																									//
-						// If in mid air and sensor contacts == 0, or if on top of conveyor belt platform				//
-						if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 )			//
-							|| ( m_pcPlayer->GetIsOnConveyorBelt() ) )													//
-						{																								//
-							// Player Bumped onto brick																	//
-							m_pcPlayer->BumpedWithBricks();																//
-						}																								//
-						// Else, is in mid-air? If so, land on platform													//
-						else if ( !m_pcPlayer->GetIsGrounded() )														//
-						{																								//
-							// Set player as grounded																	//
-							m_pcPlayer->LandedOnWalkablePlatform();														//
-						}																								//
-					}																									//
-					break;																								//
-					////////////////////////////////////////////////////////////////////////////////					//
-					// DEFAULT																	////					//
-					////////////////////////////////////////////////////////////////////////////////					//
-					default:																							//
-					{																									//
-						// Set player as grounded																		//
-						m_pcPlayer->LandedOnWalkablePlatform();															//
-					}																									//
-					break;																								//
-					}																									//
-				}																										//
+				PlayerBeganContactWithPlatform( *pPlatform );
 			}																											//
 		}																												//
 	}																													//
@@ -514,18 +453,18 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 																														//
 			// Check if this EndContact is for feet + platform surface sensors only										//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
-			{																											//
-				CCLOG( "Foot goes untoot" );																			//
-																														//
+			{																											//																														//
 				// If this platform is not a CBrickPlatform																//
 				if( pPlatform->GetPlatformType() != EPlatformType::Brick )												//
 				{																										//
 					// Deactivate this platform's collision																//
-					pPlatform->SetCollisionEnabled( false );															//
+					pPlatform->SetCollisionEnabled( pPlatform->GetTriggersHardContactEvent() );							//
 				}																										//
 																														//
 				// Decrement sensor contact count																		//
 				m_pcPlayer->SensorContactEvent( false );																//
+
+				pPlatform->SetIsSensorOverlapped( false );
 			}																											//
 																														//
 			// If not 2 sensors																							//
@@ -544,7 +483,6 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					if( !m_pcPlayer->GetHardContactCount() && m_pcPlayer->GetIsGrounded() )								//
 					{																									//
 						m_pcPlayer->LeftGround();																		//
-						CCLOG( "LeftGround()" );																		//
 					}																									//
 					// If this was a Crumbling platform, stop crumbling													//
 					switch( pPlatform->GetPlatformType() )																//
@@ -558,7 +496,20 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 						}																								//
 						break;																							//
 					}																									//
+					// If leaving this contact, and sensors aren't overlapping anymore as well
+					if ( !pPlatform->GetIsSensorOverlapped() && pPlatform->GetPlatformType() != EPlatformType::Brick )
+					{
+						// Disable platform collision
+						pPlatform->SetCollisionEnabled( false );
+					}
 				}																										//
+				else
+				{
+#ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS
+					CCLOG( "ENDED SOLID CONTACT WITH A PLATFORM THAT HAS COLLISION OFF" );
+#endif
+				}
+				pPlatform->SetIsInContact( false );
 			}																											//
 		}																												//
 	}																													//
@@ -888,6 +839,92 @@ void CManicLayer::RequestNextLevel()
 }
 
 
+
+
+
+void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
+{
+	if( rcPlatform.GetCollisionEnabled() )																	//
+	{																										//
+		// Set the platform as a trigger for hard contact events											//
+		rcPlatform.SetTriggersHardContactEvent( true );														//
+																											//
+		// Increment hard contact count for the player														//
+		m_pcPlayer->HardContactEvent( true );																//
+																											//																														//
+		// Check Platform Type																				//
+		switch( rcPlatform.GetPlatformType() )																//
+		{																									//
+		////////////////////////////////////////////////////////////////////////////////					//
+		// MOVING																	////					//
+		////////////////////////////////////////////////////////////////////////////////					//
+		case EPlatformType::Moving:																			//
+		{																									//
+			// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 			//
+			auto pMovingPlatform = static_cast< CMovingPlatform* > ( &rcPlatform );							//
+																											//
+			if( pMovingPlatform != nullptr )																//
+			{																								//
+				m_pcPlayer->LandedOnConveyorBelt( pMovingPlatform->GetDirectionLock() );					//
+			}																								//
+		}																									//
+		break;																								//
+		////////////////////////////////////////////////////////////////////////////////					//
+		// CRUMBLING																////					//
+		////////////////////////////////////////////////////////////////////////////////					//
+		case EPlatformType::Crumbling:																		//
+		{																									//
+				// Start Crumbling																			//
+			auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( &rcPlatform );					//
+																											//
+			if( pCrumblingPlatform != nullptr )																//
+			{																								//
+				pCrumblingPlatform->InitiateCrumbling();													//
+			}																								//
+																											//
+				// Set player as grounded																	//
+			m_pcPlayer->LandedOnWalkablePlatform();															//
+		}																									//
+		break;																								//
+		////////////////////////////////////////////////////////////////////////////////					//
+		// BRICK																	////					//
+		////////////////////////////////////////////////////////////////////////////////					//
+		case EPlatformType::Brick:																			//
+		{																									//
+			// If in mid air and sensor contacts == 0, or if on top of conveyor belt platform				//
+			if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 )			//
+				|| ( m_pcPlayer->GetIsOnConveyorBelt() ) )													//
+			{																								//
+				// Player Bumped onto brick																	//
+				m_pcPlayer->BumpedWithBricks();																//
+			}																								//
+			// Else, is in mid-air? If so, land on platform													//
+			else if( !m_pcPlayer->GetIsGrounded() )															//
+			{																								//
+				// Set player as grounded																	//
+				m_pcPlayer->LandedOnWalkablePlatform();														//
+			}																								//
+		}																									//
+		break;																								//
+		////////////////////////////////////////////////////////////////////////////////					//
+		// DEFAULT																	////					//
+		////////////////////////////////////////////////////////////////////////////////					//
+		default:																							//
+		{																									//
+			// Set player as grounded																		//
+			m_pcPlayer->LandedOnWalkablePlatform();															//
+		}																									//
+		break;																								//
+		}																									//
+	}																										//
+	else
+	{
+#ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS
+		CCLOG( "BEGAN SOLID CONTACT WITH A PLATFORM THAT HAS COLLISION OFF" );
+#endif
+	}
+	rcPlatform.SetIsInContact( true );
+}
 
 
 
