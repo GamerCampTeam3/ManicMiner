@@ -12,7 +12,7 @@ setlocal
 @set SUBFOLDER_TEXTUREPACKER=TexturePacker
 
 :: this is the path to the texture packer exe
-@set TEXTUREPACKER_EXE="C:\Program Files\CodeAndWeb\TexturePacker\bin\TexturePacker.exe"
+@set TEXTUREPACKER_EXE="C:\TexturePacker\bin\TexturePacker.exe"
 
 :: sub folder containing fonts
 @set SUBFOLDER_FONTS=fonts
