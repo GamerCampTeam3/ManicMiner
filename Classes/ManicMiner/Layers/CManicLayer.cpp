@@ -130,10 +130,7 @@ void CManicLayer::VOnCreate()
 	// Make sure to set the value of m_pczBackGround before this is ran otherwise it will never have a texture.
 	if (m_pczBackGround != nullptr )
 	{
-		m_pcGCSprBackGround = new CGCObjSprite();
-		m_pcGCSprBackGround->CreateSprite( m_pczBackGround );
-		m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, ( visibleSize.height / 2 ) - 60.f ) );
-		m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
+		InitializeBackground( visibleSize );
 	}
 
 
@@ -253,6 +250,14 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
 		});
 
+}
+
+void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
+{
+	m_pcGCSprBackGround = new CGCObjSprite();
+	m_pcGCSprBackGround->CreateSprite( m_pczBackGround );
+	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, (rSize.height / 2) - 60.f ) );
+	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
 }
 
 

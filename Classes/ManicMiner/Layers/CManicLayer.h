@@ -316,6 +316,7 @@ public:																													//
 
 private:
 	void PlayerBeganContactWithPlatform( CPlatform& rcPlatform );
+	void InitializeBackground( const cocos2d::Size&  rSize );
 
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
