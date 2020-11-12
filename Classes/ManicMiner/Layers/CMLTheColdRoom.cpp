@@ -31,6 +31,9 @@ void CMLTheColdRoom::VOnCreate( void )
 	// It's important to call this before the parent's VOnCreate, otherwise the texture will never be loaded in.
 	m_pczBackGround = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
 
+	// Set level name here
+	m_sLevelPath = "OgmoEditor/TheColdRoom.oel";
+
 	CManicLayer::VOnCreate();
 
 

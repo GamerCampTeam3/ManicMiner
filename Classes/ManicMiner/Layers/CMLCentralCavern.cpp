@@ -38,6 +38,9 @@ void CMLCentralCavern::VOnCreate( void )
 	// We set the background here, if m_pczBackGround is a nullptr, the background will be black.
 	// It's important to call this before the parent's VOnCreate, otherwise the texture will never be loaded in.
 	m_pczBackGround = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+
+	// Set the level path name here
+	m_sLevelPath = "OgmoEditor/AirBush.oel";
 	
 	CManicLayer::VOnCreate();
 
