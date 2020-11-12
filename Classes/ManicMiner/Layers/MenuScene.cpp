@@ -129,7 +129,7 @@ void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 	PreloadSoundEffect( ESoundName::KeyCollected );
 
 	// Play intense music theme
-	PlaySoundEffect( ESoundName::BabyShark );
+	//PlaySoundEffect( ESoundName::BabyShark );
 
 	// Load the first level
 	m_pcLevelManager->EnterCavern();

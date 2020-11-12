@@ -121,6 +121,14 @@ private:
 	float	m_fLastHighestY;																							//
 // -------------------------------------------------------------------------------------------------------------------- //
 
+// Jump Sound ID
+	unsigned int m_uiJumpSoundID;
+// Falling Sound ID
+	// This second one is needed because SimpleAudioEngine
+	// does not have the functionality to start playing
+	// a certain audio file on X seconds, so I needed
+	// a whole new audio file that started a bit ahead on the track
+	unsigned int m_uiFallingSoundID;
 
 
 // ----- Life logic --------------------------------------------------------------------------------------------------- //
