@@ -43,7 +43,7 @@ void CMLCentralCavern::VOnCreate( void )
 	cocos2d::Vec2  v2NewStart( ( origin.x + ( visibleSize.width * 0.08f ) ), ( origin.y + ( visibleSize.height * 0.11f ) ) );
 
 	// Edit Custom Layout
-	GetPlayer().SetResetPosition( v2NewStart );
+	GetPlayer().SetResetPosition(cocos2d::Vec2( 120.0f + 30.0f, 120.0f ) );
 
 	
 	m_pCHUD = new CHUD(*this );

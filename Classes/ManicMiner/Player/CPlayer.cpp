@@ -2,6 +2,15 @@
 // Gamer Camp 2020 / Henrique & Bib													//
 //////////////////////////////////////////////////////////////////////////////////////
 
+
+//#define PLAYER_DEBUG_DIRECTION
+#define PLAYER_DEBUG_CONTACTS
+//#define PLAYER_DEBUG_CONTACTS_REALTIME
+#define PLAYER_DEBUG_LANDING
+
+
+
+
 #include "Classes/ManicMiner/Player/CPlayer.h"
 
 #include "AppDelegate.h"
@@ -37,6 +46,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos )
 	, m_fJumpSpeed						( 10.6f )
 	, m_kfGravitionalPull				( 2.3f )
 	, m_kfMaxFallDistance				( 4.7f )
+	, m_fVerticalSpeedAdjust			( 0.0f )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcControllerActionToKeyMap		( nullptr )
@@ -174,6 +184,9 @@ void CPlayer::VOnResurrected()																													//
 	m_bCanBeControlled = true;																													//
 	m_bIsGrounded = true;																														//
 	m_bIsPendingDirection = false;																												//
+	m_fVerticalSpeedAdjust = 0.0f;
+	m_fLastHighestY = 0.0f;
+	m_fLastGroundedY = 0.0f;
 																																				//
 																																				//
 // Reset physics body related components																										//
@@ -201,9 +214,17 @@ void CPlayer::VOnResurrected()																													//
 // -------------------------------------------------------------------------------------------------------------------- //						//
 void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 {																																				//
+	if( m_fVerticalSpeedAdjust != 0.0f )
+	{
+		Vec2 v2ExpectedVelocity = Vec2( GetVelocity().x, GetVelocity().y - m_fVerticalSpeedAdjust );
+		SetVelocity( v2ExpectedVelocity );
+		m_fVerticalSpeedAdjust = 0.0f;
+	}
+	
+	
 // Get player input and change movement if needed																								//
 	CheckKeyboardInput();																														//
-			
+	
 	// If player is in mid-air movement
 	if( !GetIsGrounded() )
 	{
@@ -224,28 +245,44 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 		}
 	}
 	
+	//CCLOG( "Current Vx: %f", GetVelocity().x );
+	CCLOG( "Current y: %f", GetPhysicsTransform().p.y );
+	//switch( m_ePlayerDirection )
+	//{
+	//case EPlayerDirection::Static:
+	//	CCLOG( "Static" );
+	//	break;
+	//case EPlayerDirection::Right:
+	//	CCLOG( "Right" );
+	//	break;
+	//case EPlayerDirection::Left:
+	//	CCLOG( "Left" );
+	//	break;
+	//}
+
+
 																																				//
 	// DEBUG SECTION -------------------------------------------------------------- //															//
-																					//															//
+#ifdef PLAYER_DEBUG_CONTACTS_REALTIME												//															//
 	// ---------- Number of Hard Contacts this frame ------------------ //			//															//
 	//																	//			//															//
-	//std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
-	//char const* pchar1 = string1.c_str();								//			//															//
-	//CCLOG( "Hard Count:" );												//			//															//
-	//CCLOG( pchar1 );													//			//															//
-	////																	//			//															//
-	//// ---------------------------------------------------------------- //			//															//
-	//																				//															//
-	//// ----------- Number of Soft Contacts this frame ----------------- //			//															//
-	////																	//			//															//
-	//std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
-	//char const* pchar2 = string2.c_str();								//			//															//
-	//CCLOG( "Soft Count:" );												//			//															//
-	//CCLOG( pchar2 );													//			//															//
+	std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
+	char const* pchar1 = string1.c_str();								//			//															//
+	CCLOG( "Hard Count:" );												//			//															//
+	CCLOG( pchar1 );													//			//															//
 	//																	//			//															//
 	// ---------------------------------------------------------------- //			//															//
 																					//															//
+	// ----------- Number of Soft Contacts this frame ----------------- //			//															//
+	//																	//			//															//
+	std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
+	char const* pchar2 = string2.c_str();								//			//															//
+	CCLOG( "Soft Count:" );												//			//															//
+	CCLOG( pchar2 );													//			//															//
+	//																	//			//															//
+	// ---------------------------------------------------------------- //			//															//
 																					//															//
+#endif																				//															//
 	// END OF DEBUG SECTION ------------------------------------------------------- //															//
 }																																				//
 																																				//
@@ -355,8 +392,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 			case EPlayerDirection::Static:
 				
 				// Debug new direction
+#ifdef PLAYER_DEBUG_DIRECTION
 				CCLOG( "Player going Static" );
-				
+#endif
 				// Static -> no speed
 				fHorizontalSpeed = 0.0f;
 				
@@ -367,8 +405,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 			case EPlayerDirection::Right:
 				
 				// Debug new direction
+#ifdef PLAYER_DEBUG_DIRECTION
 				CCLOG( "Player going Right" );
-				
+#endif				
 				// Right -> move with walk speed
 				fHorizontalSpeed = m_fWalkSpeed;
 
@@ -382,8 +421,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 			case EPlayerDirection::Left:
 				
 			// Debug new direction
+#ifdef PLAYER_DEBUG_DIRECTION
 				CCLOG( "Player going Left" );
-
+#endif
 			// Right -> move with negative value of walk speed
 				fHorizontalSpeed = m_fWalkSpeed * -1.0f;
 
@@ -478,6 +518,8 @@ void CPlayer::JumpEvent()
 	// Unlock from conveyor belt always
 		m_bCanBeControlled = true;
 
+		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
+
 		CCLOG( "Jumped" );
 	}
 }
@@ -496,17 +538,24 @@ void CPlayer::HardContactEvent( const bool bBeganContact )
 	if ( bBeganContact )
 	{
 		++m_iHardContactCount;
+#ifdef PLAYER_DEBUG_CONTACTS
+		CCLOG( "Started Touching Platform, Hard Count is now %d", m_iHardContactCount );
+#endif
 	}
 // Else, a contact came to an end, decrement the sum
 	else
 	{
 		--m_iHardContactCount;
+#ifdef PLAYER_DEBUG_CONTACTS
+		CCLOG( "Ended Touching Platform, Hard Count is now %d", m_iHardContactCount );
+#endif
 	}
 
 // Might happen because of bricks
 	if ( m_iHardContactCount < 0 )
 	{
 	// Count should never be less than 0
+		CCLOG( " HARD COUNT < 0 " );
 		m_iHardContactCount = 0;
 	}
 }
@@ -525,11 +574,17 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 	if( bBeganContact )
 	{
 		++m_iSensorContactCount;
+#ifdef PLAYER_DEBUG_CONTACTS
+		CCLOG( "Entered Sensor, Sensor Count is now %d", m_iSensorContactCount );
+#endif
 	}
 // Else, a contact came to an end, decrement the sum
 	else
 	{
 		--m_iSensorContactCount;
+#ifdef PLAYER_DEBUG_CONTACTS
+		CCLOG( "Left Sensor, Sensor Count is now %d", m_iSensorContactCount );
+#endif
 	}
 }
 
@@ -549,10 +604,36 @@ void CPlayer::OnLanded()
 	//Else, not dead
 	else
 	{
-		CCLOG( "Landed" );
+#ifdef PLAYER_DEBUG_LANDING
+		if( m_iHardContactCount == 1 )
+		{
+			CCLOG( "Landed" );
+		}
+#endif
 		// The player is grounded, can jump
 		m_bCanJump = true;
 		m_bIsGrounded = true;
+	}
+
+	// Manually adjust height
+	float fCurrentHeight = GetPhysicsTransform().p.y;
+	float fNewHeight = fCurrentHeight;
+	fNewHeight += 0.5f;
+	fNewHeight = floor( fNewHeight );
+	if( fNewHeight != fCurrentHeight )
+	{
+		float fHeightDelta = fNewHeight - fCurrentHeight + 0.001f;
+
+		// v = ( p1 - p0 ) / t
+		//cocos2d::Vec2 v2VelocityToMoveByDeltaInOneFrame = ( v2PosDeltaB2d / IGCGameLayer::ActiveInstance()->B2dGetTimestep() );
+		float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
+		cocos2d::Vec2 v2NewVelocity = Vec2(GetVelocity().x, fVerticalSpeedToMoveByDeltaInOneFrame );
+		SetVelocity( v2NewVelocity );
+
+		// n.b. need to cache this so we can remove it from the velocity after the 
+		// physics simulation has stepped handily we can do this in 
+		m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
+		GetPhysicsBody()->SetGravityScale( 0.0f );		
 	}
 }
 
@@ -571,7 +652,7 @@ void CPlayer::LandedOnWalkablePlatform()
 	m_bIsPendingDirection = false;
 
 // Run another check for player input
-	CheckKeyboardInput();
+	//CheckKeyboardInput();
 }
 
 
@@ -584,7 +665,9 @@ void CPlayer::LandedOnWalkablePlatform()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LeftGround()
 {
-	CCLOG( "Left the Ground" );
+#ifdef PLAYER_DEBUG_LANDING
+	CCLOG( "LEFT THE GROUND" );
+#endif
 
 	m_bIsPendingDirection = false;
 	m_bIsGrounded = false;
@@ -596,6 +679,8 @@ void CPlayer::LeftGround()
 		ApplyDirectionChange( EPlayerDirection::Static );
 		CCLOG( "Dropping straight down" );
 		m_bCanJump = false;
+
+		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 	}
 
 	// Store last grounded Y coordinate
@@ -635,8 +720,9 @@ void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 	OnLanded();
 
 // Debug print out
+#ifdef PLAYER_DEBUG_LANDING
 	CCLOG( "          on Conveyor Belt" );
-
+#endif
 // Set new pending direction
 	m_ePendingDirection = eDirectionLock;
 
