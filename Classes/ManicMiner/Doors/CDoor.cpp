@@ -1,10 +1,5 @@
 #include "ManicMiner/Doors/CDoor.h"
 
-#include <string.h>
-#include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
-
-
-
 
 #ifndef TINYXML2_INCLUDED
 	#include "external\tinyxml2\tinyxml2.h"
@@ -19,60 +14,55 @@ USING_NS_CC;
 GCFACTORY_IMPLEMENT_CREATEABLECLASS( CDoor );
 
 
-//// Constructor that initializes all values.
-//// The references are fed in by the door managers.
-//CDoor::CDoor(CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition)
-//	: CGCObjSpritePhysics( GetGCTypeIDOf( CDoor ) )
-//	, m_cManicLayer						( cLayer )
-//	, m_FactoryCreationParams			( CreationParams )
-//	, m_v2ResetPosition					( ResetPosition )
-//{	
-//}
-
+// Base constructor
 CDoor::CDoor()
 	: CGCObjSpritePhysics( GetGCTypeIDOf ( CDoor) )
-	, m_pCustomCreationParams( nullptr )
+	, m_pCustomCreationParams			( nullptr  )
 {
-
 }
 
+/// <summary>
+///  Overriden function from the CGCObjSpritePhysics.
+///  Thanks to Dave's implementation, this allows for Custom plists to be loaded in
+///  without needing to make multiple classes.
+/// </summary>
+/// <param name="rCreationParams">	This will set the texture, shape and physics of the object.</param>
+/// <param name="v2InitialPosition">		The position that the object will spawn in.</param>
 void CDoor::VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition )
 {
 	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
-	
+
+	//Fetch a pointer into the OGMO Xml edtior element containing the data.
 	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
-	
-	const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute( "CustomPlist" );
-	
 
-	if ((nullptr != pCustomPlistPath)
-		&& (0 != strlen( pCustomPlistPath->Value() )))
+	// Read in the custom plist
+	if (nullptr != pCurrentObjectXmlData)
 	{
-		m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >( rCreationParams.strClassName.c_str(),
-			pCustomPlistPath->Value(),
-			rCreationParams.strPhysicsShape.c_str(),
-			rCreationParams.eB2dBody_BodyType,
-			rCreationParams.bB2dBody_FixedRotation );
 
-		pParamsToPassToBaseClass = m_pCustomCreationParams.get();
+		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute( "CustomPlist" );
+
+		if ((nullptr != pCustomPlistPath)
+			&& (0 != strlen( pCustomPlistPath->Value() )))
+		{
+			m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >( rCreationParams.strClassName.c_str(),
+				pCustomPlistPath->Value(),
+				rCreationParams.strPhysicsShape.c_str(),
+				rCreationParams.eB2dBody_BodyType,
+				rCreationParams.bB2dBody_FixedRotation );
+
+			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
+		}
 	}
-	
+
+	// Call base class version 	
 	CGCObjSpritePhysics::VHandleFactoryParams( (*pParamsToPassToBaseClass), v2InitialPosition );
 }
-
-
-
-
-
-
-
 
 
 // Sets the sprites as well as reset position
 void CDoor::VOnResourceAcquire()
 {
 	CGCObjSpritePhysics::VOnResourceAcquire();
-	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
 }
 
 // Calls parent Reset 

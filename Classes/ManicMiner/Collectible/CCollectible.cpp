@@ -1,35 +1,32 @@
 #include "ManicMiner/Collectible/CCollectible.h"
-#include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 
-#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
-#include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
-#include "ManicMiner/Helpers/Helpers.h"
-
-
 #include "ManicMiner/AudioHelper/ManicAudio.h"
-#include "ManicMiner/GameManager/CGameManager.h"
+
+#ifndef TINYXML2_INCLUDED
+	#include "external\tinyxml2\tinyxml2.h"
+#endif
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+	#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
 
 USING_NS_CC;
 
-static CGCFactoryCreationParams test1( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
+GCFACTORY_IMPLEMENT_CREATEABLECLASS( CCollectible );
 
-CCollectible::CCollectible( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
+CCollectible::CCollectible()
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
-	, m_FactoryCreationParams			( CreationParams )
+	, m_pCustomCreationParams			( nullptr )
 	, m_bHasBeenCollected				( false )
-	, m_v2ResetPosition					( ResetPosition)
 {	
 }
 
 
 void CCollectible::VOnResourceAcquire( void )
 {
-	VHandleFactoryParams( test1, GetResetPosition() );
 	CGCObjSpritePhysics::VOnResourceAcquire();
-	SetResetPosition( m_v2ResetPosition );
 }
-
 
 
 void CCollectible::VOnReset()
@@ -38,11 +35,44 @@ void CCollectible::VOnReset()
 	m_bHasBeenCollected = false;
 }
 
+/// <summary>
+///  Overriden function from the CGCObjSpritePhysics.
+///  Thanks to Dave's implementation, this allows for Custom plists to be loaded in
+///  without needing to make multiple classes.
+/// </summary>
+/// <param name="rCreationParams">	This will set the texture, shape and physics of the object.</param>
+/// <param name="v2InitialPosition">		The position that the object will spawn in.</param>
+void CCollectible::VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition )
+{
+	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
+
+	//Fetch a pointer into the OGMO Xml edtior element containing the data.
+	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
+
+	// Read in the custom plist
+	if (nullptr != pCurrentObjectXmlData)
+	{
+
+		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute( "CustomPlist" );
+
+		if ((nullptr != pCustomPlistPath)
+			&& (0 != strlen( pCustomPlistPath->Value() )))
+		{
+			m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >( rCreationParams.strClassName.c_str(),
+				pCustomPlistPath->Value(),
+				rCreationParams.strPhysicsShape.c_str(),
+				rCreationParams.eB2dBody_BodyType,
+				rCreationParams.bB2dBody_FixedRotation );
+
+			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
+		}
+	}
+
+	// Call base class version 	
+	CGCObjSpritePhysics::VHandleFactoryParams( (*pParamsToPassToBaseClass), v2InitialPosition );
+}
+
 /// Main Interact Event
-/// Depending if this object is a ECollectibleType::Collectible or ECollectibleType::Switch
-/// Will have a different interact logic.
-/// if ::Collectible, it will increment score and run the collectible event then delete itself
-/// if ::Switch, it will flip it's sprite and run the switch event
 void CCollectible::InteractEvent()
 {
 	if (!m_bHasBeenCollected)
