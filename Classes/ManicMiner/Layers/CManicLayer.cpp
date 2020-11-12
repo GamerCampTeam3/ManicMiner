@@ -211,7 +211,7 @@ void CManicLayer::VOnCreate()
 
 	// read the oel file for level 0
 	m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( "OgmoEditor/AirBush.oel" ) ).c_str() );
-	//m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
+	m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
 
 	// note: we have now created all the items, platforms, & invaders specified in the level file
 
