@@ -58,6 +58,7 @@ CManicLayer::CManicLayer()
 	, m_sLevelValues				( ECollectibleRequirements::Collectible, 5 )
 	, m_pczBackGround				( nullptr )
 	, m_sLevelPath					( "")
+	, m_v2StartPosition				( cocos2d::Vec2( 120.0f + 30.0f, 120.0f ))
 	, m_pcLevelManager				( nullptr )
 	, m_eGameState					( EGameState::Looting )
 	, m_bWasResetRequested			( false )
@@ -90,8 +91,8 @@ void CManicLayer::VOnCreate()
 
 	//////////////////////////////////////////////////////////////////////////
 	// cache some useful values 
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Point origin = Director::getInstance()->getVisibleOrigin();
+	m_sizeVisible = Director::getInstance()->getVisibleSize();
+	m_pointOrigin = Director::getInstance()->getVisibleOrigin();
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -131,9 +132,8 @@ void CManicLayer::VOnCreate()
 	// Make sure to set the value of m_pczBackGround before this is ran otherwise it will never have a texture.
 	if (m_pczBackGround != nullptr )
 	{
-		InitializeBackground( visibleSize );
+		InitializeBackground( m_sizeVisible );
 	}
-
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -146,20 +146,10 @@ void CManicLayer::VOnCreate()
 	// load the physics shapes from the plist created with PhysicsEditor
 	B2dLoadShapesFromPlist( "PhysicsEditor/GameShapes.plist" );
 
-	///////////////////////////////////////////////////////////////////////////
-	// stop Mario from leaving the screen
-	///////////////////////////////////////////////////////////////////////////
-
-	// get window size
-	//Size s = Director::getInstance()->getWinSize();
-
 	// PTM_RATIO
 	f32 PTM_RATIO = IGCGAMELAYER_B2D_PIXELS_PER_METER;
 
-	b2Vec2	b2v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
-	Vec2	v2ScreenCentre_Pixels( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.5f ) ) );
-	Vec2	v2ScreenCentre_Offset( ( origin.x + ( visibleSize.width * 0.5f ) ), ( origin.y + ( visibleSize.height * 0.4f ) ) );
-
+	b2Vec2	b2v2ScreenCentre_Pixels( (m_pointOrigin.x + (m_sizeVisible.width * 0.5f ) ), (m_pointOrigin.y + (m_sizeVisible.height * 0.5f ) ) );
 
 
 	// define the ground body
@@ -176,19 +166,19 @@ void CManicLayer::VOnCreate()
 	b2PolygonShape groundBox;
 
 	// bottom
-	groundBox.SetAsBox( ( ( visibleSize.width * 0.5f ) / PTM_RATIO ), 0.5f, b2Vec2( 0.0f, -( ( visibleSize.height * 0.5f ) / PTM_RATIO ) ), 0.0f );
+	groundBox.SetAsBox( ( (m_sizeVisible.width * 0.5f ) / PTM_RATIO ), 0.5f, b2Vec2( 0.0f, -( (m_sizeVisible.height * 0.5f ) / PTM_RATIO ) ), 0.0f );
 	groundBody->CreateFixture( &groundBox, 0 );
 
 	// top
-	groundBox.SetAsBox( ( ( visibleSize.width * 0.5f ) / PTM_RATIO ), 0.5f, b2Vec2( 0.0f, ( ( visibleSize.height * 0.5f ) / PTM_RATIO ) ), 0.0f );
+	groundBox.SetAsBox( ( (m_sizeVisible.width * 0.5f ) / PTM_RATIO ), 0.5f, b2Vec2( 0.0f, ( (m_sizeVisible.height * 0.5f ) / PTM_RATIO ) ), 0.0f );
 	groundBody->CreateFixture( &groundBox, 0 );
 
 	// left
-	groundBox.SetAsBox( 0.5f, ( ( visibleSize.height * 0.5f ) / PTM_RATIO ), b2Vec2( -( ( visibleSize.width * 0.5f ) / PTM_RATIO ), 0.0f ), 0.0f );
+	groundBox.SetAsBox( 0.5f, ( (m_sizeVisible.height * 0.5f ) / PTM_RATIO ), b2Vec2( -( (m_sizeVisible.width * 0.5f ) / PTM_RATIO ), 0.0f ), 0.0f );
 	groundBody->CreateFixture( &groundBox, 0 );
 
 	// right
-	groundBox.SetAsBox( 0.5f, ( ( visibleSize.height * 0.5f ) / PTM_RATIO ), b2Vec2( ( ( visibleSize.width * 0.5f ) / PTM_RATIO ), 0.0f ), 0.0f );
+	groundBox.SetAsBox( 0.5f, ( (m_sizeVisible.height * 0.5f ) / PTM_RATIO ), b2Vec2( ( (m_sizeVisible.width * 0.5f ) / PTM_RATIO ), 0.0f ), 0.0f );
 	groundBody->CreateFixture( &groundBox, 0 );
 
 
@@ -208,27 +198,19 @@ void CManicLayer::VOnCreate()
 	//
 	///////////////////////////////////////////////////////////////////////////
 	
-	// load level data from Ogmo Editor
-	//( std::string( "OgmoEditor/AirBush.oel" ) ).c_str() );
-	// read the oel file for level 0
-	// TODO: add a check to see if its not an empty string
-	
-	m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( m_sLevelPath ) ).c_str() );
-	m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
-
-	// note: we have now created all the items, platforms, & invaders specified in the level file
-
-
+	// If the level fails to receive a string or the string provided does not contain at least Ogmoeditor
+	// then fail
+	if ( (m_sLevelPath._Equal( "" ) != 0 ) || ( m_sLevelPath.find( "OgmoEditor/" ) != std::string::npos) ) 
+	{
+		m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( m_sLevelPath ) ).c_str() );
+		m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
+	}
 
 
 	///////////////////////////////////////////////////////////////////////////
 	// add player
 	///////////////////////////////////////////////////////////////////////////
-
-	// starting position
-	const Vec2 v2PlayerStartPos = v2ScreenCentre_Pixels;
-	// create player object
-	m_pcPlayer = new CPlayer( *this, v2PlayerStartPos );
+	m_pcPlayer = new CPlayer( *this, m_v2StartPosition );
 
 
 

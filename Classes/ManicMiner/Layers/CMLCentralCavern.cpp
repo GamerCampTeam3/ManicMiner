@@ -43,26 +43,15 @@ void CMLCentralCavern::VOnCreate( void )
 	m_sLevelPath = "OgmoEditor/AirBush.oel";
 	
 	CManicLayer::VOnCreate();
-
-
-	cocos2d::Size  visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
-	cocos2d::Point origin = cocos2d::Director::getInstance()->getVisibleOrigin();
-	cocos2d::Vec2  v2NewStart( ( origin.x + ( visibleSize.width * 0.08f ) ), ( origin.y + ( visibleSize.height * 0.11f ) ) );
-
-	// Edit Custom Layout
-	GetPlayer().SetResetPosition(cocos2d::Vec2( 120.0f + 30.0f, 120.0f ) );
-
 	
-	m_pCHUD = new CHUD(*this );
-		
-
-	m_pcAirManager = new CAirManager(origin, visibleSize);
+	m_pCHUD = new CHUD(*this );	
+	m_pcAirManager = new CAirManager(m_pointOrigin, m_sizeVisible);
 	m_pcAirManager->Init(*this);	
 }
 
 void CMLCentralCavern::InitParams()
 {
-	// Sets the references required by the player
+	// Sets the references required by the GameManager
 	m_pcGameManager	->SetCHUD				( m_pCHUD		  );
 	m_pcGameManager	->SetCPlayer			( &GetPlayer()	  );
 	m_pcGameManager	->SetCAirManager		( m_pcAirManager  );
