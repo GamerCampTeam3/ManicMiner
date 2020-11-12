@@ -272,6 +272,7 @@ void CGameManager::DrainAirForScore()
 	else
 	{
 		m_pcCPlayer->SetCanBeControlled( false );
+		m_pcCPlayer->ApplyDirectionChange( EPlayerDirection::Static );
 		m_bDrainToScore = true;
 	}
 }

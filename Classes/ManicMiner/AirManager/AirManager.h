@@ -39,7 +39,7 @@ public:
 
 	void VOnReset() override;
 
-	void Init( class CMLCentralCavern& rglOwnerGameLayer );
+	void Init(  CManicLayer& rglOwnerGameLayer );
 	
 	bool GetHasInitialized();
 
@@ -51,7 +51,7 @@ private:
 
 	EAirDrainedState m_eAirDrainedState;
 	
-	class CMLCentralCavern* m_pglOwnerGameLayer;
+	class CManicLayer* m_pglOwnerGameLayer;
 
 	class cocos2d::Director* m_pdDirector;
 	

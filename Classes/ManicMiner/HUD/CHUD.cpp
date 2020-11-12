@@ -32,34 +32,43 @@ CHUD::CHUD( CManicLayer& cLayer )
 
 void CHUD::UpdateScore(int score)
 {
-	m_pglOwnerGameLayer->removeChild( m_pScoreLabel );
+	if (m_pglOwnerGameLayer != nullptr)
+	{
+		m_pglOwnerGameLayer->removeChild( m_pScoreLabel );
 
-	m_pScoreLabel = Label::createWithTTF( "SCORE: " + std::to_string( score ), "fonts/arial.ttf", 20 );
-	m_pScoreLabel->setGlobalZOrder( 3.f );
-	m_pScoreLabel->setPosition( cocos2d::Vec2( 300.f, 1030.f ) );
+		m_pScoreLabel = Label::createWithTTF( "SCORE: " + std::to_string( score ), "fonts/arial.ttf", 20 );
+		m_pScoreLabel->setGlobalZOrder( 3.f );
+		m_pScoreLabel->setPosition( cocos2d::Vec2( 300.f, 1030.f ) );
 
-	m_pglOwnerGameLayer->addChild( m_pScoreLabel, 2 );
+		m_pglOwnerGameLayer->addChild( m_pScoreLabel, 2 );
+	}
 
 }
 
 void CHUD::UpdateLives(int lives)
 {
-	m_pglOwnerGameLayer->removeChild( m_pLivesLabel );
+	if (m_pglOwnerGameLayer != nullptr)
+	{
+		m_pglOwnerGameLayer->removeChild( m_pLivesLabel );
 
-	m_pLivesLabel = Label::createWithTTF( "LIVES: " + std::to_string( lives ), "fonts/arial.ttf", 20 );
-	m_pLivesLabel->setGlobalZOrder( 3.f );
-	m_pLivesLabel->setPosition( cocos2d::Vec2( 50.f, 1030.f ) );
+		m_pLivesLabel = Label::createWithTTF( "LIVES: " + std::to_string( lives ), "fonts/arial.ttf", 20 );
+		m_pLivesLabel->setGlobalZOrder( 3.f );
+		m_pLivesLabel->setPosition( cocos2d::Vec2( 50.f, 1030.f ) );
 
-	m_pglOwnerGameLayer->addChild( m_pLivesLabel, 2 );
+		m_pglOwnerGameLayer->addChild( m_pLivesLabel, 2 );
+	}
 }
 
 void CHUD::UpdateHighScore(int highScore)
 {
-	m_pglOwnerGameLayer->removeChild( m_pHighScoreLabel );
+	if (m_pglOwnerGameLayer != nullptr)
+	{
+		m_pglOwnerGameLayer->removeChild( m_pHighScoreLabel );
 
-	m_pHighScoreLabel = Label::createWithTTF( "HIGHSCORE: " + std::to_string( highScore ), "fonts/arial.ttf", 20 );
-	m_pHighScoreLabel->setGlobalZOrder( 3.f );
-	m_pHighScoreLabel->setPosition( cocos2d::Vec2( 600.f, 1030.f ) );
+		m_pHighScoreLabel = Label::createWithTTF( "HIGHSCORE: " + std::to_string( highScore ), "fonts/arial.ttf", 20 );
+		m_pHighScoreLabel->setGlobalZOrder( 3.f );
+		m_pHighScoreLabel->setPosition( cocos2d::Vec2( 600.f, 1030.f ) );
 
-	m_pglOwnerGameLayer->addChild( m_pHighScoreLabel, 2 );
+		m_pglOwnerGameLayer->addChild( m_pHighScoreLabel, 2 );
+	}
 }

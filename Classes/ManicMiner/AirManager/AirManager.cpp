@@ -12,6 +12,7 @@
 #include "../Layers/CMLCentralCavern.h"
 
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/Layers/CManicLayer.h"
 
 USING_NS_CC;
 
@@ -131,9 +132,9 @@ void CAirManager::VOnUpdate( float fTimeStep )
 
 
 
-void CAirManager::Init( class CMLCentralCavern& rglOwnerGameLayer )
+void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 {
-	m_pglOwnerGameLayer = &rglOwnerGameLayer;
+	m_pglOwnerGameLayer =& rglOwnerGameLayer;
 	if( nullptr != m_pglOwnerGameLayer )	// only initialize if a pointer to a game layer was provided to the constructor
 	{
 		// initialize member variables
