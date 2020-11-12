@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Keyt.png</key>
+            <key>Key2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -29,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>Key.png</string>
+            <string>Key2.png</string>
             <key>size</key>
             <string>{60,60}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b8b57412e309b961e1c204f10abcfe93:5decbbc04cdc32c25f8a7b8f81354b13:97f99da776b4ec2d3a7b3d024735617d$</string>
+            <string>$TexturePacker:SmartUpdate:45e4b8fee2fb8f2f8cb2072ea50bd3f9:559a039d2c149059818dbe9630901882:386eece06f143ac680898c6b4d3403ba$</string>
             <key>textureFileName</key>
-            <string>Key.png</string>
+            <string>Key2.png</string>
         </dict>
     </dict>
 </plist>
