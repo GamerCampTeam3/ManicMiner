@@ -323,7 +323,7 @@ const b2Vec2	k_v2B2dGravity( 0.0f, -10.0f );
 
 //////////////////////////////////////////////////////////////////////////
 // comment this IN to draw debug physics shapes
-#define GC_DRAW_DEBUG_PHYSICS
+//#define GC_DRAW_DEBUG_PHYSICS
 
 #if defined( GC_DRAW_DEBUG_PHYSICS )
 	// special layer class just for rendering the physics stuff
@@ -332,12 +332,13 @@ const b2Vec2	k_v2B2dGravity( 0.0f, -10.0f );
 	{
 		GLESDebugDraw*	m_b2dDebugDrawer; 
 		b2World*		m_pWorldToRender;
-
+		// Henrique Edit
+		bool			m_bShouldDraw;
 	public:
 		void InitialiseDebugDrawing( b2World* pWorldToRender )
 		{
 			m_pWorldToRender = pWorldToRender;
-
+			m_bShouldDraw = false;
 			uint32 uFlags = 0;
 			uFlags += b2Draw::e_shapeBit;
 			//uFlags += b2Draw::e_jointBit;
@@ -354,12 +355,15 @@ const b2Vec2	k_v2B2dGravity( 0.0f, -10.0f );
 		// used to override rendering and to draw debug physics shapes
 		virtual void draw( cocos2d::Renderer* pRenderer, const cocos2d::Mat4& rmatTransform, uint32_t uFlags )
 		{
-			cocos2d::Layer::draw( pRenderer, rmatTransform, uFlags );
+			if( m_bShouldDraw )
+			{
+				cocos2d::Layer::draw( pRenderer, rmatTransform, uFlags );
 
-			GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-			Director::getInstance()->pushMatrix( MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW );
-			m_pWorldToRender->DrawDebugData();
-			Director::getInstance()->popMatrix( MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW );
+				GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+				Director::getInstance()->pushMatrix( MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW );
+				m_pWorldToRender->DrawDebugData();
+				Director::getInstance()->popMatrix( MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW );
+			}
 		}
 
 		// called by cocos2d when layer is removed from the active cocos 2d scenegraph
