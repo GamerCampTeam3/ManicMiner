@@ -377,6 +377,11 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 			// Check if this BeginContact is for feet + platform surface ( sensors only )								//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
 			{																											//
+
+				// GET ID NAMESSSSS WOOP took exactly 1 hour to find out
+				const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
+				auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
+
 				// Check if this platform was already overlapping in terms of hard contact
 				bool bShouldStartHardContact = ( pPlatform->GetIsInContact() && !pPlatform->GetCollisionEnabled() ) && m_pcPlayer->GetHardContactCount();
 
