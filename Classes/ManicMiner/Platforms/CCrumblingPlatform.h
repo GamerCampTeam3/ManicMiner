@@ -31,6 +31,8 @@ public:
 	
 	void VOnResourceAcquire() override;
 
+	void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
+	
 	void VOnUpdate(float fTimeStep) override;
 
 	void VOnReset() override;
@@ -60,8 +62,7 @@ private:
 
 	class cocos2d::Director* m_pcDirector;
 
-
-	//cocos2d::Map<std::string, cocos2d::Animation*> m_mAnimationMap;
+	//cocos2d::Map<char*, cocos2d::Animation*> m_mAnimationMap;
 	char* m_pszAnimations[6];
 	cocos2d::Animation* m_pcAnimations[6];
 

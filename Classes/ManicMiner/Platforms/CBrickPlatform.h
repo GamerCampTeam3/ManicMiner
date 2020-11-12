@@ -19,6 +19,8 @@ public:
 	
 	void VOnResourceAcquire() override;
 
+	void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
+
 	void VOnReset() override;
 };
 
