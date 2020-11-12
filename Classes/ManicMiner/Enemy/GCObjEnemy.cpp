@@ -187,7 +187,7 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
 
-
+		// Read in the custom plist
 		if ((nullptr != pCustomPlistPath)
 			&& (0 != strlen(pCustomPlistPath->Value())))
 		{

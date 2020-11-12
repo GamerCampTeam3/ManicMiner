@@ -28,7 +28,7 @@ GCFACTORY_IMPLEMENT_CREATEABLECLASS(CGCObjHazard);
 
 CGCObjHazard::CGCObjHazard()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjHazard))
-//	, m_pCustomCreationParams(nullptr)
+	, m_pCustomCreationParams(nullptr)
 {
 }
 
@@ -47,6 +47,49 @@ void CGCObjHazard::VOnResourceAcquire( void )
 
 	//SetResetPosition(m_cAnchorPoint);
 }
+
+
+
+void CGCObjHazard::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
+{
+
+	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
+
+	//Fetch a pointer into the OGMO Xml edtior element containing the data.
+	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
+
+	// Read in the custom plist
+	if (nullptr != pCurrentObjectXmlData)
+	{
+	
+		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
+		
+		if ((nullptr != pCustomPlistPath)
+			&& (0 != strlen(pCustomPlistPath->Value())))
+		{
+			m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(rCreationParams.strClassName.c_str(),
+				pCustomPlistPath->Value(),
+				rCreationParams.strPhysicsShape.c_str(),
+				rCreationParams.eB2dBody_BodyType,
+				rCreationParams.bB2dBody_FixedRotation);
+
+			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
+		}
+
+	}
+
+	// Call base class version 	
+	CGCObjSpritePhysics::VHandleFactoryParams((*pParamsToPassToBaseClass), v2InitialPosition);
+
+}
+
+
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // This function is called when an hazard is resurected from the dead-list to the 
