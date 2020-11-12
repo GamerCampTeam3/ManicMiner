@@ -30,16 +30,6 @@ CCrumblingPlatform::CCrumblingPlatform()
 	m_ePlatformType = EPlatformType::Crumbling;
 }
 
-/*
-CCrumblingPlatform::CCrumblingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
-	: CPlatform( CreationParams, ResetPosition )
-	, m_bInitiatedCrumbling(false)
-	, m_fCurrentCrumblingTimer(1.f)
-	, m_eCrumbleState(ECrumbleState::Stage_0)
-{
-	m_ePlatformType = EPlatformType::Crumbling;
-}*/
-
 void CCrumblingPlatform::VOnResourceAcquire()
 {
 	CPlatform::VOnResourceAcquire();
@@ -47,6 +37,34 @@ void CCrumblingPlatform::VOnResourceAcquire()
 	m_pcDirector = cocos2d::Director::getInstance();
 
 	LoadAnimations();	
+}
+
+void CCrumblingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams,
+	cocos2d::Vec2 v2InitialPosition)
+{
+	const CGCFactoryCreationParams* pParamsToPasstoBaseClass = &rCreationParams;
+
+	//Fetch a pointer into the OGMO Xml edtior element containing the data.
+	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
+
+	if (nullptr != pCurrentObjectXmlData)
+	{
+		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
+
+		if ((nullptr != pCustomPlistPath)
+			&& (0 != strlen(pCustomPlistPath->Value())))
+		{
+			m_pcCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(rCreationParams.strClassName.c_str(),
+				pCustomPlistPath->Value(),
+				rCreationParams.strPhysicsShape.c_str(),
+				rCreationParams.eB2dBody_BodyType,
+				rCreationParams.bB2dBody_FixedRotation);
+
+			pParamsToPasstoBaseClass = m_pcCustomCreationParams.get();
+		}
+	}
+
+	CPlatform::VHandleFactoryParams(*pParamsToPasstoBaseClass, v2InitialPosition);
 }
 
 void CCrumblingPlatform::VOnUpdate(float fTimeStep)
