@@ -323,7 +323,7 @@ const b2Vec2	k_v2B2dGravity( 0.0f, -10.0f );
 
 //////////////////////////////////////////////////////////////////////////
 // comment this IN to draw debug physics shapes
-//#define GC_DRAW_DEBUG_PHYSICS
+#define GC_DRAW_DEBUG_PHYSICS
 
 #if defined( GC_DRAW_DEBUG_PHYSICS )
 	// special layer class just for rendering the physics stuff
@@ -355,7 +355,7 @@ const b2Vec2	k_v2B2dGravity( 0.0f, -10.0f );
 		// used to override rendering and to draw debug physics shapes
 		virtual void draw( cocos2d::Renderer* pRenderer, const cocos2d::Mat4& rmatTransform, uint32_t uFlags )
 		{
-			if( m_bShouldDraw )
+			//if( m_bShouldDraw )
 			{
 				cocos2d::Layer::draw( pRenderer, rmatTransform, uFlags );
 
