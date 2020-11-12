@@ -14,6 +14,8 @@
 #include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 
+class CHUD;
+class CAirManager;
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CObjCCGroupPlatform;																								//
 class CGCObjGroupHazardCentralCavern;																					//
@@ -39,5 +41,13 @@ private:
 	CObjCCGroupPlatform*			m_pcGroupPlatformCentralCavern;
 // --- Hazard Group --------------------------------------------------------------------------------------------------- //
 	CGCObjGroupHazardCentralCavern* m_pcGCGroupHazardCentralCavern;
+
+	// --- HUD ------------------------------------------------------------------------------------------------------------ //
+	CHUD* m_pCHUD;
+
+	// --- Air Manager ---------------------------------------------------------------------------------------------------- //
+	CAirManager* m_pcAirManager;
+
+	virtual void InitParams() override;
 };
 #endif //#ifndef _CMLTHECOLDROOM_H_
