@@ -25,7 +25,7 @@ void CMLTheColdRoom::VOnCreate( void )
 {
 
 	// Set the inherited structs, it will be fed into the game manager
-	m_sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 1 );
+	m_sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 5 );
 
 	// We set the background here, if m_pczBackGround is a nullptr, the background will be black.
 	// It's important to call this before the parent's VOnCreate, otherwise the texture will never be loaded in.
@@ -60,7 +60,6 @@ void CMLTheColdRoom::InitParams()
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLTheColdRoom::VOnDestroy( void )
 {
-
 	// Call base class last
 	CManicLayer::VOnDestroy();
 }
