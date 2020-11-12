@@ -22,7 +22,6 @@
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLCentralCavern::CMLCentralCavern( )
 	: CManicLayer( )
-	, m_pcGroupPlatformCentralCavern(nullptr)
 {}
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
@@ -46,15 +45,6 @@ void CMLCentralCavern::VOnCreate( void )
 	// Edit Custom Layout
 	GetPlayer().SetResetPosition(cocos2d::Vec2( 120.0f + 30.0f, 120.0f ) );
 
-	
-	// Platforms for Central Cavern
-	m_pcGroupPlatformCentralCavern = new CObjCCGroupPlatform();
-	CGCObjectManager::ObjectGroupRegister(m_pcGroupPlatformCentralCavern);
-
-
-
-	m_pcCDCreatorCentralCavern = new CDCreatorCentralCavern( *this );
-	CGCObjectManager::ObjectGroupRegister( m_pcCDCreatorCentralCavern );
 
 	auto test = CGCFactoryCreationParams( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
 	CCollectible* pCollectible_4 = new CCollectible(test, cocos2d::Vec2( 690.f, 60.f ));
@@ -63,34 +53,23 @@ void CMLCentralCavern::VOnCreate( void )
 		
 
 	m_pcAirManager = new CAirManager(origin, visibleSize);
-	m_pcAirManager->Init(*this);
-
-
-	
+	m_pcAirManager->Init(*this);	
 }
 
 void CMLCentralCavern::InitParams()
 {
 	// Sets the references required by the player
-	m_pcGameManager	->SetCHUD( m_pCHUD );
-	m_pcGameManager	->SetCPlayer( &GetPlayer() );
-	m_pcGameManager	->SetCAirManager( m_pcAirManager );
-	m_pcAirManager	->SetGameManager( m_pcGameManager );
-	m_pcGameManager	->SetLevelRequirements( m_sLevelValues );
+	m_pcGameManager	->SetCHUD				( m_pCHUD		  );
+	m_pcGameManager	->SetCPlayer			( &GetPlayer()	  );
+	m_pcGameManager	->SetCAirManager		( m_pcAirManager  );
+	m_pcAirManager	->SetGameManager		( m_pcGameManager );
+	m_pcGameManager	->SetLevelRequirements	( m_sLevelValues  );
 }
 
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnDestroy(void)
 {
-
-	m_pcGroupPlatformCentralCavern->DestroyPlatforms();
-	CGCObjectManager::ObjectGroupUnRegister(m_pcGroupPlatformCentralCavern);
-	safeDelete( m_pcGroupPlatformCentralCavern );
-
-	CGCObjectManager::ObjectGroupUnRegister( m_pcCDCreatorCentralCavern );
-	safeDelete( m_pcCDCreatorCentralCavern );
-
 	safeDelete( m_pCHUD );
 
 	// Call base class last

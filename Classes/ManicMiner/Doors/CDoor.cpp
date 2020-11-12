@@ -1,32 +1,78 @@
 #include "ManicMiner/Doors/CDoor.h"
-#include "ManicMiner/Layers/CManicLayer.h"
 
-// Constructor that initializes all values.
-// The references are fed in by the door managers.
-CDoor::CDoor(CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition)
-	: CGCObjSpritePhysics( GetGCTypeIDOf( CDoor ) )
-	, m_cManicLayer						( cLayer )
-	, m_FactoryCreationParams			( CreationParams )
-	, m_v2ResetPosition					( ResetPosition )
-{	
-}
+#include <string.h>
+#include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 
 
-// Checks if player is escaping and if so request the next level
-void CDoor::InteractEvent()
+
+
+#ifndef TINYXML2_INCLUDED
+	#include "external\tinyxml2\tinyxml2.h"
+#endif
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+	#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
+USING_NS_CC;
+
+GCFACTORY_IMPLEMENT_CREATEABLECLASS( CDoor );
+
+
+//// Constructor that initializes all values.
+//// The references are fed in by the door managers.
+//CDoor::CDoor(CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition)
+//	: CGCObjSpritePhysics( GetGCTypeIDOf( CDoor ) )
+//	, m_cManicLayer						( cLayer )
+//	, m_FactoryCreationParams			( CreationParams )
+//	, m_v2ResetPosition					( ResetPosition )
+//{	
+//}
+
+CDoor::CDoor()
+	: CGCObjSpritePhysics( GetGCTypeIDOf ( CDoor) )
+	, m_pCustomCreationParams( nullptr )
 {
-	if ( m_cManicLayer.GetGameState() == EGameState::Escaping )
-	{
-		m_cManicLayer.RequestNextLevel();
-	}
+
 }
+
+void CDoor::VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition )
+{
+	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
+	
+	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
+	
+	const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute( "CustomPlist" );
+	
+
+	if ((nullptr != pCustomPlistPath)
+		&& (0 != strlen( pCustomPlistPath->Value() )))
+	{
+		m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >( rCreationParams.strClassName.c_str(),
+			pCustomPlistPath->Value(),
+			rCreationParams.strPhysicsShape.c_str(),
+			rCreationParams.eB2dBody_BodyType,
+			rCreationParams.bB2dBody_FixedRotation );
+
+		pParamsToPassToBaseClass = m_pCustomCreationParams.get();
+	}
+	
+	CGCObjSpritePhysics::VHandleFactoryParams( (*pParamsToPassToBaseClass), v2InitialPosition );
+}
+
+
+
+
+
+
+
+
 
 // Sets the sprites as well as reset position
 void CDoor::VOnResourceAcquire()
 {
-	VHandleFactoryParams( m_FactoryCreationParams, GetResetPosition() );
 	CGCObjSpritePhysics::VOnResourceAcquire();
-	SetResetPosition( m_v2ResetPosition );
+	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
 }
 
 // Calls parent Reset 

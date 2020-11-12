@@ -4,6 +4,10 @@
 #ifndef _CCRUMBLINGPLATFORM_H_
 #define _CCRUMBLINGPLATFORM_H_
 
+#ifndef _GCFACTORY_OBJSPRITEPHYSICS_H_
+#include "../../GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
+#endif
+
 #include "CPlatform.h"
 #include "2d/CCActionInterval.h"
 
@@ -20,10 +24,11 @@ enum class ECrumbleState
 class CCrumblingPlatform : public CPlatform
 {
 public:
-
+	CCrumblingPlatform();
 	// overloaded constructor
-	CCrumblingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
-
+	//CCrumblingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition );
+	GCFACTORY_DECLARE_CREATABLECLASS(CCrumblingPlatform);
+	
 	void VOnResourceAcquire() override;
 
 	void VOnUpdate(float fTimeStep) override;
@@ -69,6 +74,8 @@ private:
 
 	/// Crumbling Platforms
 	////////////////////////////////////////////////////////////////////////
+
+	bool IsInRange(float NumToCompare, float MinRange, float MaxRange);
 	
 };
 

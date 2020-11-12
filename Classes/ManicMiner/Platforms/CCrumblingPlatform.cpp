@@ -10,6 +10,27 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
+#ifndef TINYXML2_INCLUDED
+#include "external\tinyxml2\tinyxml2.h"
+#endif
+
+
+
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
+GCFACTORY_IMPLEMENT_CREATEABLECLASS(CCrumblingPlatform);
+
+
+CCrumblingPlatform::CCrumblingPlatform()
+	: CPlatform()
+{
+	m_ePlatformType = EPlatformType::Crumbling;
+}
+
+/*
 CCrumblingPlatform::CCrumblingPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
 	: CPlatform( CreationParams, ResetPosition )
 	, m_bInitiatedCrumbling(false)
@@ -17,7 +38,7 @@ CCrumblingPlatform::CCrumblingPlatform( CGCFactoryCreationParams& CreationParams
 	, m_eCrumbleState(ECrumbleState::Stage_0)
 {
 	m_ePlatformType = EPlatformType::Crumbling;
-}
+}*/
 
 void CCrumblingPlatform::VOnResourceAcquire()
 {
@@ -43,21 +64,21 @@ void CCrumblingPlatform::VOnUpdate(float fTimeStep)
 		switch(m_eCrumbleState)
 		{
 		case ECrumbleState::Stage_0 :
-			if (m_fCurrentCrumblingTimer <= 0.75f && m_fCurrentCrumblingTimer >= 0.56f)
+			if(IsInRange(m_fCurrentCrumblingTimer, 0.56f, 0.75f))
 			{
 				UpdateCrumblingPlatform(ECrumbleState::Stage_1);
 			}
 			break;
 		case ECrumbleState::Stage_1 :
-			if (m_fCurrentCrumblingTimer <= 0.5f && m_fCurrentCrumblingTimer >= 0.26f)
+			if (IsInRange(m_fCurrentCrumblingTimer, 0.26f, 0.55f))
 			{
-				UpdateCrumblingPlatform(ECrumbleState::Stage_2);
+				UpdateCrumblingPlatform(ECrumbleState::Stage_1);
 			}
 			break;
 		case ECrumbleState::Stage_2 :
-			if (m_fCurrentCrumblingTimer <= 0.25f && m_fCurrentCrumblingTimer >= 0.01f)
+			if (IsInRange(m_fCurrentCrumblingTimer, 0.01f, 0.25f))
 			{
-				UpdateCrumblingPlatform(ECrumbleState::Stage_3);
+				UpdateCrumblingPlatform(ECrumbleState::Stage_1);
 			}
 			break;
 		case ECrumbleState::Stage_3 :
@@ -138,10 +159,9 @@ void CCrumblingPlatform::LoadAnimations()
 	int iCounter = 0;
 	for(const char* pszAnim : m_pszAnimations)
 	{
-		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(m_FactoryCreationParams.strPlistFile);
+		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
 		m_pcAnimations[iCounter] = GCCocosHelpers::CreateAnimation(rdictPlist, m_pszAnimations[iCounter]);
-		m_pcAnimations[iCounter]->retain();
-		
+		m_pcAnimations[iCounter]->retain(); // check for nullptr
 		iCounter++;
 	}
 }
@@ -177,6 +197,16 @@ void CCrumblingPlatform::UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState)
 			break;
 		}
 	}
+}
+
+bool CCrumblingPlatform::IsInRange(float NumToCheck, float MinRange, float MaxRange)
+{
+	bool bIsInRange = false;
+	if(NumToCheck <= MaxRange && NumToCheck >= MinRange)
+	{
+		bIsInRange = true;
+	}
+	return bIsInRange;
 }
 
 

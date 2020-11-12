@@ -2,8 +2,8 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <OgmoVersion>2.1.0.6</OgmoVersion>
   <Name>GCOgmoTemplateProject</Name>
-  <BackgroundColor A="255" R="223" G="232" B="255" />
-  <GridColor A="255" R="209" G="209" B="209" />
+  <BackgroundColor A="255" R="171" G="209" B="214" />
+  <GridColor A="255" R="81" G="81" B="81" />
   <LevelDefaultSize>
     <Width>1920</Width>
     <Height>960</Height>
@@ -16,7 +16,7 @@
     <Width>1920</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>D:\MSc_GitHub_Branch\ManicMiner\SourceAssets\OgmoEditor\GCOgmoTemplateProject.oep</Filename>
+  <Filename>E:\Solutions\TeamProj\ManicMiner\SourceAssets\OgmoEditor\GCOgmoTemplateProject.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -29,8 +29,8 @@
     <LayerDefinition xsi:type="EntityLayerDefinition">
       <Name>Platforms</Name>
       <Grid>
-        <Width>60</Width>
-        <Height>60</Height>
+        <Width>30</Width>
+        <Height>30</Height>
       </Grid>
       <ScrollFactor>
         <X>1</X>
@@ -119,37 +119,38 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Hazards/bush/bush.plist" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
     <EntityDefinition Name="Enemy" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
         <Width>60</Width>
-        <Height>60</Height>
+        <Height>120</Height>
       </Size>
       <Origin>
         <X>0</X>
         <Y>0</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\KoopaTrooper\Frames\Fly\00.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Duck\cc_enemy_duck.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CGCObjEnemy" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="koopa" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/KoopaTrooper/KoopaTrooper.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="bush" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Duck/Duck.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
-            <string>b2_dynamicBody</string>
             <string>b2_staticBody</string>
             <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="AnimationName" Default="Fly" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="FloatValueDefinition" Name="MovementRange" Default="10" Min="0" Max="100" Round="0.1" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="AnimationName" Default="" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="MovementRange" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="InitialDistanceFromAnchor" Default="0" Min="0" Max="100" Round="0.1" />
-        <ValueDefinition xsi:type="BoolValueDefinition" Name="MovingAwayFromAnchorPoint" Default="true" />
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="MovingAwayFromAnchorPoint" Default="false" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="Speed" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="BoolValueDefinition" Name="SpriteIsFlippable" Default="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="MovementAxis">
@@ -158,6 +159,198 @@
             <string>Vertical</string>
           </Elements>
         </ValueDefinition>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Duck/Duck.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="GroundPlatform" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>1800</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>900</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Ground\CN_Platform_Ground.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CGroundPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Ground" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Ground/Platform_Ground.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>180</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>0</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Brick\CN_Platform_Brick_3x1.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/Platform_Brick_3x1.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_1x16" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>960</Height>
+      </Size>
+      <Origin>
+        <X>0</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Brick\CN_Platform_Brick_1x16.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_1x16" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/Platform_Brick_1x16.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="CrumblingPlatform" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>0</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Crumbling\CN_Platform_Crumbling_Ogmo.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CCrumblingPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Crumbling_1x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Crumbling/Platform_Crumbling_1x1.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="MovingPlatform" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>1200</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>600</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Moving\Platform_Moving_Ogmo.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CMovingPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="Platform_Moving_20x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Moving/Platform_Moving_20x1.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="RegularPlatform" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>0</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_1x1.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CRegularPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Regular_1x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_1x1.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="Door" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>120</Width>
+        <Height>120</Height>
+      </Size>
+      <Origin>
+        <X>0</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Door\Door.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CDoor" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="Door" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Door/Door.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>

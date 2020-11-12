@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>cc_platform_regular_1x1.png</key>
+            <key>cc_enemy_duck.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{0,-10}</string>
                 <key>spriteSize</key>
-                <string>{60,60}</string>
+                <string>{60,100}</string>
                 <key>spriteSourceSize</key>
-                <string>{60,60}</string>
+                <string>{60,120}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{60,60}}</string>
+                <string>{{1,1},{60,100}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -29,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>CN_Platform_Regular_1x1.png</string>
+            <string>cc_enemy_duck.png</string>
             <key>size</key>
-            <string>{62,62}</string>
+            <string>{62,102}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:48d3278ae7f96b5f9ae18c76b0fa3f8c:815ccff4ccf1797209409ea3d0b6a19e:34342b9935911ad3eb24c4d192ad2300$</string>
+            <string>$TexturePacker:SmartUpdate:ce0f6ff5658d74d84cfa6df9cc5e51eb:0f9424672a252e4acc6efd21d7b1800d:360f5e547a153b77f13d35d586a40eae$</string>
             <key>textureFileName</key>
-            <string>CN_Platform_Regular_1x1.png</string>
+            <string>cc_enemy_duck.png</string>
         </dict>
     </dict>
 </plist>

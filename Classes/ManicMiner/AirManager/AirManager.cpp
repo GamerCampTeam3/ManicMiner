@@ -256,7 +256,7 @@ bool CAirManager::UpdateAirTimer()
 	
 	bool bHasAirLeft = true;
 	if( m_fRemainingAirAmount <= 0.0f )													// if no air left return false
-	{
+	{	// replace with if statement  - cheaper
 		switch (m_eAirDrainedState)
 		{
 		case EAirDrainedState::AirDrained :

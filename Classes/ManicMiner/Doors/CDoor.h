@@ -4,7 +4,9 @@
 #ifndef _CDOOR_H_
 #define _CDOOR_H_
 
-#include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
+#ifndef _GCFACTORY_OBJSPRITEPHYSICS_H_
+#include "GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
+#endif 
 
 // Forward class declaration
 class CManicLayer;
@@ -13,20 +15,19 @@ class CDoor
 	: public CGCObjSpritePhysics
 {
 private:
-
-	CManicLayer&				m_cManicLayer;					// Reference to manic layer to call interact event
-	CGCFactoryCreationParams&	m_FactoryCreationParams;		// This will be set in the constructor and dictate it's texture
 	cocos2d::Vec2				m_v2ResetPosition;				// The position of the door inside the level
 	
 public:
-	CDoor( CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition);
+	CDoor();
+	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
+	
+	GCFACTORY_DECLARE_CREATABLECLASS( CDoor );
+
+	// CDoor( CManicLayer& cLayer, CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition);
 
 	// Overriden functions from ObjSpritePhysics
 	virtual void VOnResourceAcquire( void ) override;
 	virtual void VOnReset()					override;
-
-	// Interact Event
-	// Called when player collided with the door
-	void InteractEvent();
+	virtual void VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition ) override;
 };
 #endif // #ifndef _CDOOR_H_

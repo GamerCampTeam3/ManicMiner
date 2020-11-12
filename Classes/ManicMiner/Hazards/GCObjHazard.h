@@ -29,6 +29,10 @@ private:
 	cocos2d::Vec2				m_cAnchorPoint;
 	//CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
+
+	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
+
+
 public:
 
 	CGCObjHazard();
@@ -49,6 +53,8 @@ public:
 	virtual void VOnResourceAcquire	( void ) override;
 	virtual void VOnResurrected		( void ) override;
 	virtual void VOnUpdate			(float fTimeStep) override;
+
+	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 
 	inline  HazardTypes::EHazardId GetHazardIdentifier()
 	{
