@@ -75,6 +75,8 @@
     <Hazard id="10" x="660" y="30" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/downwardSpike/downwardSpike.plist" />
     <Hazard id="11" x="840" y="30" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/downwardSpike/downwardSpike.plist" />
     <Door id="12" x="1740" y="780" class="CDoor" shape="Door" PlistFile="TexturePacker/Sprites/Door/Door.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Door/Door2.plist" />
+    <Key id="31" x="870" y="690" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Key/Key2.plist" />
+    <Key id="74" x="990" y="690" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
   </Platforms>
   <Enemies />
   <Hazards />
