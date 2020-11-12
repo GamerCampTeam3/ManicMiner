@@ -50,16 +50,6 @@ protected:																												//
 	char*				m_pczBackGround;																				//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
-
-
-		//const char* pszPlist_background = "TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist";
-	//{
-	//	m_pcGCSprBackGround = new CGCObjSprite();
-	//	m_pcGCSprBackGround->CreateSprite( pszPlist_background );
-	//	m_pcGCSprBackGround->SetResetPosition( Vec2( visibleSize.width / 2, ( visibleSize.height / 2 ) - 60.f ) );
-	//	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
-	//}
-
 	
 private:
 // Henrique Edit ------------------------------------------------------------------------------------------------------ //
