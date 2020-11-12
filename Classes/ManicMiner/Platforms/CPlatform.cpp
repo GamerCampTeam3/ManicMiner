@@ -12,12 +12,14 @@
 
 
 CPlatform::CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
-	: CGCObjSpritePhysics(GetGCTypeIDOf(CPlatform))
-	, m_FactoryCreationParams(CreationParams)
-	, m_v2ResetPosition(ResetPosition)
+	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlatform ) )
+	, m_FactoryCreationParams( CreationParams )
+	, m_v2ResetPosition( ResetPosition )
 	, m_ePlatformType( EPlatformType::Regular )
 	, m_bCollisionEnabled( false )
-	, m_bTriggersHardContactEvent ( false )
+	, m_bTriggersHardContactEvent( false )
+	, m_bIsInContact( false )
+	, m_bIsSensorOverlapped( false )
 
 {
 }
@@ -61,7 +63,7 @@ void CPlatform::VOnReset()
 	m_bTriggersHardContactEvent = false;
 }
 
-bool CPlatform::GetCollisionEnabled()
+bool CPlatform::GetCollisionEnabled() const
 {
 	return m_bCollisionEnabled;
 }
@@ -71,7 +73,7 @@ void CPlatform::SetCollisionEnabled( bool bCollisionEnabled )
 	m_bCollisionEnabled = bCollisionEnabled;
 }
 
-bool CPlatform::GetTriggersHardContactEvent()
+bool CPlatform::GetTriggersHardContactEvent() const
 {
 	return m_bTriggersHardContactEvent;
 }
@@ -79,4 +81,24 @@ bool CPlatform::GetTriggersHardContactEvent()
 void CPlatform::SetTriggersHardContactEvent( bool bShouldTrigger )
 {
 	m_bTriggersHardContactEvent = bShouldTrigger;
+}
+
+bool CPlatform::GetIsInContact() const
+{
+	return m_bIsInContact;
+}
+
+void CPlatform::SetIsInContact( bool bIsInContact )
+{
+	m_bIsInContact = bIsInContact;
+}
+
+bool CPlatform::GetIsSensorOverlapped() const
+{
+	return m_bIsSensorOverlapped;
+}
+
+void CPlatform::SetIsSensorOverlapped( bool bIsSensorOverlapped )
+{
+	m_bIsSensorOverlapped = bIsSensorOverlapped;
 }

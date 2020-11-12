@@ -31,12 +31,17 @@ public:
 	
 	inline EPlatformType GetPlatformType() { return m_ePlatformType; }
 
-	bool GetCollisionEnabled();
+	bool GetCollisionEnabled() const;
 	void SetCollisionEnabled( bool bCollisionEnabled );
 	
-	bool GetTriggersHardContactEvent();
+	bool GetTriggersHardContactEvent() const;
 	void SetTriggersHardContactEvent( bool bShouldTrigger ); 
 
+	bool GetIsInContact() const;
+	void SetIsInContact( bool bIsInContact );
+
+	bool GetIsSensorOverlapped() const;
+	void SetIsSensorOverlapped( bool bIsSensorOverlapped );
 	
 protected:
 
@@ -49,7 +54,8 @@ protected:
 
 	bool m_bCollisionEnabled;
 	bool m_bTriggersHardContactEvent;
-
+	bool m_bIsInContact;
+	bool m_bIsSensorOverlapped;
 
 	cocos2d::Director* m_pcDirector;
 };
