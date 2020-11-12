@@ -8,6 +8,9 @@
 #include "GamerCamp/GCObject/GCObjectGroup.h"
 #include "ManicMiner/Doors/CDoor.h"
 
+
+class CManicLayer;
+
 class CDoorCreator
 	: public CGCObjectGroup
 {

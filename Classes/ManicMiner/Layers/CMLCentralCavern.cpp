@@ -45,9 +45,6 @@ void CMLCentralCavern::VOnCreate( void )
 	// Edit Custom Layout
 	GetPlayer().SetResetPosition(cocos2d::Vec2( 120.0f + 30.0f, 120.0f ) );
 
-
-	auto test = CGCFactoryCreationParams( "Key", "TexturePacker/Sprites/Key/Key.plist", "Key", b2_staticBody, true );
-	CCollectible* pCollectible_4 = new CCollectible(test, cocos2d::Vec2( 690.f, 60.f ));
 	
 	m_pCHUD = new CHUD(*this );
 		
