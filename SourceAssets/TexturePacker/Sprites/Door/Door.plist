@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Keyt.png</key>
+            <key>Door.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{60,60}</string>
+                <string>{122,122}</string>
                 <key>spriteSourceSize</key>
-                <string>{60,60}</string>
+                <string>{122,122}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{60,60}}</string>
+                <string>{{0,0},{122,122}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -29,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>Key.png</string>
+            <string>Door.png</string>
             <key>size</key>
-            <string>{60,60}</string>
+            <string>{122,122}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b8b57412e309b961e1c204f10abcfe93:5decbbc04cdc32c25f8a7b8f81354b13:97f99da776b4ec2d3a7b3d024735617d$</string>
+            <string>$TexturePacker:SmartUpdate:ef28974627d4dbb9ecc549abc05cb9b4:b3ce6464d79fdc66d21fb3c81fc807a6:cda7c2666d2827883042e1c152d14b51$</string>
             <key>textureFileName</key>
-            <string>Key.png</string>
+            <string>Door.png</string>
         </dict>
     </dict>
 </plist>
