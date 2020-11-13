@@ -13,13 +13,13 @@
 #include "GamerCamp/Win32Input/GCKeyboardManager.h"
 
 #include "ManicMiner/Collectible/CCollectible.h"
-#include "ManicMiner/CollectiblesGroup/CCollectiblesGroup.h"
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
+#include "ManicMiner/Structs/SLevelValues.h"
 
 // Include different platform types for collision checks
 #include "ManicMiner/Platforms/CBrickPlatform.h"
@@ -50,14 +50,11 @@ USING_NS_CC;
 
 #endif
 
-
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcGameManager				( nullptr )
-	, m_sLevelValues				( ECollectibleRequirements::Collectible, 5 )
-	, m_pczBackGround				( nullptr )
-	, m_sLevelPath					( "")
+	, m_sLevelCreationParamaters	( SLevelCreationParameters() )
 	, m_v2StartPosition				( cocos2d::Vec2( 120.0f + 30.0f, 120.0f ))
 	, m_pcLevelManager				( nullptr )
 	, m_eGameState					( EGameState::Looting )
@@ -85,19 +82,12 @@ CManicLayer::~CManicLayer()
 //virtual
 void CManicLayer::VOnCreate()
 {
-	///////////////////////////////////////////////////////////////////////////
-	// cache some useful values 
-	///////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////
 	// cache some useful values 
 	m_sizeVisible = Director::getInstance()->getVisibleSize();
 	m_pointOrigin = Director::getInstance()->getVisibleOrigin();
 
-
-	///////////////////////////////////////////////////////////////////////////
-	// default object group
-	///////////////////////////////////////////////////////////////////////////
 
 	// create the default object group
 	IGCGameLayer::VOnCreate();
@@ -119,18 +109,9 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 
 
-	///////////////////////////////////////////////////////////////////////////
-	// custom object groups
-	//
-	// N.B. Cannot do this in CGCObjectGroup internally on construction, 
-	// because ObjectGroupRegister calls a virtual function 
-	// in the CGCObjectManager interface to check the 
-	// types of objects that the group handles
-	///////////////////////////////////////////////////////////////////////////
-
 	// Adds the background
 	// Make sure to set the value of m_pczBackGround before this is ran otherwise it will never have a texture.
-	if (m_pczBackGround != nullptr )
+	if (m_sLevelCreationParamaters.pszLevelBackground != nullptr )
 	{
 		InitializeBackground( m_sizeVisible );
 	}
@@ -200,9 +181,9 @@ void CManicLayer::VOnCreate()
 	
 	// If the level fails to receive a string or the string provided does not contain at least Ogmoeditor
 	// then fail
-	if ( (m_sLevelPath._Equal( "" ) != 0 ) || ( m_sLevelPath.find( "OgmoEditor/" ) != std::string::npos) ) 
+	if ( (m_sLevelCreationParamaters.szLevelPath._Equal( "" ) != 0 ) || (m_sLevelCreationParamaters.szLevelPath.find( "OgmoEditor/" ) != std::string::npos) )
 	{
-		m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( m_sLevelPath ) ).c_str() );
+		m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( m_sLevelCreationParamaters.szLevelPath ) ).c_str() );
 		m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
 	}
 
@@ -240,7 +221,7 @@ void CManicLayer::VOnCreate()
 void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
 {
 	m_pcGCSprBackGround = new CGCObjSprite();
-	m_pcGCSprBackGround->CreateSprite( m_pczBackGround );
+	m_pcGCSprBackGround->CreateSprite( m_sLevelCreationParamaters.pszLevelBackground );
 	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, (rSize.height / 2) - 60.f ) );
 	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
 }

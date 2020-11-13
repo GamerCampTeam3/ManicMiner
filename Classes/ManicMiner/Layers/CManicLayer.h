@@ -21,7 +21,8 @@
 
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "ManicMiner/GameState/EGameState.h"
-#include "ManicMiner/Structs/SLevelValues.h"
+#include "ManicMiner/Structs/SLevelCreationParameters.h"
+
 
 #ifndef _GCLEVELLOADER_OGMO_H_
 #include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
@@ -45,13 +46,11 @@ class CManicLayer: public IGCGameLayer, public b2ContactListener
 {
 // Bib Edit ----------------------------------------------------------------------------------------------------------- //
 protected:																												//
-	CGameManager*		m_pcGameManager;																				//
-	SLevelValues		m_sLevelValues;																					//
-	char*				m_pczBackGround;																				//
-	std::string			m_sLevelPath;																					//
-	cocos2d::Vec2		m_v2StartPosition;																				//
-	cocos2d::Size		m_sizeVisible;																					//
-	cocos2d::Point		m_pointOrigin; 																						//
+	CGameManager*				m_pcGameManager;
+	SLevelCreationParameters	m_sLevelCreationParamaters; //
+	cocos2d::Vec2				m_v2StartPosition;																		//
+	cocos2d::Size				m_sizeVisible;																			//
+	cocos2d::Point				m_pointOrigin; 																			//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 	

@@ -17,23 +17,23 @@ CMLAbandonedUraniumWorkings::~CMLAbandonedUraniumWorkings()
 // VOnCreate - Define unique layout ----------------------------------------------------------------------------------- //
 void CMLAbandonedUraniumWorkings::VOnCreate( void )
 {
+	// Step 1:  Set the values of the inherited protected LevelCreationParamaters.
 
-	// Set the inherited structs, it will be fed into the game manager
-	m_sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 5 );
+	// SLevelValues:		Tells the CGameManager what is required for the level to be completed.
+	// pszLevelBackground:	Sets the background for the level.
+	// szLevelPath:			Sets the path where the level will be found.
+	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
+	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
+	m_sLevelCreationParamaters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
+	m_sLevelCreationParamaters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+	m_sLevelCreationParamaters.szLevelPath			= "OgmoEditor/AbandonedUraniumWorkings.oel";
 
-	// We set the background here, if m_pczBackGround is a nullptr, the background will be black.
-	// It's important to call this before the parent's VOnCreate, otherwise the texture will never be loaded in.
-	m_pczBackGround = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
-
-	// Set the level path name here
-	m_sLevelPath = "OgmoEditor/AbandonedUraniumWorkings.oel";
-
-	// Run parent VOnCreate() which will handle all the rest of the setting up.
+	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
 
-	// new the CHUD and AirManager (only classes that required to be  newed on the level)
-	m_pCHUD = new CHUD( *this );
-	m_pcAirManager = new CAirManager( m_pointOrigin, m_sizeVisible );
+	// Step 3:	New the CHUD and CAirManager.
+	m_pCHUD			= new CHUD( *this );
+	m_pcAirManager	= new CAirManager( m_pointOrigin, m_sizeVisible );
 	m_pcAirManager->Init( *this );
 }
 
@@ -42,12 +42,12 @@ void CMLAbandonedUraniumWorkings::VOnCreate( void )
 void CMLAbandonedUraniumWorkings::InitParams()
 {
 	// Sets the references required by the player
-	m_pcGameManager->SetCHUD( m_pCHUD );
-	m_pcGameManager->SetCPlayer( &GetPlayer() );
-	m_pcGameManager->SetCAirManager( m_pcAirManager );
-	m_pcAirManager->SetGameManager( m_pcGameManager );
+	m_pcGameManager->SetCHUD			( m_pCHUD			);
+	m_pcGameManager->SetCPlayer			( &GetPlayer()		);
+	m_pcGameManager->SetCAirManager		( m_pcAirManager	);
+	m_pcAirManager->SetGameManager		( m_pcGameManager	);
 	m_pcGameManager->ResetValues();
-	m_pcGameManager->SetLevelRequirements( m_sLevelValues );
+	m_pcGameManager->SetLevelRequirements( m_sLevelCreationParamaters.sLevelValues );
 }
 
 

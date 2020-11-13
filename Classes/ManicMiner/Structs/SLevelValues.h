@@ -24,6 +24,13 @@ struct SLevelValues
 	{
 	}
 
+	SLevelValues()
+		: eCollectibleRequirements(ECollectibleRequirements::Collectible)
+		, iNumberOfSwitches (0)
+		, iNumberofCollectibles(0)
+	{		
+	}
+
 	
 
 	ECollectibleRequirements	eCollectibleRequirements;
