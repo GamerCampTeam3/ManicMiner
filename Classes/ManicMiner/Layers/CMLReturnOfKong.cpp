@@ -31,7 +31,7 @@ void CMLReturnOfKong::VOnCreate( void )
 	// szLevelPath:			Sets the path where the level will be found.
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
-	m_sLevelCreationParameters.sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 5 );
+	m_sLevelCreationParameters.sLevelValues = SLevelValues( ECollectibleRequirements::Collectible_And_Switches, 2, 5 );
 	m_sLevelCreationParameters.pszLevelBackground = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
 	m_sLevelCreationParameters.szLevelPath = "OgmoEditor/11_ReturnOfTheAlienKongBeast.oel";
 	m_sLevelCreationParameters.szLevelName = "Return of the Alien Kong Beast";

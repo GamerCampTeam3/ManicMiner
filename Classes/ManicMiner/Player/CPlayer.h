@@ -20,7 +20,8 @@ template< typename TActionType > class TGCActionToKeyMap;																//
 enum  EPlayerActions																									//
 {																														//
 	EPA_AxisMove_X,																										//
-	EPA_AxisMove_Y,																										//
+	EPA_AxisMove_Y,
+	EPA_Cheat,//
 	EPA_Jump																											//
 };																														//
 // -------------------------------------------------------------------------------------------------------------------- //

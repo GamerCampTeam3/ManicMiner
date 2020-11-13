@@ -162,7 +162,8 @@ public:																													//
 		EPA_Up = 0,																										//
 		EPA_Down,																										//
 		EPA_Left,																										//
-		EPA_Right,																										//
+		EPA_Right,
+		EPA_Cheat,//
 		EPA_Jump																										//
 	};																													//																						//
 																														//

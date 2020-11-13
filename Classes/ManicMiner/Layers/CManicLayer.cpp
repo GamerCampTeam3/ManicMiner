@@ -687,6 +687,7 @@ void CManicLayer::onEnter()
 		EventKeyboard::KeyCode::KEY_DOWN_ARROW,		// EPA_Down,
 		EventKeyboard::KeyCode::KEY_LEFT_ARROW,		// EPA_Left,		
 		EventKeyboard::KeyCode::KEY_RIGHT_ARROW,	// EPA_Right,
+		EventKeyboard::KeyCode::KEY_H,				// EPA_Cheat,
 		EventKeyboard::KeyCode::KEY_SPACE,			// EPA_Fire	
 	};
 

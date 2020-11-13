@@ -1,0 +1,14 @@
+<level width="1920" height="960">
+  <Platforms>
+    <RegularPlatform_900x60 id="0" x="510" y="930" class="CRegularPlatform" shape="CN_Platform_Regular_15x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_15x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_15x1.plist" CustomShape="CN_Platform_Regular_15x1" />
+    <RegularPlatform_900x60 id="1" x="1410" y="930" class="CRegularPlatform" shape="CN_Platform_Regular_15x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_15x1.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_15x1.plist" CustomShape="CN_Platform_Regular_15x1" />
+    <BrickPlatform_1x16 id="2" x="30" y="480" class="CBrickPlatform" shape="CN_Platform_Brick_1x16" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick_1x16.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick_1x16.plist" CustomShape="CN_Platform_Brick_1x16" />
+    <BrickPlatform_1x16 id="3" x="1890" y="480" class="CBrickPlatform" shape="CN_Platform_Brick_1x16" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick_1x16.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick_1x16.plist" CustomShape="CN_Platform_Brick_1x16" />
+  </Platforms>
+  <Enemies />
+  <Hazards />
+  <Keys />
+  <Switches />
+  <Door />
+  <LayoutOverlay />
+</level>

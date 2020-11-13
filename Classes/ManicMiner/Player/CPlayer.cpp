@@ -24,8 +24,8 @@
 USING_NS_CC;
 
 // action map arrays must match in length - in the templated controller class we use they map from the user define enum to cocos2d::Controller::Key 
-static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,								EPlayerActions::EPA_AxisMove_Y,								EPlayerActions::EPA_Jump };
-static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	cocos2d::Controller::Key::BUTTON_A };
+static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,								EPlayerActions::EPA_AxisMove_Y, EPlayerActions::EPA_Cheat,					EPlayerActions::EPA_Jump };
+static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	 cocos2d::Controller::Key::BUTTON_X,   cocos2d::Controller::Key::BUTTON_A };
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos )
@@ -61,7 +61,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos )
 CPlayer::~CPlayer()
 {}
 
-
+#pragma region Getters
 // Getters ------------------------------------------------------------------------------------------------------------ //
 																														//
 EPlayerDirection CPlayer::GetCurrentDirection() const																	//
@@ -116,7 +116,9 @@ int CPlayer::GetSensorContactCount() const																				//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
+#pragma endregion Getters
 
+#pragma region Setters
 // Setters ------------------------------------------------------------------------------------------------------------ //
 																														//
 void CPlayer::SetCanJump( const bool bCanJump )																			//
@@ -136,7 +138,7 @@ void CPlayer::SetLives( const int iLives )																				//
 																														//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
-
+#pragma endregion Setters
 
 
 
@@ -304,7 +306,17 @@ void CPlayer::CheckKeyboardInput()
 {
 	const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
 	TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, (*m_pcControllerActionToKeyMap) );
-	
+
+	// This is used to cheat and go to the next level.
+	// To disable, simply remove the ! operator.
+	if (_DEBUG)
+	{
+		if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Cheat )))
+		{
+			m_rcManicLayer.RequestNextLevel();
+		}
+	}
+
 	if ( m_bCanJump)
 	{
 	//////////////////////////////////////////////////////////////////////////////////////////////////
