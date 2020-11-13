@@ -81,6 +81,9 @@
     <Key id="78" x="930" y="30" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
     <Key id="79" x="1470" y="30" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
     <Key id="80" x="1350" y="390" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
+    <Enemy id="81" x="90" y="840" class="CGCObjEnemy" shape="cc_enemy_duck" PlistFile="TexturePacker/Sprites/Duck/Duck.plist" B2DBodyType="b2_DynamicBody" HasFixedRotation="false" AnimationName="Fly" MovementRange="1040" InitialDistanceFromAnchor="1040" MovingAwayFromAnchorPoint="true" Speed="4" SpriteIsFlippable="true" MovementAxis="Horizontal" CustomPlist="TexturePacker/Sprites/Duck/Duck.plist" CustomShape="cc_enemy_duck" />
+    <Enemy id="82" x="90" y="240" class="CGCObjEnemy" shape="cc_enemy_duck" PlistFile="TexturePacker/Sprites/Duck/Duck.plist" B2DBodyType="b2_DynamicBody" HasFixedRotation="false" AnimationName="Fly" MovementRange="780" InitialDistanceFromAnchor="0" MovingAwayFromAnchorPoint="true" Speed="4" SpriteIsFlippable="true" MovementAxis="Horizontal" CustomPlist="TexturePacker/Sprites/Duck/Duck.plist" CustomShape="cc_enemy_duck" />
+    <Enemy id="83" x="1030" y="240" class="CGCObjEnemy" shape="cc_enemy_duck" PlistFile="TexturePacker/Sprites/Duck/Duck.plist" B2DBodyType="b2_DynamicBody" HasFixedRotation="false" AnimationName="Fly" MovementRange="760" InitialDistanceFromAnchor="0" MovingAwayFromAnchorPoint="true" Speed="4" SpriteIsFlippable="true" MovementAxis="Horizontal" CustomPlist="TexturePacker/Sprites/Duck/Duck.plist" CustomShape="cc_enemy_duck" />
   </Platforms>
   <Enemies />
   <Hazards />
