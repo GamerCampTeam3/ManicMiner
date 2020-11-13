@@ -31,10 +31,10 @@ void CMLTheVat::VOnCreate( void )
 	// szLevelPath:			Sets the path where the level will be found.
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
-	m_sLevelCreationParameters.sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 5 );
-	m_sLevelCreationParameters.pszLevelBackground = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
-	m_sLevelCreationParameters.szLevelPath = "OgmoEditor/TheVat.oel";
-	m_sLevelCreationParameters.szLevelName = "The Vat";
+	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
+	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/6_TheVat.oel";
+	m_sLevelCreationParameters.szLevelName			= "The Vat";
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

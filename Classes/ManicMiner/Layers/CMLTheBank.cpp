@@ -33,7 +33,7 @@ void CMLTheBank::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 5 );
 	m_sLevelCreationParameters.pszLevelBackground = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
-	m_sLevelCreationParameters.szLevelPath = "OgmoEditor/TheBank.oel";
+	m_sLevelCreationParameters.szLevelPath = "OgmoEditor/14_TheBank.oel";
 	m_sLevelCreationParameters.szLevelName = "The Bank";
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
