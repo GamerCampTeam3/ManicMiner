@@ -41,7 +41,11 @@ void CMLCentralCavern::VOnCreate( void )
 	// Step 3:	New the CHUD and CAirManager.
 	m_pCHUD = new CHUD(*this );	
 	m_pcAirManager = new CAirManager(m_pointOrigin, m_sizeVisible);
-	m_pcAirManager->Init(*this);	
+	m_pcAirManager->Init(*this);
+	
+	//auto emitter = cocos2d::ParticleExplosion::create();
+	//emitter->setTotalParticles( 100 );
+	//addChild( emitter, 10 );
 }
 
 void CMLCentralCavern::InitParams()
