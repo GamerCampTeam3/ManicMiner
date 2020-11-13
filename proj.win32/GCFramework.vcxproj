@@ -226,9 +226,25 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\HUD\CHUD.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CManicLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLAmoebatronsRevenge.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLAttackOfTheMutant.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLEugenesLair.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLOreRefinery.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLProcessingPlant.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLReturnOfKong.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLSkyLabLandingBay.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLSolarPowerGenerator.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheBank.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheEndorianForest.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheFinalBarrier.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheMenagerie.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheSixteenthCavern.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheVat.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheWarehouse.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLWackyAmoebatrons.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLWillyMeetsKong.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Layers\CTestLayer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -339,9 +355,25 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\HUD\CHUD.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CManicLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAmoebatronsRevenge.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAttackOfTheMutant.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLEugenesLair.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLOreRefinery.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLProcessingPlant.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLReturnOfKong.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLSkyLabLandingBay.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLSolarPowerGenerator.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheBank.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheEndorianForest.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheFinalBarrier.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheMenagerie.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheSixteenthCavern.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheVat.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheWarehouse.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLWackyAmoebatrons.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLWillyMeetsKong.h" />
     <ClInclude Include="..\Classes\ManicMiner\Layers\CTestLayer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>

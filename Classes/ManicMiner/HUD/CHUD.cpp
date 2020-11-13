@@ -13,6 +13,7 @@ CHUD::CHUD( CManicLayer& cLayer )
 	: m_pLivesLabel			( nullptr  )
 	, m_pScoreLabel			( nullptr  )
 	, m_pHighScoreLabel		( nullptr  )
+	, m_pLevelName			( nullptr )
 	, m_pglOwnerGameLayer	( &cLayer  )
 {
 	m_pLivesLabel = Label::createWithTTF( "LIVES: " + std::to_string( 3 ), "fonts/arial.ttf", 20 );
@@ -27,6 +28,16 @@ CHUD::CHUD( CManicLayer& cLayer )
 	m_pScoreLabel->setPosition( cocos2d::Vec2( 300.f, 1030.f ) );
 
 	m_pglOwnerGameLayer->addChild( m_pScoreLabel, 2 );
+}
+
+void CHUD::UpdateLevelName(const std::string szLevelName)
+{
+
+	m_pLevelName = Label::createWithTTF( szLevelName, "fonts/arial.ttf", 40 );
+	m_pLevelName->setGlobalZOrder( 3.f );
+	m_pLevelName->setPosition( cocos2d::Vec2( 180, 1000.f ) );
+
+	m_pglOwnerGameLayer->addChild( m_pLevelName, 2 );
 }
 
 
