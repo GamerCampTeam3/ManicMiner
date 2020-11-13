@@ -54,7 +54,7 @@ USING_NS_CC;
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcGameManager				( nullptr )
-	, m_sLevelCreationParamaters	( SLevelCreationParameters() )
+	, m_sLevelCreationParameters	( SLevelCreationParameters() )
 	, m_v2StartPosition				( cocos2d::Vec2( 120.0f + 30.0f, 120.0f ))
 	, m_pcLevelManager				( nullptr )
 	, m_eGameState					( EGameState::Looting )
@@ -111,7 +111,7 @@ void CManicLayer::VOnCreate()
 
 	// Adds the background
 	// Make sure to set the value of m_pczBackGround before this is ran otherwise it will never have a texture.
-	if (m_sLevelCreationParamaters.pszLevelBackground != nullptr )
+	if (m_sLevelCreationParameters.pszLevelBackground != nullptr )
 	{
 		InitializeBackground( m_sizeVisible );
 	}
@@ -181,9 +181,9 @@ void CManicLayer::VOnCreate()
 	
 	// If the level fails to receive a string or the string provided does not contain at least Ogmoeditor
 	// then fail
-	if ( (m_sLevelCreationParamaters.szLevelPath._Equal( "" ) != 0 ) || (m_sLevelCreationParamaters.szLevelPath.find( "OgmoEditor/" ) != std::string::npos) )
+	if ( (m_sLevelCreationParameters.szLevelPath._Equal( "" ) != 0 ) || (m_sLevelCreationParameters.szLevelPath.find( "OgmoEditor/" ) != std::string::npos) )
 	{
-		m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( m_sLevelCreationParamaters.szLevelPath ) ).c_str() );
+		m_cLevelLoader.LoadLevelFile( FileUtils::getInstance()->fullPathForFilename( std::string( m_sLevelCreationParameters.szLevelPath ) ).c_str() );
 		m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
 	}
 
@@ -221,7 +221,7 @@ void CManicLayer::VOnCreate()
 void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
 {
 	m_pcGCSprBackGround = new CGCObjSprite();
-	m_pcGCSprBackGround->CreateSprite( m_sLevelCreationParamaters.pszLevelBackground );
+	m_pcGCSprBackGround->CreateSprite( m_sLevelCreationParameters.pszLevelBackground );
 	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, (rSize.height / 2) - 60.f ) );
 	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
 }
