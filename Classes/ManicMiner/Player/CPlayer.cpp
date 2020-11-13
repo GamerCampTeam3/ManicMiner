@@ -308,8 +308,9 @@ void CPlayer::CheckKeyboardInput()
 	TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, (*m_pcControllerActionToKeyMap) );
 
 	// This is used to cheat and go to the next level.
-	// To disable, simply remove the ! operator.
-	if (_DEBUG)
+	// Toggle off by setting to false.
+	const bool bCheatMode = true;
+	if ( bCheatMode )
 	{
 		if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Cheat )))
 		{
