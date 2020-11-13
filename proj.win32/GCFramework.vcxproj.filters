@@ -653,6 +653,9 @@
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.h">
       <Filter>Classes\ManicMiner\Layers\3</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelCreationParameters.h">
+      <Filter>Classes\ManicMiner\Structs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

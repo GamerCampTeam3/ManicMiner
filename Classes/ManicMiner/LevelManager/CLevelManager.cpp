@@ -96,7 +96,6 @@ void CLevelManager::GoToNextLevel()
 	case 0:
 		// CENTRAL CAVERN
 		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
-
 		break;
 	case 1:
 		// THE COLD ROOM

@@ -38,29 +38,31 @@ void CGroundPlatform::VOnResourceAcquire()
 void CGroundPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams,
 	cocos2d::Vec2 v2InitialPosition)
 {
-	const CGCFactoryCreationParams* pParamsToPasstoBaseClass = &rCreationParams;
+	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
 
 	//Fetch a pointer into the OGMO Xml edtior element containing the data.
 	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
 
 	if (nullptr != pCurrentObjectXmlData)
 	{
+		// Read in the custom plist and shape
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
+		const tinyxml2::XMLAttribute* pCustomShapePath = pCurrentObjectXmlData->FindAttribute("CustomShape");
 
 		if ((nullptr != pCustomPlistPath)
 			&& (0 != strlen(pCustomPlistPath->Value())))
 		{
 			m_pcCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(rCreationParams.strClassName.c_str(),
 				pCustomPlistPath->Value(),
-				rCreationParams.strPhysicsShape.c_str(),
+				pCustomShapePath->Value(),
 				rCreationParams.eB2dBody_BodyType,
 				rCreationParams.bB2dBody_FixedRotation);
 
-			pParamsToPasstoBaseClass = m_pcCustomCreationParams.get();
+			pParamsToPassToBaseClass = m_pcCustomCreationParams.get();
 		}
 	}
 
-	CPlatform::VHandleFactoryParams(*pParamsToPasstoBaseClass, v2InitialPosition);
+	CPlatform::VHandleFactoryParams(*pParamsToPassToBaseClass, v2InitialPosition);
 }
 
 void CGroundPlatform::VOnReset()
