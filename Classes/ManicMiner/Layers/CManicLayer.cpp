@@ -55,7 +55,6 @@ CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
 	, m_pcGameManager				( nullptr )
 	, m_sLevelCreationParameters	( SLevelCreationParameters() )
-	, m_v2StartPosition				( cocos2d::Vec2( 120.0f + 30.0f, 120.0f ))
 	, m_pcLevelManager				( nullptr )
 	, m_eGameState					( EGameState::Looting )
 	, m_bWasResetRequested			( false )
@@ -191,7 +190,7 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 	// add player
 	///////////////////////////////////////////////////////////////////////////
-	m_pcPlayer = new CPlayer( *this, m_v2StartPosition );
+	m_pcPlayer = new CPlayer( *this, m_sLevelCreationParameters.v2PlayerStartPos );
 
 
 

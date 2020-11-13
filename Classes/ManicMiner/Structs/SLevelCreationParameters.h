@@ -11,6 +11,7 @@
 /// <param name="szLevelbackground"><c> A char* that will take be used to set the Background of the current level. </param>
 /// <param name="szLevelpath"><c> A std::string that wil hold the location of the level file (.oel) </param>
 /// <param name="szLevelName"><c> A std::string that wil hold the name of the level to be displayed by CHUD. </param>
+/// <param name="v2PlayerStartPos"><c>A vector2 that is used to place the player on the level. </param>
 struct SLevelCreationParameters
 {
 	/// <summary>
@@ -20,11 +21,13 @@ struct SLevelCreationParameters
 	/// <param name="szLevelbackground"><c>A char* that will take be used to set the Background of the current level. </param>
 	/// <param name="szLevelpath"><c>A std::string that wil hold the location of the level file (.oel) </param>
 	/// <param name="szLevelName"><c>A std::string that wil hold the name of the level to be displayed by CHUD. </param>
-	SLevelCreationParameters( SLevelValues slevelValues, char* szLevelbackground, std::string szLevelpath, std::string szLevelname)
+	/// <param name="v2PlayerStartPos"><c>A vector2 that is used to place the player on the level. </param>
+	SLevelCreationParameters( SLevelValues slevelValues, char* szLevelbackground, std::string szLevelpath, std::string szLevelname, cocos2d::Vec2 v2StartPos)
 		: sLevelValues					( slevelValues		 )
 		, pszLevelBackground			( szLevelbackground	 )
 		, szLevelPath					( szLevelpath		 )
 		, szLevelName					( szLevelname		 )
+		, v2PlayerStartPos				( v2StartPos		 )
 	{
 	}
 
@@ -33,7 +36,8 @@ struct SLevelCreationParameters
 		: sLevelValues					( SLevelValues() )
 		, pszLevelBackground			( nullptr		 )
 		, szLevelPath					( ""		 )
-		, szLevelName					( ""		 )		
+		, szLevelName					( ""		 )
+		, v2PlayerStartPos				( cocos2d::Vec2( 120.0f + 30.0f, 120.0f ) )
 	{		
 	}
 
@@ -42,6 +46,7 @@ struct SLevelCreationParameters
 	char*						pszLevelBackground;	// A char* that will take be used to set the Background of the current level. 
 	std::string					szLevelPath;		// A std::string that wil hold the location of the level file (.oel).
 	std::string					szLevelName;		// Used to display the name of the level on the HUD.
+	cocos2d::Vec2				v2PlayerStartPos;	// The location at which the player should spawn at.
 	
 };
 
