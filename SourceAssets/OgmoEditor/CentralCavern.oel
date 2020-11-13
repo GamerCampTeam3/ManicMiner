@@ -65,7 +65,7 @@
     <Key id="60" x="1770" y="30" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
     <Key id="61" x="570" y="30" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
     <Key id="62" x="990" y="90" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
-    <Key id="63" x="1470" y="270" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
+    <Key id="63" x="1600" y="840" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/Key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
   </Platforms>
   <Enemies />
   <Hazards />
