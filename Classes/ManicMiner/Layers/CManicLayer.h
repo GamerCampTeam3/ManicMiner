@@ -48,6 +48,10 @@ protected:																												//
 	CGameManager*		m_pcGameManager;																				//
 	SLevelValues		m_sLevelValues;																					//
 	char*				m_pczBackGround;																				//
+	std::string			m_sLevelPath;																					//
+	cocos2d::Vec2		m_v2StartPosition;																				//
+	cocos2d::Size		m_sizeVisible;																					//
+	cocos2d::Point		m_pointOrigin; 																						//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 	

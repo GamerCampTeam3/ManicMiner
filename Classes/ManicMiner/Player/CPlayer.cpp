@@ -19,6 +19,7 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
+#include "../AudioHelper/ManicAudio.h"
 
 USING_NS_CC;
 
@@ -47,6 +48,8 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos )
 	, m_kfGravitionalPull				( 2.3f )
 	, m_kfMaxFallDistance				( 4.7f )
 	, m_fVerticalSpeedAdjust			( 0.0f )
+	, m_uiJumpSoundID					( 0 )
+	, m_uiFallingSoundID				( 0 )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcControllerActionToKeyMap		( nullptr )
@@ -520,7 +523,7 @@ void CPlayer::JumpEvent()
 		m_bCanBeControlled = true;
 
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
-
+		m_uiJumpSoundID = PlaySoundEffect( ESoundName::Jump );
 		CCLOG( "Jumped" );
 	}
 }
@@ -592,53 +595,67 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 
 void CPlayer::OnLanded()
 {
+// The player is grounded, can jump
+	m_bCanJump = true;
+	m_bIsGrounded = true;
+
+// If first contact with ground -> landing
+	if( m_iHardContactCount == 1 )
+	{
 	// Check fall damage / death
 	// Store last grounded Y coordinate
-	float currentY = GetPhysicsTransform().p.y;
-	float heightDelta = m_fLastHighestY - currentY;
+		float currentY = GetPhysicsTransform().p.y;
+		float heightDelta = m_fLastHighestY - currentY;
 	// If height difference exceeded the max fall distance
-	if( heightDelta >= m_kfMaxFallDistance )
-	{
-		CCLOG( "Died from fall x(" );
-		m_rcManicLayer.OnDeath();
-	}
-	//Else, not dead
-	else
-	{
-#ifdef PLAYER_DEBUG_LANDING
-		if( m_iHardContactCount == 1 )
+		if( heightDelta >= m_kfMaxFallDistance )
 		{
-			CCLOG( "Landed" );
+			CCLOG( "Died from fall x(" );
+			m_rcManicLayer.OnDeath();
 		}
+	// Else, not dead, proceed with more logic:
+		else 
+		{
+		// Manually adjust height
+			float fCurrentHeight = GetPhysicsTransform().p.y;
+			float fNewHeight = fCurrentHeight;
+			fNewHeight += 0.5f;
+			fNewHeight = floor( fNewHeight );
+		// If landed on an inferior y than expected
+		// IE landed and now is on 4.99836f instead of 5.0f or above
+			if( fNewHeight > fCurrentHeight )
+			{
+				float fHeightDelta = fNewHeight - fCurrentHeight + 0.0005f;
+
+				// v = ( p1 - p0 ) / t
+				//cocos2d::Vec2 v2VelocityToMoveByDeltaInOneFrame = ( v2PosDeltaB2d / IGCGameLayer::ActiveInstance()->B2dGetTimestep() );
+				float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
+				cocos2d::Vec2 v2NewVelocity = Vec2(GetVelocity().x, fVerticalSpeedToMoveByDeltaInOneFrame );
+				SetVelocity( v2NewVelocity );
+
+				// n.b. need to cache this so we can remove it from the velocity after the
+				// physics simulation has stepped handily we can do this in 
+				m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
+				GetPhysicsBody()->SetGravityScale( 0.0f );
+			}
+		// Stop Jump/Fall sound effect
+			if( m_uiJumpSoundID != 0 )
+			{
+				StopSoundEffect( m_uiJumpSoundID );
+				m_uiJumpSoundID = 0;
+			}
+			if( m_uiFallingSoundID != 0 )
+			{
+				StopSoundEffect( m_uiFallingSoundID );
+				m_uiFallingSoundID = 0;
+			}
+
+#ifdef PLAYER_DEBUG_LANDING
+		CCLOG( "Landed" );
 #endif
-		// The player is grounded, can jump
-		m_bCanJump = true;
-		m_bIsGrounded = true;
-	}
-
-	// Manually adjust height
-	float fCurrentHeight = GetPhysicsTransform().p.y;
-	float fNewHeight = fCurrentHeight;
-	fNewHeight += 0.5f;
-	fNewHeight = floor( fNewHeight );
-	// If landed on an inferior y than expected
-	// IE landed and now is on 4.99836f instead of 5.0f or above
-	if( fNewHeight > fCurrentHeight )
-	{
-		float fHeightDelta = fNewHeight - fCurrentHeight + 0.0005f;
-
-		// v = ( p1 - p0 ) / t
-		//cocos2d::Vec2 v2VelocityToMoveByDeltaInOneFrame = ( v2PosDeltaB2d / IGCGameLayer::ActiveInstance()->B2dGetTimestep() );
-		float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
-		cocos2d::Vec2 v2NewVelocity = Vec2(GetVelocity().x, fVerticalSpeedToMoveByDeltaInOneFrame );
-		SetVelocity( v2NewVelocity );
-
-		// n.b. need to cache this so we can remove it from the velocity after the 
-		// physics simulation has stepped handily we can do this in 
-		m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
-		GetPhysicsBody()->SetGravityScale( 0.0f );		
+		}
 	}
 }
+
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//
@@ -682,7 +699,7 @@ void CPlayer::LeftGround()
 		ApplyDirectionChange( EPlayerDirection::Static );
 		CCLOG( "Dropping straight down" );
 		m_bCanJump = false;
-
+		m_uiFallingSoundID = PlaySoundEffect( ESoundName::Falling );
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 	}
 

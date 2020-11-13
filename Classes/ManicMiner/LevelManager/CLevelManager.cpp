@@ -23,8 +23,10 @@
 #include "ManicMiner/GameManager/CGameManager.h"
 
 // Include levels
+#include "ManicMiner/Layers/CMLAbandonedUraniumWorkings.h"
 #include "ManicMiner/Layers/CMLCentralCavern.h"
 #include "ManicMiner/Layers/CMLTheColdRoom.h"
+#include "ManicMiner/Layers/CMLTheMenagerie.h"
 
 USING_NS_CC;
 
@@ -100,6 +102,15 @@ void CLevelManager::GoToNextLevel()
 		// THE COLD ROOM
 		pScene = TGCGameLayerSceneCreator< CMLTheColdRoom >::CreateScene();
 		break;
+	case 2:
+		// THE MENAGERIE
+		pScene = TGCGameLayerSceneCreator< CMLTheMenagerie >::CreateScene();
+		break;
+	case 3:
+		// ABANDONED URANUIM WORKINGS
+		pScene = TGCGameLayerSceneCreator< CMLAbandonedUraniumWorkings >::CreateScene();
+		break;
+		
 	default:
 		// Should not run
 		int z = 0;	// BREAKPOINT something went wrong!

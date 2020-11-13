@@ -31,7 +31,9 @@ enum class ESoundName
 	Death,
 	MusicTheme,
 	KeyCollected,
-	BabyShark
+	BabyShark,
+	Jump,
+	Falling
 };
 
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -48,7 +50,9 @@ const static std::map < const ESoundName, const std::string > k_mapSoundFiles =
 	{ ESoundName::Death,				"audio/Transition.wav"					},
 	{ ESoundName::MusicTheme,			"audio/YouWouldNotBelieveYourEyes.wav"	},
 	{ ESoundName::KeyCollected,			"audio/SnakeBumped.wav"					},
-	{ ESoundName::BabyShark,			"audio/BabyShark.mp3"					}
+	{ ESoundName::BabyShark,			"audio/BabyShark.mp3"					},
+	{ ESoundName::Jump,					"audio/JumpSound.wav"					},
+	{ ESoundName::Falling,				"audio/FallingSound.wav"				}
 };
 
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -74,7 +78,7 @@ const static std::map < const ESoundName, const std::string > k_mapSoundFiles =
 //						DeleteSelf();																					//
 //					}																									//
 // -------------------------------------------------------------------------------------------------------------------- //
-inline void PlaySoundEffect( const ESoundName eSoundName )
+inline unsigned int PlaySoundEffect( const ESoundName eSoundName )
 {
 	// Get SimpleAudioEngine singleton
 	auto pAudioEngine = SimpleAudioEngine::getInstance();
@@ -83,7 +87,16 @@ inline void PlaySoundEffect( const ESoundName eSoundName )
 	const char* sAudioDirectory = k_mapSoundFiles.at( eSoundName ).c_str();
 
 	// Play desired sound effect
-	pAudioEngine->playEffect( sAudioDirectory, false, 1.0f, 1.0f, 1.0f );
+	return pAudioEngine->playEffect( sAudioDirectory, false, 1.0f, 1.0f, 1.0f );
+}
+
+inline void StopSoundEffect( const unsigned int uiSoundID )
+{
+	// Get SimpleAudioEngine singleton
+	auto pAudioEngine = SimpleAudioEngine::getInstance();
+
+	// Stop desired sound effect using designated ID, which is returned when calling PlaySoundEffect()
+	return pAudioEngine->stopEffect( uiSoundID );
 }
 
 // -------------------------------------------------------------------------------------------------------------------- //

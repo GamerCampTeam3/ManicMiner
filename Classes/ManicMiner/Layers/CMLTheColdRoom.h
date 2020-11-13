@@ -11,15 +11,10 @@
 #ifndef _CMLTHECOLDROOM_H_
 #define _CMLTHECOLDROOM_H_
 
-#include "ManicMiner/Enemy/CentralCavern/GCObjGroupEnemyCentralCavern.h"
 #include "ManicMiner/Layers/CManicLayer.h"
 
 class CHUD;
 class CAirManager;
-// ----------------------------------------- Fwd declares ------------------------------------------------------------- //
-class CObjCCGroupPlatform;																								//
-class CGCObjGroupHazardCentralCavern;																					//
-// -------------------------------------------------------------------------------------------------------------------- //
 
 class CMLTheColdRoom: public CManicLayer
 {
@@ -37,11 +32,6 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 
 private:
-// --- Platform Group ------------------------------------------------------------------------------------------------- //
-	CObjCCGroupPlatform*			m_pcGroupPlatformCentralCavern;
-// --- Hazard Group --------------------------------------------------------------------------------------------------- //
-	CGCObjGroupHazardCentralCavern* m_pcGCGroupHazardCentralCavern;
-
 	// --- HUD ------------------------------------------------------------------------------------------------------------ //
 	CHUD* m_pCHUD;
 

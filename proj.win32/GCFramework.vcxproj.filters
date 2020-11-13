@@ -166,6 +166,12 @@
     <Filter Include="Classes\ManicMiner\Physics">
       <UniqueIdentifier>{9b64c24d-8d6b-4940-a5f6-1cbdb17e01bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\2">
+      <UniqueIdentifier>{ca0b42eb-480a-4c06-9271-1d39515d9ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\3">
+      <UniqueIdentifier>{df93d6dd-31a4-47d8-8122-43b05a38e4dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -374,6 +380,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.cpp">
       <Filter>Classes\ManicMiner\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.cpp">
+      <Filter>Classes\ManicMiner\Layers\3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheMenagerie.cpp">
+      <Filter>Classes\ManicMiner\Layers\2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -634,6 +646,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelValues.h">
       <Filter>Classes\ManicMiner\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheMenagerie.h">
+      <Filter>Classes\ManicMiner\Layers\2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.h">
+      <Filter>Classes\ManicMiner\Layers\3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

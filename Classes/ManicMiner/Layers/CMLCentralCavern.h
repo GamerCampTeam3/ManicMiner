@@ -14,10 +14,7 @@
 #include "ManicMiner/Layers/CManicLayer.h"
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CAirManager;																										//
-class CCGCentralCavern;																									//
-class CDCreatorCentralCavern;																							//
 class CHUD;																												//
-class CObjCCGroupPlatform;																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 class CMLCentralCavern: public CManicLayer

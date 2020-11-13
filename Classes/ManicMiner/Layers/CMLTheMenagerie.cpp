@@ -1,27 +1,21 @@
-// -------------------------------------------------------------------------------------------------------------------- //
-// Gamer Camp 2020 / Henrique Teixeira																					//
-// -------------------------------------------------------------------------------------------------------------------- //
-#include "CMLTheColdRoom.h"
+#include "CMLTheMenagerie.h"
 
-#include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
-#include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
-#include "ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/AirManager/AirManager.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
-CMLTheColdRoom::CMLTheColdRoom()
+CMLTheMenagerie::CMLTheMenagerie()
 	: CManicLayer()
 {}
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
-CMLTheColdRoom::~CMLTheColdRoom()
+CMLTheMenagerie::~CMLTheMenagerie()
 {}
 
 // CManicLayer Overrides ---------------------------------------------------------------------------------------------- //
 // VOnCreate - Define unique layout ----------------------------------------------------------------------------------- //
-void CMLTheColdRoom::VOnCreate( void )
+void CMLTheMenagerie::VOnCreate( void )
 {
 
 	// Set the inherited structs, it will be fed into the game manager
@@ -32,7 +26,7 @@ void CMLTheColdRoom::VOnCreate( void )
 	m_pczBackGround = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
 
 	// Set the level path name here
-	m_sLevelPath = "OgmoEditor/TheColdRoom.oel";
+	m_sLevelPath = "OgmoEditor/TheMenagerie.oel";
 
 	// Run parent VOnCreate() which will handle all the rest of the setting up.
 	CManicLayer::VOnCreate();
@@ -45,20 +39,20 @@ void CMLTheColdRoom::VOnCreate( void )
 
 
 
-void CMLTheColdRoom::InitParams()
+void CMLTheMenagerie::InitParams()
 {
 	// Sets the references required by the player
-	m_pcGameManager	->SetCHUD				( m_pCHUD			);
-	m_pcGameManager	->SetCPlayer			( &GetPlayer()		);
-	m_pcGameManager	->SetCAirManager		( m_pcAirManager	);
-	m_pcAirManager	->SetGameManager		( m_pcGameManager	);
-	m_pcGameManager	->ResetValues();
-	m_pcGameManager	->SetLevelRequirements	( m_sLevelValues	);
+	m_pcGameManager->SetCHUD( m_pCHUD );
+	m_pcGameManager->SetCPlayer( &GetPlayer() );
+	m_pcGameManager->SetCAirManager( m_pcAirManager );
+	m_pcAirManager->SetGameManager( m_pcGameManager );
+	m_pcGameManager->ResetValues();
+	m_pcGameManager->SetLevelRequirements( m_sLevelValues );
 }
 
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
-void CMLTheColdRoom::VOnDestroy( void )
+void CMLTheMenagerie::VOnDestroy( void )
 {
 	// Call base class last
 	CManicLayer::VOnDestroy();
