@@ -1,0 +1,9 @@
+<level width="1920" height="960">
+  <Platforms />
+  <Enemies />
+  <Hazards />
+  <Keys />
+  <Switches />
+  <Door />
+  <LayoutOverlay />
+</level>
