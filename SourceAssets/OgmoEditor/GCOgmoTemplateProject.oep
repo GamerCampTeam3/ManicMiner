@@ -470,7 +470,7 @@
         <X>150</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_5x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -485,7 +485,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_5x1.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_5x1.plist" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
@@ -498,7 +498,7 @@
         <X>180</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_6x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -526,7 +526,7 @@
         <X>210</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_7x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -583,7 +583,7 @@
         <X>260</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_9x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -611,7 +611,7 @@
         <X>300</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_10x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -639,7 +639,7 @@
         <X>330</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_11x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -725,7 +725,7 @@
         <X>570</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_19x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>

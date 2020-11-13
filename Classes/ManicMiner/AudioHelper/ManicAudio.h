@@ -33,7 +33,9 @@ enum class ESoundName
 	KeyCollected,
 	BabyShark,
 	Jump,
-	Falling
+	Falling,
+	Crumbling_Stage,
+	Crumbling_Full
 };
 
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -52,7 +54,9 @@ const static std::map < const ESoundName, const std::string > k_mapSoundFiles =
 	{ ESoundName::KeyCollected,			"audio/SnakeBumped.wav"					},
 	{ ESoundName::BabyShark,			"audio/BabyShark.mp3"					},
 	{ ESoundName::Jump,					"audio/JumpSound.wav"					},
-	{ ESoundName::Falling,				"audio/FallingSound.wav"				}
+	{ ESoundName::Falling,				"audio/FallingSound.wav"				},
+	{ ESoundName::Crumbling_Stage,		"audio/Crumbling_Stage.wav"				},
+	{ ESoundName::Crumbling_Full,		"audio/Crumbling_Full.wav"				}
 };
 
 // -------------------------------------------------------------------------------------------------------------------- //
