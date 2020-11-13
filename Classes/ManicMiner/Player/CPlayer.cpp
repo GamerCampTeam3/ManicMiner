@@ -636,6 +636,7 @@ void CPlayer::OnLanded()
 				// physics simulation has stepped handily we can do this in 
 				m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
 				GetPhysicsBody()->SetGravityScale( 0.0f );
+				CCLOG( "Adjusting Y coordinate manually" );
 			}
 		// Stop Jump/Fall sound effect
 			if( m_uiJumpSoundID != 0 )
