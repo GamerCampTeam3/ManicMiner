@@ -104,7 +104,7 @@ void CLevelManager::GoToMainMenu()
 void CLevelManager::GoToNextLevel()
 {
 	// If beat last level, go to first level
-	if( m_iCurrentLevelIndex == 2 )
+	if( m_iCurrentLevelIndex == 20 )
 	{
 		m_iCurrentLevelIndex = 0;
 	}
@@ -117,7 +117,7 @@ void CLevelManager::GoToNextLevel()
 	switch( m_iCurrentLevelIndex )
 	{
 	case 0:
-		// CENTRAL CAVERN
+		// CENTRAL CAVERN CMLTheFinalBarrier CMLCentralCavern
 		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
 		break;
 	case 1:

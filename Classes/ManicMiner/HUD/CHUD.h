@@ -27,6 +27,7 @@ public:
 	void UpdateHighScore(int highScore);
 	void UpdateLives(int lives);
 	void UpdateLevelName( const std::string szLevelName );
+	void FlushText();
 	
 private:
 	// Member Variables

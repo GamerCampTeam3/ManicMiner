@@ -108,7 +108,7 @@ class CGCObjectGroup
 public:
 	enum
 	{
-		EMaxGCObjects = 128 // constant maximum number of managed CGCObjects
+		EMaxGCObjects = 512 // constant maximum number of managed CGCObjects
 	};
 
 protected:

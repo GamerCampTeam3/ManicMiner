@@ -3,6 +3,7 @@
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/AirManager/AirManager.h"
+#include "ManicMiner/Helpers/Helpers.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLAbandonedUraniumWorkings::CMLAbandonedUraniumWorkings()
@@ -34,6 +35,8 @@ void CMLAbandonedUraniumWorkings::VOnCreate( void )
 
 	// Step 3:	New the CHUD and CAirManager.
 	m_pCHUD			= new CHUD( *this );
+	m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
+	
 	m_pcAirManager	= new CAirManager( m_pointOrigin, m_sizeVisible );
 	m_pcAirManager->Init( *this );
 }
@@ -55,6 +58,8 @@ void CMLAbandonedUraniumWorkings::InitParams()
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLAbandonedUraniumWorkings::VOnDestroy( void )
 {
+	safeDelete( m_pCHUD );
+	
 	// Call base class last
 	CManicLayer::VOnDestroy();
 }

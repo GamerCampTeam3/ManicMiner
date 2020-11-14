@@ -179,6 +179,12 @@ void CGameManager::UpdateLives() const
 {
 	m_pcCHUD->UpdateLives( m_pcCPlayer->GetLives() );
 }
+
+void CGameManager::ResetHUD()
+{
+	m_pcCHUD->FlushText();
+}
+
 #pragma endregion CHUD_Update_Calls
 
 #pragma region Pointers_Setters

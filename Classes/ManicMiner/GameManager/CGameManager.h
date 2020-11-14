@@ -34,6 +34,7 @@ class CGameManager
 	void	ResetValues();													// Resets the values required for level management.											//
 	void	EndLevel();														// Checks if the level can end.																//
 	void	DrainToScore();													// Called by the air manager, drains air to score. 											//
+	void	ResetHUD();														// Called by the CManicLayer when the level ends.											//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	//																																									//
 	//-----------------------------------------------------------  Player Related  -------------------------------------------------------------------------------------//															

@@ -813,6 +813,7 @@ void CManicLayer::ResetLevel()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::RequestNextLevel()
 {
+	m_pcGameManager->ResetHUD();
 	m_bWasNextLevelRequested = true;
 }
 
