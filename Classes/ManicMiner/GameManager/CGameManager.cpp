@@ -270,21 +270,19 @@ void CGameManager::EndLevel()
 void CGameManager::DrainAirForScore() 
 {
 	m_pcAirManager->DrainAir();
-																
-	if (m_pcAirManager->GetDrainComplete())
-	{
-		m_pcLevelManager->GetCurrentManicLayer().RequestNextLevel();
-	}
-	else
-	{
-		m_pcCPlayer->SetCanBeControlled( false );
-		m_pcCPlayer->ApplyDirectionChange( EPlayerDirection::Static );
-		m_bDrainToScore = true;
-	}
+	m_pcCPlayer->SetVisible( false );
+	m_pcCPlayer->SetCanBeControlled( false );
+	m_pcCPlayer->ApplyDirectionChange( EPlayerDirection::Static );
+	m_bDrainToScore = true;
+
 }
 
 void CGameManager::DrainToScore()
 {
+	if (m_pcAirManager->GetDrainComplete())
+	{
+		m_pcLevelManager->GetCurrentManicLayer().RequestNextLevel();
+	}
 	m_iCurrentScore += m_kiScorePerTimeLeft;
 	UpdateScore();
 	CheckHighScoreForUpdate();

@@ -209,7 +209,6 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedHazard(rcPlayer, rcHazard, rcContact);
 		});
 
-
 	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
