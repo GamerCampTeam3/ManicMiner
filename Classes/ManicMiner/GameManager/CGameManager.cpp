@@ -82,11 +82,11 @@ bool CGameManager::CheckIfLevelRequirementsAreMet() const
 	switch ( m_sLevelValues.eCollectibleRequirements )
 	{
 		case ECollectibleRequirements::Collectible:
-			enoughReached = (m_iCurrentCollectibles == m_sLevelValues.iNumberofCollectibles);
+			enoughReached = (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles);
 			break;
 
 		case ECollectibleRequirements::Collectible_And_Switches:
-			enoughReached = ( (m_iCurrentCollectibles == m_sLevelValues.iNumberofCollectibles) && (m_iCurrentSwitches == m_sLevelValues.iNumberOfSwitches) );
+			enoughReached = ( (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles) && (m_iCurrentSwitches >= m_sLevelValues.iNumberOfSwitches) );
 			break;
 	}
 
