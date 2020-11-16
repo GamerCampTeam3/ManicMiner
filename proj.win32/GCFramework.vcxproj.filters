@@ -486,6 +486,9 @@
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheFinalBarrier.cpp">
       <Filter>Classes\ManicMiner\Layers\Levels\19</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEugene.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -802,6 +805,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheFinalBarrier.h">
       <Filter>Classes\ManicMiner\Layers\Levels\19</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEugene.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
