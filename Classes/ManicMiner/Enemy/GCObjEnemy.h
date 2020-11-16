@@ -57,6 +57,8 @@ public:
 
 	CGCObjEnemy();
 
+	CGCObjEnemy(GCTypeID idDerivedType);
+
 	// Module 1 constructor.
 //GCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
 	//bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyIdentifier,
@@ -74,6 +76,7 @@ public:
 	virtual void VOnResourceAcquire	( void ) override;
 	virtual void VOnResurrected		( void ) override;
 	virtual void VOnUpdate			(float fTimeStep) override;
+	virtual void VOnResourceRelease	() override;
 	void BounceEnemyDirection();
 
 	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
