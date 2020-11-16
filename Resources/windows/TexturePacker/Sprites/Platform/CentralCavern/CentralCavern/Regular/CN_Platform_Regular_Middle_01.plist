@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>CN_Platform_Moving.png</key>
+            <key>CN_Platform_Regular_Middle_01.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,7}</string>
+                <string>{0,8}</string>
                 <key>spriteSize</key>
-                <string>{1200,46}</string>
+                <string>{60,44}</string>
                 <key>spriteSourceSize</key>
-                <string>{1200,60}</string>
+                <string>{60,60}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{1200,46}}</string>
+                <string>{{1,1},{60,44}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -29,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>Platform_Moving_Ogmo.png</string>
+            <string>CN_Platform_Regular_Middle_01.png</string>
             <key>size</key>
-            <string>{1202,48}</string>
+            <string>{62,46}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:5a4c2f5cbc8fd7eeb3f4fc34ee4e17e5:56fc188ae663ff634284e3662b9c63a0:94987ec05a00b2e98226c06abe9b0261$</string>
+            <string>$TexturePacker:SmartUpdate:d54b3dd152ff6762b1dffc26937451f7:306b759090aaab4e36d37a5aeb56639a:b4710461694ec450f23a30e51b097ae0$</string>
             <key>textureFileName</key>
-            <string>Platform_Moving_Ogmo.png</string>
+            <string>CN_Platform_Regular_Middle_01.png</string>
         </dict>
     </dict>
 </plist>

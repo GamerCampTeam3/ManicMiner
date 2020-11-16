@@ -44,9 +44,10 @@ void CMovingPlatform::VOnResourceAcquire()
 
 	const char* pszAnim_Move = "MoveLeft";
 
-	cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
-	m_pcMovingAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Move);
-	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcMovingAnim));
+	// Used to be able to have animation - no animation provided by the artist therefore feature was removed
+	//cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
+	//m_pcMovingAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Move);
+	//RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcMovingAnim));
 
 	InitDirectionalLock(EPlayerDirection::Left);
 }
