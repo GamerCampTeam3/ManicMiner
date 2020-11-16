@@ -48,6 +48,12 @@ CGCObjEnemy::CGCObjEnemy()
 	m_fMoveDelta = 0.0;
 }
 
+CGCObjEnemy::CGCObjEnemy(GCTypeID idDerivedType)
+	: m_pCustomCreationParams(nullptr)
+{
+	m_fMoveDelta = 0.0;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Destructor
 //////////////////////////////////////////////////////////////////////////
@@ -89,6 +95,12 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	   
     //RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 
+
+	
+	
+	// use below as data driven from OGMO to set animation speed if required?
+	//pAnimation->setDelayPerUnit(0.0f);
+
 	//////////////////////////
 	
 
@@ -119,13 +131,6 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 	SetFacingOrientation();
 
-
-
-	//Alternative movement solution.
-	m_cDest = Vec2(m_cAnchorPoint.x+30.0, m_cAnchorPoint.y);
-
-
-	m_cCurrentPos = m_cAnchorPoint;
 
 }
 
@@ -270,21 +275,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 	// Call base class version first.
 	CGCObject::VOnUpdate(fTimeStep);
 	   	 
-	/*cocos2d::Vec2 diff =  m_cAnchorPoint - m_cDest;
-    float mag = diff.length();
-
-    m_fMoveDelta = m_fMoveDelta + fTimeStep;
 	
-	//m_cCurrentPos.lerp(m_cDest, fTimeStep);
-	//m_cCurrentPos.x = m_cCurrentPos.x + fTimeStep;
-
-	//MoveToPixelPosition(m_cCurrentPos);
-
-
-	*/
-
-
-
 	if (m_bMovingAwayFromAnchorPoint)
 	{
 		SetVelocity(m_cTotalVelocity);
@@ -343,3 +334,16 @@ void CGCObjEnemy::BounceEnemyDirection()
 	// Latch the flag to stop the enemy constantly flipping during the collisions duration.
 	m_bBounceCollisionDisabled = true;
 }
+
+//////////////////////////////////////////////////////////////////////////
+
+void CGCObjEnemy::VOnResourceRelease()
+{
+	// call base class first.
+	CGCObjSpritePhysics::VOnResourceRelease();
+
+	// Rquired when animations available.
+	//pAnimation->release();
+	//pAnimation = nullptr;
+}
+
