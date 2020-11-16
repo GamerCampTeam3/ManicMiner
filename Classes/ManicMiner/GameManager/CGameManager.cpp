@@ -82,11 +82,11 @@ bool CGameManager::CheckIfLevelRequirementsAreMet() const
 	switch ( m_sLevelValues.eCollectibleRequirements )
 	{
 		case ECollectibleRequirements::Collectible:
-			enoughReached = (m_iCurrentCollectibles == m_sLevelValues.iNumberofCollectibles);
+			enoughReached = (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles);
 			break;
 
 		case ECollectibleRequirements::Collectible_And_Switches:
-			enoughReached = ( (m_iCurrentCollectibles == m_sLevelValues.iNumberofCollectibles) && (m_iCurrentSwitches == m_sLevelValues.iNumberOfSwitches) );
+			enoughReached = ( (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles) && (m_iCurrentSwitches >= m_sLevelValues.iNumberOfSwitches) );
 			break;
 	}
 
@@ -179,6 +179,12 @@ void CGameManager::UpdateLives() const
 {
 	m_pcCHUD->UpdateLives( m_pcCPlayer->GetLives() );
 }
+
+void CGameManager::ResetHUD()
+{
+	m_pcCHUD->FlushText();
+}
+
 #pragma endregion CHUD_Update_Calls
 
 #pragma region Pointers_Setters
@@ -264,21 +270,19 @@ void CGameManager::EndLevel()
 void CGameManager::DrainAirForScore() 
 {
 	m_pcAirManager->DrainAir();
-																
-	if (m_pcAirManager->GetDrainComplete())
-	{
-		m_pcLevelManager->GetCurrentManicLayer().RequestNextLevel();
-	}
-	else
-	{
-		m_pcCPlayer->SetCanBeControlled( false );
-		m_pcCPlayer->ApplyDirectionChange( EPlayerDirection::Static );
-		m_bDrainToScore = true;
-	}
+	m_pcCPlayer->SetVisible( false );
+	m_pcCPlayer->SetCanBeControlled( false );
+	m_pcCPlayer->ApplyDirectionChange( EPlayerDirection::Static );
+	m_bDrainToScore = true;
+
 }
 
 void CGameManager::DrainToScore()
 {
+	if (m_pcAirManager->GetDrainComplete())
+	{
+		m_pcLevelManager->GetCurrentManicLayer().RequestNextLevel();
+	}
 	m_iCurrentScore += m_kiScorePerTimeLeft;
 	UpdateScore();
 	CheckHighScoreForUpdate();

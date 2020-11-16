@@ -23,10 +23,33 @@
 #include "ManicMiner/GameManager/CGameManager.h"
 
 // Include levels
-#include "ManicMiner/Layers/CMLAbandonedUraniumWorkings.h"
+// Sorted by level order
 #include "ManicMiner/Layers/CMLCentralCavern.h"
 #include "ManicMiner/Layers/CMLTheColdRoom.h"
 #include "ManicMiner/Layers/CMLTheMenagerie.h"
+#include "ManicMiner/Layers/CMLAbandonedUraniumWorkings.h"
+#include "ManicMiner/Layers/CMLEugenesLair.h"
+#include "ManicMiner/Layers/CMLProcessingPlant.h"
+#include "ManicMiner/Layers/CMLTheVat.h"
+#include "ManicMiner/Layers/CMLWillyMeetsKong.h"
+#include "ManicMiner/Layers/CMLWackyAmoebatrons.h"
+#include "ManicMiner/Layers/CMLTheEndorianForest.h"
+#include "ManicMiner/Layers/CMLAttackOfTheMutant.h"
+#include "ManicMiner/Layers/CMLReturnOfKong.h"
+#include "ManicMiner/Layers/CMLOreRefinery.h"
+#include "ManicMiner/Layers/CMLSkyLabLandingBay.h"
+#include "ManicMiner/Layers/CMLTheBank.h"
+#include "ManicMiner/Layers/CMLTheSixteenthCavern.h"
+#include "ManicMiner/Layers/CMLTheWarehouse.h"
+#include "ManicMiner/Layers/CMLAmoebatronsRevenge.h"
+#include "ManicMiner/Layers/CMLSolarPowerGenerator.h"
+#include "ManicMiner/Layers/CMLTheFinalBarrier.h"
+
+
+
+
+
+
 
 USING_NS_CC;
 
@@ -81,7 +104,7 @@ void CLevelManager::GoToMainMenu()
 void CLevelManager::GoToNextLevel()
 {
 	// If beat last level, go to first level
-	if( m_iCurrentLevelIndex == 2 )
+	if( m_iCurrentLevelIndex == 20 )
 	{
 		m_iCurrentLevelIndex = 0;
 	}
@@ -94,7 +117,7 @@ void CLevelManager::GoToNextLevel()
 	switch( m_iCurrentLevelIndex )
 	{
 	case 0:
-		// CENTRAL CAVERN
+		// CENTRAL CAVERN CMLTheFinalBarrier CMLCentralCavern
 		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
 		break;
 	case 1:
@@ -106,9 +129,75 @@ void CLevelManager::GoToNextLevel()
 		pScene = TGCGameLayerSceneCreator< CMLTheMenagerie >::CreateScene();
 		break;
 	case 3:
-		// ABANDONED URANUIM WORKINGS
+		// ABANDONED URANIUM WORKINGS
 		pScene = TGCGameLayerSceneCreator< CMLAbandonedUraniumWorkings >::CreateScene();
 		break;
+	case 4:
+		// EUGENES LAIR
+		pScene = TGCGameLayerSceneCreator< CMLEugenesLair >::CreateScene();
+		break;
+	case 5:
+		// PROCESSING PLANT
+		pScene = TGCGameLayerSceneCreator< CMLProcessingPlant >::CreateScene();
+		break;
+	case 6:
+		// THE VAT
+		pScene = TGCGameLayerSceneCreator< CMLTheVat >::CreateScene();
+		break;
+	case 7:
+		// WILLY MEETS KONG
+		pScene = TGCGameLayerSceneCreator< CMLWillyMeetsKong >::CreateScene();
+		break;
+	case 8:
+		// WACKY AMOEBATRONS
+		pScene = TGCGameLayerSceneCreator< CMLWackyAmoebatrons >::CreateScene();
+		break;
+	case 9:
+		// THE ENDORIAN FOREST
+		pScene = TGCGameLayerSceneCreator< CMLTheEndorianForest >::CreateScene();
+		break;
+	case 10:
+		// ATTACK OF THE MUTANT
+		pScene = TGCGameLayerSceneCreator< CMLAttackOfTheMutant >::CreateScene();
+		break;
+	case 11:
+		// RETURN OF KONG
+		pScene = TGCGameLayerSceneCreator< CMLReturnOfKong >::CreateScene();
+		break;
+	case 12:
+		// ORE REFINERY
+		pScene = TGCGameLayerSceneCreator< CMLOreRefinery >::CreateScene();
+		break;
+	case 13:
+		// SKY LAB LANDING BAY
+		pScene = TGCGameLayerSceneCreator< CMLSkyLabLandingBay >::CreateScene();
+		break;
+	case 14:
+		// THE BANK
+		pScene = TGCGameLayerSceneCreator< CMLTheBank >::CreateScene();
+		break;
+	case 15:
+		// THE SIXTEENTH CAVERN
+		pScene = TGCGameLayerSceneCreator< CMLTheSixteenthCavern >::CreateScene();
+		break;
+	case 16:
+		// THE WAREHOUSE
+		pScene = TGCGameLayerSceneCreator< CMLTheWarehouse >::CreateScene();
+		break;
+	case 17:
+		// AMOEBATRONS REVENGE
+		pScene = TGCGameLayerSceneCreator< CMLAmoebatronsRevenge >::CreateScene();
+		break;
+	case 18:
+		// SOLAR POWER GENERATOR
+		pScene = TGCGameLayerSceneCreator< CMLSolarPowerGenerator >::CreateScene();
+		break;
+	case 19:
+		// THE FINAL BARRIER
+		pScene = TGCGameLayerSceneCreator< CMLTheFinalBarrier >::CreateScene();
+		break;
+
+
 		
 	default:
 		// Should not run

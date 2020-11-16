@@ -109,12 +109,6 @@
     <Filter Include="Classes\ManicMiner\Enemy\SkylabLandingBay">
       <UniqueIdentifier>{77bfe9b1-1989-4128-909f-40edcca8f813}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\Layers\0">
-      <UniqueIdentifier>{9a7f17bb-1bec-413e-8423-54e9b1c9797d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ManicMiner\Layers\1">
-      <UniqueIdentifier>{9c47d203-2247-45d9-a5f3-a921c55397a7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ManicMiner\ResolutionHelper">
       <UniqueIdentifier>{fa2d7355-c2eb-4796-bf4c-2786e519e764}</UniqueIdentifier>
     </Filter>
@@ -166,11 +160,68 @@
     <Filter Include="Classes\ManicMiner\Physics">
       <UniqueIdentifier>{9b64c24d-8d6b-4940-a5f6-1cbdb17e01bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\Layers\2">
+    <Filter Include="Classes\ManicMiner\Layers\Levels">
+      <UniqueIdentifier>{d0d4fc05-e62c-4606-b205-8fa3821ca0d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\0">
+      <UniqueIdentifier>{9a7f17bb-1bec-413e-8423-54e9b1c9797d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\1">
+      <UniqueIdentifier>{9c47d203-2247-45d9-a5f3-a921c55397a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\2">
       <UniqueIdentifier>{ca0b42eb-480a-4c06-9271-1d39515d9ba6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\Layers\3">
+    <Filter Include="Classes\ManicMiner\Layers\Levels\3">
       <UniqueIdentifier>{df93d6dd-31a4-47d8-8122-43b05a38e4dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\4">
+      <UniqueIdentifier>{653838d7-4dba-4728-a3e8-9afea8a08d58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\5">
+      <UniqueIdentifier>{6a323549-941b-4549-af74-2d3b30c3223c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\6">
+      <UniqueIdentifier>{dfbd6f4b-557e-4b0a-9413-ed72d145b9b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\7">
+      <UniqueIdentifier>{7976ca82-17cd-483f-8f37-25f924477635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\8">
+      <UniqueIdentifier>{d3a19596-08bf-49cf-8b6a-0373da998aa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\9">
+      <UniqueIdentifier>{26206bfc-4da9-456f-9856-bd8e784b6bef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\10">
+      <UniqueIdentifier>{cc97ef15-0a2b-45cd-8898-43009aff861d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\11">
+      <UniqueIdentifier>{79869a1f-9828-48ac-80fb-bf13d40d32b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\12">
+      <UniqueIdentifier>{733965ef-c274-4032-aeb1-9bde2891fbc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\13">
+      <UniqueIdentifier>{cb9f0c65-5265-4ae1-b84f-73e37e40e855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\14">
+      <UniqueIdentifier>{55eea5b5-e134-4eda-bcb6-47fb6db39557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\15">
+      <UniqueIdentifier>{66faad89-fe6b-44ca-8af5-67caed441b96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\16">
+      <UniqueIdentifier>{9e6b6d8a-23f3-44c5-b653-94ac6a3d2a1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\17">
+      <UniqueIdentifier>{c45d8964-32c6-4578-af4a-e127ffc795c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\18">
+      <UniqueIdentifier>{654e1c0f-0279-401e-bfd6-009c574cd152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Layers\Levels\19">
+      <UniqueIdentifier>{8471426d-1e96-4c1d-9892-f4692a0e1c56}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,10 +364,10 @@
       <Filter>Classes\ManicMiner\Enemy\SkylabLandingBay</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.cpp">
-      <Filter>Classes\ManicMiner\Layers\0</Filter>
+      <Filter>Classes\ManicMiner\Layers\Levels\0</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.cpp">
-      <Filter>Classes\ManicMiner\Layers\1</Filter>
+      <Filter>Classes\ManicMiner\Layers\Levels\1</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Hazards\CentralCavern\GCObjGroupHazardCentralCavern.cpp">
       <Filter>Classes\ManicMiner\Hazards\CentralCavern</Filter>
@@ -382,10 +433,58 @@
       <Filter>Classes\ManicMiner\Physics</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.cpp">
-      <Filter>Classes\ManicMiner\Layers\3</Filter>
+      <Filter>Classes\ManicMiner\Layers\Levels\3</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheMenagerie.cpp">
-      <Filter>Classes\ManicMiner\Layers\2</Filter>
+      <Filter>Classes\ManicMiner\Layers\Levels\2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLEugenesLair.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLProcessingPlant.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheVat.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLWillyMeetsKong.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\7</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLWackyAmoebatrons.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheEndorianForest.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLAttackOfTheMutant.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLReturnOfKong.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLOreRefinery.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLSkyLabLandingBay.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\13</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheBank.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\14</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheSixteenthCavern.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\15</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheWarehouse.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\16</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLAmoebatronsRevenge.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\17</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLSolarPowerGenerator.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\18</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\CMLTheFinalBarrier.cpp">
+      <Filter>Classes\ManicMiner\Layers\Levels\19</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -570,10 +669,10 @@
       <Filter>Classes\ManicMiner\Enemy\SkylabLandingBay</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLCentralCavern.h">
-      <Filter>Classes\ManicMiner\Layers\0</Filter>
+      <Filter>Classes\ManicMiner\Layers\Levels\0</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheColdRoom.h">
-      <Filter>Classes\ManicMiner\Layers\1</Filter>
+      <Filter>Classes\ManicMiner\Layers\Levels\1</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h">
       <Filter>Classes\ManicMiner\ResolutionHelper</Filter>
@@ -648,13 +747,61 @@
       <Filter>Classes\ManicMiner\Structs</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheMenagerie.h">
-      <Filter>Classes\ManicMiner\Layers\2</Filter>
+      <Filter>Classes\ManicMiner\Layers\Levels\2</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAbandonedUraniumWorkings.h">
-      <Filter>Classes\ManicMiner\Layers\3</Filter>
+      <Filter>Classes\ManicMiner\Layers\Levels\3</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelCreationParameters.h">
       <Filter>Classes\ManicMiner\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLEugenesLair.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLProcessingPlant.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheVat.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\6</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLWillyMeetsKong.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\7</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLWackyAmoebatrons.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheEndorianForest.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAttackOfTheMutant.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\10</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLReturnOfKong.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLOreRefinery.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\12</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLSkyLabLandingBay.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\13</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheBank.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\14</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheSixteenthCavern.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\15</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheWarehouse.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\16</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLAmoebatronsRevenge.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\17</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLSolarPowerGenerator.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\18</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\CMLTheFinalBarrier.h">
+      <Filter>Classes\ManicMiner\Layers\Levels\19</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

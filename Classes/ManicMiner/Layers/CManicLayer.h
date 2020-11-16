@@ -47,8 +47,7 @@ class CManicLayer: public IGCGameLayer, public b2ContactListener
 // Bib Edit ----------------------------------------------------------------------------------------------------------- //
 protected:																												//
 	CGameManager*				m_pcGameManager;
-	SLevelCreationParameters	m_sLevelCreationParamaters; //
-	cocos2d::Vec2				m_v2StartPosition;																		//
+	SLevelCreationParameters	m_sLevelCreationParameters;																//
 	cocos2d::Size				m_sizeVisible;																			//
 	cocos2d::Point				m_pointOrigin; 																			//
 																														//
@@ -162,7 +161,8 @@ public:																													//
 		EPA_Up = 0,																										//
 		EPA_Down,																										//
 		EPA_Left,																										//
-		EPA_Right,																										//
+		EPA_Right,
+		EPA_Cheat,//
 		EPA_Jump																										//
 	};																													//																						//
 																														//

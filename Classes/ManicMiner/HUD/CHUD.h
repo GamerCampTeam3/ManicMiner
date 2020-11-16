@@ -26,12 +26,15 @@ public:
 	void UpdateScore(int score);
 	void UpdateHighScore(int highScore);
 	void UpdateLives(int lives);
+	void UpdateLevelName( const std::string szLevelName );
+	void FlushText();
 	
 private:
 	// Member Variables
 	cocos2d::Label*		m_pLivesLabel;			// Lives text
 	cocos2d::Label*		m_pScoreLabel;			// Score text
 	cocos2d::Label*		m_pHighScoreLabel;		// HighScore text
+	cocos2d::Label*		m_pLevelName;
 	CManicLayer*		m_pglOwnerGameLayer;	// manic layer pointer
 
 };

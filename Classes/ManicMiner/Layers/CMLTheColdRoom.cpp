@@ -3,12 +3,10 @@
 // -------------------------------------------------------------------------------------------------------------------- //
 #include "CMLTheColdRoom.h"
 
-#include "ManicMiner/Hazards/CentralCavern/GCObjGroupHazardCentralCavern.h"
-#include "ManicMiner/Platforms/CentralCavern/CObjCCGroupPlatform.h"
-#include "ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/AirManager/AirManager.h"
+#include "ManicMiner/Helpers/Helpers.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLTheColdRoom::CMLTheColdRoom()
@@ -30,15 +28,18 @@ void CMLTheColdRoom::VOnCreate( void )
 	// szLevelPath:			Sets the path where the level will be found.
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
-	m_sLevelCreationParamaters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
-	m_sLevelCreationParamaters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
-	m_sLevelCreationParamaters.szLevelPath			= "OgmoEditor/TheColdRoom.oel";
+	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
+	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/1_TheColdRoom.oel";
+	m_sLevelCreationParameters.szLevelName			= "The Cold Room";
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
 
 	// Step 3:	New the CHUD and CAirManager.
 	m_pCHUD = new CHUD( *this );
+	m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
+	
 	m_pcAirManager = new CAirManager( m_pointOrigin, m_sizeVisible );
 	m_pcAirManager->Init( *this );
 }
@@ -53,13 +54,15 @@ void CMLTheColdRoom::InitParams()
 	m_pcGameManager	->SetCAirManager		( m_pcAirManager	);
 	m_pcAirManager	->SetGameManager		( m_pcGameManager	);
 	m_pcGameManager	->ResetValues();
-	m_pcGameManager	->SetLevelRequirements	( m_sLevelCreationParamaters.sLevelValues );
+	m_pcGameManager	->SetLevelRequirements	( m_sLevelCreationParameters.sLevelValues );
 }
 
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLTheColdRoom::VOnDestroy( void )
 {
+	safeDelete( m_pCHUD );
+	
 	// Call base class last
 	CManicLayer::VOnDestroy();
 }
