@@ -29,6 +29,7 @@ void CMLAbandonedUraniumWorkings::VOnCreate( void )
 	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/3_AbandonedUraniumWorkings.oel";
 	m_sLevelCreationParameters.szLevelName			= "Abandoned Uranium Workings";
+	m_sLevelCreationParameters.v2PlayerStartPos		= cocos2d::Vec2(1600.0f + 30.0f, 120.0f);
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
