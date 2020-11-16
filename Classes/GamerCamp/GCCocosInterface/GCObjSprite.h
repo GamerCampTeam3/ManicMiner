@@ -51,6 +51,8 @@ private:
 	// used to hold the current scale value of the sprite
 	cocos2d::Vec2               m_v2SpriteScale;
 
+	
+
 protected:
 	CGCObjSprite( GCTypeID idDerivedType );
 
