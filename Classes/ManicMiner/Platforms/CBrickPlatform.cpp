@@ -33,6 +33,8 @@ CBrickPlatform::CBrickPlatform()
 void CBrickPlatform::VOnResourceAcquire()
 {
 	CPlatform::VOnResourceAcquire();
+
+	GetSprite()->setVisible(false);
 }
 
 void CBrickPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams,

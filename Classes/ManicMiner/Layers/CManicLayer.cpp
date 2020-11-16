@@ -220,7 +220,7 @@ void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
 {
 	m_pcGCSprBackGround = new CGCObjSprite();
 	m_pcGCSprBackGround->CreateSprite( m_sLevelCreationParameters.pszLevelBackground );
-	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, (rSize.height / 2) - 60.f ) );
+	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, (rSize.height / 2)) );
 	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
 }
 
