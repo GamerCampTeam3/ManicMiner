@@ -109,6 +109,12 @@
     <Key id="63" x="1470" y="270" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/cc_collectible_key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Key/cc_collectible_key.plist" />
     <Key id="60" x="1770" y="30" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/cc_collectible_key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Key/cc_collectible_key.plist" />
     <Key id="59" x="1830" y="390" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/cc_collectible_key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Key/cc_collectible_key.plist" />
+    <Hazard id="4" x="990" y="30" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/downwardSpike/downwardSpike.plist" />
+    <Hazard id="5" x="690" y="30" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/downwardSpike/downwardSpike.plist" />
+    <Hazard id="10" x="1290" y="510" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/bush/bush.plist" />
+    <Hazard id="2" x="1410" y="270" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/bush/bush.plist" />
+    <Hazard id="3" x="1650" y="270" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/bush/bush.plist" />
+    <Hazard id="11" x="750" y="750" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/bush/bush.plist" />
   </Platforms>
   <Enemies />
   <Hazards />
