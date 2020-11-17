@@ -299,8 +299,8 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 32.000,-30.000 }</string>	
-								<string>{ 32.000,30.000 }</string>	
+								<string>{ 30.000,-30.000 }</string>	
+								<string>{ 30.000,30.000 }</string>	
 								<string>{ -30.000,30.000 }</string>	
 								<string>{ -30.000,-30.000 }</string>
 							</array>
@@ -320,8 +320,8 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 32.000,30.000 }</string>	
-								<string>{ 32.000,36.000 }</string>	
+								<string>{ 30.000,30.000 }</string>	
+								<string>{ 30.000,36.000 }</string>	
 								<string>{ -30.000,36.000 }</string>	
 								<string>{ -30.000,30.000 }</string>
 							</array>
