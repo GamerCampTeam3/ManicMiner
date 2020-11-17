@@ -31,10 +31,11 @@ void CMLTheFinalBarrier::VOnCreate( void )
 	// szLevelPath:			Sets the path where the level will be found.
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
-	m_sLevelCreationParameters.sLevelValues = SLevelValues( ECollectibleRequirements::Collectible, 5 );
-	m_sLevelCreationParameters.pszLevelBackground = static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
-	m_sLevelCreationParameters.szLevelPath = "OgmoEditor/19_TheFinalBarrier.oel";
-	m_sLevelCreationParameters.szLevelName = "The Final Barrier";
+	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
+	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/19_TheFinalBarrier.oel";
+	m_sLevelCreationParameters.szLevelName			= "The Final Barrier";
+	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 1680.0f + 30.0f, 120.0f );
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

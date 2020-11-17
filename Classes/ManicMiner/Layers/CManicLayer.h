@@ -28,6 +28,8 @@
 #include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
 #endif
 
+// param0 = X, param1 = Y
+#define CC_V2(param0, param1)  cocos2d::Vec2(param0, param1) 
 
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CCollectible;																										//																							

@@ -5,6 +5,8 @@
 #include "ManicMiner/AirManager/AirManager.h"
 #include "ManicMiner/Helpers/Helpers.h"
 
+
+
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLTheMenagerie::CMLTheMenagerie()
 	: CManicLayer()
@@ -29,6 +31,7 @@ void CMLTheMenagerie::VOnCreate( void )
 	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/2_TheMenagerie.oel";
 	m_sLevelCreationParameters.szLevelName			= "The Menagerie";
+	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

@@ -35,6 +35,7 @@ void CMLCentralCavern::VOnCreate( void )
 	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/CN_Background.plist");
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/0_CentralCavern.oel";
 	m_sLevelCreationParameters.szLevelName			= "Central Cavern";
+	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

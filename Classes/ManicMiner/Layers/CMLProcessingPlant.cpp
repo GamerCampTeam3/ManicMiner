@@ -35,6 +35,7 @@ void CMLProcessingPlant::VOnCreate( void )
 	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/5_ProcessingPlant.oel";
 	m_sLevelCreationParameters.szLevelName			= "Processing Plant";
+	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 990.0f, 720.f);
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
