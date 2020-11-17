@@ -145,7 +145,7 @@ void CPlayer::SetLives( const int iLives )																				//
 
 // ---------- CGCObjSprite Interface ---------------------------------------------------------------------------------------------------------- //
 																																				//
-IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/TempCharacter.plist", "TempCharacter", b2_dynamicBody, true );	//
+IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/mm_character_willy.plist", "TempCharacter", b2_dynamicBody, true );	//
 void CPlayer::VOnResourceAcquire()																												//
 {																																				//
 	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CPlayer );																				//
