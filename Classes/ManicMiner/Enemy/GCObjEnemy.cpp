@@ -81,36 +81,28 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
 	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+		   	 
+	if (m_pszAnimation.length() > 0)
+	{
+				
+		std::string m_pszPlist = pcCreateParams->strPlistFile;
 
-	/////////////////////////////////////////////
-	// Set up Animations.
-	// For module 2:
-	// Commented out until animations available for Duck enemy.
-	// std::string m_pszPlist = pcCreateParams->strPlistFile;
-	// Note m_pszAnimation is sourced from the data file so not set here.
+		// Note m_pszAnimation is sourced from the data file so not set here.
+		cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
+		pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
+		pAnimation->retain();
 
-	//cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
-	//pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
-	//pAnimation->retain();
-	   
-    //RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
+		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 
 
+		// use below as data driven from OGMO to set animation speed if required?
+		//pAnimation->setDelayPerUnit(0.0f);
+
+	}
 	
-	
-	// use below as data driven from OGMO to set animation speed if required?
-	//pAnimation->setDelayPerUnit(0.0f);
-
-	//////////////////////////
-	
-
-	
-
 
 	m_cTotalVelocity = Vec2::ZERO;
 	
-
-
 
 	Vec2 AnchorPointAndOffset = GetResetPosition();
 	m_cAnchorPoint = GetResetPosition();
@@ -342,8 +334,12 @@ void CGCObjEnemy::VOnResourceRelease()
 	// call base class first.
 	CGCObjSpritePhysics::VOnResourceRelease();
 
-	// Rquired when animations available.
-	//pAnimation->release();
-	//pAnimation = nullptr;
+
+	if (m_pszAnimation.length() > 0)
+	{
+		pAnimation->release();
+		pAnimation = nullptr;
+
+	}
 }
 
