@@ -38,7 +38,7 @@ void CMLTheMenagerie::VOnCreate( void )
 	CManicLayer::VOnCreate();
 
 	// Step 3:	New the CHUD and CAirManager.
-	m_pCHUD = new CHUD( *this );
+	m_pCHUD = new CHUD(*this, m_pointOrigin, m_sizeVisible );
 	m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
 	
 	m_pcAirManager = new CAirManager( m_pointOrigin, m_sizeVisible );
