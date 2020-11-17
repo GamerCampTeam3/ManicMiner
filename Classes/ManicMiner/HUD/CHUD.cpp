@@ -15,63 +15,61 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	, m_pHighScoreLabel		( nullptr		)
 	, m_pLevelName			( nullptr		)
 	, m_pglOwnerGameLayer	( &cLayer		)
-	, m_pOrigin				( pOrigin		)
-	, m_visibleSize			( visibleSize	)
+	, m_pointOrigin			( pOrigin		)
+	, m_sizeVisible			( visibleSize	)
 {
 	// First draw of the HUD
 	// 1) Lives
-	m_pLivesLabel = Label::createWithTTF( "LIVES: " + std::to_string( 3 ), "fonts/arial.ttf", 20 );
-	m_pLivesLabel->setGlobalZOrder( 3.f );
-	m_pLivesLabel->setPosition( Vec2( (m_pOrigin).x + 800.f, ((m_pOrigin).y + (m_visibleSize).height) - 40 ) );
-	m_pglOwnerGameLayer->addChild( m_pLivesLabel, 2 );
-
-	// 2) Score
-	m_pScoreLabel = Label::createWithTTF( "SCORE: " + std::to_string( 0 ), "fonts/arial.ttf", 20 );
-	m_pScoreLabel->setGlobalZOrder( 3.f );
-	m_pScoreLabel->setPosition( Vec2( (m_pOrigin).x + 1400.0f, ((m_pOrigin).y + (m_visibleSize).height) - 92 ) );
-	m_pglOwnerGameLayer->addChild( m_pScoreLabel, 2 );
+	DrawElement( m_pLivesLabel, static_cast<char*>("LIVES: "), 3, Vec2( (m_pointOrigin).x + 800.f, ((m_pointOrigin).y + (m_sizeVisible).height) - 40 ), 20 );
+	DrawElement( m_pScoreLabel, static_cast<char*>("SCORE: "), 0, Vec2( (m_pointOrigin).x + 1400.0f, ((m_pointOrigin).y + (m_sizeVisible).height) - 92 ), 20 );
 }
 
-void CHUD::UpdateLevelName(const std::string szLevelName)
+void CHUD::UpdateLevelName(const std::string szLevelName) const
 {
-	m_pLevelName = Label::createWithTTF( szLevelName, "fonts/arial.ttf", 40 );
-	m_pLevelName->setGlobalZOrder( 3.f );	
-	m_pLevelName->setPosition( Vec2( (m_pOrigin).x + 1520.f, ((m_pOrigin).y + (m_visibleSize).height) - 60 ) );
+	char* pchr = _strdup( szLevelName.c_str() );
 
-	m_pglOwnerGameLayer->addChild( m_pLevelName, 2 );
+	DrawElement( m_pLivesLabel, pchr, 0, Vec2( (m_pointOrigin).x + 1520.f, ((m_pointOrigin).y + (m_sizeVisible).height) - 60 ) , 40, true);
 }
 
-void CHUD::FlushText()
+void CHUD::FlushText() const
 {
-	m_pglOwnerGameLayer->removeChild( m_pScoreLabel );
-	m_pglOwnerGameLayer->removeChild( m_pLivesLabel );
+	m_pglOwnerGameLayer->removeChild( m_pScoreLabel		);
+	m_pglOwnerGameLayer->removeChild( m_pLivesLabel		);
 	m_pglOwnerGameLayer->removeChild( m_pHighScoreLabel );
-	m_pglOwnerGameLayer->removeChild( m_pLevelName );
+	m_pglOwnerGameLayer->removeChild( m_pLevelName		);
 }
 
 
-void CHUD::UpdateScore(int score)
+void CHUD::UpdateScore(int score) const
 {
-	DrawElement( m_pScoreLabel, "SCORE: ", score, Vec2( (m_pOrigin).x + 1400.0f, ((m_pOrigin).y + (m_visibleSize).height) - 92 ) );
+	DrawElement( m_pScoreLabel, static_cast<char*>("SCORE: "), score, Vec2( (m_pointOrigin).x + 1400.0f, ((m_pointOrigin).y + (m_sizeVisible).height) - 92 ), 20 );
 }
 
-void CHUD::UpdateLives(int lives)
+void CHUD::UpdateLives(int lives) const
 {
-	DrawElement( m_pLivesLabel, "LIVES: ", lives, Vec2( (m_pOrigin).x + 800.f, ((m_pOrigin).y + (m_visibleSize).height) - 40 ) );
+	DrawElement( m_pLivesLabel, static_cast<char*>("LIVES: "), lives, Vec2( (m_pointOrigin).x + 800.f, ((m_pointOrigin).y + (m_sizeVisible).height) - 40 ), 20 );
 }
 
-void CHUD::UpdateHighScore( int highScore )
+void CHUD::UpdateHighScore( int highScore ) const
 {
-	DrawElement( m_pHighScoreLabel, "HIGHSCORE: ", highScore, Vec2( (m_pOrigin).x + 1680.f, ((m_pOrigin).y + (m_visibleSize).height) - 92 ) );
+	DrawElement( m_pHighScoreLabel, static_cast<char*>("HIGHSCORE: "), highScore, Vec2( (m_pointOrigin).x + 1680.f, ((m_pointOrigin).y + (m_sizeVisible).height) - 92 ) , 20 );
 }
 
-void CHUD::DrawElement( cocos2d::Label* label, char* labelText, int labelValue, cocos2d::Vec2 labelPos) const
+void CHUD::DrawElement( cocos2d::Label* label, char* labelText, int labelValue, cocos2d::Vec2 labelPos, int iFontSize, bool isLevelLabel) const
 {
 	if (m_pglOwnerGameLayer != nullptr)
 	{
 		m_pglOwnerGameLayer->removeChild( label );
 
-		label = Label::createWithTTF( labelText + std::to_string( labelValue ), "fonts/arial.ttf", 20 );
+		if (!isLevelLabel)
+		{
+			label = Label::createWithTTF( labelText + std::to_string( labelValue ), "fonts/arial.ttf", iFontSize );
+		}
+		else
+		{
+			label = Label::createWithTTF( labelText, "fonts/arial.ttf", iFontSize );
+		}
+		
 		label->setGlobalZOrder( 3.f );
 		label->setPosition( labelPos );
 

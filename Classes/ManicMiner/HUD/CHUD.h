@@ -24,11 +24,11 @@ public:
 	CHUD ( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSize );
 	~CHUD() { };
 
-	void UpdateScore(int score);
-	void UpdateHighScore(int highScore);
-	void UpdateLives(int lives);
-	void UpdateLevelName( const std::string szLevelName );
-	void FlushText();
+	void UpdateScore(int score) const;
+	void UpdateHighScore(int highScore) const;
+	void UpdateLives(int lives) const;
+	void UpdateLevelName( const std::string szLevelName ) const;
+	void FlushText() const;
 	
 private:
 	// Member Variables
@@ -38,11 +38,10 @@ private:
 	cocos2d::Label*		m_pLevelName;
 	CManicLayer*		m_pglOwnerGameLayer;	// manic layer pointer
 
-	cocos2d::Point m_pOrigin;
-	cocos2d::Size m_visibleSize;
+	cocos2d::Point		m_pointOrigin;
+	cocos2d::Size		m_sizeVisible;
 
-	void  DrawElement(cocos2d::Label* label, char* labelText, int labelValue, cocos2d::Vec2 labelPos ) const;
-
+	void  DrawElement(cocos2d::Label* label, char* labelText, int labelValue, cocos2d::Vec2 labelPos, int iFontSize, bool isLevelLabel = false ) const;
 };
 
 #endif // #ifndef _CHUD_H_
