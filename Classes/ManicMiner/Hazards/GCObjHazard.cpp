@@ -45,6 +45,52 @@ void CGCObjHazard::VOnResourceAcquire( void )
 
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
+
+
+
+
+
+
+
+
+	if (m_pszAnimation.length() > 0)
+	{
+
+		const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+
+		std::string m_pszPlist = pcCreateParams->strPlistFile;
+
+		// Note m_pszAnimation is sourced from the data file so not set here.
+		cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
+		pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
+		pAnimation->retain();
+
+		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
+
+
+		// use below as data driven from OGMO to set animation speed if required?
+		//pAnimation->setDelayPerUnit(0.0f);
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//SetResetPosition(m_cAnchorPoint);
 }
 
@@ -61,7 +107,14 @@ void CGCObjHazard::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 	// Read in the custom plist
 	if (nullptr != pCurrentObjectXmlData)
 	{
-	
+		// Animation name	
+		const tinyxml2::XMLAttribute* pAnimationName = pCurrentObjectXmlData->FindAttribute("AnimationName");
+		CCLOG((nullptr == pAnimationName) ? "AnimationName not found for Hazard!" : pAnimationName->Value());
+		m_pszAnimation = pAnimationName->Value();
+
+
+		// Custom Plist
+
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
 		
 		if ((nullptr != pCustomPlistPath)
@@ -112,4 +165,16 @@ void CGCObjHazard::VOnUpdate(float fTimeStep)
 	CGCObject::VOnUpdate(fTimeStep);
 
 	// D.O'DWYER - THIS FUNCTION IS NOT REQUIRED AND SHOULD BE REMOVED AT MODULE 2.
+}
+
+void CGCObjHazard::VOnResourceRelease()
+{
+	// call base class first.
+	CGCObjSpritePhysics::VOnResourceRelease();
+
+	if (m_pszAnimation.length() > 0)
+	{
+		pAnimation->release();
+		pAnimation = nullptr;
+	}
 }
