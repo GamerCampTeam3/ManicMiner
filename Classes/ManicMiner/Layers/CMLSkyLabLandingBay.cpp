@@ -36,6 +36,7 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/13_SkyLabLandingBay.oel";
 	m_sLevelCreationParameters.szLevelName			= "Sky Lab Landing Bay";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 1820.0f, 120.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= false;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

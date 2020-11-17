@@ -190,7 +190,7 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 	// add player
 	///////////////////////////////////////////////////////////////////////////
-	m_pcPlayer = new CPlayer( *this, m_sLevelCreationParameters.v2PlayerStartPos );
+	m_pcPlayer = new CPlayer( *this, m_sLevelCreationParameters.v2PlayerStartPos, m_sLevelCreationParameters.bShouldFaceRight );
 
 
 
@@ -213,7 +213,6 @@ void CManicLayer::VOnCreate()
 		{
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
 		});
-
 }
 
 void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)

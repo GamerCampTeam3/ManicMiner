@@ -36,6 +36,7 @@ void CMLTheFinalBarrier::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/19_TheFinalBarrier.oel";
 	m_sLevelCreationParameters.szLevelName			= "The Final Barrier";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 1680.0f + 30.0f, 120.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= false;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

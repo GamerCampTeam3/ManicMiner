@@ -36,6 +36,7 @@ void CMLEugenesLair::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/4_Eugene'sLair.oel";
 	m_sLevelCreationParameters.szLevelName			= "Eugene's Lair";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 60.0f + 30.0f, 720.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= true;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

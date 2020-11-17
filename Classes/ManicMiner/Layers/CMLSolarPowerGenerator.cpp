@@ -36,6 +36,7 @@ void CMLSolarPowerGenerator::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/18_SolarPowerGenerator.oel";
 	m_sLevelCreationParameters.szLevelName			= "Solar Power Generator";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 840.0f + 30.0f, 300.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= true;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

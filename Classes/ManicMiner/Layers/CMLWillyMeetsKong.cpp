@@ -36,6 +36,7 @@ void CMLWillyMeetsKong::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/7_MinerWillyMeetsTheKongBeast.oel";
 	m_sLevelCreationParameters.szLevelName			= " Miner Willy meets the Kong Beast";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= true;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

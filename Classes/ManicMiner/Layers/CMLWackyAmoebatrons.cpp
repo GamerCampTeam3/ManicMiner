@@ -36,6 +36,7 @@ void CMLWackyAmoebatrons::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/8_WackyAmoebatrons.oel";
 	m_sLevelCreationParameters.szLevelName			= "Wacky Amoebatrons";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 90.0f, 120.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= true;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

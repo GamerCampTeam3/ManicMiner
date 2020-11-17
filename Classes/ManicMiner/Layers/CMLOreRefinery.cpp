@@ -36,6 +36,7 @@ void CMLOreRefinery::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/12_OreRefinery.oel";
 	m_sLevelCreationParameters.szLevelName			= "Ore Refinery";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 1820.0f, 120.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= true;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

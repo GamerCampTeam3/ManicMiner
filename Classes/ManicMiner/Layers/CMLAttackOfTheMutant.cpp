@@ -36,6 +36,7 @@ void CMLAttackOfTheMutant::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/10_AttackOfTheMutant.oel";
 	m_sLevelCreationParameters.szLevelName			= "Attack Of The Mutant Telephones";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 90.0f, 840.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= true;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

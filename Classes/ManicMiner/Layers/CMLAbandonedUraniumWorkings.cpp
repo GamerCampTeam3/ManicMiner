@@ -30,6 +30,7 @@ void CMLAbandonedUraniumWorkings::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/3_AbandonedUraniumWorkings.oel";
 	m_sLevelCreationParameters.szLevelName			= "Abandoned Uranium Workings";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2 ( 1920.0f - 90.0f, 120.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= false;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

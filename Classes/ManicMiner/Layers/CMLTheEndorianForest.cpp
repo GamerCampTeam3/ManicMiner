@@ -36,6 +36,7 @@ void CMLTheEndorianForest::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/9_TheEndorianForest.oel";
 	m_sLevelCreationParameters.szLevelName			= "The Endorian Forest";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 90.0f, 660.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= true;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

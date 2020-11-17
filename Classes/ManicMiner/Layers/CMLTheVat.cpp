@@ -36,6 +36,7 @@ void CMLTheVat::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/6_TheVat.oel";
 	m_sLevelCreationParameters.szLevelName			= "The Vat";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );
+	m_sLevelCreationParameters.bShouldFaceRight		= true;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();

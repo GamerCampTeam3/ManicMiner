@@ -36,6 +36,7 @@ void CMLProcessingPlant::VOnCreate( void )
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/5_ProcessingPlant.oel";
 	m_sLevelCreationParameters.szLevelName			= "Processing Plant";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 990.0f, 720.f);
+	m_sLevelCreationParameters.bShouldFaceRight		= false;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
