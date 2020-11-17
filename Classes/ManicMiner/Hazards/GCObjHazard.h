@@ -27,6 +27,16 @@ public:
 private:
 	HazardTypes::EHazardId	    m_eHazardIdentifier;
 	cocos2d::Vec2				m_cAnchorPoint;
+
+
+	// For animations
+	std::string					m_pszAnimation;
+	std::string                 m_pszPlist;
+	cocos2d::Animation*			pAnimation;
+
+
+
+
 	//CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
 
@@ -53,6 +63,7 @@ public:
 	virtual void VOnResourceAcquire	( void ) override;
 	virtual void VOnResurrected		( void ) override;
 	virtual void VOnUpdate			(float fTimeStep) override;
+	virtual void VOnResourceRelease	(void) override;
 
 	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 

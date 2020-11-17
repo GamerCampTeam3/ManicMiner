@@ -80,11 +80,13 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	// Call base class verion.
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
-	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+	
 		   	 
 	if (m_pszAnimation.length() > 0)
 	{
-				
+	
+		const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+
 		std::string m_pszPlist = pcCreateParams->strPlistFile;
 
 		// Note m_pszAnimation is sourced from the data file so not set here.
