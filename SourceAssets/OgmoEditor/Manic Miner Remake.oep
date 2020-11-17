@@ -16,7 +16,7 @@
     <Width>1920</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>E:\Solutions\TeamProj\ManicMiner\SourceAssets\OgmoEditor\Manic Miner Remake.oep</Filename>
+  <Filename>D:\MSc_GitHub_Branch\ManicMiner\SourceAssets\OgmoEditor\Manic Miner Remake.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -148,16 +148,57 @@
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CGCObjEnemy" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="bush" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="cc_enemy_duck" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Duck/Duck.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
             <string>b2_kinematicBody</string>
-            <string>b2_dynamicBody</string>
+            <string>b2_DynamicBody</string>
           </Elements>
         </ValueDefinition>
-        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="AnimationName" Default="" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="MovementRange" Default="0" Min="0" Max="100" Round="0.1" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="InitialDistanceFromAnchor" Default="0" Min="0" Max="100" Round="0.1" />
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="MovingAwayFromAnchorPoint" Default="false" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="Speed" Default="0" Min="0" Max="100" Round="0.1" />
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="SpriteIsFlippable" Default="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="MovementAxis">
+          <Elements>
+            <string>Horizontal</string>
+            <string>Vertical</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Duck/Duck.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="Eugene" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>120</Width>
+        <Height>120</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>60</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Duck\cc_enemy_duck.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CGCObjEugene" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="cc_enemy_duck" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Duck/Duck.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_DynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="AnimationName" Default="" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="MovementRange" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="InitialDistanceFromAnchor" Default="0" Min="0" Max="100" Round="0.1" />
