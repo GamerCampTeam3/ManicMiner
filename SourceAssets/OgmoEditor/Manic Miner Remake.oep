@@ -915,5 +915,20 @@
       <ValueDefinitions />
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
+    <EntityDefinition Name="Sunlight" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Sunlight\Sunlight.png" Tiled="false">
+        <RectColor A="255" R="255" G="255" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions />
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
   </EntityDefinitions>
 </project>

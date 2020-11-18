@@ -257,6 +257,18 @@ void CAirManager::DrainAir()
 	m_eAirDrainedState = EAirDrainedState::LevelCompleted;
 }
 
+void CAirManager::SunlightDrainAir(bool bShouldDrainAir)
+{
+	if(bShouldDrainAir)
+	{
+		m_fDrainAirMultiplier = 5.f;
+	}
+	else
+	{
+		m_fDrainAirMultiplier = 1.f;
+	}
+}
+
 bool CAirManager::UpdateAirTimer()
 {
 	

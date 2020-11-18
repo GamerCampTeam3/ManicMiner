@@ -44,6 +44,8 @@ public:
 	bool GetHasInitialized();
 
 	void DrainAir();
+
+	void SunlightDrainAir(bool bShouldDrainAir);
 	
 private:
 
