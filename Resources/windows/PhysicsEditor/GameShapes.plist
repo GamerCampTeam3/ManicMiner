@@ -919,7 +919,7 @@
                         <key>restitution</key> <real>0</real>
                         <key>filter_categoryBits</key> <integer>2</integer>
                         <key>filter_groupIndex</key> <integer>0</integer>
-                        <key>filter_maskBits</key> <integer>5</integer>
+                        <key>filter_maskBits</key> <integer>1</integer>
                         <key>isSensor</key> <false/>
                         <key>id</key> <string></string>
                         <key>fixture_type</key> <string>POLYGON</string>
@@ -927,18 +927,18 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 30.000,-59.000 }</string>	
-								<string>{ 25.143,-11.429 }</string>	
-								<string>{ -1.714,30.571 }</string>	
-								<string>{ -30.000,33.000 }</string>	
-								<string>{ -19.000,-40.000 }</string>	
-								<string>{ -9.000,-51.000 }</string>	
-								<string>{ 7.000,-59.000 }</string>
+								<string>{ 27.000,-58.000 }</string>	
+								<string>{ 27.000,-11.000 }</string>	
+								<string>{ 25.000,40.000 }</string>	
+								<string>{ 0.000,43.000 }</string>	
+								<string>{ 6.000,-57.000 }</string>
 							</array>
 							<array>	
-								<string>{ -12.000,40.000 }</string>	
-								<string>{ -30.000,33.000 }</string>	
-								<string>{ -1.714,30.571 }</string>
+								<string>{ -30.000,40.000 }</string>	
+								<string>{ -26.000,-57.000 }</string>	
+								<string>{ -9.000,-58.000 }</string>	
+								<string>{ 6.000,-57.000 }</string>	
+								<string>{ 0.000,43.000 }</string>
 							</array>
 						</array>
                     </dict>
