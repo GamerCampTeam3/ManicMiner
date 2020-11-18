@@ -1,6 +1,7 @@
 // -------------------------------------------------------------------------------------------------------------------- //
 // Gamer Camp 2020 / Team 3																								//
 // -------------------------------------------------------------------------------------------------------------------- //
+#include <string>
 
 #include "CManicLayer.h"
 
@@ -59,7 +60,10 @@ CManicLayer::CManicLayer()
 	, m_eGameState					( EGameState::Looting )
 	, m_bWasResetRequested			( false )
 	, m_bWasNextLevelRequested		( false )
+	, m_pcGCSprForeGround			( nullptr )
+	, m_pcGCSprMidGround			( nullptr )
 	, m_pcGCSprBackGround			( nullptr )
+	, m_pcParallax					( nullptr )
 	, m_pcPlayer					( nullptr )
 {
 }
@@ -214,14 +218,38 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
 		});
 
+	
 }
 
 void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
 {
-	m_pcGCSprBackGround = new CGCObjSprite();
-	m_pcGCSprBackGround->CreateSprite( m_sLevelCreationParameters.pszLevelBackground );
-	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, (rSize.height / 2)) );
-	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
+	auto pcBackgroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
+	pcBackgroundSprite->retain();
+	
+	auto pcForegroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
+	pcForegroundSprite->retain();
+	
+	auto pcMidgroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
+	pcMidgroundSprite->retain();
+
+
+	// Parallax
+	m_pcParallax = ParallaxNode::create();
+
+
+	m_pcParallax->addChild( pcBackgroundSprite, -1, Vec2( 0.1f, 0.1f ), Vec2( 1920.0f * 0.5f, 1080.0f * 0.5f ) );
+
+	m_pcParallax->addChild( pcMidgroundSprite, 1, Vec2( 0.3f, 0.3f ), Vec2(1920.0f * 0.5f, 1080.0f * 0.5f)  );
+
+	m_pcParallax->addChild( pcForegroundSprite, 2, Vec2( 1.5f, 1.2f ), Vec2( 1920.0f * 0.5f, 1080.0f * 0.5f ) );
+
+	//auto v2PlayerPos = m_pcPlayer->GetSpritePosition();
+	//Vec2 v2PlayerOffsetFromCentre( ( 1920 * 0.5f - v2PlayerPos.x ), ( 1080 * 0.5f - v2PlayerPos.y ) );
+
+	//auto updateParallaxAction = MoveTo::create( 0.0f, v2PlayerOffsetFromCentre );
+	//m_pcParallax->runAction( updateParallaxAction );
+
+	//this->addChild( m_pcParallax, -5 );
 }
 
 
@@ -232,6 +260,12 @@ void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
 void CManicLayer::VOnUpdate( f32 fTimeStep )
 {
 	IGCGameLayer::VOnUpdate( fTimeStep );
+
+	//auto v2PlayerPos = m_pcPlayer->GetSpritePosition();
+	//Vec2 v2PlayerOffsetFromCentre ( ( 1920 * 0.5f - v2PlayerPos.x ), ( 1080 * 0.5f - v2PlayerPos.y ) );
+
+	//auto updateParallaxAction = MoveTo::create( 0.0f, v2PlayerOffsetFromCentre );
+	//m_pcParallax->runAction( updateParallaxAction );
 
 	// Reset level request ( and not going to next level )
 	if( GetWasResetRequested() && !GetWasNextLevelRequested() )
@@ -258,9 +292,6 @@ void CManicLayer::VOnDestroy()
 	///////////////////////////////////////////////////////////////////////////
 	// clean up anything we allocated in opposite order to creation
 	///////////////////////////////////////////////////////////////////////////
-	///
-	//safeDelete( m_pcPlayer );
-	//safeDelete( m_pcGCSprBackGround );
 	
 	// Clean up the level
 	m_cLevelLoader.DestroyObjects();
@@ -342,7 +373,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
 			{																											//
 
-				// GET ID NAMESSSSS WOOP took exactly 1 hour to find out
+				// GET ID NAME
 				const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
 				auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
 
@@ -372,6 +403,30 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 			{																											//
 				PlayerBeganContactWithPlatform( *pPlatform );
 			}																											//
+
+			// Exclusive Or
+			// BeginContact triggered with hard fixture + sensor fixture
+			// This is an edge case we need to check for in order to prevent a bug with the bricks platform
+			// This type of platform by default has collision on so the player might land on the top without
+			// having overlapped sensors first.
+			else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
+			{
+				if( pPlatform->GetPlatformType() == EPlatformType::Brick )
+				{
+					// GET ID NAME
+					auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
+					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
+					if( (		*pszSensorIdA == "surface"	&& *pszSensorIdB == "body" ) 
+						|| (	*pszSensorIdA == "body"		&& *pszSensorIdB == "surface" ) )
+					{
+						auto pBrickPlatform = static_cast< CBrickPlatform* > ( pPlatform );
+						if ( pBrickPlatform != nullptr )
+						{
+							pBrickPlatform->SetIsUnderPlayer( true );
+						}
+					}
+				}
+			}
 		}																												//
 	}																													//
 }																														//
@@ -487,6 +542,30 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				}
 				pPlatform->SetIsInContact( false );
 			}																											//
+
+			// Exclusive Or
+			// EndContact triggered with hard fixture + sensor fixture
+			// This is an edge case we need to check for in order to prevent a bug with the bricks platform
+			// This type of platform by default has collision on so the player might land on the top without
+			// having overlapped sensors first.
+			else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
+			{
+				if( pPlatform->GetPlatformType() == EPlatformType::Brick )
+				{
+					// GET ID NAME
+					auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
+					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
+					if( ( *pszSensorIdA == "surface" && *pszSensorIdB == "body" )
+						|| ( *pszSensorIdA == "body" && *pszSensorIdB == "surface" ) )
+					{
+						auto pBrickPlatform = static_cast< CBrickPlatform* > ( pPlatform );
+						if( pBrickPlatform != nullptr )
+						{
+							pBrickPlatform->SetIsUnderPlayer( false );
+						}
+					}
+				}
+			}
 		}																												//
 	}																													//
 }																														//
@@ -870,18 +949,32 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 		case EPlatformType::Brick:																			//
 		{																									//
 			// If in mid air and sensor contacts == 0, or if on top of conveyor belt platform				//
-			if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 )			//
-				|| ( m_pcPlayer->GetIsOnConveyorBelt() ) )													//
-			{																								//
-				// Player Bumped onto brick																	//
-				m_pcPlayer->BumpedWithBricks();																//
-			}																								//
-			// Else, is in mid-air? If so, land on platform													//
-			else if( !m_pcPlayer->GetIsGrounded() )															//
-			{																								//
-				// Set player as grounded																	//
-				m_pcPlayer->LandedOnWalkablePlatform();														//
-			}																								//
+
+			auto pBrickPlatform = static_cast< CBrickPlatform* > ( &rcPlatform );							//
+
+
+			if( pBrickPlatform != nullptr )
+			{
+				if( pBrickPlatform->GetIsUnderPlayer() )
+				{
+					m_pcPlayer->LandedOnWalkablePlatform();													//
+				}
+				else
+				{
+					m_pcPlayer->BumpedWithBricks();															//
+				}
+			}
+			//if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 )			//
+			//	|| ( m_pcPlayer->GetIsOnConveyorBelt() ) )													//
+			//{																								//
+			//	// Player Bumped onto brick																	//
+			//}																								//
+			//// Else, is in mid-air? If so, land on platform													//
+			//else if( !m_pcPlayer->GetIsGrounded() )															//
+			//{																								//
+			//	// Set player as grounded																	//
+			//	m_pcPlayer->LandedOnWalkablePlatform();														//
+			//}																								//
 		}																									//
 		break;																								//
 		////////////////////////////////////////////////////////////////////////////////					//

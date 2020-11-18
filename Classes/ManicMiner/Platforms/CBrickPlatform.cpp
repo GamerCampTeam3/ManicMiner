@@ -26,6 +26,7 @@ GCFACTORY_IMPLEMENT_CREATEABLECLASS(CBrickPlatform);
 
 CBrickPlatform::CBrickPlatform()
 	: CPlatform()
+	, m_bIsUnderPlayer( false )
 {
 	m_ePlatformType = EPlatformType::Brick;
 }
@@ -72,4 +73,14 @@ void CBrickPlatform::VOnReset()
 	CPlatform::VOnReset();
 	m_bCollisionEnabled = true;
 	m_bTriggersHardContactEvent = true;
+}
+
+bool CBrickPlatform::GetIsUnderPlayer() const
+{
+	return m_bIsUnderPlayer;
+}
+
+void CBrickPlatform::SetIsUnderPlayer( const bool bIsUnderPlayer )
+{
+	m_bIsUnderPlayer = bIsUnderPlayer;
 }
