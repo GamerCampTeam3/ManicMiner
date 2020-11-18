@@ -89,6 +89,8 @@
     <RegularPlatform_V3 id="38" x="510" y="750" class="CRegularPlatform" shape="CN_Platform_Regular_1x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_03.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_03.plist" CustomShape="CN_Platform_Regular_1x1" />
     <RegularPlatform_V2 id="39" x="990" y="750" class="CRegularPlatform" shape="CN_Platform_Regular_1x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_02.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_01.plist" CustomShape="CN_Platform_Regular_1x1" />
     <RegularPlatform_60x60 id="40" x="1050" y="750" class="CRegularPlatform" shape="CN_Platform_Regular_1x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_01.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_01.plist" CustomShape="CN_Platform_Regular_1x1" />
+    <BrickPlatform id="43" x="1410" y="930" class="CBrickPlatform" shape="CN_Platform_Brick_3x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick.plist" CustomShape="CN_Platform_Brick_3x1" />
+    <Sunlight id="45" x="1410" y="30" />
   </Platforms>
   <Enemies />
   <Hazards />

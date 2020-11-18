@@ -43,7 +43,7 @@ void CMLWackyAmoebatrons::VOnCreate( void )
 
 	// Step 3:	New the CHUD and CAirManager.
 	m_pCHUD = new CHUD(*this, m_pointOrigin, m_sizeVisible );
-	m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
+	//m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
 
 	m_pcAirManager = new CAirManager( m_pointOrigin, m_sizeVisible );
 	m_pcAirManager->Init( *this );
@@ -61,6 +61,7 @@ void CMLWackyAmoebatrons::InitParams()
 	m_pcGameManager->SetCAirManager( m_pcAirManager );
 	m_pcAirManager->SetGameManager( m_pcGameManager );
 	m_pcGameManager->SetLevelRequirements( m_sLevelCreationParameters.sLevelValues );
+	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
 }
 
 

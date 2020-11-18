@@ -36,6 +36,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 void  CGameManager::IncreaseScore()
 {
 	m_iCurrentScore += m_kIScoreIncrement;
+
 	
 	CheckHighScoreForUpdate();
 	UpdateScore();
@@ -177,6 +178,7 @@ void CGameManager::UpdateHighScore() const
 
 void CGameManager::UpdateLives() const
 {
+	
 	m_pcCHUD->UpdateLives( m_pcCPlayer->GetLives() );
 }
 
@@ -195,9 +197,14 @@ void CGameManager::SetCHUD(CHUD* pcCHUD)
 	if (pcCHUD != nullptr)
 	{
 		m_pcCHUD = pcCHUD;
-		UpdateHighScore();
 	}
 }
+
+void CGameManager::InitCHUD(std::string szLevelName)
+{
+	m_pcCHUD->Init( szLevelName, m_pcCPlayer->GetLives(), m_iCurrentScore, m_iHighScore );
+}
+
 
 // Sets the current CPlayer if valid
 void CGameManager::SetCPlayer(CPlayer* pcPlayer)
@@ -206,7 +213,7 @@ void CGameManager::SetCPlayer(CPlayer* pcPlayer)
 	{
 		m_pcCPlayer = pcPlayer;
 		pcPlayer->SetLives( m_iCurrentLives );
-		UpdateLives();
+		//UpdateLives();
 	}
 }
 

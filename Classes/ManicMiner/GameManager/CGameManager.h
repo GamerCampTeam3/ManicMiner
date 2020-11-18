@@ -4,7 +4,11 @@
 #ifndef _CGAMEMANAGER_H_
 #define _CGAMEMANAGER_H_
 
+
+
 #include "ManicMiner/Structs/SLevelValues.h"
+
+#include <string>
 
 	//-------------------------------------------------------- FWD CLS DECLARATION -------------------------------------------------------------------------------------//	
 	class CAirManager;																																					//
@@ -45,6 +49,7 @@ class CGameManager
 	void	SetCPlayer		( CPlayer* pcPlayer );							// Sets the pointer to the current CPlayer.													//
 	void	SetCHUD			( CHUD* pcCHUD );								// Sets the pointer to the current CHUD.													//
 	void	SetCAirManager	( CAirManager* pcAirManager );					// Sets the pointer to the current AirManager.												//
+	void	InitCHUD		( std::string szLevelName );																												//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	//																																									//
 	//--------------------------------------------------------------  Getters  -----------------------------------------------------------------------------------------//	
