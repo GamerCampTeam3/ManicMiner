@@ -117,7 +117,7 @@ void CLevelManager::GoToNextLevel()
 	switch( m_iCurrentLevelIndex )
 	{
 	case 0:
-		// CENTRAL CAVERN CMLTheFinalBarrier CMLCentralCavern
+		// CENTRAL CAVERN 
 		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
 		break;
 	case 1:

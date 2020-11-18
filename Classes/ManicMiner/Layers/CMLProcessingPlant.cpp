@@ -35,12 +35,14 @@ void CMLProcessingPlant::VOnCreate( void )
 	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/5_ProcessingPlant.oel";
 	m_sLevelCreationParameters.szLevelName			= "Processing Plant";
+	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 990.0f, 720.f);
+	m_sLevelCreationParameters.bShouldFaceRight		= false;
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
 
 	// Step 3:	New the CHUD and CAirManager.
-	m_pCHUD = new CHUD( *this );
+	m_pCHUD = new CHUD(*this, m_pointOrigin, m_sizeVisible );
 	m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
 
 	m_pcAirManager = new CAirManager( m_pointOrigin, m_sizeVisible );

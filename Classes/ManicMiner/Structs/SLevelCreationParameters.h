@@ -22,12 +22,13 @@ struct SLevelCreationParameters
 	/// <param name="szLevelpath"><c>A std::string that wil hold the location of the level file (.oel) </param>
 	/// <param name="szLevelName"><c>A std::string that wil hold the name of the level to be displayed by CHUD. </param>
 	/// <param name="v2PlayerStartPos"><c>A vector2 that is used to place the player on the level. </param>
-	SLevelCreationParameters( SLevelValues slevelValues, char* szLevelbackground, std::string szLevelpath, std::string szLevelname, cocos2d::Vec2 v2StartPos)
+	SLevelCreationParameters( SLevelValues slevelValues, char* szLevelbackground, std::string szLevelpath, std::string szLevelname, cocos2d::Vec2 v2StartPos, bool bShouldLookRight)
 		: sLevelValues					( slevelValues		 )
 		, pszLevelBackground			( szLevelbackground	 )
 		, szLevelPath					( szLevelpath		 )
 		, szLevelName					( szLevelname		 )
 		, v2PlayerStartPos				( v2StartPos		 )
+		, bShouldFaceRight				( bShouldLookRight	 )
 	{
 	}
 
@@ -38,6 +39,7 @@ struct SLevelCreationParameters
 		, szLevelPath					( ""		 )
 		, szLevelName					( ""		 )
 		, v2PlayerStartPos				( cocos2d::Vec2( 120.0f + 30.0f, 120.0f ) )
+		, bShouldFaceRight				( false			 )
 	{		
 	}
 
@@ -47,6 +49,7 @@ struct SLevelCreationParameters
 	std::string					szLevelPath;		// A std::string that wil hold the location of the level file (.oel).
 	std::string					szLevelName;		// Used to display the name of the level on the HUD.
 	cocos2d::Vec2				v2PlayerStartPos;	// The location at which the player should spawn at.
+	bool						bShouldFaceRight;	// Should the player originally should face right or not.
 	
 };
 

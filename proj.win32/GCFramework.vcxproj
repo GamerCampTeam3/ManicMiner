@@ -260,6 +260,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Sunlight\CSunlight.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Switch\CSwitch.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -395,6 +396,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelCreationParameters.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelValues.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SSwitches.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Sunlight\CSunlight.h" />
     <ClInclude Include="..\Classes\ManicMiner\Switch\CSwitch.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

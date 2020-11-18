@@ -91,6 +91,11 @@ CAirManager::~CAirManager()
 		delete m_pcAirBar;
 		m_pcAirBar = nullptr;
 	}
+
+	if( nullptr != m_pcGameManager )
+	{
+		m_pcGameManager = nullptr;
+	}
 }
 
 void CAirManager::VOnReset()
@@ -191,15 +196,15 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 
 		if (nullptr != m_pcAirBar)
 		{
-			m_pcAirBar = ui::LoadingBar::create("ui/AirBar/AirBar.png");
+			m_pcAirBar = ui::LoadingBar::create("ui/AirBar/ui_airbar.png");
 			m_pcAirBar->setDirection(ui::LoadingBar::Direction::LEFT);
 			m_pcAirBar->setPercent(100.f);
-			m_pcAirBar->setPosition(Vec2((m_pOrigin).x + 1000.f, ((m_pOrigin).y + (m_visibleSize).height) - 24));
+			m_pcAirBar->setPosition(Vec2((m_pOrigin).x + 620.f, ((m_pOrigin).y + (m_visibleSize).height) - 78));
 			rglOwnerGameLayer.addChild(m_pcAirBar, 2);
 		}
 		
 		// initialize and add Air Bar Sprite to the screen
-		const char* pszPlist_Air = "TexturePacker/Air/Air.plist";
+		const char* pszPlist_Air = "TexturePacker/Air/AirBarBackground.plist";
 		const char* pszSpr_AirBar = "AirBar";
 		{
 			// create new Sprite Object for Air Bar
@@ -216,14 +221,14 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 				}
 
 				m_pcGCSprAirBar->SetSpriteGlobalZOrder( 3.f );
-				m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 1000.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 24 ) );
+				m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 620.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 60 ) );
 				m_pcGCSprAirBar->GetSprite()->setPosition( m_pcGCSprAirBar->GetResetPosition() );
 				m_pcGCSprAirBar->SetParent( &rglOwnerGameLayer );
 				m_pcGCSprAirBar->SetSpriteScale( 1.f, 1.f );
 			}
 		}
 
-
+		/*
 		// create and initialize label for air and the percentage
 		if( m_plAirLabel == nullptr )
 		{
@@ -235,7 +240,7 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 		// position pAirLabel in the top left corner
 		m_plAirLabel->setPosition( m_v2AirLabelPos );
 		// add the pAirLabel as a child to this layer
-		rglOwnerGameLayer.addChild( m_plAirLabel, 2 );
+		rglOwnerGameLayer.addChild( m_plAirLabel, 2 );*/
 	}
 	m_bInitialized = true;
 }
@@ -250,6 +255,18 @@ void CAirManager::DrainAir()
 {
 	m_fDrainAirMultiplier = 40.f;
 	m_eAirDrainedState = EAirDrainedState::LevelCompleted;
+}
+
+void CAirManager::SunlightDrainAir(bool bShouldDrainAir)
+{
+	if(bShouldDrainAir)
+	{
+		m_fDrainAirMultiplier = 5.f;
+	}
+	else
+	{
+		m_fDrainAirMultiplier = 1.f;
+	}
 }
 
 bool CAirManager::UpdateAirTimer()
@@ -283,6 +300,8 @@ bool CAirManager::UpdateAirTimer()
 
 	m_iRemainingAirPercentage = m_fRemainingAirPercentage;
 
+
+	// Bibs Implementation
 	// Not really a great way of doing this, since AirManager doesn't necessarily need to know about the CGameManager
 	// But it does work, ideally I will replicate later the per frame thing Umeer has done.
 	if (m_pcGameManager->GetCanDrainToScore())
@@ -301,8 +320,9 @@ void CAirManager::SetGameManager(CGameManager* pcGameManager)
 
 void CAirManager::UpdateAirUIElements()
 {
-	if( nullptr != m_pglOwnerGameLayer && nullptr != m_pcGCSprAirBar->GetSprite() && m_pcGCSprAirVignette->GetSprite()  !=nullptr && m_plAirLabel != nullptr )
+	if( nullptr != m_pglOwnerGameLayer && nullptr != m_pcGCSprAirBar->GetSprite() && m_pcGCSprAirVignette->GetSprite()  !=nullptr )
 	{
+		/*
 		// remove already existing label
 		m_pglOwnerGameLayer->removeChild( m_plAirLabel );
 		// add a label displaying Air
@@ -312,7 +332,7 @@ void CAirManager::UpdateAirUIElements()
 		m_plAirLabel->setPosition( m_v2AirLabelPos );
 		m_plAirLabel->setGlobalZOrder( 3.f );
 		// add the pAirLabel as a child to this layer
-		m_pglOwnerGameLayer->addChild( m_plAirLabel, 2 );
+		m_pglOwnerGameLayer->addChild( m_plAirLabel, 2 );*/
 
 		if(0.0f <= m_pcAirBar->getPercent())
 		{

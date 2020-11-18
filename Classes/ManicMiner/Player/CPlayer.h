@@ -143,11 +143,12 @@ private:
 // -------------------------------------------------------------------------------------------------------------------- //
 	
 // -
-	TGCActionToKeyMap< EPlayerActions >*	m_pcControllerActionToKeyMap;												
+	TGCActionToKeyMap< EPlayerActions >*	m_pcControllerActionToKeyMap;
+	bool m_bSpriteXFlip;
 																														
 public:																													
 // Constructor -------------------------------------------------------------------------------------------------------- // 
-	CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos);
+	CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, const bool spriteFlipStatus);
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
 	virtual ~CPlayer();

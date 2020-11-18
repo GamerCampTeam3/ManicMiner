@@ -28,7 +28,7 @@ static EPlayerActions			s_aePlayerActions[] = { EPlayerActions::EPA_AxisMove_X,	
 static cocos2d::Controller::Key	s_aeKeys[]			= { cocos2d::Controller::Key::JOYSTICK_LEFT_X,	cocos2d::Controller::Key::JOYSTICK_LEFT_Y,	 cocos2d::Controller::Key::BUTTON_X,   cocos2d::Controller::Key::BUTTON_A };
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
-CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos )
+CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, const bool spriteFlipStatus )
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlayer ) )
 	, m_rcB2World						( *rcManicLayer.B2dGetWorld() )
 	, m_rcManicLayer					( rcManicLayer )
@@ -53,6 +53,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos )
 	, m_iMaxLives						( 3 )
 	, m_iLives							( m_iMaxLives )
 	, m_pcControllerActionToKeyMap		( nullptr )
+	, m_bSpriteXFlip					( spriteFlipStatus )
 {
 	SetResetPosition( startingPos );
 }
@@ -142,10 +143,9 @@ void CPlayer::SetLives( const int iLives )																				//
 
 
 
-
 // ---------- CGCObjSprite Interface ---------------------------------------------------------------------------------------------------------- //
 																																				//
-IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/TempCharacter.plist", "TempCharacter", b2_dynamicBody, true );	//
+IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/mm_character_willy.plist", "TempCharacter", b2_dynamicBody, true );	//
 void CPlayer::VOnResourceAcquire()																												//
 {																																				//
 	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CPlayer );																				//
@@ -180,7 +180,7 @@ void CPlayer::VOnResurrected()																													//
 	CGCObjSpritePhysics::VOnResurrected();																										//
 																																				//
 // Reset sprite orientation																														//
-	SetFlippedX( false );																														//
+	SetFlippedX( m_bSpriteXFlip );																														//
 	SetFlippedY( false );																														//
 																																				//
 // Reset all member variable flags																												//
