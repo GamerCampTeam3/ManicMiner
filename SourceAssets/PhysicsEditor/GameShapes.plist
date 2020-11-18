@@ -148,7 +148,7 @@
 							<array>	
 								<string>{ -30.000,30.000 }</string>	
 								<string>{ -30.000,-30.000 }</string>	
-								<string>{ 31.000,-30.000 }</string>	
+								<string>{ 30.000,-30.000 }</string>	
 								<string>{ 30.000,30.000 }</string>
 							</array>
 						</array>
@@ -167,10 +167,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 30.000,36.000 }</string>	
 								<string>{ -30.000,36.000 }</string>	
 								<string>{ -30.000,30.000 }</string>	
-								<string>{ 29.000,30.000 }</string>
+								<string>{ 30.000,30.000 }</string>	
+								<string>{ 30.000,36.000 }</string>
 							</array>
 						</array>
                     </dict>
@@ -351,8 +351,8 @@
 						<array>
 							<array>	
 								<string>{ -60.000,-30.000 }</string>	
-								<string>{ 62.000,-30.000 }</string>	
-								<string>{ 62.000,30.000 }</string>	
+								<string>{ 60.000,-30.000 }</string>	
+								<string>{ 60.000,30.000 }</string>	
 								<string>{ -60.000,30.000 }</string>
 							</array>
 						</array>
@@ -373,8 +373,8 @@
 							<array>	
 								<string>{ -60.000,36.000 }</string>	
 								<string>{ -60.000,30.000 }</string>	
-								<string>{ 62.000,30.000 }</string>	
-								<string>{ 62.000,36.000 }</string>
+								<string>{ 60.000,30.000 }</string>	
+								<string>{ 60.000,36.000 }</string>
 							</array>
 						</array>
                     </dict>
@@ -657,9 +657,9 @@
 						<array>
 							<array>	
 								<string>{ -599.798,-30.008 }</string>	
-								<string>{ 602.202,-30.008 }</string>	
-								<string>{ 602.202,31.992 }</string>	
-								<string>{ -599.798,31.992 }</string>
+								<string>{ 600.202,-30.008 }</string>	
+								<string>{ 600.202,29.992 }</string>	
+								<string>{ -599.798,29.992 }</string>
 							</array>
 						</array>
                     </dict>
@@ -677,10 +677,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -599.798,37.992 }</string>	
-								<string>{ -599.798,31.992 }</string>	
-								<string>{ 601.202,29.992 }</string>	
-								<string>{ 601.202,35.992 }</string>
+								<string>{ -599.798,35.992 }</string>	
+								<string>{ -599.798,29.992 }</string>	
+								<string>{ 600.202,29.992 }</string>	
+								<string>{ 600.202,35.992 }</string>
 							</array>
 						</array>
                     </dict>
@@ -701,16 +701,16 @@
                         <key>filter_groupIndex</key> <integer>0</integer>
                         <key>filter_maskBits</key> <integer>4</integer>
                         <key>isSensor</key> <false/>
-                        <key>id</key> <string></string>
+                        <key>id</key> <string>body</string>
                         <key>fixture_type</key> <string>POLYGON</string>
 
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 30.000,56.000 }</string>	
+								<string>{ 35.000,56.000 }</string>	
 								<string>{ -35.000,56.000 }</string>	
 								<string>{ -35.000,-60.000 }</string>	
-								<string>{ 30.000,-60.000 }</string>
+								<string>{ 35.000,-60.000 }</string>
 							</array>
 						</array>
                     </dict>

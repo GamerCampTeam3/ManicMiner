@@ -23,6 +23,13 @@ public:
 
 	void VOnReset() override;
 
+	bool GetIsUnderPlayer() const;
+
+	void SetIsUnderPlayer( const bool bIsUnderPlayer );
+
+private:
+
+	bool m_bIsUnderPlayer;
 };
 
 #endif

@@ -632,18 +632,18 @@ void CPlayer::OnLanded()
 			float fCurrentHeight = GetPhysicsTransform().p.y;
 			float fNewHeight = fCurrentHeight;
 			fNewHeight += 0.5f;
-			fNewHeight = floor( fNewHeight );
+			fNewHeight = floor( fNewHeight ) + 0.006f;
 		// If landed on an inferior y than expected
 		// IE landed and now is on 4.99836f instead of 5.0f or above
 			if( fNewHeight > fCurrentHeight )
 			{
-				float fHeightDelta = fNewHeight - fCurrentHeight + 0.0005f;
+				float fHeightDelta = fNewHeight - fCurrentHeight + 0.01f;
 
 				// v = ( p1 - p0 ) / t
 				//cocos2d::Vec2 v2VelocityToMoveByDeltaInOneFrame = ( v2PosDeltaB2d / IGCGameLayer::ActiveInstance()->B2dGetTimestep() );
 				float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
 				cocos2d::Vec2 v2NewVelocity = Vec2(GetVelocity().x, fVerticalSpeedToMoveByDeltaInOneFrame );
-				SetVelocity( v2NewVelocity );
+				SetVelocity( v2NewVelocity * 0.95f );
 
 				// n.b. need to cache this so we can remove it from the velocity after the
 				// physics simulation has stepped handily we can do this in 
@@ -706,8 +706,8 @@ void CPlayer::LeftGround()
 	m_bIsPendingDirection = false;
 	m_bIsGrounded = false;
 
-// If player did not initiate jump
-	if( m_bCanJump )
+// If there is no ground below feet -> player is dropping off ledge
+	if( m_iSensorContactCount == 0 )
 	{
 	// Drop straight down
 		ApplyDirectionChange( EPlayerDirection::Static );

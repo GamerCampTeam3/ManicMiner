@@ -74,8 +74,11 @@ private:
 // Handling Going to Next Level Flag																					//
 	bool				m_bWasNextLevelRequested;																		//
 																														//
-// Pointer to Background Sprite																							//
+// Pointer to Background Sprites																						//
+	CGCObjSprite*		m_pcGCSprForeGround;																			//
+	CGCObjSprite*		m_pcGCSprMidGround;																				//
 	CGCObjSprite*		m_pcGCSprBackGround;																			//
+	cocos2d::ParallaxNode* m_pcParallax;																				//
 																														//
 // Pointer to player, for easy play access																				//
 	CPlayer*			m_pcPlayer;																						//
