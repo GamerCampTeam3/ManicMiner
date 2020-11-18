@@ -223,6 +223,9 @@
     <Filter Include="Classes\ManicMiner\Layers\Levels\19">
       <UniqueIdentifier>{8471426d-1e96-4c1d-9892-f4692a0e1c56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Sunlight">
+      <UniqueIdentifier>{d879fd3f-23ea-4d12-aa84-d5f81118d9c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -488,6 +491,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEugene.cpp">
       <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Sunlight\CSunlight.cpp">
+      <Filter>Classes\ManicMiner\Sunlight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -808,6 +814,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEugene.h">
       <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Sunlight\CSunlight.h">
+      <Filter>Classes\ManicMiner\Sunlight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
