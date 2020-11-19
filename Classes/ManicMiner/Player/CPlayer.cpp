@@ -252,7 +252,7 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 	}
 	
 	//CCLOG( "Current Vx: %f", GetVelocity().x );
-	CCLOG( "Current y: %f", GetPhysicsTransform().p.y );
+	//CCLOG( "Current y: %f", GetPhysicsTransform().p.y );
 	//switch( m_ePlayerDirection )
 	//{
 	//case EPlayerDirection::Static:
@@ -707,7 +707,7 @@ void CPlayer::LeftGround()
 	m_bIsGrounded = false;
 
 // If there is no ground below feet -> player is dropping off ledge
-	if( m_iSensorContactCount == 0 )
+	if( m_iSensorContactCount == 0 || m_bCanJump == true )
 	{
 	// Drop straight down
 		ApplyDirectionChange( EPlayerDirection::Static );
