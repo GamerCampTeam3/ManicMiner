@@ -222,25 +222,31 @@ void CManicLayer::VOnCreate()
 
 void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
 {
-	auto pcBackgroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
-	pcBackgroundSprite->retain();
-	
-	auto pcForegroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
-	pcForegroundSprite->retain();
-	
-	auto pcMidgroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
-	pcMidgroundSprite->retain();
+	m_pcGCSprBackGround = new CGCObjSprite();
+	m_pcGCSprBackGround->CreateSprite( m_sLevelCreationParameters.pszLevelBackground );
+	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, ( rSize.height / 2 ) ) );
+	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
 
 
-	// Parallax
-	m_pcParallax = ParallaxNode::create();
+	//auto pcBackgroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
+	//pcBackgroundSprite->retain();
+	//
+	//auto pcForegroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
+	//pcForegroundSprite->retain();
+	//
+	//auto pcMidgroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
+	//pcMidgroundSprite->retain();
 
 
-	m_pcParallax->addChild( pcBackgroundSprite, -1, Vec2( 0.1f, 0.1f ), Vec2( 1920.0f * 0.5f, 1080.0f * 0.5f ) );
+	//// Parallax
+	//m_pcParallax = ParallaxNode::create();
 
-	m_pcParallax->addChild( pcMidgroundSprite, 1, Vec2( 0.3f, 0.3f ), Vec2(1920.0f * 0.5f, 1080.0f * 0.5f)  );
 
-	m_pcParallax->addChild( pcForegroundSprite, 2, Vec2( 1.5f, 1.2f ), Vec2( 1920.0f * 0.5f, 1080.0f * 0.5f ) );
+	//m_pcParallax->addChild( pcBackgroundSprite, -1, Vec2( 0.1f, 0.1f ), Vec2( 1920.0f * 0.5f, 1080.0f * 0.5f ) );
+
+	//m_pcParallax->addChild( pcMidgroundSprite, 1, Vec2( 0.3f, 0.3f ), Vec2(1920.0f * 0.5f, 1080.0f * 0.5f)  );
+
+	//m_pcParallax->addChild( pcForegroundSprite, 2, Vec2( 1.5f, 1.2f ), Vec2( 1920.0f * 0.5f, 1080.0f * 0.5f ) );
 
 	//auto v2PlayerPos = m_pcPlayer->GetSpritePosition();
 	//Vec2 v2PlayerOffsetFromCentre( ( 1920 * 0.5f - v2PlayerPos.x ), ( 1080 * 0.5f - v2PlayerPos.y ) );
