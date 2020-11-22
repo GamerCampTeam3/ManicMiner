@@ -26,7 +26,7 @@ private:
 	EnemyTypes::EMovementAxis	m_eMovementAxis;
 	EnemyTypes::EEnemyId	    m_eEnemyId;
 	cocos2d::Vec2				m_cAnchorPoint;
-	cocos2d::Vec2				m_cTotalVelocity;
+	//cocos2d::Vec2				m_cTotalVelocity;
 	float						m_fSpeed;
 	float						m_fInitialDistanceFromAnchor;    
 	float						m_fMovementWindowLength;
@@ -41,8 +41,16 @@ private:
 
 	cocos2d::Vec2				m_cDest;
 	cocos2d::Vec2				m_cCurrentPos;
-
 	float m_fMoveDelta;
+
+	bool m_bTemporaryAnchorPositionActive;
+	cocos2d::Vec2 m_cTemporaryAnchorPosition;
+
+	bool m_bInitialiseToOne;
+
+	float m_fPreviousXPos;
+
+
 
 	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
 	
@@ -78,6 +86,7 @@ public:
 	virtual void VOnUpdate			(float fTimeStep) override;
 	virtual void VOnResourceRelease	() override;
 	void BounceEnemyDirection();
+	virtual void VOnReset() override;
 
 	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 
