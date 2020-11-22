@@ -37,11 +37,13 @@ static const char* k_pszB2BodyType_Kinematic	= "b2_kinematicBody";
 const tinyxml2::XMLElement* CGCLevelLoader_Ogmo::sm_pCurrentObjectXmlData = nullptr;
 
 
+b2Vec2 CGCLevelLoader_Ogmo::m_v2LevelDimensions = b2Vec2_zero;
+
 //////////////////////////////////////////////////////////////////////////
 // Constructor
 //////////////////////////////////////////////////////////////////////////
 CGCLevelLoader_Ogmo::CGCLevelLoader_Ogmo( void )
-: m_v2LevelDimensions( b2Vec2_zero )
+//: m_v2LevelDimensions( b2Vec2_zero )
 {
 	m_vecFactoryCreationParams.reserve( EMAX_HANDLED_UNIQUE_CREATIONPARAMS );
 	m_vecFactoryCreatedObjects.reserve( EMAX_HANDLED_OBJECTS );
@@ -247,8 +249,11 @@ inline cocos2d::Vec2 CGCLevelLoader_Ogmo::GetObjectPosition( const tinyxml2::XML
 	Point			origin = Director::getInstance()->getVisibleOrigin();
 	cocos2d::Vec2	v2Origin( origin.x, origin.y );
 
-	return( v2Origin + cocos2d::Vec2(	rxmlElement.FloatAttribute( k_pszXmlAttr_StartPos_X ),
-								( m_v2LevelDimensions.y - rxmlElement.FloatAttribute( k_pszXmlAttr_StartPos_Y ) ) ) );
+
+	return (v2Origin + cocos2d::Vec2(rxmlElement.FloatAttribute(k_pszXmlAttr_StartPos_X),
+		(m_v2LevelDimensions.y - rxmlElement.FloatAttribute(k_pszXmlAttr_StartPos_Y))));
+
+
 }
 
 

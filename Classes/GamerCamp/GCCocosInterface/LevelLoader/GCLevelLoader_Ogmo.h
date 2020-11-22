@@ -47,7 +47,7 @@ class CGCLevelLoader_Ogmo
 
 	// level file has dimensions, need to use these to correctly position objects from level file
 	// as ogmo's coords are top left 0,0 & cocos are bottom left 0,0
-	b2Vec2				m_v2LevelDimensions;
+    static b2Vec2				m_v2LevelDimensions;
 
 
 	// XML node currently processing when the factory is asked to create an instance
@@ -92,6 +92,15 @@ public:
 	static const tinyxml2::XMLElement* GetCurrentObjectXmlData()
 	{
 		return sm_pCurrentObjectXmlData;
+	}
+	
+	static cocos2d::Vec2 GetLevelDimensions()
+	{
+		cocos2d::Vec2 cRetVal;
+		cRetVal.x = m_v2LevelDimensions.x;
+		cRetVal.y = m_v2LevelDimensions.y;
+
+		return cRetVal;
 	}
 
 	// load level file (level_x.oel)
