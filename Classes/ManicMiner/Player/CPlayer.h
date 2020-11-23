@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////
 /// Original Author: Bib    - designated as A.B
 /// Edits made by: Henrique - designated as H.T
+/// Edits made by: Umeer	- designated as U.R
 ///////////////////////////////////////////////
 
 #ifndef _CPLAYER_H_
@@ -20,9 +21,19 @@ template< typename TActionType > class TGCActionToKeyMap;																//
 enum  EPlayerActions																									//
 {																														//
 	EPA_AxisMove_X,																										//
-	EPA_AxisMove_Y,
-	EPA_Cheat,//
+	EPA_AxisMove_Y,																										//
+	EPA_Cheat,																											//
 	EPA_Jump																											//
+};																														//
+																														//
+//	U.R																													//
+enum class EAnimationState																								//
+{																														//
+	Idle,																												//
+	Run,																												//
+	Jump,																												//
+	Spawn,																												//
+	Death																												//
 };																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
