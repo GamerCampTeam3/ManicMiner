@@ -146,10 +146,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -30.000,30.000 }</string>	
 								<string>{ -30.000,-30.000 }</string>	
-								<string>{ 31.000,-30.000 }</string>	
-								<string>{ 30.000,30.000 }</string>
+								<string>{ 30.000,-30.000 }</string>	
+								<string>{ 30.000,30.000 }</string>	
+								<string>{ -30.000,30.000 }</string>
 							</array>
 						</array>
                     </dict>
@@ -879,7 +879,7 @@
 			<key>Door</key>
 			<dict>
 				<key>anchorpoint</key>
-                <string>{ 0.4918,0.4918 }</string>
+                <string>{ 0.4920,0.4920 }</string>
 				<key>fixtures</key>
 				<array>
 
@@ -897,10 +897,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 30.000,-30.000 }</string>	
-								<string>{ 30.000,30.000 }</string>	
-								<string>{ -30.000,30.000 }</string>	
-								<string>{ -30.000,-30.000 }</string>
+								<string>{ 29.976,-30.024 }</string>	
+								<string>{ 29.976,29.976 }</string>	
+								<string>{ -30.024,29.976 }</string>	
+								<string>{ -30.024,-30.024 }</string>
 							</array>
 						</array>
                     </dict>
@@ -909,7 +909,7 @@
 			<key>cc_enemy_duck</key>
 			<dict>
 				<key>anchorpoint</key>
-                <string>{ 0.5123,0.5000 }</string>
+                <string>{ 0.5170,0.5000 }</string>
 				<key>fixtures</key>
 				<array>
 
@@ -917,20 +917,20 @@
                         <key>density</key> <real>2</real>
                         <key>friction</key> <real>0</real>
                         <key>restitution</key> <real>0</real>
-                        <key>filter_categoryBits</key> <integer>1</integer>
+                        <key>filter_categoryBits</key> <integer>2</integer>
                         <key>filter_groupIndex</key> <integer>0</integer>
-                        <key>filter_maskBits</key> <integer>65535</integer>
-                        <key>isSensor</key> <false/>
+                        <key>filter_maskBits</key> <integer>5</integer>
+                        <key>isSensor</key> <true/>
                         <key>id</key> <string></string>
                         <key>fixture_type</key> <string>POLYGON</string>
 
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ 28.260,-56.000 }</string>	
-								<string>{ 26.260,43.000 }</string>	
-								<string>{ -27.740,43.000 }</string>	
-								<string>{ -27.740,-56.000 }</string>
+								<string>{ 27.980,-56.000 }</string>	
+								<string>{ 25.980,43.000 }</string>	
+								<string>{ -28.020,43.000 }</string>	
+								<string>{ -28.020,-56.000 }</string>
 							</array>
 						</array>
                     </dict>

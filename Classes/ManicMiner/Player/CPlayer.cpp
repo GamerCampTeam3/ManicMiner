@@ -188,7 +188,7 @@ void CPlayer::VOnResurrected()																													//
 	CGCObjSpritePhysics::VOnResurrected();																										//
 																																				//
 // Reset sprite orientation																														//
-	SetFlippedX( m_bSpriteXFlip );																														//
+	SetFlippedX( m_bSpriteXFlip );																												//
 	SetFlippedY( false );																														//
 																																				//
 // Reset all member variable flags																												//
@@ -529,6 +529,9 @@ void CPlayer::JumpEvent()
 				break;
 			case EPlayerDirection::Left:
 				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
+				break;
+			case EPlayerDirection::Static:
+				SetVelocity( cocos2d::Vec2( 0.0f, m_fJumpSpeed ) );
 				break;
 			}
 		}
