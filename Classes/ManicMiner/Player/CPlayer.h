@@ -31,9 +31,7 @@ enum class EAnimationState																								//
 {																														//
 	Idle,																												//
 	Run,																												//
-	Jump,																												//
-	Spawn,																												//
-	Death																												//
+	Jump,																												//																												//
 };																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -448,6 +446,31 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 	void Die();																											//
 																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// ----- Player Animation State Machine - U.R ------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+																														//
+	void LoadAnimations(bool bShouldLoadAnimations);																	//
+																														//
+	EAnimationState m_eAnimationState;																					//
+																														//
+	// Serves as a checkpoint to disable functionality of the current state the animation state machine is in,			//
+	// before switching to the new state																				//
+	// Can be thought of as the end point of the current state															//
+	void InitiateAnimationStateChange(EAnimationState eNewAnimationState);												//
+																														//
+	// Can be thought of as the starting point of the new state															//
+	void AnimationStateChange(EAnimationState* eNewAnimationState);														//
+																														//
+	// contains all animations for the player character																	//
+	// ma stands for Map Array																							//
+	std::map<char*, cocos2d::Animation*> m_pcPlayerAnimationList;													//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 };
