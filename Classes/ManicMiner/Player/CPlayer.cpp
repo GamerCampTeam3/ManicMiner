@@ -55,7 +55,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_iLives							( m_iMaxLives )
 	, m_pcControllerActionToKeyMap		( nullptr )
 	, m_bSpriteXFlip					( spriteFlipStatus )
-	, m_eAnimationState					( EAnimationState::Idle )
+	, m_eAnimationState					( EAnimationState::None )
 {
 	SetResetPosition( startingPos );
 }
@@ -164,16 +164,21 @@ void CPlayer::VOnResourceAcquire()																												//
 	// we'd need to use std::unique_ptr::reset in VOnResourceRelease if we wanted the memory allocate / free behaviour to be the same...		//
 	m_pcControllerActionToKeyMap = TCreateActionToKeyMap( s_aePlayerActions, s_aeKeys );														//
 																																				//
+																																				//
 	LoadAnimations(true);																														//
-
-	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at("Idle")));
+																																				//
+	InitiateAnimationStateChange(EAnimationState::Idle);																						//
 }																																				//
 																																				//
 void CPlayer::VOnResourceRelease()																												//
 {																																				//
-	safeDelete( m_pcControllerActionToKeyMap );																									//
+	safeDelete( m_pcControllerActionToKeyMap );																								//
+	m_pcPlayerAnimationList.clear();																											//
 																																				//
 	CGCObjSpritePhysics::VOnResourceRelease();																									//
+																																				//
+	LoadAnimations(false);																														//
+																																				//
 }																																				//
 																																				//
 // -------------------------------------------------------------------------------------------------------------------- //						//
@@ -360,7 +365,6 @@ void CPlayer::CheckKeyboardInput()
 				ApplyDirectionChange( EPlayerDirection::Right );
 			}
 		}
-
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	// STATIC																						//
 	//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,7 +427,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 #endif
 				// Static -> no speed
 				fHorizontalSpeed = 0.0f;
-				
+				InitiateAnimationStateChange(EAnimationState::Idle);
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// RIGHT																						//
@@ -439,7 +443,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 				// Adjust sprite orientation
 				SetFlippedX( true );
-				
+				InitiateAnimationStateChange(EAnimationState::Run);
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// LEFT																							//
@@ -455,7 +459,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 			// Adjust sprite orientation
 				SetFlippedX( false );
-				
+				InitiateAnimationStateChange(EAnimationState::Run);
 				break;
 			}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -900,13 +904,13 @@ void CPlayer::Die()
 void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 {
 	int iCounter;
+	char* pszAnimations[2];
+	pszAnimations[0] = "Idle";
+	pszAnimations[1] = "Run";
 	if(bShouldLoadAnimations)
 	{
 		iCounter = 0;
 		// Load Animations
-		char* pszAnimations[2];
-		pszAnimations[0] = "Idle";
-		pszAnimations[1] = "Run";
 
 		int iCounter = 0;
 		for (const char* pszAnim : pszAnimations)
@@ -919,12 +923,17 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 	}
 	else
 	{
-		iCounter = 2;
+		iCounter = 1;
+		for(iCounter; iCounter <= -0; iCounter--)
+		{
+			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->release();
+		}
 	}
 }
 
 void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 {
+	GetSprite()->stopAllActions();
 	switch(m_eAnimationState)
 	{
 	case EAnimationState::Idle :
@@ -942,20 +951,25 @@ void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 
 void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 {
+	char* pszAnim;
 	switch(*eNewAnimationState)
 	{
 	case EAnimationState::Idle:
 		m_eAnimationState = EAnimationState::Idle;
-		//RunAction();
+		pszAnim = "Idle";
 		break;
 	case EAnimationState::Run:
 		m_eAnimationState = EAnimationState::Run;
+		pszAnim = "Run";
 		break;
 	case EAnimationState::Jump:
 		m_eAnimationState = EAnimationState::Jump;
+		pszAnim = "Jump";
 		break;
 	default:
 		// play idle
 		break;
 	}
+	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
 }
+
