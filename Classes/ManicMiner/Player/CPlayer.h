@@ -474,6 +474,7 @@ public:
 	// ma stands for Map Array																							//
 	std::map<char*, cocos2d::Animation*> m_pcPlayerAnimationList;														//
 																														//
+																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 };
 #endif // #ifndef _CPLAYER_H_

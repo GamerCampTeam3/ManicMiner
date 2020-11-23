@@ -166,8 +166,7 @@ void CPlayer::VOnResourceAcquire()																												//
 																																				//
 																																				//
 	LoadAnimations(true);																														//
-																																				//
-	InitiateAnimationStateChange(EAnimationState::Idle);																						//
+																																				//																						//
 }																																				//
 																																				//
 void CPlayer::VOnResourceRelease()																												//
@@ -177,6 +176,7 @@ void CPlayer::VOnResourceRelease()																												//
 																																				//
 	CGCObjSpritePhysics::VOnResourceRelease();																									//
 																																				//
+
 	LoadAnimations(false);																														//
 																																				//
 }																																				//
@@ -195,6 +195,8 @@ void CPlayer::VOnResurrected()																													//
 // Reset sprite orientation																														//
 	SetFlippedX( m_bSpriteXFlip );																												//
 	SetFlippedY( false );																														//
+																																				//
+	InitiateAnimationStateChange(EAnimationState::Idle);
 																																				//
 // Reset all member variable flags																												//
 	m_bIsAlive = true;																															//
@@ -427,7 +429,10 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 #endif
 				// Static -> no speed
 				fHorizontalSpeed = 0.0f;
-				InitiateAnimationStateChange(EAnimationState::Idle);
+				if (m_bIsAlive)
+				{
+					InitiateAnimationStateChange(EAnimationState::Idle);
+				}
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// RIGHT																						//
@@ -443,7 +448,10 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 				// Adjust sprite orientation
 				SetFlippedX( true );
-				InitiateAnimationStateChange(EAnimationState::Run);
+				if (m_bIsAlive)
+				{
+					InitiateAnimationStateChange(EAnimationState::Run);
+				}
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// LEFT																							//
@@ -459,7 +467,10 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 			// Adjust sprite orientation
 				SetFlippedX( false );
-				InitiateAnimationStateChange(EAnimationState::Run);
+				if (m_bIsAlive)
+				{
+					InitiateAnimationStateChange(EAnimationState::Run);
+				}
 				break;
 			}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -898,6 +909,8 @@ void CPlayer::Die()
 	{
 		m_iLives--;
 		m_bIsAlive = false;
+
+		InitiateAnimationStateChange(EAnimationState::None);
 	}
 }
 
@@ -952,24 +965,37 @@ void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 {
 	char* pszAnim;
+	bool bHasAnimation;
 	switch(*eNewAnimationState)
 	{
+	case EAnimationState::None:
+		m_eAnimationState = EAnimationState::None;
+		bHasAnimation = false;
+		break;
 	case EAnimationState::Idle:
 		m_eAnimationState = EAnimationState::Idle;
 		pszAnim = "Idle";
+		bHasAnimation = true;
 		break;
 	case EAnimationState::Run:
 		m_eAnimationState = EAnimationState::Run;
 		pszAnim = "Run";
+		bHasAnimation = true;
 		break;
 	case EAnimationState::Jump:
 		m_eAnimationState = EAnimationState::Jump;
 		pszAnim = "Jump";
+		bHasAnimation = true;
 		break;
 	default:
-		// play idle
+		GetSprite()->stopAllActions();
+		bHasAnimation = false;
 		break;
 	}
-	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
+
+	if (bHasAnimation)
+	{
+		RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
+	}
 }
 
