@@ -4,9 +4,9 @@
 
 
 //#define PLAYER_DEBUG_DIRECTION
-#define PLAYER_DEBUG_CONTACTS
+//#define PLAYER_DEBUG_CONTACTS
 //#define PLAYER_DEBUG_CONTACTS_REALTIME
-#define PLAYER_DEBUG_LANDING
+//#define PLAYER_DEBUG_LANDING
 
 
 
@@ -20,6 +20,7 @@
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "../AudioHelper/ManicAudio.h"
+#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
 USING_NS_CC;
 
@@ -43,7 +44,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_iHardContactCount				( 0 )
 	, m_fLastGroundedY					( 0.0f )
 	, m_fLastHighestY					( 0.0f )
-	, m_fWalkSpeed						( 4.0f )
+	, m_kfWalkSpeed						( 4.0f )
 	, m_fJumpSpeed						( 10.6f )
 	, m_kfGravitionalPull				( 2.3f )
 	, m_kfMaxFallDistance				( 4.7f )
@@ -54,6 +55,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_iLives							( m_iMaxLives )
 	, m_pcControllerActionToKeyMap		( nullptr )
 	, m_bSpriteXFlip					( spriteFlipStatus )
+	, m_eAnimationState					( EAnimationState::Idle )
 {
 	SetResetPosition( startingPos );
 }
@@ -114,7 +116,9 @@ int CPlayer::GetSensorContactCount() const																				//
 {																														//
 	return m_iSensorContactCount;																						//
 }																														//
-																														//
+
+
+//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 #pragma endregion Getters
@@ -159,6 +163,10 @@ void CPlayer::VOnResourceAcquire()																												//
 	// n.n.b. ... however if we did use std::unique_ptr 																						//
 	// we'd need to use std::unique_ptr::reset in VOnResourceRelease if we wanted the memory allocate / free behaviour to be the same...		//
 	m_pcControllerActionToKeyMap = TCreateActionToKeyMap( s_aePlayerActions, s_aeKeys );														//
+																																				//
+	LoadAnimations(true);																														//
+
+	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at("Idle")));
 }																																				//
 																																				//
 void CPlayer::VOnResourceRelease()																												//
@@ -219,17 +227,17 @@ void CPlayer::VOnResurrected()																													//
 // -------------------------------------------------------------------------------------------------------------------- //						//
 void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 {																																				//
+// Get player input and change movement if needed																								//
+	CheckKeyboardInput();																														//
+
 	if( m_fVerticalSpeedAdjust != 0.0f )
 	{
 		Vec2 v2ExpectedVelocity = Vec2( GetVelocity().x, GetVelocity().y - m_fVerticalSpeedAdjust );
-		CCLOG( "Fixing velocity to %f", v2ExpectedVelocity.y );
+		//CCLOG( "Fixing velocity to %f", v2ExpectedVelocity.y );
 		SetVelocity( v2ExpectedVelocity );
 		m_fVerticalSpeedAdjust = 0.0f;
 	}
 	
-	
-// Get player input and change movement if needed																								//
-	CheckKeyboardInput();																														//
 	
 	// If player is in mid-air movement
 	if( !GetIsGrounded() )
@@ -248,6 +256,7 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 		{
 			// End arch-like movement  - >   just drop straight down from now on
 			ApplyDirectionChange( EPlayerDirection::Static );
+			CCLOG( "ARCH" );
 		}
 	}
 	
@@ -312,7 +321,7 @@ void CPlayer::CheckKeyboardInput()
 	const bool bCheatMode = true;
 	if ( bCheatMode )
 	{
-		if ((pKeyManager->ActionIsPressed( CManicLayer::EPA_Cheat )))
+		if ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Cheat ) )
 		{
 			m_rcManicLayer.RequestNextLevel();
 		}
@@ -323,7 +332,7 @@ void CPlayer::CheckKeyboardInput()
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	// JUMP																							//
 	//////////////////////////////////////////////////////////////////////////////////////////////////
-		if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) ) )
+		if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) )
 		{
 			//CCLOG( "jump input received" );
 			JumpEvent();
@@ -332,7 +341,7 @@ void CPlayer::CheckKeyboardInput()
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// LEFT																							//
 		//////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left ) ) )
+		else if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left ) )
 		{
 			// If can be controlled and is grounded
 			if( m_bCanBeControlled && m_bIsGrounded )
@@ -344,7 +353,7 @@ void CPlayer::CheckKeyboardInput()
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// RIGHT																						//
 		//////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) ) )
+		else if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) )
 		{
 			if( m_bCanBeControlled && m_bIsGrounded )
 			{
@@ -426,7 +435,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 				CCLOG( "Player going Right" );
 #endif				
 				// Right -> move with walk speed
-				fHorizontalSpeed = m_fWalkSpeed;
+				fHorizontalSpeed = m_kfWalkSpeed;
 
 				// Adjust sprite orientation
 				SetFlippedX( true );
@@ -441,8 +450,8 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 #ifdef PLAYER_DEBUG_DIRECTION
 				CCLOG( "Player going Left" );
 #endif
-			// Right -> move with negative value of walk speed
-				fHorizontalSpeed = m_fWalkSpeed * -1.0f;
+			// Left -> move with negative value of walk speed
+				fHorizontalSpeed = m_kfWalkSpeed * -1.0f;
 
 			// Adjust sprite orientation
 				SetFlippedX( false );
@@ -505,7 +514,7 @@ void CPlayer::JumpEvent()
 
 	if( m_cRayCastCallBack.GetDidRayHit() )
 	{
-		CCLOG( "Head Bumped, Jump Cancelled" );
+		//CCLOG( "Head Bumped, Jump Cancelled" );
 		ApplyDirectionChange( EPlayerDirection::Static );
 	}
 	else
@@ -513,7 +522,15 @@ void CPlayer::JumpEvent()
 	// If on normal platform, jump normally
 		if( !m_bIsPendingDirection )
 		{
-			SetVelocity( cocos2d::Vec2 ( GetVelocity().x, m_fJumpSpeed ) );
+			switch( m_ePlayerDirection )
+			{
+			case EPlayerDirection::Right:
+				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, m_fJumpSpeed ) );
+				break;
+			case EPlayerDirection::Left:
+				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
+				break;
+			}
 		}
 	// Else, on top of conveyor, jump that way
 		else
@@ -521,10 +538,10 @@ void CPlayer::JumpEvent()
 			switch( m_ePendingDirection )
 			{
 			case EPlayerDirection::Right:
-				SetVelocity( cocos2d::Vec2( m_fWalkSpeed, m_fJumpSpeed ) );
+				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, m_fJumpSpeed ) );
 				break;
 			case EPlayerDirection::Left:
-				SetVelocity( cocos2d::Vec2( m_fWalkSpeed * -1.0f, m_fJumpSpeed ) );
+				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
 				break;
 			}
 			m_ePlayerDirection = m_ePendingDirection;
@@ -537,7 +554,7 @@ void CPlayer::JumpEvent()
 
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 		m_uiJumpSoundID = PlaySoundEffect( ESoundName::Jump );
-		CCLOG( "Jumped" );
+		//CCLOG( "Jumped" );
 	}
 }
 
@@ -628,29 +645,6 @@ void CPlayer::OnLanded()
 	// Else, not dead, proceed with more logic:
 		else 
 		{
-		// Manually adjust height
-			float fCurrentHeight = GetPhysicsTransform().p.y;
-			float fNewHeight = fCurrentHeight;
-			fNewHeight += 0.5f;
-			fNewHeight = floor( fNewHeight ) + 0.006f;
-		// If landed on an inferior y than expected
-		// IE landed and now is on 4.99836f instead of 5.0f or above
-			if( fNewHeight > fCurrentHeight )
-			{
-				float fHeightDelta = fNewHeight - fCurrentHeight + 0.01f;
-
-				// v = ( p1 - p0 ) / t
-				//cocos2d::Vec2 v2VelocityToMoveByDeltaInOneFrame = ( v2PosDeltaB2d / IGCGameLayer::ActiveInstance()->B2dGetTimestep() );
-				float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
-				cocos2d::Vec2 v2NewVelocity = Vec2(GetVelocity().x, fVerticalSpeedToMoveByDeltaInOneFrame );
-				SetVelocity( v2NewVelocity * 0.95f );
-
-				// n.b. need to cache this so we can remove it from the velocity after the
-				// physics simulation has stepped handily we can do this in 
-				m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
-				GetPhysicsBody()->SetGravityScale( 0.0f );
-				CCLOG( "Adjusting Y coordinate manually" );
-			}
 		// Stop Jump/Fall sound effect
 			if( m_uiJumpSoundID != 0 )
 			{
@@ -662,6 +656,54 @@ void CPlayer::OnLanded()
 				StopSoundEffect( m_uiFallingSoundID );
 				m_uiFallingSoundID = 0;
 			}
+		
+		// -----------------------------------------------------------------------------------------------------------
+		// Manually adjust height ( if not trying to jump )
+		const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
+		TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, ( *m_pcControllerActionToKeyMap ) );
+		if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) ) 
+		{
+			float fCurrentHeight = GetPhysicsTransform().p.y;
+			float fNewHeight = fCurrentHeight;
+			fNewHeight += 0.5f;
+			fNewHeight = floor( fNewHeight ) + 0.006f;
+		// If landed on an inferior y than expected
+		// IE landed and now is on 4.99836f instead of 5.0f or above
+			if( fNewHeight > fCurrentHeight )
+			{
+				float fHeightDelta = fNewHeight - fCurrentHeight + 0.01f;
+
+				// v = ( p1 - p0 ) / t
+				float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
+
+
+				// Calculate horizontal speed
+				float fHorizontalSpeed = 0.0f;
+				if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left ) )
+				{
+					fHorizontalSpeed = m_kfWalkSpeed * -1.0f;
+				}
+				else if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) )
+				{
+					fHorizontalSpeed = m_kfWalkSpeed;
+				}
+
+
+
+
+				cocos2d::Vec2 v2NewVelocity = Vec2( fHorizontalSpeed, fVerticalSpeedToMoveByDeltaInOneFrame );
+				SetVelocity( v2NewVelocity * 0.95f );
+
+				// n.b. need to cache this so we can remove it from the velocity after the
+				// physics simulation has stepped handily we can do this in 
+				m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
+				GetPhysicsBody()->SetGravityScale( 0.0f );
+				CCLOG( "Adjusting Y coordinate manually" );
+			}
+		}
+		
+		
+
 
 #ifdef PLAYER_DEBUG_LANDING
 		CCLOG( "Landed" );
@@ -686,7 +728,7 @@ void CPlayer::LandedOnWalkablePlatform()
 	m_bIsPendingDirection = false;
 
 // Run another check for player input
-	//CheckKeyboardInput();
+	CheckKeyboardInput();
 }
 
 
@@ -849,5 +891,68 @@ void CPlayer::Die()
 	{
 		m_iLives--;
 		m_bIsAlive = false;
+	}
+}
+
+void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
+{
+	int iCounter;
+	if(bShouldLoadAnimations)
+	{
+		iCounter = 0;
+		// Load Animations
+		char* pszAnimations[2];
+		pszAnimations[0] = "Idle";
+		pszAnimations[1] = "Run";
+
+		int iCounter = 0;
+		for (const char* pszAnim : pszAnimations)
+		{
+			cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
+			m_pcPlayerAnimationList.insert({ pszAnimations[iCounter], GCCocosHelpers::CreateAnimation(rdictPlist, pszAnimations[iCounter]) });
+			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->retain();
+			iCounter++;
+		}
+	}
+	else
+	{
+		iCounter = 2;
+	}
+}
+
+void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
+{
+	switch(m_eAnimationState)
+	{
+	case EAnimationState::Idle :
+		break;
+	case EAnimationState::Run :
+		break;
+	case EAnimationState::Jump :
+		break;
+	default:	
+		break;
+	}
+
+	AnimationStateChange(&eNewAnimationState);
+}
+
+void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
+{
+	switch(*eNewAnimationState)
+	{
+	case EAnimationState::Idle:
+		m_eAnimationState = EAnimationState::Idle;
+		//RunAction();
+		break;
+	case EAnimationState::Run:
+		m_eAnimationState = EAnimationState::Run;
+		break;
+	case EAnimationState::Jump:
+		m_eAnimationState = EAnimationState::Jump;
+		break;
+	default:
+		// play idle
+		break;
 	}
 }
