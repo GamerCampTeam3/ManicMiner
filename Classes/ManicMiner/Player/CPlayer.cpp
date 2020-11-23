@@ -20,6 +20,7 @@
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "../AudioHelper/ManicAudio.h"
+#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
 USING_NS_CC;
 
@@ -54,6 +55,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_iLives							( m_iMaxLives )
 	, m_pcControllerActionToKeyMap		( nullptr )
 	, m_bSpriteXFlip					( spriteFlipStatus )
+	, m_eAnimationState					( EAnimationState::Idle )
 {
 	SetResetPosition( startingPos );
 }
@@ -161,6 +163,10 @@ void CPlayer::VOnResourceAcquire()																												//
 	// n.n.b. ... however if we did use std::unique_ptr 																						//
 	// we'd need to use std::unique_ptr::reset in VOnResourceRelease if we wanted the memory allocate / free behaviour to be the same...		//
 	m_pcControllerActionToKeyMap = TCreateActionToKeyMap( s_aePlayerActions, s_aeKeys );														//
+																																				//
+	LoadAnimations(true);																														//
+
+	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at("Idle")));
 }																																				//
 																																				//
 void CPlayer::VOnResourceRelease()																												//
@@ -885,5 +891,68 @@ void CPlayer::Die()
 	{
 		m_iLives--;
 		m_bIsAlive = false;
+	}
+}
+
+void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
+{
+	int iCounter;
+	if(bShouldLoadAnimations)
+	{
+		iCounter = 0;
+		// Load Animations
+		char* pszAnimations[2];
+		pszAnimations[0] = "Idle";
+		pszAnimations[1] = "Run";
+
+		int iCounter = 0;
+		for (const char* pszAnim : pszAnimations)
+		{
+			cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
+			m_pcPlayerAnimationList.insert({ pszAnimations[iCounter], GCCocosHelpers::CreateAnimation(rdictPlist, pszAnimations[iCounter]) });
+			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->retain();
+			iCounter++;
+		}
+	}
+	else
+	{
+		iCounter = 2;
+	}
+}
+
+void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
+{
+	switch(m_eAnimationState)
+	{
+	case EAnimationState::Idle :
+		break;
+	case EAnimationState::Run :
+		break;
+	case EAnimationState::Jump :
+		break;
+	default:	
+		break;
+	}
+
+	AnimationStateChange(&eNewAnimationState);
+}
+
+void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
+{
+	switch(*eNewAnimationState)
+	{
+	case EAnimationState::Idle:
+		m_eAnimationState = EAnimationState::Idle;
+		//RunAction();
+		break;
+	case EAnimationState::Run:
+		m_eAnimationState = EAnimationState::Run;
+		break;
+	case EAnimationState::Jump:
+		m_eAnimationState = EAnimationState::Jump;
+		break;
+	default:
+		// play idle
+		break;
 	}
 }

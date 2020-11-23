@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////
 /// Original Author: Bib    - designated as A.B
 /// Edits made by: Henrique - designated as H.T
+/// Edits made by: Umeer	- designated as U.R
 ///////////////////////////////////////////////
 
 #ifndef _CPLAYER_H_
@@ -20,9 +21,17 @@ template< typename TActionType > class TGCActionToKeyMap;																//
 enum  EPlayerActions																									//
 {																														//
 	EPA_AxisMove_X,																										//
-	EPA_AxisMove_Y,
-	EPA_Cheat,//
+	EPA_AxisMove_Y,																										//
+	EPA_Cheat,																											//
 	EPA_Jump																											//
+};																														//
+																														//
+//	U.R																													//
+enum class EAnimationState																								//
+{																														//
+	Idle,																												//
+	Run,																												//
+	Jump,																												//																												//
 };																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -437,6 +446,31 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 	void Die();																											//
 																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// ----- Player Animation State Machine - U.R ------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+																														//
+	void LoadAnimations(bool bShouldLoadAnimations);																	//
+																														//
+	EAnimationState m_eAnimationState;																					//
+																														//
+	// Serves as a checkpoint to disable functionality of the current state the animation state machine is in,			//
+	// before switching to the new state																				//
+	// Can be thought of as the end point of the current state															//
+	void InitiateAnimationStateChange(EAnimationState eNewAnimationState);												//
+																														//
+	// Can be thought of as the starting point of the new state															//
+	void AnimationStateChange(EAnimationState* eNewAnimationState);														//
+																														//
+	// contains all animations for the player character																	//
+	// ma stands for Map Array																							//
+	std::map<char*, cocos2d::Animation*> m_pcPlayerAnimationList;													//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 };
