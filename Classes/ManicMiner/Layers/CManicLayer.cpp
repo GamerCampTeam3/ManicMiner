@@ -361,17 +361,17 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 		{																												//
 																														//
 			// Get pointer to platform																					//
-			CPlatform* pPlatform = nullptr;																				//
+			CPlatform* pcPlatform = nullptr;																				//
 																														//
 			// If BodyA is player, BodyB must be platform																//
 			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )												//
 			{																											//
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysB );													//
+				pcPlatform = static_cast< CPlatform* >( pGcSprPhysB );													//
 			}																											//
 			// Else, vice versa																							//
 			else																										//
 			{																											//
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysA );													//
+				pcPlatform = static_cast< CPlatform* >( pGcSprPhysA );													//
 			}																											//
 																														//
 																														//
@@ -385,21 +385,21 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 				auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
 
 				// Check if this platform was already overlapping in terms of hard contact
-				bool bShouldStartHardContact = ( pPlatform->GetIsInContact() && !pPlatform->GetCollisionEnabled() ) && m_pcPlayer->GetHardContactCount();
+				bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) && m_pcPlayer->GetHardContactCount();
 
 				// Activate this platform's collision																	//
-				pPlatform->SetCollisionEnabled( true );																	//
+				pcPlatform->SetCollisionEnabled( true );																	//
 																														//
 																														//
 				// Increment sensor count for the player																//
 				m_pcPlayer->SensorContactEvent( true );																	//
 
-				pPlatform->SetIsSensorOverlapped( true );
+				pcPlatform->SetIsSensorOverlapped( true );
 				
 				if( bShouldStartHardContact )
 				{
-					CCLOG( "Forcing a ghosted hard contact start, due to sensor contact now but hard fixtures were already overlapping." );
-					PlayerBeganContactWithPlatform( *pPlatform );
+					//CCLOG( "Forcing a ghosted hard contact start, due to sensor contact now but hard fixtures were already overlapping." );
+					PlayerBeganContactWithPlatform( *pcPlatform );
 				}
 
 			}																											//
@@ -408,7 +408,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 			// Check if this BeginContact is for character + platform ( no sensors included )							//
 			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )											//
 			{																											//
-				PlayerBeganContactWithPlatform( *pPlatform );
+				PlayerBeganContactWithPlatform( *pcPlatform );
 			}																											//
 
 			// Exclusive Or
@@ -418,7 +418,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 			// having overlapped sensors first.
 			else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
 			{
-				if( pPlatform->GetPlatformType() == EPlatformType::Brick )
+				if( pcPlatform->GetPlatformType() == EPlatformType::Brick )
 				{
 					// GET ID NAME
 					auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
@@ -426,7 +426,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 					if( (		*pszSensorIdA == "surface"	&& *pszSensorIdB == "body" ) 
 						|| (	*pszSensorIdA == "body"		&& *pszSensorIdB == "surface" ) )
 					{
-						auto pBrickPlatform = static_cast< CBrickPlatform* > ( pPlatform );
+						auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
 						if ( pBrickPlatform != nullptr )
 						{
 							pBrickPlatform->SetIsUnderPlayer( true );
@@ -474,17 +474,17 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )										//
 		{																												//
 			// Get pointer to platform																					//
-			CPlatform* pPlatform = nullptr;																				//
+			CPlatform* pcPlatform = nullptr;																				//
 																														//
 			// If BodyA is player, BodyB must be platform																//
 			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )												//
 			{																											//
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysB );													//
+				pcPlatform = static_cast< CPlatform* >( pGcSprPhysB );													//
 			}																											//
 			// Else, vice versa																							//
 			else																										//
 			{																											//
-				pPlatform = static_cast< CPlatform* >( pGcSprPhysA );													//
+				pcPlatform = static_cast< CPlatform* >( pGcSprPhysA );													//
 			}																											//
 																														//
 																														//
@@ -493,26 +493,26 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
 			{																											//																														//
 				// If this platform is not a CBrickPlatform																//
-				if( pPlatform->GetPlatformType() != EPlatformType::Brick )												//
+				if( pcPlatform->GetPlatformType() != EPlatformType::Brick )												//
 				{																										//
 					// Deactivate this platform's collision																//
-					pPlatform->SetCollisionEnabled( pPlatform->GetTriggersHardContactEvent() );							//
+					pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );							//
 				}																										//
 																														//
 				// Decrement sensor contact count																		//
 				m_pcPlayer->SensorContactEvent( false );																//
 
-				pPlatform->SetIsSensorOverlapped( false );
+				pcPlatform->SetIsSensorOverlapped( false );
 			}																											//
 																														//
 			// If not 2 sensors																							//
 			// Check if this EndContact is for character + platform ( no sensors included )								//
 			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )											//
 			{																											//
-				if( pPlatform->GetTriggersHardContactEvent() )															//
+				if( pcPlatform->GetTriggersHardContactEvent() )															//
 				{																										//
 					// Set the platform as no trigger for hard contact events											//
-					pPlatform->SetTriggersHardContactEvent( false );													//
+					pcPlatform->SetTriggersHardContactEvent( false );													//
 																														//
 					// Decrement hard contact count																		//
 					m_pcPlayer->HardContactEvent( false );																//
@@ -523,22 +523,24 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 						m_pcPlayer->LeftGround();																		//
 					}																									//
 					// If this was a Crumbling platform, stop crumbling													//
-					switch( pPlatform->GetPlatformType() )																//
+					switch( pcPlatform->GetPlatformType() )																//
 					{																									//
 					case EPlatformType::Crumbling:																		//
-						auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pPlatform );						//
-																														//
-						if( pCrumblingPlatform != nullptr )																//
-						{																								//
-							pCrumblingPlatform->StopCrumbling();														//
-						}																								//
-						break;																							//
+						{						
+							auto pcCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pcPlatform );					//
+																															//
+							if( pcCrumblingPlatform != nullptr )															//
+							{																								//
+								pcCrumblingPlatform->StopCrumbling();														//
+							}																								//
+							break;																							//
+						}
 					}																									//
 					// If leaving this contact, and sensors aren't overlapping anymore as well
-					if ( !pPlatform->GetIsSensorOverlapped() && pPlatform->GetPlatformType() != EPlatformType::Brick )
+					if ( !pcPlatform->GetIsSensorOverlapped() && pcPlatform->GetPlatformType() != EPlatformType::Brick )
 					{
 						// Disable platform collision
-						pPlatform->SetCollisionEnabled( false );
+						pcPlatform->SetCollisionEnabled( false );
 					}
 				}																										//
 				else
@@ -547,7 +549,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					CCLOG( "ENDED SOLID CONTACT WITH A PLATFORM THAT HAS COLLISION OFF" );
 #endif
 				}
-				pPlatform->SetIsInContact( false );
+				pcPlatform->SetIsInContact( false );
 			}																											//
 
 			// Exclusive Or
@@ -557,7 +559,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 			// having overlapped sensors first.
 			else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
 			{
-				if( pPlatform->GetPlatformType() == EPlatformType::Brick )
+				if( pcPlatform->GetPlatformType() == EPlatformType::Brick )
 				{
 					// GET ID NAME
 					auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
@@ -565,7 +567,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					if( ( *pszSensorIdA == "surface" && *pszSensorIdB == "body" )
 						|| ( *pszSensorIdA == "body" && *pszSensorIdB == "surface" ) )
 					{
-						auto pBrickPlatform = static_cast< CBrickPlatform* > ( pPlatform );
+						auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
 						if( pBrickPlatform != nullptr )
 						{
 							pBrickPlatform->SetIsUnderPlayer( false );
@@ -621,21 +623,21 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 				// We must check if this platform is supposed to have collision or not									//
 																														//
 				// Get pointer to platform																				//
-				CPlatform* pPlatform = nullptr;																			//
+				CPlatform* pcPlatform = nullptr;																			//
 																														//
 				// If BodyA is player, BodyB must be platform															//
 				if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )											//
 				{																										//
-					pPlatform = static_cast< CPlatform* >( pGcSprPhysB );												//
+					pcPlatform = static_cast< CPlatform* >( pGcSprPhysB );												//
 				}																										//
 				// Else, vice versa																						//
 				else																									//
 				{																										//
-					pPlatform = static_cast< CPlatform* >( pGcSprPhysA );												//
+					pcPlatform = static_cast< CPlatform* >( pGcSprPhysA );												//
 				}																										//
 																														//
 				// Set contact collision accordingly																	//
-				pB2Contact->SetEnabled( pPlatform->GetCollisionEnabled() );												//
+				pB2Contact->SetEnabled( pcPlatform->GetCollisionEnabled() );												//
 			}																											//
 																														//
 		}																												//

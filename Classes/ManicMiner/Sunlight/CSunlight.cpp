@@ -6,8 +6,10 @@
 #include "CSunlight.h"
 #endif
 
-CSunlight::CSunlight()
+CSunlight::CSunlight(CAirManager* pcAirManager)
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CSunlight))
+	, m_pcAirManager		( pcAirManager )
+	, m_eEffect				( EEffect::DrainAir )
 {
 	
 }

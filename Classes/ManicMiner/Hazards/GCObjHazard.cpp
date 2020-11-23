@@ -114,16 +114,17 @@ void CGCObjHazard::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		m_pszAnimation = pAnimationName->Value();
 
 
-		// Custom Plist
+		// Custom Plist and shape.
 
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
+		const tinyxml2::XMLAttribute* pCustomShapePath = pCurrentObjectXmlData->FindAttribute("CustomShape");
 		
 		if ((nullptr != pCustomPlistPath)
 			&& (0 != strlen(pCustomPlistPath->Value())))
 		{
 			m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(rCreationParams.strClassName.c_str(),
 				pCustomPlistPath->Value(),
-				rCreationParams.strPhysicsShape.c_str(),
+				pCustomShapePath->Value(),
 				rCreationParams.eB2dBody_BodyType,
 				rCreationParams.bB2dBody_FixedRotation);
 

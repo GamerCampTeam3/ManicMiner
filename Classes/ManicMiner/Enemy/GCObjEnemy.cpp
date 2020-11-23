@@ -18,40 +18,24 @@ USING_NS_CC;
 
 GCFACTORY_IMPLEMENT_CREATEABLECLASS( CGCObjEnemy );
 
-//////////////////////////////////////////////////////////////////////////
-// Constructor (module 1)
-//////////////////////////////////////////////////////////////////////////
-/*
-CGCObjEnemy::CGCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
-	const bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyId, CGCFactoryCreationParams& rcFactoryCreationParamsInput)
-	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
-	, m_eMovementAxis(EMovementAxisInput)
-	, m_eEnemyId(eEnemyId)
-	, m_cAnchorPoint(rcAnchorPoint)
-	, m_fMovementWindowLength(fMovementRange)
-	, m_fSpeed(fSpeed)
-	, m_bMovingAWayFromAnchorPoint(bMovingAwayFromAnchorPoint)
-	, m_rFactoryCreationParams(rcFactoryCreationParamsInput)
-	, m_fInitialDistanceFromAnchor (fInitialDistanceFromAnchor)
-	, m_bBounceCollisionDisabled(false)
-	, m_bSpriteIsFlippable(bSpriteIsFlippable)
-{
-
-	pAnimation = nullptr;
-}
-*/
-
 CGCObjEnemy::CGCObjEnemy()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
 	, m_pCustomCreationParams(nullptr)
 {
 	m_fMoveDelta = 0.0;
+	m_bTemporaryAnchorPositionActive = false;
+	m_bInitialiseToOne = false;
+	m_fPreviousXPos = 0.0;
 }
 
 CGCObjEnemy::CGCObjEnemy(GCTypeID idDerivedType)
 	: m_pCustomCreationParams(nullptr)
 {
 	m_fMoveDelta = 0.0;
+	m_bTemporaryAnchorPositionActive = false;
+	m_bInitialiseToOne = false;
+	m_fPreviousXPos = 0.0;
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -103,32 +87,125 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	}
 	
 
-	m_cTotalVelocity = Vec2::ZERO;
 	
 
-	Vec2 AnchorPointAndOffset = GetResetPosition();
 	m_cAnchorPoint = GetResetPosition();
 
 
-	if (EnemyTypes::EMovementAxis::EMovementAxis_Horizontal == m_eMovementAxis)
+
+
+
+
+
+
+
+	SetFacingOrientation();
+
+
+
+	// Special consideration required if this value > 0 which means the first walk window path is shorter than the others.
+	if (m_fInitialDistanceFromAnchor > 0)
 	{
-		m_cTotalVelocity.x = m_fSpeed;
-		AnchorPointAndOffset.x += m_fInitialDistanceFromAnchor;
+
+		// This flag will be checked at the end of the walk window and used to restore normal walk window values.
+		m_bTemporaryAnchorPositionActive = true;
+
+		// Calculate the required arbitrary point along the movement window as a Vector2 position.
+		cocos2d::Vec2 cArbitraryPoint = m_cDest - m_cAnchorPoint;
+		cArbitraryPoint.normalize();
+		cArbitraryPoint = m_cAnchorPoint + (cArbitraryPoint * m_fInitialDistanceFromAnchor);
+
+		// Set current and reset positions to this arbitrary point.
+		m_cCurrentPos = cArbitraryPoint;
+		SetResetPosition(cArbitraryPoint);
+
+		// Need to store either the anchor point or the destination point in a temporary variable before overwriting with the 
+		// just calculated arbitrary point position.  The original anchor/destination point will be re-instated at the end of the 
+		// first walk window pass.
+		if (m_bMovingAwayFromAnchorPoint)
+		{
+
+			m_cTemporaryAnchorPosition = m_cAnchorPoint;
+			m_cAnchorPoint = cArbitraryPoint;
+
+			// Results in:
+			//           (Arbitrary start point)
+			//   |-----------|---->--->---->--->-----|
+			//               0  (LERP)               1			     
+			//   			 Anc					Dest
+
+		}
+		else
+		{
+			m_cTemporaryAnchorPosition = m_cDest;
+			m_cDest = cArbitraryPoint;
+
+			// Results in:
+			//           (Arbitrary start point)
+			//   |-<---<---<-|-----------------------|
+			//   0  (LERP)   1
+			//   Anc        Dest
+
+			// For this case need to initialise the LERP input to 1.0 as we are starting from the Destination and moving to the Anchor point.
+			m_fMoveDelta = 1.0f;
+			m_bInitialiseToOne = true;
+		}
+
 	}
 	else
 	{
-		m_cTotalVelocity.y = m_fSpeed;
-		AnchorPointAndOffset.y += m_fInitialDistanceFromAnchor;
+		// Normal walk window size so nothing special to do here.
+		m_cCurrentPos = m_cAnchorPoint;
+
+
+
+
+
+
+		SetResetPosition(m_cAnchorPoint);
+
+
+
+
+
 	}
 
-	SetResetPosition(AnchorPointAndOffset);
 
-	SetFacingOrientation();
+
+
+
+
+
+
+
+	m_fPreviousXPos = m_cCurrentPos.x;
+
 
 
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+
+void CGCObjEnemy::VOnReset()
+{
+	// Call base class version first.
+	CGCObjSpritePhysics::VOnReset();
+
+	if (m_bInitialiseToOne)
+	{
+		m_fMoveDelta = 1.0f;
+	}
+	else
+	{
+		m_fMoveDelta = 0.0f;
+	}
+
+}
+
+
+
+
 
 void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
 {
@@ -149,9 +226,9 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		CCLOG((nullptr == pAnimationName) ? "AnimationName not found for Enemy!" : pAnimationName->Value());
 		m_pszAnimation = pAnimationName->Value();
 		
-		const tinyxml2::XMLAttribute* pMovementRange = pCurrentObjectXmlData->FindAttribute("MovementRange");
-		CCLOG((nullptr == pMovementRange) ? "MovementRange not found for Enemy!" : pMovementRange->Value());
-		m_fMovementWindowLength = pMovementRange->FloatValue();
+		//const tinyxml2::XMLAttribute* pMovementRange = pCurrentObjectXmlData->FindAttribute("MovementRange");
+		//CCLOG((nullptr == pMovementRange) ? "MovementRange not found for Enemy!" : pMovementRange->Value());
+		//m_fMovementWindowLength = pMovementRange->FloatValue();
 
 				
 		const tinyxml2::XMLAttribute* pInitialDistanceFromAnchor = pCurrentObjectXmlData->FindAttribute("InitialDistanceFromAnchor");
@@ -164,26 +241,35 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		m_bMovingAwayFromAnchorPoint = pMovingAwayFromAnchorPoint->BoolValue();
 		
 		const tinyxml2::XMLAttribute* pSpeed = pCurrentObjectXmlData->FindAttribute("Speed");
-		CCLOG((nullptr == pMovingAwayFromAnchorPoint) ? "Speed not found for Enemy!" : pSpeed->Value());
+		CCLOG((nullptr == pSpeed) ? "Speed not found for Enemy!" : pSpeed->Value());
 		m_fSpeed = pSpeed->FloatValue();
 				
 		const tinyxml2::XMLAttribute* pSpriteIsFlippable = pCurrentObjectXmlData->FindAttribute("SpriteIsFlippable");
 		CCLOG((nullptr == pMovingAwayFromAnchorPoint) ? "SpriteIsFlippable not found for Enemy!" : pSpriteIsFlippable->Value());
 		m_bSpriteIsFlippable = pSpriteIsFlippable->BoolValue();
 			
-		const tinyxml2::XMLAttribute* pMovementAxis = pCurrentObjectXmlData->FindAttribute("MovementAxis");
-		CCLOG((nullptr == pMovementAxis) ? "SpriteIsFlippable not found for Enemy!" : pMovementAxis->Value());
+
+
+
 		
-		if (!strcmp(pMovementAxis->Value(),"Horizontal"))
-		{
-			m_eMovementAxis = EnemyTypes::EMovementAxis::EMovementAxis_Horizontal;
-		}
-		else
-		{
-			m_eMovementAxis = EnemyTypes::EMovementAxis::EMovementAxis_Vertical;
-		}
+		const tinyxml2::XMLAttribute* pDestinationX = pCurrentObjectXmlData->FindAttribute("DestinationX");
+		CCLOG((nullptr == pDestinationX) ? "DestX not found for Enemy!" : pDestinationX->Value());
+		m_cDest.x = pDestinationX->FloatValue();
+
+		
+		const tinyxml2::XMLAttribute* pDestinationY = pCurrentObjectXmlData->FindAttribute("DestinationY");
+		CCLOG((nullptr == pDestinationY) ? "DestX not found for Enemy!" : pDestinationY->Value());
+		m_cDest.y = (pDestinationY->FloatValue());
 
 
+		// Modify destination axis inputs values just read as OGMO  origin is top left, but cocos2dx is bottom left.
+		// (Use same method as GCLevelLoader_Ogmo uses).
+
+		cocos2d::Vec2 cLevelDimensions = CGCLevelLoader_Ogmo::GetLevelDimensions();
+		Point origin = Director::getInstance()->getVisibleOrigin();
+		cocos2d::Vec2 v2Origin(origin.x, origin.y);
+		m_cDest = v2Origin + m_cDest;
+		m_cDest.y = cLevelDimensions.y - m_cDest.y;
 
 		// Read in the custom plist and shape
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
@@ -221,46 +307,6 @@ void CGCObjEnemy::VOnResurrected( void )
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Function to detect if the current position of the enemy has passed a movement boundary.
-// Returns true if a boundary has been reached or exceeded.
-//////////////////////////////////////////////////////////////////////////
-bool CGCObjEnemy::CheckForBoundaryReached(const float fCurrentPosition, const float fAnchorPoint, const float fMovementWindowLength)
-{
-	bool bReturnResult = false;
-
-	// Test right or upper side boundary limit passed and flip to moving back to start if required.
-	if (m_bMovingAwayFromAnchorPoint && (fCurrentPosition >= fAnchorPoint + fMovementWindowLength))
-	{
-		m_bMovingAwayFromAnchorPoint = false;
-		bReturnResult = true;
-	}
-	// Test left or lower side boundary limit passed and flip to moving away from start if required.
-	else if (!m_bMovingAwayFromAnchorPoint && (fCurrentPosition <= fAnchorPoint))
-	{
-		m_bMovingAwayFromAnchorPoint = true;
-		bReturnResult = true;
-	}
-	return bReturnResult;
-}
-
-//////////////////////////////////////////////////////////////////////////
-// Function to check the boundaries of the enemy movement window to detect a directional flip.
-// Returns true if a directional flip was perfomed.
-//////////////////////////////////////////////////////////////////////////
-bool CGCObjEnemy::CheckForDirectionFlip()
-{
-	Vec2 CurrentPosition = GetSpritePosition();
-	if (EnemyTypes::EMovementAxis::EMovementAxis_Horizontal == m_eMovementAxis)
-	{
-		return CheckForBoundaryReached(CurrentPosition.x, m_cAnchorPoint.x, m_fMovementWindowLength);
-	}
-	else
-	{
-		return CheckForBoundaryReached(CurrentPosition.y, m_cAnchorPoint.y, m_fMovementWindowLength);
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////
 //Function to provide the frame update of this object
 //////////////////////////////////////////////////////////////////////////
 //virtual function
@@ -269,27 +315,82 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 	// Call base class version first.
 	CGCObject::VOnUpdate(fTimeStep);
 	   	 
-	
+
+
+
+	// Calulate a vector to represent the movement window.
+	cocos2d::Vec2 fVectorWindow = m_cAnchorPoint - m_cDest;
+
+
+	// Calculate movement % increment amount as a function of the movment window length and the frame rate * speed modifier.
+	// This value is the input into the LERP function to calculate m_cCurrentPos.
+	float fLerpInput = ((fTimeStep * m_fSpeed) / fVectorWindow.length()) * 100.0f;
+
+
 	if (m_bMovingAwayFromAnchorPoint)
 	{
-		SetVelocity(m_cTotalVelocity);
+		m_fMoveDelta += fLerpInput;
 	}
 	else
 	{
-		SetVelocity(-m_cTotalVelocity);
+		m_fMoveDelta -= fLerpInput;
 	}
-	
-	if (CheckForDirectionFlip())
+
+
+
+
+
+	m_cCurrentPos = m_cAnchorPoint.lerp(m_cDest, m_fMoveDelta);
+
+
+
+
+
+
+	if (m_fMoveDelta > 0.0f && m_fMoveDelta < 1.0f)
 	{
-		m_bBounceCollisionDisabled = false;
-        // if the Enemy's direction has just flipped then need to change the facing orientation
-		// for left/right orientation Enemy's.
-		if (EnemyTypes::EMovementAxis::EMovementAxis_Horizontal == m_eMovementAxis && m_bSpriteIsFlippable)
+		MoveToPixelPosition(m_cCurrentPos);
+	}
+	else
+	{
+		// Must of arrived at either side of the movement window.
+
+		if (m_bTemporaryAnchorPositionActive)
+		{
+			// need to restore normal walk cycle positions
+
+			if (m_bMovingAwayFromAnchorPoint)
+				m_cAnchorPoint = m_cTemporaryAnchorPosition;
+			else
+				m_cDest = m_cTemporaryAnchorPosition;
+
+			// Clear this flag and this path will not be taken again.
+			m_bTemporaryAnchorPositionActive = false;
+
+		}
+
+
+
+
+
+
+
+		// Flip moving logic and facing orientation if required.
+		m_bMovingAwayFromAnchorPoint = !m_bMovingAwayFromAnchorPoint;
+		if (m_bSpriteIsFlippable)
 		{
 			SetFacingOrientation();
 		}
+
+
+		// Clamp value between 0 and 1 to avoid any 'stuck' situations occuring just outside of the 0 to 1 range.
+		m_fMoveDelta = std::max(0.0f, std::min(m_fMoveDelta, 1.0f));
+
+
 	}
-	
+
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -297,13 +398,11 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 //////////////////////////////////////////////////////////////////////////
 void CGCObjEnemy::SetFacingOrientation()
 {
-	// Note the boolean k_bArtDefaultIsEnemyFacingRight is present
-	// as the programmer art from the Gamer Camp framework faces by default to the
-	// left.  However the facing direction delivered from the art team is facing right.
-
-	const bool k_bArtDefaultIsEnemyFacingRight = false;
-	SetFlippedX((k_bArtDefaultIsEnemyFacingRight && !m_bMovingAwayFromAnchorPoint) || (!k_bArtDefaultIsEnemyFacingRight && m_bMovingAwayFromAnchorPoint));
+	SetFlippedX(m_fPreviousXPos >= m_cCurrentPos.x);
 }
+
+
+
 //////////////////////////////////////////////////////////////////////////
 // Function to flip the enemies current direction of travel when it has collided with an object
 // (note required only in the Kong Beast levels 8 and 12 when a wall is removed during gameplay).

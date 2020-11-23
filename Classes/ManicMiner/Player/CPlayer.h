@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////
 /// Original Author: Bib    - designated as A.B
 /// Edits made by: Henrique - designated as H.T
+/// Edits made by: Umeer	- designated as U.R
 ///////////////////////////////////////////////
 
 #ifndef _CPLAYER_H_
@@ -20,9 +21,18 @@ template< typename TActionType > class TGCActionToKeyMap;																//
 enum  EPlayerActions																									//
 {																														//
 	EPA_AxisMove_X,																										//
-	EPA_AxisMove_Y,
-	EPA_Cheat,//
+	EPA_AxisMove_Y,																										//
+	EPA_Cheat,																											//
 	EPA_Jump																											//
+};																														//
+																														//
+//	U.R																													//
+enum class EAnimationState																								//
+{																														//
+	None,																												//
+	Idle,																												//
+	Run,																												//
+	Jump,																												//																												//
 };																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -86,7 +96,7 @@ private:
 // -------------------------------------------------------------------------------------------------------------------- //
 																														//
 // Horizontal velocity for when player is moving sideways																//
-	float		m_fWalkSpeed;																							//
+	const float	m_kfWalkSpeed;																							//
 // -------------------------------------------------------------------------------------------------------------------- //
 																														//
 // Instant vertical velocity for when player jumps																		//
@@ -96,10 +106,10 @@ private:
 // Specific gravitational acceleration for the player																	//
 	const float	m_kfGravitionalPull;																					//
 // -------------------------------------------------------------------------------------------------------------------- //
+	
 	const float m_kfMaxFallDistance;
 																								
 	float m_fVerticalSpeedAdjust;
-
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // -------------- Collision Properties -------------------------------------------------------------------------------- //
@@ -114,6 +124,7 @@ private:
 // Does not include any sensor fixtures																					//
 	int		m_iHardContactCount;																						//
 // -------------------------------------------------------------------------------------------------------------------- //
+
 																														//
 // Stores the Y coordinate of when Willy left the surface																//
 // Functionality not yet implemented, but this will be needed for fall damage / death									//
@@ -173,7 +184,6 @@ public:
 	void SetCanJump			( const bool	bCanJump	);																//
 	void SetCanBeControlled	( const bool	bCanControl	);																//
 	void SetLives			( const int		iLives		);																//
-	void SetLastYPos		( const float	fYPos		);																//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -436,6 +446,33 @@ public:
 // Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 	void Die();																											//
+																														//
+																														//
+// -------------------------------------------------------------------------------------------------------------------- //
+
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// ----- Player Animation State Machine - U.R ------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------------------------------------------- //
+																														//
+	// true - Loads Animations || false - Releases Animations															//
+	void LoadAnimations(bool bShouldLoadAnimations);																	//
+																														//
+	EAnimationState m_eAnimationState;																					//
+																														//
+	// Serves as a checkpoint to disable functionality of the current state, the animation state machine is in,			//
+	// before switching to the new state																				//
+	// Can be thought of as the end point of the current state															//
+	void InitiateAnimationStateChange(EAnimationState eNewAnimationState);												//
+																														//
+	// Can be thought of as the starting point of the new state															//
+	void AnimationStateChange(EAnimationState* eNewAnimationState);														//
+																														//
+	// contains all animations for the player character																	//
+	// ma stands for Map Array																							//
+	std::map<char*, cocos2d::Animation*> m_pcPlayerAnimationList;														//
 																														//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
