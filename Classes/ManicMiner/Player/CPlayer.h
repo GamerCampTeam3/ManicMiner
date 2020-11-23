@@ -86,7 +86,7 @@ private:
 // -------------------------------------------------------------------------------------------------------------------- //
 																														//
 // Horizontal velocity for when player is moving sideways																//
-	float		m_fWalkSpeed;																							//
+	const float	m_kfWalkSpeed;																							//
 // -------------------------------------------------------------------------------------------------------------------- //
 																														//
 // Instant vertical velocity for when player jumps																		//
@@ -96,10 +96,10 @@ private:
 // Specific gravitational acceleration for the player																	//
 	const float	m_kfGravitionalPull;																					//
 // -------------------------------------------------------------------------------------------------------------------- //
+	
 	const float m_kfMaxFallDistance;
 																								
 	float m_fVerticalSpeedAdjust;
-
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // -------------- Collision Properties -------------------------------------------------------------------------------- //
@@ -114,6 +114,7 @@ private:
 // Does not include any sensor fixtures																					//
 	int		m_iHardContactCount;																						//
 // -------------------------------------------------------------------------------------------------------------------- //
+
 																														//
 // Stores the Y coordinate of when Willy left the surface																//
 // Functionality not yet implemented, but this will be needed for fall damage / death									//
@@ -173,7 +174,6 @@ public:
 	void SetCanJump			( const bool	bCanJump	);																//
 	void SetCanBeControlled	( const bool	bCanControl	);																//
 	void SetLives			( const int		iLives		);																//
-	void SetLastYPos		( const float	fYPos		);																//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
