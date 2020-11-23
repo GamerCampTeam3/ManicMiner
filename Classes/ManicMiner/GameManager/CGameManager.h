@@ -10,6 +10,8 @@
 
 #include <string>
 
+
+enum class ELifeUpdateType;
 	//-------------------------------------------------------- FWD CLS DECLARATION -------------------------------------------------------------------------------------//	
 	class CAirManager;																																					//
 	class CPlayer;																																						//
@@ -22,6 +24,7 @@
 class CGameManager
 {
 																	 public:
+	
 	//------------------------------------------------------------  CTOR/DTOR ------------------------------------------------------------------------------------------//	
 	CGameManager(CLevelManager& rcLevelManager );																														//
 	~CGameManager();																																					//
@@ -42,14 +45,15 @@ class CGameManager
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	//																																									//
 	//-----------------------------------------------------------  Player Related  -------------------------------------------------------------------------------------//															
-	void	UpdateLives()	  const;										// Tells the CHUD to update the lives with the current lives.								//
+	void	UpdateLives( ELifeUpdateType eLifeUpdateType )	  ;				// Tells the CHUD to update the lives with the current lives.								//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	//																																									//
 	//--------------------------------------------------------------  Setters  -----------------------------------------------------------------------------------------//	
 	void	SetCPlayer		( CPlayer* pcPlayer );							// Sets the pointer to the current CPlayer.													//
 	void	SetCHUD			( CHUD* pcCHUD );								// Sets the pointer to the current CHUD.													//
 	void	SetCAirManager	( CAirManager* pcAirManager );					// Sets the pointer to the current AirManager.												//
-	void	InitCHUD		( std::string szLevelName );																												//
+	void	InitCHUD		( std::string szLevelName );
+	void	ResetLives();//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	//																																									//
 	//--------------------------------------------------------------  Getters  -----------------------------------------------------------------------------------------//	
@@ -91,7 +95,7 @@ class CGameManager
 	void			 DrainAirForScore();						// Called by the AirManager (for now), drains remaining air into score									//
 	bool 			 IsScoreGreaterThanHighscore() const;		// Checks to see if score exceeds the highscore.														//
 	bool			 CheckIfLevelRequirementsAreMet() const;	// Checks if the level has collected everything set in the SLevelValues.								//
-	void			 ExtraLifeCheck() const;					// Checks if player has acquired more than 10,000 score, then awards a life if so.						//
+	void			 ExtraLifeCheck( int iScore );				// Checks if player has acquired more than 10,000 score, then awards a life if so.						//
 	void			 CheckHighScoreForUpdate();					// Checks if Highscore should be updated.																//
 	void			 IncreaseScore();							// Increases the score by a flat amount which is 100 (just like the original Manic Miner)				//
 	void			 UpdateHighScore() const;					// Tells the CHUD to update the high score with the current high score.									//

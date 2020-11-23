@@ -345,6 +345,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleTypeRequired.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EEnemyTypes.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EHazardTypes.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enums\ELifeUpdateType.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\EPlayerMovement.h" />
     <ClInclude Include="..\Classes\ManicMiner\GameInstance\CGameInstance.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

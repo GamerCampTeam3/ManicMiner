@@ -33,6 +33,8 @@
 
 #include "ManicMiner/Player/CPlayer.h"
 
+#include "ManicMiner/Enums/ELifeUpdateType.h"
+
 USING_NS_CC;
 
 //////////////////////////////////////////////////////////////////////////
@@ -657,7 +659,8 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
-		OnDeath();																										//
+		OnDeath();
+		//m_pcGameManager->UpdateLives(ELifeUpdateType::Minus);
 	}																													//
 }																														//
 																														//
@@ -665,9 +668,15 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 void CManicLayer::PlayerCollidedHazard( CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact )			//
 {																														//
 	if( rcContact.IsTouching() )																						//
-	{																													//
-		OnDeath();
-		m_pcGameManager->UpdateLives();//
+	{
+		if (rcHazard.GetCanCollide() )
+		{
+
+			OnDeath();
+			rcHazard.SetCanCollide( false );
+			//m_pcGameManager->UpdateLives( ELifeUpdateType::Minus );//
+		}
+
 	}																													//
 }																														//
 																														//
@@ -686,7 +695,7 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 	if( rcContact.IsTouching() )																						//
 	{																													//
 		rcCollectible.InteractEvent();																					//
-		m_pcGameManager->CCollectibleInteractEvent();																	//
+		m_pcGameManager->CCollectibleInteractEvent();
 	}																													//
 }																														//
 																														//
@@ -809,6 +818,7 @@ void CManicLayer::OnEscaped()
 	// Run Time animation and points, etc
 	// when that ends, call this line:
 	RequestNextLevel();
+	
 }
 
 
@@ -822,10 +832,12 @@ void CManicLayer::OnEscaped()
 void CManicLayer::OnDeath()
 {
 	m_pcPlayer->Die();
+	m_pcGameManager->UpdateLives( ELifeUpdateType::Minus );	
 
 	if( m_pcPlayer->GetLives() > 0 )
 	{
 		RequestReset();
+		
 	}
 	else
 	{
@@ -843,6 +855,8 @@ void CManicLayer::OnDeath()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::OutOfLives()
 {
+	m_pcGameManager->ResetHUD();
+	m_pcGameManager->ResetLives();
 	m_pcLevelManager->GoToMainMenu();
 }
 
@@ -896,8 +910,8 @@ void CManicLayer::ResetLevel()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::RequestNextLevel()
 {
-	m_pcGameManager->ResetHUD();
 	m_bWasNextLevelRequested = true;
+	m_pcGameManager->ResetHUD();
 }
 
 

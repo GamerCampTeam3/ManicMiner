@@ -31,7 +31,7 @@ void CMLCentralCavern::VOnCreate( void )
 	// szLevelPath:			Sets the path where the level will be found.
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
-	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5);
+	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 1);
 	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/CN_Background.plist");
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/0_CentralCavern.oel";
 	m_sLevelCreationParameters.szLevelName			= "Central Cavern";
@@ -42,9 +42,7 @@ void CMLCentralCavern::VOnCreate( void )
 	CManicLayer::VOnCreate();
 
 	// Step 3:	New the CHUD and CAirManager.
-	m_pCHUD = new CHUD(*this, m_pointOrigin, m_sizeVisible );
-	//m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
-	
+	m_pCHUD = new CHUD(*this, m_pointOrigin, m_sizeVisible );	
 	m_pcAirManager = new CAirManager(m_pointOrigin, m_sizeVisible);
 	m_pcAirManager->Init(*this);
 

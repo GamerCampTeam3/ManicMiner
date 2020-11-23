@@ -818,6 +818,9 @@
     <ClInclude Include="..\Classes\ManicMiner\Sunlight\CSunlight.h">
       <Filter>Classes\ManicMiner\Sunlight</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enums\ELifeUpdateType.h">
+      <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
