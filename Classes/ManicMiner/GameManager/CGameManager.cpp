@@ -10,6 +10,8 @@
 #include "ManicMiner/Layers/CManicLayer.h"
 #include "ManicMiner/Player/CPlayer.h"
 
+#include "ManicMiner/Enums/ELifeUpdateType.h"
+
 
 
 CGameManager::CGameManager( CLevelManager& rcLevelManager )
@@ -35,17 +37,15 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 // Finally tell the CHUD to update it's text
 void  CGameManager::IncreaseScore()
 {
-	m_iCurrentScore += m_kIScoreIncrement;
-
-	
+	m_iCurrentScore += m_kIScoreIncrement;	
 	CheckHighScoreForUpdate();
 	UpdateScore();
-	ExtraLifeCheck();
+	ExtraLifeCheck( m_kIScoreIncrement );
 }
 
 void CGameManager::CheckHighScoreForUpdate()
 {
-	if (IsScoreGreaterThanHighscore())
+	if (IsScoreGreaterThanHighscore() )
 	{
 		m_iHighScore = m_iCurrentScore;
 		m_pcCHUD->UpdateHighScore( m_iHighScore );
@@ -56,16 +56,15 @@ void CGameManager::CheckHighScoreForUpdate()
 
 // Keeps tracks if the player has accrued enough score to get a new life
 // If it has, the player will be given an extra life and then the counter will be reset.
-void CGameManager::ExtraLifeCheck() const
+void CGameManager::ExtraLifeCheck(int iScore)
 {
 	static int counter;
-	counter += m_kIScoreIncrement;
+	counter += iScore;
 
 	if ( counter >= m_kiExtraLifeThreshold )
 	{
-		int extraLife = m_pcCPlayer->GetLives();
-		m_pcCPlayer->SetLives( ++extraLife );
-		counter = 0;
+		UpdateLives( ELifeUpdateType::Plus );
+		counter = counter - m_kiExtraLifeThreshold;
 	}
 }
 
@@ -87,7 +86,9 @@ bool CGameManager::CheckIfLevelRequirementsAreMet() const
 			break;
 
 		case ECollectibleRequirements::Collectible_And_Switches:
-			enoughReached = ( (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles) && (m_iCurrentSwitches >= m_sLevelValues.iNumberOfSwitches) );
+			enoughReached = 
+					(m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles	) 
+				&&	(m_iCurrentSwitches		>= m_sLevelValues.iNumberOfSwitches		) ;
 			break;
 	}
 
@@ -176,11 +177,24 @@ void CGameManager::UpdateHighScore() const
 }
 
 
-void CGameManager::UpdateLives() const
+void CGameManager::UpdateLives(ELifeUpdateType eLifeUpdateType)
 {
-	
-	m_pcCHUD->UpdateLives( m_pcCPlayer->GetLives() );
+		switch (eLifeUpdateType)
+		{
+			case ELifeUpdateType::Plus:
+				++m_iCurrentLives;
+				m_pcCPlayer->SetLives( m_iCurrentLives );
+				m_pcCHUD->UpdateLives( ELifeUpdateType::Plus, m_iCurrentLives );
+				break;
+
+			case ELifeUpdateType::Minus:
+				--m_iCurrentLives;
+				m_pcCPlayer->SetLives( m_iCurrentLives );
+				m_pcCHUD->UpdateLives( ELifeUpdateType::Minus, m_iCurrentLives );
+				break;
+		}
 }
+
 
 void CGameManager::ResetHUD()
 {
@@ -202,7 +216,7 @@ void CGameManager::SetCHUD(CHUD* pcCHUD)
 
 void CGameManager::InitCHUD(std::string szLevelName)
 {
-	m_pcCHUD->Init( szLevelName, m_pcCPlayer->GetLives(), m_iCurrentScore, m_iHighScore );
+	m_pcCHUD->Init( szLevelName, m_iCurrentLives, m_iCurrentScore, m_iHighScore );
 }
 
 
@@ -213,7 +227,6 @@ void CGameManager::SetCPlayer(CPlayer* pcPlayer)
 	{
 		m_pcCPlayer = pcPlayer;
 		pcPlayer->SetLives( m_iCurrentLives );
-		//UpdateLives();
 	}
 }
 
@@ -266,6 +279,12 @@ void CGameManager::ResetValues()
 	m_sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 0 );
 }
 
+void CGameManager::ResetLives()
+{
+	m_iCurrentLives = m_kiStartingLives;
+	m_iCurrentScore = 0;
+}
+
 void CGameManager::EndLevel() 
 {
 	if (m_pcLevelManager->GetCurrentManicLayer().GetGameState() == EGameState::Escaping)
@@ -288,13 +307,15 @@ void CGameManager::DrainToScore()
 {
 	if (m_pcAirManager->GetDrainComplete())
 	{
+
 		m_pcLevelManager->GetCurrentManicLayer().RequestNextLevel();
+		m_pcCHUD->FlushText();
+
 	}
 	m_iCurrentScore += m_kiScorePerTimeLeft;
 	UpdateScore();
 	CheckHighScoreForUpdate();
-	ExtraLifeCheck();
-	UpdateLives();
+	ExtraLifeCheck( m_kiScorePerTimeLeft );
 }
 
 #pragma endregion Level_Related_Calls

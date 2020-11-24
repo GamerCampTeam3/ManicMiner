@@ -55,7 +55,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_iLives							( m_iMaxLives )
 	, m_pcControllerActionToKeyMap		( nullptr )
 	, m_bSpriteXFlip					( spriteFlipStatus )
-	, m_eAnimationState					( EAnimationState::Idle )
+	, m_eAnimationState					( EAnimationState::None )
 {
 	SetResetPosition( startingPos );
 }
@@ -164,16 +164,21 @@ void CPlayer::VOnResourceAcquire()																												//
 	// we'd need to use std::unique_ptr::reset in VOnResourceRelease if we wanted the memory allocate / free behaviour to be the same...		//
 	m_pcControllerActionToKeyMap = TCreateActionToKeyMap( s_aePlayerActions, s_aeKeys );														//
 																																				//
+																																				//
 	LoadAnimations(true);																														//
-
-	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at("Idle")));
+																																				//																						//
 }																																				//
 																																				//
 void CPlayer::VOnResourceRelease()																												//
 {																																				//
-	safeDelete( m_pcControllerActionToKeyMap );																									//
+	safeDelete( m_pcControllerActionToKeyMap );																								//
+	m_pcPlayerAnimationList.clear();																											//
 																																				//
 	CGCObjSpritePhysics::VOnResourceRelease();																									//
+																																				//
+
+	LoadAnimations(false);																														//
+																																				//
 }																																				//
 																																				//
 // -------------------------------------------------------------------------------------------------------------------- //						//
@@ -188,8 +193,10 @@ void CPlayer::VOnResurrected()																													//
 	CGCObjSpritePhysics::VOnResurrected();																										//
 																																				//
 // Reset sprite orientation																														//
-	SetFlippedX( m_bSpriteXFlip );																														//
+	SetFlippedX( m_bSpriteXFlip );																												//
 	SetFlippedY( false );																														//
+																																				//
+	InitiateAnimationStateChange(EAnimationState::Idle);
 																																				//
 // Reset all member variable flags																												//
 	m_bIsAlive = true;																															//
@@ -360,7 +367,6 @@ void CPlayer::CheckKeyboardInput()
 				ApplyDirectionChange( EPlayerDirection::Right );
 			}
 		}
-
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	// STATIC																						//
 	//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,7 +429,10 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 #endif
 				// Static -> no speed
 				fHorizontalSpeed = 0.0f;
-				
+				if (m_bIsAlive)
+				{
+					InitiateAnimationStateChange(EAnimationState::Idle);
+				}
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// RIGHT																						//
@@ -439,7 +448,10 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 				// Adjust sprite orientation
 				SetFlippedX( true );
-				
+				if (m_bIsAlive)
+				{
+					InitiateAnimationStateChange(EAnimationState::Run);
+				}
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// LEFT																							//
@@ -455,7 +467,10 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 			// Adjust sprite orientation
 				SetFlippedX( false );
-				
+				if (m_bIsAlive)
+				{
+					InitiateAnimationStateChange(EAnimationState::Run);
+				}
 				break;
 			}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -529,6 +544,9 @@ void CPlayer::JumpEvent()
 				break;
 			case EPlayerDirection::Left:
 				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
+				break;
+			case EPlayerDirection::Static:
+				SetVelocity( cocos2d::Vec2( 0.0f, m_fJumpSpeed ) );
 				break;
 			}
 		}
@@ -891,19 +909,21 @@ void CPlayer::Die()
 	{
 		m_iLives--;
 		m_bIsAlive = false;
+
+		InitiateAnimationStateChange(EAnimationState::None);
 	}
 }
 
 void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 {
 	int iCounter;
+	char* pszAnimations[2];
+	pszAnimations[0] = "Idle";
+	pszAnimations[1] = "Run";
 	if(bShouldLoadAnimations)
 	{
 		iCounter = 0;
 		// Load Animations
-		char* pszAnimations[2];
-		pszAnimations[0] = "Idle";
-		pszAnimations[1] = "Run";
 
 		int iCounter = 0;
 		for (const char* pszAnim : pszAnimations)
@@ -916,12 +936,17 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 	}
 	else
 	{
-		iCounter = 2;
+		iCounter = 1;
+		for(iCounter; iCounter <= -0; iCounter--)
+		{
+			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->release();
+		}
 	}
 }
 
 void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 {
+	GetSprite()->stopAllActions();
 	switch(m_eAnimationState)
 	{
 	case EAnimationState::Idle :
@@ -939,20 +964,38 @@ void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 
 void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 {
+	char* pszAnim;
+	bool bHasAnimation;
 	switch(*eNewAnimationState)
 	{
+	case EAnimationState::None:
+		m_eAnimationState = EAnimationState::None;
+		bHasAnimation = false;
+		break;
 	case EAnimationState::Idle:
 		m_eAnimationState = EAnimationState::Idle;
-		//RunAction();
+		pszAnim = "Idle";
+		bHasAnimation = true;
 		break;
 	case EAnimationState::Run:
 		m_eAnimationState = EAnimationState::Run;
+		pszAnim = "Run";
+		bHasAnimation = true;
 		break;
 	case EAnimationState::Jump:
 		m_eAnimationState = EAnimationState::Jump;
+		pszAnim = "Jump";
+		bHasAnimation = true;
 		break;
 	default:
-		// play idle
+		GetSprite()->stopAllActions();
+		bHasAnimation = false;
 		break;
 	}
+
+	if (bHasAnimation)
+	{
+		RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
+	}
 }
+

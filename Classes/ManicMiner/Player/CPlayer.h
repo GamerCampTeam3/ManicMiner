@@ -29,6 +29,7 @@ enum  EPlayerActions																									//
 //	U.R																													//
 enum class EAnimationState																								//
 {																														//
+	None,																												//
 	Idle,																												//
 	Run,																												//
 	Jump,																												//																												//
@@ -456,11 +457,12 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 // -------------------------------------------------------------------------------------------------------------------- //
 																														//
+	// true - Loads Animations || false - Releases Animations															//
 	void LoadAnimations(bool bShouldLoadAnimations);																	//
 																														//
 	EAnimationState m_eAnimationState;																					//
 																														//
-	// Serves as a checkpoint to disable functionality of the current state the animation state machine is in,			//
+	// Serves as a checkpoint to disable functionality of the current state, the animation state machine is in,			//
 	// before switching to the new state																				//
 	// Can be thought of as the end point of the current state															//
 	void InitiateAnimationStateChange(EAnimationState eNewAnimationState);												//
@@ -470,7 +472,8 @@ public:
 																														//
 	// contains all animations for the player character																	//
 	// ma stands for Map Array																							//
-	std::map<char*, cocos2d::Animation*> m_pcPlayerAnimationList;													//
+	std::map<char*, cocos2d::Animation*> m_pcPlayerAnimationList;														//
+																														//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 };
