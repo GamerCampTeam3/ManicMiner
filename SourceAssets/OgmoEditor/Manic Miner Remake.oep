@@ -16,7 +16,7 @@
     <Width>1920</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>D:\MSc_GitHub_Branch\ManicMiner\SourceAssets\OgmoEditor\Manic Miner Remake.oep</Filename>
+  <Filename>E:\Solutions\TeamProj\ManicMiner\SourceAssets\OgmoEditor\Manic Miner Remake.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -132,7 +132,6 @@
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Hazards/bush/bush.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="AnimationName" Default="" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
@@ -161,14 +160,19 @@
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="AnimationName" Default="" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="MovementRange" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="InitialDistanceFromAnchor" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="BoolValueDefinition" Name="MovingAwayFromAnchorPoint" Default="false" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="Speed" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="BoolValueDefinition" Name="SpriteIsFlippable" Default="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="MovementAxis">
+          <Elements>
+            <string>Horizontal</string>
+            <string>Vertical</string>
+          </Elements>
+        </ValueDefinition>
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Duck/Duck.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="FloatValueDefinition" Name="DestinationX" Default="0" Min="0" Max="2000" Round="0.1" />
-        <ValueDefinition xsi:type="FloatValueDefinition" Name="DestinationY" Default="0" Min="0" Max="2000" Round="0.1" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
@@ -197,14 +201,19 @@
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="AnimationName" Default="" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="MovementRange" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="InitialDistanceFromAnchor" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="BoolValueDefinition" Name="MovingAwayFromAnchorPoint" Default="false" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="Speed" Default="0" Min="0" Max="100" Round="0.1" />
         <ValueDefinition xsi:type="BoolValueDefinition" Name="SpriteIsFlippable" Default="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="MovementAxis">
+          <Elements>
+            <string>Horizontal</string>
+            <string>Vertical</string>
+          </Elements>
+        </ValueDefinition>
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Duck/Duck.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="FloatValueDefinition" Name="DestinationX" Default="0" Min="0" Max="100" Round="0.1" />
-        <ValueDefinition xsi:type="FloatValueDefinition" Name="DestinationY" Default="0" Min="0" Max="100" Round="0.1" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>

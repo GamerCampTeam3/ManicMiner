@@ -29,6 +29,7 @@ GCFACTORY_IMPLEMENT_CREATEABLECLASS(CGCObjHazard);
 CGCObjHazard::CGCObjHazard()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjHazard))
 	, m_pCustomCreationParams(nullptr)
+	, m_bCanCollide(true)
 {
 }
 
@@ -153,6 +154,7 @@ void CGCObjHazard::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 void CGCObjHazard::VOnResurrected( void )
 {
 	CGCObjSpritePhysics::VOnResurrected();
+	m_bCanCollide = true;
 	GetPhysicsBody()->SetGravityScale( 0.0f );
 }
 

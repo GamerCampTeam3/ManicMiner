@@ -23,6 +23,8 @@ class CGCObjHazard
 : public CGCObjSpritePhysics
 {
 public:
+	bool GetCanCollide() { return m_bCanCollide; }
+	void SetCanCollide( bool bCanCollide ) { m_bCanCollide = bCanCollide; }
 	
 private:
 	HazardTypes::EHazardId	    m_eHazardIdentifier;
@@ -33,6 +35,7 @@ private:
 	std::string					m_pszAnimation;
 	std::string                 m_pszPlist;
 	cocos2d::Animation*			pAnimation;
+	bool						m_bCanCollide;
 
 
 
