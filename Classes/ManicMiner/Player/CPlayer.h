@@ -473,8 +473,18 @@ public:
 	// contains all animations for the player character																	//
 	// ma stands for Map Array																							//
 	std::map<char*, cocos2d::Animation*> m_pcPlayerAnimationList;														//
-																														//
-																														//
+
+	int m_iStartAlternatingTime;
+
+	int m_iAlternateIdleTimer;
+
+	bool m_bSelectedStandardIdle;
+	
+	// Alternates between different Idle Animations																		//
+	void AlternateIdleAnimation(bool bPlayStandardIdle);																//																									//
+
+	void ResetIdle();
+	
 // -------------------------------------------------------------------------------------------------------------------- //
 };
 #endif // #ifndef _CPLAYER_H_

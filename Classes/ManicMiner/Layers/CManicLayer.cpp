@@ -222,7 +222,7 @@ void CManicLayer::VOnCreate()
 
 }
 
-void CManicLayer::InitializeBackground(const cocos2d::Size& rSize)
+void CManicLayer::InitializeBackground( const cocos2d::Size& rSize )
 {
 	m_pcGCSprBackGround = new CGCObjSprite();
 	m_pcGCSprBackGround->CreateSprite( m_sLevelCreationParameters.pszLevelBackground );
