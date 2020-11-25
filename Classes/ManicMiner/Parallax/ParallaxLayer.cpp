@@ -2,6 +2,7 @@
 
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "2d/CCScene.h"
+#include "2d/CCSprite.h"
 
 CParallaxLayer::CParallaxLayer()
 	: m_pcSprite	( nullptr )
