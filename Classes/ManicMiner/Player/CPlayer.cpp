@@ -381,9 +381,15 @@ void CPlayer::CheckKeyboardInput()
 
 				// Alternate between Idle Animations
 				m_iAlternateIdleTimer++;
+				//m_iAlternateIdleTimer = m_iAlternateIdleTimer % m_iStartAlternatingTime;
 				if(m_iAlternateIdleTimer >= m_iStartAlternatingTime)
 				{
 					m_iAlternateIdleTimer = 0;
+
+					AlternateIdleAnimation(m_bSelectedStandardIdle); // z check
+					m_bSelectedStandardIdle = !m_bSelectedStandardIdle; // z check
+					
+					/*
 					if(m_bSelectedStandardIdle)
 					{
 						m_bSelectedStandardIdle = false;
@@ -393,7 +399,10 @@ void CPlayer::CheckKeyboardInput()
 					{
 						m_bSelectedStandardIdle = true;
 						AlternateIdleAnimation(false);
-					}
+					}*/
+
+
+					
 				}
 			}
 		}
@@ -985,8 +994,8 @@ void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 
 void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 {
-	char* pszAnim;
-	bool bHasAnimation;
+	char* pszAnim = nullptr;
+	bool bHasAnimation = false;
 	switch(*eNewAnimationState)
 	{
 	case EAnimationState::None:
@@ -1016,14 +1025,16 @@ void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 
 	if (bHasAnimation)
 	{
-		RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
+		auto pAnimation = m_pcPlayerAnimationList[pszAnim];
+		CC_ASSERT( pAnimation );
+		RunAction(GCCocosHelpers::CreateAnimationActionLoop( pAnimation ));
 	}
 }
 
 void CPlayer::AlternateIdleAnimation(bool bPlayStandardIdle)
 {
 	GetSprite()->stopAllActions();
-	char* pszAnim;
+	char* pszAnim = nullptr;
 	if(bPlayStandardIdle)
 	{
 		pszAnim = "Idle";
@@ -1038,5 +1049,6 @@ void CPlayer::AlternateIdleAnimation(bool bPlayStandardIdle)
 void CPlayer::ResetIdle()
 {
 	m_iAlternateIdleTimer = 0;
+	m_bSelectedStandardIdle = false;
 }
 
