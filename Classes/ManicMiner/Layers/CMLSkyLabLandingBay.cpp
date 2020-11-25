@@ -58,7 +58,7 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 
 
 
-	CGCObjLander* CLander1 = new CGCObjLander(cocos2d::Vec2(0.0,0.0), cocos2d::Vec2(0.0, 0.0), 1.0f, 1.0f, 1.0f);
+	//CGCObjLander* CLander1 = new CGCObjLander(cocos2d::Vec2(0.0,0.0), cocos2d::Vec2(0.0, 0.0), 1.0f, 1.0f, 1.0f);
 
 
 
