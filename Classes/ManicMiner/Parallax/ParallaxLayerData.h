@@ -1,12 +1,14 @@
 #ifndef _PARALLAX_LAYER_DATA_H_
 #define _PARALLAX_LAYER_DATA_H_
 
+static const float s_kfMovementScaleMultiplier = 0.0025f;
+
 struct SParallaxLayerData
 {
-	SParallaxLayerData( const char* kpszPlist_image, const int kiZOrder, const float kfMovementScaled )
+	SParallaxLayerData( const char* kpszPlist_image, const int kiZOrder, const float kfMovementScale )
 		: kpszPlist_image( kpszPlist_image )
 		, kiZOrder( kiZOrder )
-		, kfMovementScale( kfMovementScaled * 0.0025f )
+		, kfMovementScale( kfMovementScale * s_kfMovementScaleMultiplier )
 	{}
 
 

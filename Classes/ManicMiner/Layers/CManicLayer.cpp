@@ -1011,7 +1011,7 @@ void CManicLayer::CB_OnGameExitButton( Ref* pSender )
 void CManicLayer::PostInit()
 {
 	// Init level params
-	InitParams();
+	VInitParams();
 
 	// Parallax initiation
 	InitializeBackground();

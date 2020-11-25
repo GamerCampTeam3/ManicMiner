@@ -329,7 +329,7 @@ private:
 	void CB_OnGameExitButton( Ref* pSender );
 
 public:
-	virtual void InitParams() = 0;
-	virtual void PostInit();
+	virtual void VInitParams() = 0;
+	void PostInit();
 };
 #endif // #ifndef _CMANICLAYER_H_

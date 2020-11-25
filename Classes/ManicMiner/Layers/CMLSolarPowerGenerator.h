@@ -40,6 +40,6 @@ private:
 	// --- Air Manager ---------------------------------------------------------------------------------------------------- //
 	CAirManager* m_pcAirManager;
 
-	virtual void InitParams() override;
+	virtual void VInitParams() override;
 };
 #endif //#ifndef _CMLSOLARPOWERGENERATOR_H_

@@ -24,7 +24,7 @@ void CBackgroundParallaxLayer::Init(cocos2d::Scene& pcScene, const SParallaxLaye
 	m_pcPlayer = pcPlayer;
 }
 
-void CBackgroundParallaxLayer::Update()
+void CBackgroundParallaxLayer::VUpdate()
 {
 	const float kfPlayerPosX = m_pcPlayer->GetSpritePosition().x;
 	const float kfScreenCentreX = 960.0f;

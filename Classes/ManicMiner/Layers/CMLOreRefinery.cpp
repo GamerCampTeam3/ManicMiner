@@ -53,7 +53,7 @@ void CMLOreRefinery::VOnCreate( void )
 	//addChild( emitter, 10 );
 }
 
-void CMLOreRefinery::InitParams()
+void CMLOreRefinery::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager->SetCHUD( m_pCHUD );

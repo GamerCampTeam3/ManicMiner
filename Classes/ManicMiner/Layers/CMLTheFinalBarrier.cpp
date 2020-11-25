@@ -53,7 +53,7 @@ void CMLTheFinalBarrier::VOnCreate( void )
 	//addChild( emitter, 10 );
 }
 
-void CMLTheFinalBarrier::InitParams()
+void CMLTheFinalBarrier::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager->SetCHUD( m_pCHUD );

@@ -47,7 +47,7 @@ void CMLTheMenagerie::VOnCreate( void )
 
 
 
-void CMLTheMenagerie::InitParams()
+void CMLTheMenagerie::VInitParams()
 {
 	// Sets the references required by the player
 	m_pcGameManager->SetCHUD				( m_pCHUD			);

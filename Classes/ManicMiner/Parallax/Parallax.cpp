@@ -41,7 +41,7 @@ void CParallax::Update()
 {
 	for( int iCurrentLayer = 0; iCurrentLayer < m_kiNumLayers; iCurrentLayer++ )
 	{
-		m_pacBGPLayers[ iCurrentLayer ].Update();
+		m_pacBGPLayers[ iCurrentLayer ].VUpdate();
 	}
 }
 

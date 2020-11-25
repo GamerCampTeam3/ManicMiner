@@ -61,7 +61,7 @@ void CMLReturnOfKong::VOnCreate( void )
 
 }
 
-void CMLReturnOfKong::InitParams()
+void CMLReturnOfKong::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager->SetCHUD( m_pCHUD );

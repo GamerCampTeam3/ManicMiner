@@ -52,7 +52,7 @@ void CMLCentralCavern::VOnCreate( void )
 	//addChild( emitter, 10 );
 }
 
-void CMLCentralCavern::InitParams()
+void CMLCentralCavern::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager	->SetCHUD				( m_pCHUD		  );

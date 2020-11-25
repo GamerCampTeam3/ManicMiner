@@ -70,7 +70,7 @@ void CMLWillyMeetsKong::VOnCreate( void )
 
 }
 
-void CMLWillyMeetsKong::InitParams()
+void CMLWillyMeetsKong::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager->SetCHUD( m_pCHUD );

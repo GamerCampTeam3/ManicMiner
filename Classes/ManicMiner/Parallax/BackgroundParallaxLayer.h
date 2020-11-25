@@ -11,9 +11,9 @@ public:
 	CBackgroundParallaxLayer();
 	virtual ~CBackgroundParallaxLayer();
 
+	void Init(cocos2d::Scene& pcScene, const SParallaxLayerData& rsData, CPlayer* pcPlayer);
 
-	virtual void Init(cocos2d::Scene& pcScene, const SParallaxLayerData& rsData, CPlayer* pcPlayer);
-	virtual void Update() override;
+	virtual void VUpdate() override;
 private:
 	CPlayer* m_pcPlayer;
 };

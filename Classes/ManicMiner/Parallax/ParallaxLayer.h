@@ -18,10 +18,10 @@ public:
 	CParallaxLayer();
 	virtual ~CParallaxLayer();
 
-	virtual void Init( cocos2d::Scene& pcScene, const SParallaxLayerData& rsData );
+	void Init( cocos2d::Scene& pcScene, const SParallaxLayerData& rsData );
 	
 	// Purely Virtual Update
-	virtual void Update() = 0;
+	virtual void VUpdate() = 0;
 	
 	cocos2d::Sprite* GetSprite() const;
 	const SParallaxLayerData* GetData() const;

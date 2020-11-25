@@ -82,7 +82,7 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 }
 
 
-void CMLSkyLabLandingBay::InitParams()
+void CMLSkyLabLandingBay::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager->SetCHUD( m_pCHUD );

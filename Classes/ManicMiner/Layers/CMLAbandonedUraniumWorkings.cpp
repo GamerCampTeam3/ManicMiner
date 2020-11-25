@@ -45,7 +45,7 @@ void CMLAbandonedUraniumWorkings::VOnCreate( void )
 
 
 
-void CMLAbandonedUraniumWorkings::InitParams()
+void CMLAbandonedUraniumWorkings::VInitParams()
 {
 	// Sets the references required by the player
 	m_pcGameManager->SetCHUD			( m_pCHUD			);

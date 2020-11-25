@@ -48,7 +48,7 @@ void CMLTheColdRoom::VOnCreate( void )
 
 
 
-void CMLTheColdRoom::InitParams()
+void CMLTheColdRoom::VInitParams()
 {
 	// Sets the references required by the player
 	m_pcGameManager	->SetCHUD				( m_pCHUD			);
