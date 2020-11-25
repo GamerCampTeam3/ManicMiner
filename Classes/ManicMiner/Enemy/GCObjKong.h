@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // (C) Gamer Camp / Dave O'Dwyer October 2020
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#ifndef _GCOBJLANDER_H_
-#define _GCOBJLANDER_H_
+#ifndef _GCOBJKONG_H_
+#define _GCOBJKONG_H_
 
 //#ifndef _GCFACTORY_OBJSPRITEPHYSICS_H_
 //#include "../../../GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
@@ -10,7 +10,6 @@
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
-//#include "ManicMiner/Enums/ELanderTypes.h"
 
 //////////////////////////////////////////////////////////////////////////
 //  This class defines an invidual instance of an enemy character.
@@ -20,14 +19,14 @@
 //
 //////////////////////////////////////////////////////////////////////////
 
-class CGCObjLander
+class CGCObjKong
 : public CGCObjSpritePhysics
 {
 private:
 
-	enum class ELanderState {
-		EWaitingToDeploy,
-		EDeploying,
+	enum class EKongState {
+		EWaitingToFall,
+		EFalling,
 
 	};
 
@@ -37,13 +36,11 @@ private:
 
 
 
-	ELanderState				m_cLanderState;
+	EKongState					m_cKongState;
 
 	cocos2d::Vec2				m_cAnchorPoint;
 	float						m_fSpeed;
-    float 						m_fStartDelay;
-	float 						m_fReDeployDelay;
-
+    
 
 
 	std::string					m_pszAnimation;
@@ -57,25 +54,21 @@ private:
 
 
 
-	//std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
 	cocos2d::Animation* pAnimation;
 		
 public:
 
-	//CGCObjLander();
+	
 
-	//CGCObjLander(GCTypeID idDerivedType);
-
-
-	CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const cocos2d::Vec2& rcDestinationPoint, const float fSpeed, const float fStartDelay, const float fReDeployDelay, CGCFactoryCreationParams& ParamsInput);
+	CGCObjKong(const cocos2d::Vec2& rcAnchorPoint, const cocos2d::Vec2& rcDestinationPoint, const float fSpeed, CGCFactoryCreationParams& ParamsInput);
 		//CGCFactoryCreationParams& ParamsInput);
 
-	//GCFACTORY_DECLARE_CREATABLECLASS(CGCObjLander);
+	//GCFACTORY_DECLARE_CREATABLECLASS(CGCObjKong);
 	
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
 	// this class to delete derived types.
-	virtual ~CGCObjLander();
+	virtual ~CGCObjKong();
 	
 	//////////////////////////////////////////////////////////////////////////
 	// overridden virtuals from the game object interface
@@ -89,4 +82,4 @@ public:
 
 
 };
-#endif // #ifndef _GCOBJLANDER_H_
+#endif // #ifndef _GCOBJKONG_H_
