@@ -15,19 +15,19 @@ USING_NS_CC;
 
 CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	: m_pScoreValueLabel		( nullptr		)
-	, m_pScoreTextLabel			( nullptr		)
+	, m_pScoreTextLabel		( nullptr		)
 	, m_pHighScoreValueLabel	( nullptr		)
 	, m_pHighscoreTextLabel		( nullptr		)
-	, m_pLevelName				( nullptr		)
+	, m_pLevelName			( nullptr		)
 	, m_pglOwnerGameLayer		( &cLayer		)
-	, m_pointOrigin				( pOrigin		)
-	, m_sizeVisible				( visibleSize	)
+	, m_pointOrigin			( pOrigin		)
+	, m_sizeVisible			( visibleSize		)
 	, m_v2ScoreTextPosition		(0,0		)
 	, m_v2HighscoreTextPosition	(0,0		)
 	, m_v2ScoreValuePosition	(0,0		)
-	, m_v2HighscoreValuePosition(0,0		)
+	, m_v2HighscoreValuePosition	(0,0		)
 	, m_v2LevelNamePosition		(0,0		)
-	, m_fXPlacement				( 0.f			)
+	, m_fXPlacement			( 700.f			)
 {
 
 	// We initialized them to 0 to keep the list clean, so we set them up here
@@ -39,14 +39,12 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	
 	m_v2LevelNamePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1570.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 40 );	//	Level name
 
-	// X position of the first Battery to be drawn (each other battery will add an increment to this)
-	m_fXPlacement = 700.f;
 
 	// We new the labels now, and set the content on Init()
 	m_pScoreTextLabel		= new cocos2d::Label();
 	m_pScoreValueLabel		= new cocos2d::Label();
-	m_pHighscoreTextLabel	= new cocos2d::Label();
-	m_pHighScoreValueLabel	= new cocos2d::Label();
+	m_pHighscoreTextLabel		= new cocos2d::Label();
+	m_pHighScoreValueLabel		= new cocos2d::Label();
 	m_pLevelName			= new cocos2d::Label();
 
 	// The color of the text, that will be used to set the initial label values.
@@ -61,8 +59,8 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	InitLabel( m_pScoreTextLabel,		textColor, 20.0f, m_v2ScoreTextPosition,			TextHAlignment::LEFT	);
 	InitLabel( m_pScoreValueLabel,		textColor, 20.0f, m_v2ScoreValuePosition,		TextHAlignment::CENTER	);
 	InitLabel( m_pHighscoreTextLabel,	textColor, 20.0f, m_v2HighscoreTextPosition,		TextHAlignment::LEFT	);
-	InitLabel( m_pHighScoreValueLabel,	textColor, 20.0f, m_v2HighscoreValuePosition,	TextHAlignment::CENTER	);
-	InitLabel( m_pLevelName,			textColor, 25.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
+	InitLabel( m_pHighScoreValueLabel,	textColor, 20.0f, m_v2HighscoreValuePosition,		TextHAlignment::CENTER	);
+	InitLabel( m_pLevelName,		textColor, 25.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
 }
 
 CHUD::~CHUD()
@@ -108,7 +106,7 @@ void CHUD::Init(std::string szLevelName, int life, int iScore, int iHighscore)
 	//
 	// HIGHSCORE -----------------------------------------------------------------------------------------------------------------------------------//
 	// TEXT:
-	UpdateLabel( m_pHighscoreTextLabel,  static_cast<char*>("HIGHSCORE: "), 0, ELabelType::Text );
+	UpdateLabel( m_pHighscoreTextLabel, "HIGHSCORE: ", 0, ELabelType::Text );
 	// VALUE:
 	UpdateLabel( m_pHighScoreValueLabel,  nullptr, iHighscore,  ELabelType::Number );
 	// ---------------------------------------------------------------------------------------------------------------------------------------------//

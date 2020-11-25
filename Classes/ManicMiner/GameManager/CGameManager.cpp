@@ -1,17 +1,13 @@
-#include "CGameManager.h"
-
-#include <fstream>
-
-#include "ManicMiner/Helpers/Helpers.h"
-
 #include "ManicMiner/AirManager/AirManager.h"
+#include "ManicMiner/Enums/ELifeUpdateType.h"
+#include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
-#include "ManicMiner/LevelManager/CLevelManager.h"
 #include "ManicMiner/Layers/CManicLayer.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
 #include "ManicMiner/Player/CPlayer.h"
 
-#include "ManicMiner/Enums/ELifeUpdateType.h"
-
+#include "CGameManager.h"
+#include <fstream>
 
 
 CGameManager::CGameManager( CLevelManager& rcLevelManager )
@@ -52,7 +48,6 @@ void CGameManager::CheckHighScoreForUpdate()
 		WriteHighScore();
 	}
 }
-
 
 // Keeps tracks if the player has accrued enough score to get a new life
 // If it has, the player will be given an extra life and then the counter will be reset.
@@ -108,25 +103,17 @@ void  CGameManager::WriteHighScore()
 	// TODO: Look into creating binary file instead
 	std::ofstream highScoreFile;
 	highScoreFile.open( "Highscore.bin" );
-	if (!highScoreFile.is_open())
-	{
-		m_iHighScore = 0;
-		// TODO: Add a prompt saying file not found, therefore reset.
-	}
-	else
-	{
+	ASSERT_CHECK( highScoreFile.is_open() );
+
 		unsigned int tempScore = m_iHighScore;				// Sec the temporary int to be the current high score
 		unsigned int comparisonScore = tempScore;			// We then also store it in another variable
 
 		tempScore = tempScore << 16;						// We shift the bits here by 8
-
 		comparisonScore = comparisonScore << 5;				// The second variable is shifted with a different number (so they aren't both the same)
-
 
 		highScoreFile << tempScore;							// We then write the first value to the file
 		highScoreFile << "\r\n";							// Next line
 		highScoreFile << comparisonScore;					// Store the comparison value into the following line
-	}
 }
 
 
@@ -138,18 +125,14 @@ void  CGameManager::ReadHighScore()
 {
 	std::ifstream highScoreFile;
 	highScoreFile.open( "Highscore.bin" );
-	if (!highScoreFile.is_open())
-	{
-		m_iHighScore = 0;
-		// TODO: Add a prompt saying file not found, therefore reset.
-	}
+	ASSERT_CHECK( highScoreFile.is_open());
 
 	unsigned int tempScore = 0;
 	unsigned int comparisonScore = 0;
 	highScoreFile >> tempScore >> comparisonScore;			// We read the file and store the values
 	
 	// We then decrypt it with a division operation
-	tempScore = tempScore >> 16;								// then shift 8 bits back
+	tempScore = tempScore >> 16;							// then shift 8 bits back
 	comparisonScore = comparisonScore >> 5;					// Reverse the operation on comparison as well
 
 	if ( tempScore != comparisonScore)						// Finally we compare the value to see if any where user touched.

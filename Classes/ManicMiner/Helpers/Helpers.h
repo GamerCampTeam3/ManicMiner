@@ -17,4 +17,10 @@ template <typename T> void safeDeleteArray( T*& a )
 	delete[] a;
 	a = nullptr;
 }
+
+
+#ifdef _DEBUG
+#define ASSERT_CHECK(param) assert(param)
+#endif
+
 #endif // !HELPERS_H

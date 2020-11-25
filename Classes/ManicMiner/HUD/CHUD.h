@@ -55,7 +55,6 @@ private:
 	cocos2d::Label*		m_pHighScoreValueLabel;				// HighScore Value
 	cocos2d::Label*		m_pHighscoreTextLabel;				// HighScore Text
 	cocos2d::Label*		m_pLevelName;						// Level name Text
-
 	
 	CManicLayer*		m_pglOwnerGameLayer;				// Pointer to the current CManicLayer
 
