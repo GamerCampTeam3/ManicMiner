@@ -8,6 +8,7 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/Enemy/GCObjEnemy.h"
 
 
 
@@ -51,6 +52,19 @@ void CMLWillyMeetsKong::VOnCreate( void )
 	//auto emitter = cocos2d::ParticleExplosion::create();
 	//emitter->setTotalParticles( 100 );
 	//addChild( emitter, 10 );
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 void CMLWillyMeetsKong::InitParams()

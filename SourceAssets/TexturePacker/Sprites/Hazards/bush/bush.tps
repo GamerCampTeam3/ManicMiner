@@ -181,6 +181,71 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Frames/Move/final-0001.png</key>
+            <key type="filename">Frames/Move/final-0002.png</key>
+            <key type="filename">Frames/Move/final-0003.png</key>
+            <key type="filename">Frames/Move/final-0004.png</key>
+            <key type="filename">Frames/Move/final-0005.png</key>
+            <key type="filename">Frames/Move/final-0006.png</key>
+            <key type="filename">Frames/Move/final-0007.png</key>
+            <key type="filename">Frames/Move/final-0008.png</key>
+            <key type="filename">Frames/Move/final-0009.png</key>
+            <key type="filename">Frames/Move/final-0010.png</key>
+            <key type="filename">Frames/Move/final-0011.png</key>
+            <key type="filename">Frames/Move/final-0012.png</key>
+            <key type="filename">Frames/Move/final-0013.png</key>
+            <key type="filename">Frames/Move/final-0014.png</key>
+            <key type="filename">Frames/Move/final-0015.png</key>
+            <key type="filename">Frames/Move/final-0016.png</key>
+            <key type="filename">Frames/Move/final-0017.png</key>
+            <key type="filename">Frames/Move/final-0018.png</key>
+            <key type="filename">Frames/Move/final-0019.png</key>
+            <key type="filename">Frames/Move/final-0020.png</key>
+            <key type="filename">Frames/Move/final-0021.png</key>
+            <key type="filename">Frames/Move/final-0022.png</key>
+            <key type="filename">Frames/Move/final-0023.png</key>
+            <key type="filename">Frames/Move/final-0024.png</key>
+            <key type="filename">Frames/Move/final-0025.png</key>
+            <key type="filename">Frames/Move/final-0026.png</key>
+            <key type="filename">Frames/Move/final-0027.png</key>
+            <key type="filename">Frames/Move/final-0028.png</key>
+            <key type="filename">Frames/Move/final-0029.png</key>
+            <key type="filename">Frames/Move/final-0030.png</key>
+            <key type="filename">Frames/Move/final-0031.png</key>
+            <key type="filename">Frames/Move/final-0032.png</key>
+            <key type="filename">Frames/Move/final-0033.png</key>
+            <key type="filename">Frames/Move/final-0034.png</key>
+            <key type="filename">Frames/Move/final-0035.png</key>
+            <key type="filename">Frames/Move/final-0036.png</key>
+            <key type="filename">Frames/Move/final-0037.png</key>
+            <key type="filename">Frames/Move/final-0038.png</key>
+            <key type="filename">Frames/Move/final-0039.png</key>
+            <key type="filename">Frames/Move/final-0040.png</key>
+            <key type="filename">Frames/Move/final-0041.png</key>
+            <key type="filename">Frames/Move/final-0042.png</key>
+            <key type="filename">Frames/Move/final-0043.png</key>
+            <key type="filename">Frames/Move/final-0044.png</key>
+            <key type="filename">Frames/Move/final-0045.png</key>
+            <key type="filename">Frames/Move/final-0046.png</key>
+            <key type="filename">Frames/Move/final-0047.png</key>
+            <key type="filename">Frames/Move/final-0048.png</key>
+            <key type="filename">Frames/Move/final-0049.png</key>
+            <key type="filename">Frames/Move/final-0050.png</key>
+            <key type="filename">Frames/Move/final-0051.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,15,30,30</rect>
+                <key>scale9Paddings</key>
+                <rect>15,15,30,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">bush.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -200,6 +265,7 @@
         <key>fileList</key>
         <array>
             <filename>bush.png</filename>
+            <filename>Frames</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -26,6 +26,8 @@ CGCObjEnemy::CGCObjEnemy()
 	m_bTemporaryAnchorPositionActive = false;
 	m_bInitialiseToOne = false;
 	m_fPreviousXPos = 0.0;
+	m_bEnemyJustReceivedANewDestination = false;
+	m_cNewDestination = cocos2d::Vec2::ZERO;
 }
 
 CGCObjEnemy::CGCObjEnemy(GCTypeID idDerivedType)
@@ -35,6 +37,8 @@ CGCObjEnemy::CGCObjEnemy(GCTypeID idDerivedType)
 	m_bTemporaryAnchorPositionActive = false;
 	m_bInitialiseToOne = false;
 	m_fPreviousXPos = 0.0;
+	m_bEnemyJustReceivedANewDestination = false;
+	m_cNewDestination = cocos2d::Vec2::ZERO;
 
 }
 
@@ -86,22 +90,9 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 	}
 	
-
-	
-
 	m_cAnchorPoint = GetResetPosition();
 
-
-
-
-
-
-
-
-
 	SetFacingOrientation();
-
-
 
 	// Special consideration required if this value > 0 which means the first walk window path is shorter than the others.
 	if (m_fInitialDistanceFromAnchor > 0)
@@ -158,34 +149,13 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 		m_cCurrentPos = m_cAnchorPoint;
 
 
-
-
-
-
 		SetResetPosition(m_cAnchorPoint);
-
-
-
-
 
 	}
 
-
-
-
-
-
-
-
-
 	m_fPreviousXPos = m_cCurrentPos.x;
 
-
-
 }
-
-//////////////////////////////////////////////////////////////////////////
-
 
 void CGCObjEnemy::VOnReset()
 {
@@ -336,12 +306,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 		m_fMoveDelta -= fLerpInput;
 	}
 
-
-
-
-
 	m_cCurrentPos = m_cAnchorPoint.lerp(m_cDest, m_fMoveDelta);
-
 
 
 
@@ -349,16 +314,17 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 
 	if (m_fMoveDelta > 0.0f && m_fMoveDelta < 1.0f)
 	{
+		// This is the normal path taken during an enemies traverse of its movement window.
 		MoveToPixelPosition(m_cCurrentPos);
 	}
 	else
 	{
-		// Must of arrived at either side of the movement window.
+		// This is the path taken when an enemy has arrived at either side of the movement window.
 
+		// A TemporaryAnchorPositionActive signifies that the walk window needs re-setting to its 'normal' size.
 		if (m_bTemporaryAnchorPositionActive)
 		{
 			// need to restore normal walk cycle positions
-
 			if (m_bMovingAwayFromAnchorPoint)
 				m_cAnchorPoint = m_cTemporaryAnchorPosition;
 			else
@@ -370,27 +336,64 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 		}
 
 
+		// This is the situation when the movement window is updated with a new wider position (kong beast levels).
+		// 
 
-
-
-
-
-		// Flip moving logic and facing orientation if required.
-		m_bMovingAwayFromAnchorPoint = !m_bMovingAwayFromAnchorPoint;
-		if (m_bSpriteIsFlippable)
+		if (m_bEnemyJustReceivedANewDestination)
 		{
-			SetFacingOrientation();
+			// This path signifies that the enemy destination has been updated to a new position during this walk cycle.
+
+			if (m_fMoveDelta < 0.0f)
+			{
+				// At start side of 0-1 LERP calcuation so no need to worry about a visible step jump for the new window width.
+			    // The new destination can just be slotted in and the LERP will recalculate correctly.
+				m_cDest = m_cNewDestination;
+
+			}
+
+			else if (m_fMoveDelta > 1.0f)
+			{
+				// For this case we need to calculate for the journey to the new destination point as a 'temporaryAnchorPositionActive',
+				// using the same method as for if the initial distance from the anchor is set > 0 at startup.
+
+				// Store current anchor point into the temporary variable and set a flag to signal this needs re-instating at the end of the current walk cycle.
+				m_cTemporaryAnchorPosition = m_cAnchorPoint;
+				m_bTemporaryAnchorPositionActive = true;
+
+				// Set new anchor and destination points for the temporary movement window.
+				m_cAnchorPoint = m_cCurrentPos;
+				m_cDest = m_cNewDestination;
+				
+                // Set these values to ensure a standard walk cycle occurs for the temporary movement.
+				m_bMovingAwayFromAnchorPoint = true;
+				m_fMoveDelta = 0.0f;
+
+			}
+
+			// Clear this flag and this path will not be taken again until triggered.
+			m_bEnemyJustReceivedANewDestination = false;
+
+		}
+		//-----------------------------------------------------------------------------
+		else
+		{
+			// This path is not taken if m_bEnemyJustReceivedANewDestination is True as we don't want to perform a sprite flip
+			// or clamp m_fMoveDelta for that situation.
+
+
+			// Flip moving logic and facing orientation if required.
+			m_bMovingAwayFromAnchorPoint = !m_bMovingAwayFromAnchorPoint;
+			if (m_bSpriteIsFlippable)
+			{
+				SetFacingOrientation();
+			}
+
+			// Clamp value between 0 and 1 to avoid any 'stuck' situations occuring just outside of the 0 to 1 range.
+			m_fMoveDelta = std::max(0.0f, std::min(m_fMoveDelta, 1.0f));
 		}
 
 
-		// Clamp value between 0 and 1 to avoid any 'stuck' situations occuring just outside of the 0 to 1 range.
-		m_fMoveDelta = std::max(0.0f, std::min(m_fMoveDelta, 1.0f));
-
-
 	}
-
-
-
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -401,32 +404,6 @@ void CGCObjEnemy::SetFacingOrientation()
 	SetFlippedX(m_fPreviousXPos >= m_cCurrentPos.x);
 }
 
-
-
-//////////////////////////////////////////////////////////////////////////
-// Function to flip the enemies current direction of travel when it has collided with an object
-// (note required only in the Kong Beast levels 8 and 12 when a wall is removed during gameplay).
-// 
-void CGCObjEnemy::BounceEnemyDirection()
-{
-	// If the enemy has just collided with an ojbect then this latching flag is set true to allow only
-	// one flip of the sprite during collisions lifttime.   
-	// The flag is reset when the enemy reaches the boundary at the other
-	// side of its movement window.   This is a crude method but sufficient for the one edge case when
-	// an enemy collides with an object which restricts the enemys moviement.  During gameplay the 
-	// ojbect is removed therefore allowing greater movement of the enemy.
-
-	if (!m_bBounceCollisionDisabled)
-	{
-		if (EnemyTypes::EMovementAxis::EMovementAxis_Horizontal == m_eMovementAxis && m_bSpriteIsFlippable)
-		{
-			SetFlippedX(!m_bMovingAwayFromAnchorPoint);
-		}
-		m_bMovingAwayFromAnchorPoint = !m_bMovingAwayFromAnchorPoint;
-	}
-	// Latch the flag to stop the enemy constantly flipping during the collisions duration.
-	m_bBounceCollisionDisabled = true;
-}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -442,5 +419,20 @@ void CGCObjEnemy::VOnResourceRelease()
 		pAnimation = nullptr;
 
 	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+
+void CGCObjEnemy::ModifyEnemyDestinationPoint(cocos2d::Vec2& rcNewDestination)
+{
+	
+	m_bEnemyJustReceivedANewDestination = true;
+	m_cNewDestination = rcNewDestination;
+
+
+	// 
+   //ModifyEnemyDestinationPoint(Vec2(1180.0, 475.0));
+
 }
 
