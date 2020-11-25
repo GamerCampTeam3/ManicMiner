@@ -504,6 +504,9 @@
     <ClCompile Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.cpp">
       <Filter>Classes\ManicMiner\Parallax</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\BackgroundParallaxLayer.cpp">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -835,9 +838,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayerData.h">
       <Filter>Classes\ManicMiner\Parallax</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enums\ELifeUpdateType.h">
       <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\BackgroundParallaxLayer.h">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\EParallaxTheme.h">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

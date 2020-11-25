@@ -3,6 +3,7 @@
 
 class CPlayer;
 class CParallaxLayer;
+class CBackgroundParallaxLayer;
 struct SParallaxLayerData;
 
 namespace cocos2d
@@ -26,7 +27,7 @@ private:
 	CPlayer& m_rcPlayer;
 
 	const int m_kiNumLayers;
-	CParallaxLayer* m_pacLayers;
+	CBackgroundParallaxLayer* m_pacBGPLayers;
 	// Used only for init purposes
 	int m_iCurrentLayer;
 };

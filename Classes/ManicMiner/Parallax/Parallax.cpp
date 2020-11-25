@@ -1,48 +1,47 @@
 #include "Parallax.h"
 
-#include "ManicMiner/Player/CPlayer.h"
 #include "2d/CCScene.h"
+
+#include "BackgroundParallaxLayer.h"
+#include "ManicMiner/Player/CPlayer.h"
 #include "ParallaxLayer.h"
+#include "base/ccMacros.h"
 
 CParallax::CParallax( const int kiNumLayers, cocos2d::Scene& rcScene, CPlayer& rcPlayer )
 	: m_rcScene		( rcScene		)
 	, m_rcPlayer	( rcPlayer		)
 	, m_kiNumLayers	( kiNumLayers	)
-	, m_pacLayers	( nullptr		)
+	, m_pacBGPLayers( nullptr		)
 	, m_iCurrentLayer ( 0 )
 {
-	m_pacLayers = new CParallaxLayer[ m_kiNumLayers ];
+	m_pacBGPLayers = new CBackgroundParallaxLayer[ m_kiNumLayers ];
 }
 
 CParallax::~CParallax()
 {
-	if( m_pacLayers != nullptr )
+	if(m_pacBGPLayers != nullptr )
 	{
-		delete[] m_pacLayers;
-		m_pacLayers = nullptr;
+		delete[] m_pacBGPLayers;
+		m_pacBGPLayers = nullptr;
 	}
 }
 
 void CParallax::AddLayer( const SParallaxLayerData& rsLayerData )
 {
-	if( m_iCurrentLayer < m_kiNumLayers )
-	{
-		CParallaxLayer& rcCurrentLayer = m_pacLayers[ m_iCurrentLayer ];
+	CCAssert( (m_iCurrentLayer < m_kiNumLayers), "Trying to add more layers than allocated to CParallax" );
+	CCAssert( rsLayerData.kpszPlist_image != nullptr, "CParallaxLayer pszPlist incorrect path" );
 
-		rcCurrentLayer.Init( m_rcScene, rsLayerData );
-		m_iCurrentLayer++;
-	}
-	else
-	{
-		CCLOG( "EXCEEDED PARALLAX SPECIFIED NUMBER OF LAYERS: %d", m_kiNumLayers );
-	}
+	CBackgroundParallaxLayer& rcCurrentLayer = m_pacBGPLayers[m_iCurrentLayer];
+
+	rcCurrentLayer.Init( m_rcScene, rsLayerData, &m_rcPlayer );
+	m_iCurrentLayer++;
 }
 
 void CParallax::Update()
 {
 	for( int iCurrentLayer = 0; iCurrentLayer < m_kiNumLayers; iCurrentLayer++ )
 	{
-		//m_pacLayers[ iCurrentLayer ].Update();
+		m_pacBGPLayers[ iCurrentLayer ].Update();
 	}
 }
 
