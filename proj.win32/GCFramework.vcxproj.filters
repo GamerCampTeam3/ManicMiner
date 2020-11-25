@@ -226,6 +226,9 @@
     <Filter Include="Classes\ManicMiner\Sunlight">
       <UniqueIdentifier>{d879fd3f-23ea-4d12-aa84-d5f81118d9c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Parallax">
+      <UniqueIdentifier>{af49e63c-6d6e-4a08-be6f-b1cec3f224ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -495,11 +498,11 @@
     <ClCompile Include="..\Classes\ManicMiner\Sunlight\CSunlight.cpp">
       <Filter>Classes\ManicMiner\Sunlight</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp">
-      <Filter>Classes\ManicMiner\Door</Filter>
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\Parallax.cpp">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp">
-      <Filter>Classes\ManicMiner\Door</Filter>
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.cpp">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -824,14 +827,17 @@
     <ClInclude Include="..\Classes\ManicMiner\Sunlight\CSunlight.h">
       <Filter>Classes\ManicMiner\Sunlight</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\Parallax.h">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.h">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayerData.h">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
+	</ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enums\ELifeUpdateType.h">
       <Filter>Classes\ManicMiner\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h">
-      <Filter>Classes\ManicMiner\Door</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h">
-      <Filter>Classes\ManicMiner\Door</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

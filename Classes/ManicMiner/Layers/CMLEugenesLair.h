@@ -12,6 +12,8 @@
 #define _CMLEUGENESLAIR_H_
 
 #include "ManicMiner/Layers/CManicLayer.h"
+#include "ManicMiner/Enemy/GCObjEugene.h"
+
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CAirManager;																										//
 class CHUD;																												//
@@ -24,13 +26,14 @@ public:
 	CMLEugenesLair();
 	// Destructor --------------------------------------------------------------------------------------------------------- //
 	virtual ~CMLEugenesLair();
-
 	// CManicLayer Overrides ---------------------------------------------------------------------------------------------- //
 	// VOnCreate will define this level's specific layout ----------------------------------------------------------------- //
 	virtual	void VOnCreate( void ) override;																			//
 // VOnDestroy needs to cleanup the unique elements to this level ------------------------------------------------------ //
 	virtual	void VOnDestroy( void ) override;																			//
 // -------------------------------------------------------------------------------------------------------------------- //
+
+public:
 
 private:
 

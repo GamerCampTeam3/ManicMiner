@@ -56,6 +56,9 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_pcControllerActionToKeyMap		( nullptr )
 	, m_bSpriteXFlip					( spriteFlipStatus )
 	, m_eAnimationState					( EAnimationState::None )
+	, m_iAlternateIdleTimer				( 0 )
+	, m_iStartAlternatingTime			( 200 )
+	, m_bSelectedStandardIdle			( false )
 {
 	SetResetPosition( startingPos );
 }
@@ -375,6 +378,32 @@ void CPlayer::CheckKeyboardInput()
 			if( m_bCanBeControlled && m_bIsGrounded )
 			{
 				ApplyDirectionChange( EPlayerDirection::Static, true );
+
+				// Alternate between Idle Animations
+				m_iAlternateIdleTimer++;
+				//m_iAlternateIdleTimer = m_iAlternateIdleTimer % m_iStartAlternatingTime;
+				if(m_iAlternateIdleTimer >= m_iStartAlternatingTime)
+				{
+					m_iAlternateIdleTimer = 0;
+
+					AlternateIdleAnimation(m_bSelectedStandardIdle); // z check
+					m_bSelectedStandardIdle = !m_bSelectedStandardIdle; // z check
+					
+					/*
+					if(m_bSelectedStandardIdle)
+					{
+						m_bSelectedStandardIdle = false;
+						AlternateIdleAnimation(true);
+					}
+					else
+					{
+						m_bSelectedStandardIdle = true;
+						AlternateIdleAnimation(false);
+					}*/
+
+
+					
+				}
 			}
 		}
 	}
@@ -909,17 +938,17 @@ void CPlayer::Die()
 	{
 		m_iLives--;
 		m_bIsAlive = false;
-
-		InitiateAnimationStateChange(EAnimationState::None);
 	}
 }
 
 void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 {
 	int iCounter;
-	char* pszAnimations[2];
+	char* pszAnimations[3];
 	pszAnimations[0] = "Idle";
-	pszAnimations[1] = "Run";
+	pszAnimations[1] = "AlternativeIdle";
+	pszAnimations[2] = "Run";
+	//pszAnimations[3] = "Jump";
 	if(bShouldLoadAnimations)
 	{
 		iCounter = 0;
@@ -936,8 +965,8 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 	}
 	else
 	{
-		iCounter = 1;
-		for(iCounter; iCounter <= -0; iCounter--)
+		iCounter = 2;
+		for(iCounter; iCounter <= 0; iCounter--)
 		{
 			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->release();
 		}
@@ -950,6 +979,7 @@ void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 	switch(m_eAnimationState)
 	{
 	case EAnimationState::Idle :
+		ResetIdle();
 		break;
 	case EAnimationState::Run :
 		break;
@@ -964,8 +994,8 @@ void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 
 void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 {
-	char* pszAnim;
-	bool bHasAnimation;
+	char* pszAnim = nullptr;
+	bool bHasAnimation = false;
 	switch(*eNewAnimationState)
 	{
 	case EAnimationState::None:
@@ -995,7 +1025,30 @@ void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 
 	if (bHasAnimation)
 	{
-		RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
+		auto pAnimation = m_pcPlayerAnimationList[pszAnim];
+		CC_ASSERT( pAnimation );
+		RunAction(GCCocosHelpers::CreateAnimationActionLoop( pAnimation ));
 	}
+}
+
+void CPlayer::AlternateIdleAnimation(bool bPlayStandardIdle)
+{
+	GetSprite()->stopAllActions();
+	char* pszAnim = nullptr;
+	if(bPlayStandardIdle)
+	{
+		pszAnim = "Idle";
+	}
+	else
+	{
+		pszAnim = "AlternativeIdle";
+	}
+	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
+}
+
+void CPlayer::ResetIdle()
+{
+	m_iAlternateIdleTimer = 0;
+	m_bSelectedStandardIdle = false;
 }
 

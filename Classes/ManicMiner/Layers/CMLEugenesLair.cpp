@@ -8,12 +8,12 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
-
-
+#include "ManicMiner/Enemy/GCObjEugene.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLEugenesLair::CMLEugenesLair()
 	: CManicLayer()
+
 {}
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
@@ -62,6 +62,18 @@ void CMLEugenesLair::InitParams()
 	m_pcAirManager->SetGameManager( m_pcGameManager );
 	m_pcGameManager->SetLevelRequirements( m_sLevelCreationParameters.sLevelValues );
 	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
+
+	
+	/////////////////////////////////////////////
+	// Find Eugene in the object list 
+	CGCObjEugene* pcEugene;
+	CGCObject* pcBaseObject;
+	pcBaseObject = CGCObjectManager::FindObject("Eugene", GetGCTypeIDOf(CGCObjEugene));
+	pcEugene = static_cast<CGCObjEugene*>(pcBaseObject);
+
+	// This operation can now be call when required, eg. all collectibles have been collected on this level.
+	//pcEugene->TriggerEugenesAlternativeAnimation();
+
 }
 
 
@@ -72,4 +84,7 @@ void CMLEugenesLair::VOnDestroy( void )
 
 	// Call base class last
 	CManicLayer::VOnDestroy();
+
+
+
 }

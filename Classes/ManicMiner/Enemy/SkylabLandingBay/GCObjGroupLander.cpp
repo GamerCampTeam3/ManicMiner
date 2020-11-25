@@ -250,11 +250,11 @@ void CGCObjGroupLander::CreateLanders()
 {
 	for (int iLoop = 0; iLoop < k_iMaxLanderAnchorPoints; ++iLoop)
 	{
-		CGCObjLander* pLander = new CGCObjLander(vLanderAnchorPoints[iLoop], 2.0f, s_cCreationParams_CGCObj_ELander);
-		pLander->SetName("Lander");
+	//	CGCObjLander* pLander = new CGCObjLander(vLanderAnchorPoints[iLoop], 2.0f, s_cCreationParams_CGCObj_ELander);
+	//	pLander->SetName("Lander");
 
 		// Store the GCTypeID in a map to allow an index from the GCTypeID to the anchor position.
-		LanderGCTypeIDLookup.insert({pLander->GetGCTypeID(), iLoop});
+//		LanderGCTypeIDLookup.insert({pLander->GetGCTypeID(), iLoop});
 
 	}
 }

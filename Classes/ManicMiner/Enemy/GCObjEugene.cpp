@@ -5,6 +5,8 @@
 #include <string.h>
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 #include "GCObjEugene.h"
+//#include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/Layers/CMLEugenesLair.h"
 
 #ifndef TINYXML2_INCLUDED
     #include "external\tinyxml2\tinyxml2.h"
@@ -18,9 +20,12 @@ USING_NS_CC;
 
 GCFACTORY_IMPLEMENT_CREATEABLECLASS( CGCObjEugene );
 
+class  CMLEugenesLair;
+
 CGCObjEugene::CGCObjEugene()
-	: CGCObjEnemy(GetGCTypeIDOf(CGCObjEugene))
+	: CGCObjEnemy(GetGCTypeIDOf(CGCObjEugene)) 
 {
+	m_bAngryEugeneTriggered = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -47,7 +52,36 @@ void CGCObjEugene::VOnUpdate(float fTimeStep)
 	// ie, if accessor 'set euguene flashing'
 	// animation?
 
+	if (m_bAngryEugeneTriggered)
+	{
+		SetSpriteRotation(fTimeStep);
 
+
+
+
+
+	}
+
+
+
+
+}
+
+
+void  CGCObjEugene::VOnResourceAcquire(void)
+{
+	CGCObjEnemy::VOnResourceAcquire();
+
+	SetName("Eugene");
+
+
+}
+
+
+void CGCObjEugene::TriggerEugenesAlternativeAnimation(void)
+{
+	m_bAngryEugeneTriggered = true;
+	
 
 }
 
