@@ -8,6 +8,7 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/Parallax/Parallax.h"
 
 
 
@@ -64,6 +65,11 @@ void CMLCentralCavern::VInitParams()
 	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
 }
 
+void CMLCentralCavern::VInitializeBackground()
+{
+	CManicLayer::VInitializeBackground();
+	GetParallax().AddPlatformOutlines( "TexturePacker/Backgrounds/Cavern/Platforms.plist" );
+}
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnDestroy(void)

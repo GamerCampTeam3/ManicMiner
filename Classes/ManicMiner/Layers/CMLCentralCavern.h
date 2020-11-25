@@ -41,5 +41,6 @@ private:
 	CAirManager*					m_pcAirManager;
 
 	virtual void VInitParams() override;
+	virtual void VInitializeBackground() override;
 };
 #endif //#ifndef _CMANICLAYER_H_

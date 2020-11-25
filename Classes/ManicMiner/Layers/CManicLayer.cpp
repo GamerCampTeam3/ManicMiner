@@ -55,6 +55,7 @@ USING_NS_CC;
 
 #endif
 
+
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
@@ -162,7 +163,6 @@ void CManicLayer::VOnCreate()
 	groundBody->CreateFixture( &groundBox, 0 );
 
 
-
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. this is where you would load a level file, using the factory to
 	// create the class instances specified by the level file by passing their
@@ -217,25 +217,28 @@ void CManicLayer::VOnCreate()
 
 }
 
-void CManicLayer::InitializeBackground()
+void CManicLayer::VInitializeBackground()
 {
-	const int kiNumBGLayers = 4;
-	SParallaxLayerData sData0( "TexturePacker/Backgrounds/Cavern/Platforms.plist",	 -2,	0.0f	);
-	SParallaxLayerData sData1( "TexturePacker/Backgrounds/Cavern/Background_0.plist", -3,	5.0f	);
-	SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -4,	2.5f	);
-	SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -5,	1.0f	);
-
 	auto pcScene = static_cast< cocos2d::Scene* >( getParent() );
 	if ( pcScene && m_pcPlayer )
 	{
-		m_pcParallax = new CParallax( kiNumBGLayers, *pcScene, *m_pcPlayer );
+		int kiNumScrollingLayers = 3;
+		//const int kiNumAnimatedLayers = 4;
+		//if( m_pzsPlatformOutlinePlist == nullptr )
+		//{
+		//	kiNumScrollingLayers--;
+		//}
+		m_pcParallax = new CParallax( kiNumScrollingLayers, 0, *pcScene, *m_pcPlayer );
 
-		m_pcParallax->AddLayer( sData0 );
-		m_pcParallax->AddLayer( sData1 );
-		m_pcParallax->AddLayer( sData2 );
-		m_pcParallax->AddLayer( sData3 );
+		const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Cavern/Background_0.plist", -3 );
+		const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -4 );
+		const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -5 );
 
-		m_pcParallax->Update();
+		m_pcParallax->AddScrollingLayer( sData1, 5.0f );
+		m_pcParallax->AddScrollingLayer( sData2, 1.5f );
+		m_pcParallax->AddScrollingLayer( sData3, 0.5f );
+
+		m_pcParallax->Reset();
 	}
 }
 
@@ -278,16 +281,22 @@ void CManicLayer::VOnDestroy()
 	///////////////////////////////////////////////////////////////////////////
 	// clean up anything we allocated in opposite order to creation
 	///////////////////////////////////////////////////////////////////////////
+
+	// Clean up the level
+	m_cLevelLoader.DestroyObjects();
 	
 	// Delete Parallax
+	//if ( m_pzsPlatformOutlinePlist )
+	//{
+	//	delete m_pzsPlatformOutlinePlist;
+	//	m_pzsPlatformOutlinePlist = nullptr;
+	//}
 	if ( m_pcParallax ) 
 	{
 		delete m_pcParallax;
 		m_pcParallax = nullptr;
 	}
 
-	// Clean up the level
-	m_cLevelLoader.DestroyObjects();
 	
 	IGCGameLayer::VOnDestroy();
 }
@@ -729,6 +738,13 @@ bool CManicLayer::GetWasNextLevelRequested() const																		//
 {																														//
 	return m_bWasNextLevelRequested;																					//
 }																														//
+
+CParallax& CManicLayer::GetParallax() const
+{
+	CC_ASSERT( m_pcParallax != nullptr );
+	return *m_pcParallax;
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -1014,5 +1030,5 @@ void CManicLayer::PostInit()
 	VInitParams();
 
 	// Parallax initiation
-	InitializeBackground();
+	VInitializeBackground();
 }

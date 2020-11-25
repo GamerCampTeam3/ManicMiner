@@ -83,10 +83,6 @@ private:
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
-
-
-
-
 public:
 // Constructor -------------------------------------------------------------------------------------------------------- //
 	CManicLayer( void );
@@ -139,6 +135,7 @@ public:
 	const EGameState	GetGameState()					const;															//
 	bool				GetWasResetRequested()			const;															//
 	bool				GetWasNextLevelRequested()		const;															//
+	CParallax&			GetParallax()					const;															//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -322,7 +319,6 @@ public:																													//
 
 private:
 	void PlayerBeganContactWithPlatform( CPlatform& rcPlatform );
-	void InitializeBackground();
 
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
@@ -331,5 +327,8 @@ private:
 public:
 	virtual void VInitParams() = 0;
 	void PostInit();
+
+protected:
+	virtual void VInitializeBackground();
 };
 #endif // #ifndef _CMANICLAYER_H_
