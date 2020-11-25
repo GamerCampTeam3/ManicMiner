@@ -2,6 +2,8 @@
 #define _PARALLAX_LAYER_H_
 
 #include "ParallaxLayerData.h"
+#include "2d/CCSprite.h"
+
 
 class CGCObjSprite;
 namespace cocos2d

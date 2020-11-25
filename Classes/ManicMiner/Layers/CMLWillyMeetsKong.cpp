@@ -8,7 +8,11 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Enemy/GCObjKong.h"
 
+
+static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
@@ -51,6 +55,19 @@ void CMLWillyMeetsKong::VOnCreate( void )
 	//auto emitter = cocos2d::ParticleExplosion::create();
 	//emitter->setTotalParticles( 100 );
 	//addChild( emitter, 10 );
+
+	CGCObjKong* CKong = new CGCObjKong(cocos2d::Vec2(960.0, 900.0), cocos2d::Vec2(100.0, 360.0), 2.0f, s_cCreationParams_CGCObj_EKong);
+
+
+
+
+
+
+
+
+
+
+
 }
 
 void CMLWillyMeetsKong::InitParams()

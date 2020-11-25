@@ -8,8 +8,10 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/Enemy/SkylabLandingBay/GCObjLander.h"
 
 
+static CGCFactoryCreationParams s_cCreationParams_CGCObj_ELander("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLSkyLabLandingBay::CMLSkyLabLandingBay()
@@ -51,7 +53,34 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 	//auto emitter = cocos2d::ParticleExplosion::create();
 	//emitter->setTotalParticles( 100 );
 	//addChild( emitter, 10 );
+
+
+	CGCObjLander* CLander1 = new CGCObjLander(cocos2d::Vec2(100.0,900.0), cocos2d::Vec2(100.0, 360.0), 2.0f, 3.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+	
+	CGCObjLander* CLander2 = new CGCObjLander(cocos2d::Vec2(240.0, 900.0), cocos2d::Vec2(240.0, 660.0), 1.0f, 0.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+	
+	CGCObjLander* CLander3 = new CGCObjLander(cocos2d::Vec2(360.0, 900.0), cocos2d::Vec2(360.0, 480.0), 3.0f, 3.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+	
+	CGCObjLander* CLander5 = new CGCObjLander(cocos2d::Vec2(590.0, 900.0), cocos2d::Vec2(590.0, 360.0), 7.0f, 1.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
+	CGCObjLander* CLander6 = new CGCObjLander(cocos2d::Vec2(730.0, 900.0), cocos2d::Vec2(730.0, 650.0), 3.0f, 4.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
+	CGCObjLander* CLander7 = new CGCObjLander(cocos2d::Vec2(840.0, 900.0), cocos2d::Vec2(840.0, 480.0), 8.0f, 2.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
+	CGCObjLander* CLander9 = new CGCObjLander(cocos2d::Vec2(1090.0, 900.0), cocos2d::Vec2(1090.0, 360.0), 7.0f, 0.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
+	CGCObjLander* CLander10 = new CGCObjLander(cocos2d::Vec2(1190.0, 900.0), cocos2d::Vec2(1190.0, 650.0), 7.0f, 0.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
+	CGCObjLander* CLander11 = new CGCObjLander(cocos2d::Vec2(1320.0, 900.0), cocos2d::Vec2(1320.0, 480.0), 1.0f, 3.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
+	CGCObjLander* CLander13 = new CGCObjLander(cocos2d::Vec2(1560.0, 900.0), cocos2d::Vec2(1560.0, 360.0), 2.0f, 2.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
+	CGCObjLander* CLander14 = new CGCObjLander(cocos2d::Vec2(1670.0, 900.0), cocos2d::Vec2(1670.0, 650.0), 4.0f, 1.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
+	CGCObjLander* CLander15 = new CGCObjLander(cocos2d::Vec2(1810.0, 900.0), cocos2d::Vec2(1810.0, 480.0), 1.0f, 0.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+
 }
+
 
 void CMLSkyLabLandingBay::InitParams()
 {

@@ -26,7 +26,6 @@ private:
 	EnemyTypes::EMovementAxis	m_eMovementAxis;
 	EnemyTypes::EEnemyId	    m_eEnemyId;
 	cocos2d::Vec2				m_cAnchorPoint;
-	//cocos2d::Vec2				m_cTotalVelocity;
 	float						m_fSpeed;
 	float						m_fInitialDistanceFromAnchor;    
 	float						m_fMovementWindowLength;
@@ -41,6 +40,12 @@ private:
 
 	cocos2d::Vec2				m_cDest;
 	cocos2d::Vec2				m_cCurrentPos;
+	
+	
+	cocos2d::Vec2				m_cNewDestination;
+
+
+	
 	float m_fMoveDelta;
 
 	bool m_bTemporaryAnchorPositionActive;
@@ -49,6 +54,9 @@ private:
 	bool m_bInitialiseToOne;
 
 	float m_fPreviousXPos;
+
+
+	bool m_bEnemyJustReceivedANewDestination;
 
 
 
@@ -60,6 +68,9 @@ private:
 	bool CheckForBoundaryReached(const float fCurrentPosition, const float fAnchorPoint, const float fMovementWindowLength);
 	bool CheckForDirectionFlip	();
 	void SetFacingOrientation	();
+
+
+
 		
 public:
 
@@ -85,8 +96,10 @@ public:
 	virtual void VOnResurrected		( void ) override;
 	virtual void VOnUpdate			(float fTimeStep) override;
 	virtual void VOnResourceRelease	() override;
-	void BounceEnemyDirection();
 	virtual void VOnReset() override;
+
+
+	void ModifyEnemyDestinationPoint(cocos2d::Vec2& rcNewDestination);
 
 	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 

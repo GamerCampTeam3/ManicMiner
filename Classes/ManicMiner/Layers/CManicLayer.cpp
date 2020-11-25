@@ -638,7 +638,7 @@ void CManicLayer::EnemyCollidedPlatform( CGCObjEnemy& rcEnemy, const b2Contact& 
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
-		rcEnemy.BounceEnemyDirection();																					//
+		//rcEnemy.BounceEnemyDirection();																					//
 	}																													//
 }																														//
 																														//
