@@ -45,6 +45,8 @@ private:
 	cocos2d::Vec2				m_cNewDestination;
 
 
+	std::string                 m_psName;
+
 	
 	float m_fMoveDelta;
 

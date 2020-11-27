@@ -220,8 +220,7 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 			
 
 
-
-		
+			   		 	  	  		
 		const tinyxml2::XMLAttribute* pDestinationX = pCurrentObjectXmlData->FindAttribute("DestinationX");
 		CCLOG((nullptr == pDestinationX) ? "DestX not found for Enemy!" : pDestinationX->Value());
 		m_cDest.x = pDestinationX->FloatValue();
@@ -230,6 +229,17 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		const tinyxml2::XMLAttribute* pDestinationY = pCurrentObjectXmlData->FindAttribute("DestinationY");
 		CCLOG((nullptr == pDestinationY) ? "DestX not found for Enemy!" : pDestinationY->Value());
 		m_cDest.y = (pDestinationY->FloatValue());
+
+
+
+
+		const tinyxml2::XMLAttribute* pName = pCurrentObjectXmlData->FindAttribute("Name");
+		CCLOG((nullptr == pName) ? "Name not found for Enemy!" : pName->Value());
+		m_psName = pName->Value();
+		SetName(m_psName);
+
+
+
 
 
 		// Modify destination axis inputs values just read as OGMO  origin is top left, but cocos2dx is bottom left.
@@ -429,10 +439,6 @@ void CGCObjEnemy::ModifyEnemyDestinationPoint(cocos2d::Vec2& rcNewDestination)
 	
 	m_bEnemyJustReceivedANewDestination = true;
 	m_cNewDestination = rcNewDestination;
-
-
-	// 
-   //ModifyEnemyDestinationPoint(Vec2(1180.0, 475.0));
 
 }
 
