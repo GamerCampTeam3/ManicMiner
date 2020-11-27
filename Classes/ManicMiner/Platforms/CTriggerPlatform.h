@@ -12,14 +12,14 @@ private:
 
         // Whether Crumbling has been triggered 
 	bool m_bHasBeenTriggered;
-
+	  
         // Holds the Crumble Animation
 	cocos2d::Animation* m_pcCrumbleAnimation;
 
 public:
 
-	CTriggerPlatform(cocos2d::Vec2 v2SpawnLocation);
-	~CTriggerPlatform();
+	CTriggerPlatform(cocos2d::Vec2 v2ResetPosition);
+        ~CTriggerPlatform();
 	
 	void VOnResourceAcquire() override;
 
