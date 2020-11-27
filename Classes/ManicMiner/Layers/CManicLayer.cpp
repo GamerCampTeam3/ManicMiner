@@ -32,7 +32,8 @@
 #include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CRegularPlatform.h"
 #include "ManicMiner/Switch/CSwitch.h"
-
+#include "ManicMiner/HUD/CHUD.h"
+#include "ManicMiner/AirManager/AirManager.h"
 #include "ManicMiner/Player/CPlayer.h"
 
 #include "ManicMiner/Enums/ELifeUpdateType.h"
@@ -239,6 +240,11 @@ void CManicLayer::VInitializeBackground()
 		m_pcParallax->AddScrollingLayer( sData3, 0.5f );
 
 		m_pcParallax->Reset();
+	}
+
+	if (m_sLevelCreationParameters.pszPlatformBackground != nullptr)
+	{
+		GetParallax().AddPlatformOutlines( m_sLevelCreationParameters.pszPlatformBackground );
 	}
 }
 
@@ -1024,11 +1030,25 @@ void CManicLayer::CB_OnGameExitButton( Ref* pSender )
 	RequestNextLevel();
 }
 
-void CManicLayer::PostInit()
+void CManicLayer::Init()
 {
-	// Init level params
-	VInitParams();
+	m_pcHUD = new CHUD( *this, m_pointOrigin, m_sizeVisible );
+	m_pcAirManager = new CAirManager( m_pointOrigin, m_sizeVisible );
+	m_pcAirManager->Init( *this );
 
-	// Parallax initiation
+	m_pcGameManager->SetCHUD( m_pcHUD );
+	m_pcGameManager->SetCPlayer( &GetPlayer() );
+	m_pcGameManager->SetCAirManager( m_pcAirManager );
+	m_pcAirManager ->SetGameManager( m_pcGameManager );
+	
+	if (m_pcGameManager->GetDoOnce() )
+	{
+		m_pcGameManager->ResetValues();		
+		m_pcGameManager->SetDoOnce( false );
+	}
+
+	m_pcGameManager->SetLevelRequirements( m_sLevelCreationParameters.sLevelValues );
+	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
+
 	VInitializeBackground();
 }

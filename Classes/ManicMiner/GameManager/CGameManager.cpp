@@ -9,6 +9,8 @@
 #include "CGameManager.h"
 #include <fstream>
 
+#include "ManicMiner/Layers/CMLEugenesLair.h"
+
 
 CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	: m_iCurrentScore			( 0 )
@@ -17,6 +19,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_iCurrentCollectibles	( 0 )
 	, m_iCurrentSwitches		( 0 )
 	, m_bDrainToScore			( false )
+    , m_bDoOnce(true)
 	, m_pcAirManager			( nullptr )
 	, m_pcCHUD					( nullptr )
 	, m_pcLevelManager			( &rcLevelManager )
@@ -70,7 +73,7 @@ bool  CGameManager::IsScoreGreaterThanHighscore() const
 }
 
 // Upon interacting, checks if enough has been reached.
-bool CGameManager::CheckIfLevelRequirementsAreMet() const
+bool CGameManager::CheckIfLevelRequirementsAreMet()
 {
 	bool enoughReached = false;
 
@@ -78,6 +81,7 @@ bool CGameManager::CheckIfLevelRequirementsAreMet() const
 	{
 		case ECollectibleRequirements::Collectible:
 			enoughReached = (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles);
+			m_ESpecialInteractionType = ESpecialInteraction::Boss;
 			break;
 
 		case ECollectibleRequirements::Collectible_And_Switches:
@@ -239,11 +243,28 @@ void CGameManager::CCollectibleInteractEvent()
 
 void CGameManager::CSwitchInteractEvent()
 {
+	static int iTempSwitch = 0;
+	
+	iTempSwitch++;
 	m_iCurrentSwitches++;
+	
 	if (CheckIfLevelRequirementsAreMet() )
 	{
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
+
+	if (iTempSwitch == 1)
+	{
+		m_ESpecialInteractionType = ESpecialInteraction::Door;
+	}
+
+	if ( iTempSwitch == 2)
+	{
+		m_ESpecialInteractionType = ESpecialInteraction::Boss;
+		iTempSwitch = 0;
+	}
+	
+	m_pcLevelManager->GetCurrentManicLayer().VLevelSpecificInteraction();
 }
 
 #pragma endregion Collectible/Switch Events

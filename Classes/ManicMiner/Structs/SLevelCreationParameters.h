@@ -13,6 +13,7 @@
 /// <param name="szLevelpath"><c> A std::string that wil hold the location of the level file (.oel) </param>
 /// <param name="szLevelName"><c> A std::string that wil hold the name of the level to be displayed by CHUD. </param>
 /// <param name="v2PlayerStartPos"><c>A vector2 that is used to place the player on the level. </param>
+/// <param name="pszPlatformBackground"><c>A char* that should hold the path to the background plist. </param>
 struct SLevelCreationParameters
 {
 	/// <summary>
@@ -23,13 +24,15 @@ struct SLevelCreationParameters
 	/// <param name="szLevelpath"><c>A std::string that wil hold the location of the level file (.oel) </param>
 	/// <param name="szLevelName"><c>A std::string that wil hold the name of the level to be displayed by CHUD. </param>
 	/// <param name="v2PlayerStartPos"><c>A vector2 that is used to place the player on the level. </param>
-	SLevelCreationParameters( SLevelValues slevelValues, EParallaxTheme eParallaxTheme, std::string szLevelpath, std::string szLevelname, cocos2d::Vec2 v2StartPos, bool bShouldLookRight)
+	/// <param name="pszPlatformBackground"><c>A char* that should hold the path to the background plist. </param>
+	SLevelCreationParameters( SLevelValues slevelValues, EParallaxTheme eParallaxTheme, std::string szLevelpath, std::string szLevelname, cocos2d::Vec2 v2StartPos, bool bShouldLookRight, char* pszPlatformbg)
 		: sLevelValues					( slevelValues		)
 		, eParallaxTheme				( eParallaxTheme	)
 		, szLevelPath					( szLevelpath		)
 		, szLevelName					( szLevelname		)
 		, v2PlayerStartPos				( v2StartPos		)
 		, bShouldFaceRight				( bShouldLookRight	)
+		, pszPlatformBackground			( pszPlatformbg		)
 	{
 	}
 
@@ -41,16 +44,18 @@ struct SLevelCreationParameters
 		, szLevelName					( ""		 )
 		, v2PlayerStartPos				( cocos2d::Vec2( 120.0f + 30.0f, 120.0f ) )
 		, bShouldFaceRight				( false			 )
+		, pszPlatformBackground			( nullptr		 )
 	{		
 	}
 
 
-	SLevelValues				sLevelValues;		// Struct that takes in an "ECollectibleRequirements" and two "int" to be used by the "CLevelManager". It can be Zero initialized.
-	EParallaxTheme				eParallaxTheme;		// An enum that will be used to set the different parallax layers of the current level. 
-	std::string					szLevelPath;		// A std::string that wil hold the location of the level file (.oel).
-	std::string					szLevelName;		// Used to display the name of the level on the HUD.
-	cocos2d::Vec2				v2PlayerStartPos;	// The location at which the player should spawn at.
-	bool						bShouldFaceRight;	// Should the player originally should face right or not.
+	SLevelValues				sLevelValues;			// Struct that takes in an "ECollectibleRequirements" and two "int" to be used by the "CLevelManager". It can be Zero initialized.
+	EParallaxTheme				eParallaxTheme;			// An enum that will be used to set the different parallax layers of the current level. 
+	std::string					szLevelPath;			// A std::string that wil hold the location of the level file (.oel).
+	std::string					szLevelName;			// Used to display the name of the level on the HUD.
+	cocos2d::Vec2				v2PlayerStartPos;		// The location at which the player should spawn at.
+	bool						bShouldFaceRight;		// Should the player originally should face right or not.
+	char*						pszPlatformBackground;	// The path to the background platform .plist
 	
 };
 

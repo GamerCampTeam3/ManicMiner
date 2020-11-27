@@ -41,7 +41,9 @@ class CLevelManager;																									//
 class CParallax;																										//
 class CPlatform;																										//
 class CPlayer;																											//
-class CSwitch;																											//
+class CSwitch;
+class CHUD;
+class CAirManager;//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -319,16 +321,16 @@ public:																													//
 
 private:
 	void PlayerBeganContactWithPlatform( CPlatform& rcPlatform );
+	virtual void VInitializeBackground();
+	CHUD* m_pcHUD;
+	CAirManager* m_pcAirManager;
 
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
 	void CB_OnGameExitButton( Ref* pSender );
 
 public:
-	virtual void VInitParams() = 0;
-	void PostInit();
-
-protected:
-	virtual void VInitializeBackground();
+	void Init();
+	virtual void VLevelSpecificInteraction() {};
 };
 #endif // #ifndef _CMANICLAYER_H_

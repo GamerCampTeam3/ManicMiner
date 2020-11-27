@@ -12,6 +12,9 @@
 #define _CMLRETURNOFKONG_H_
 
 #include "ManicMiner/Layers/CManicLayer.h"
+
+class CGCObjKong;
+
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CAirManager;																										//
 class CHUD;																												//
@@ -30,16 +33,9 @@ public:
 	virtual	void VOnCreate( void ) override;																			//
 // VOnDestroy needs to cleanup the unique elements to this level ------------------------------------------------------ //
 	virtual	void VOnDestroy( void ) override;																			//
+	void VLevelSpecificInteraction() override;
 // -------------------------------------------------------------------------------------------------------------------- //
-
 private:
-
-	// --- HUD ------------------------------------------------------------------------------------------------------------ //
-	CHUD* m_pCHUD;
-
-	// --- Air Manager ---------------------------------------------------------------------------------------------------- //
-	CAirManager* m_pcAirManager;
-
-	virtual void VInitParams() override;
+	CGCObjKong* m_pcKong;
 };
 #endif //#ifndef _CMLRETURNOFKONG_H_

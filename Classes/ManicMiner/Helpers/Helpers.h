@@ -23,4 +23,5 @@ template <typename T> void safeDeleteArray( T*& a )
 #define ASSERT_CHECK(param) assert(param)
 #endif
 
+
 #endif // !HELPERS_H

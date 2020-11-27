@@ -3,9 +3,6 @@
 
 #include "ManicMiner/Layers/CManicLayer.h"
 
-class CHUD;
-class CAirManager;
-
 class CMLAbandonedUraniumWorkings : public CManicLayer
 {
 public:
@@ -20,14 +17,5 @@ public:
 // VOnDestroy needs to cleanup the unique elements to this level ------------------------------------------------------ //
 	virtual	void VOnDestroy( void ) override;																			//
 // -------------------------------------------------------------------------------------------------------------------- //
-
-private:
-	// --- HUD ------------------------------------------------------------------------------------------------------------ //
-	CHUD* m_pCHUD;
-
-	// --- Air Manager ---------------------------------------------------------------------------------------------------- //
-	CAirManager* m_pcAirManager;
-
-	virtual void VInitParams() override;
 };
 #endif //#ifndef _CMLABANDONEDURANIUMWORKINS_H_

@@ -3,14 +3,7 @@
 // -------------------------------------------------------------------------------------------------------------------- //
 
 #include "CMLCentralCavern.h"
-
-#include "ManicMiner/AirManager/AirManager.h"
-#include "ManicMiner/Helpers/Helpers.h"
-#include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
-#include "ManicMiner/Parallax/Parallax.h"
-
-
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLCentralCavern::CMLCentralCavern( )
@@ -32,50 +25,22 @@ void CMLCentralCavern::VOnCreate( void )
 	// szLevelPath:			Sets the path where the level will be found.
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
-	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5);
-	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
-	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/0_CentralCavern.oel";
-	m_sLevelCreationParameters.szLevelName			= "Central Cavern";
-	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );
-	m_sLevelCreationParameters.bShouldFaceRight		= true;
+	m_sLevelCreationParameters.sLevelValues				= SLevelValues( ECollectibleRequirements::Collectible, 5);
+	m_sLevelCreationParameters.eParallaxTheme			= EParallaxTheme::Cavern;
+	m_sLevelCreationParameters.szLevelPath				= "OgmoEditor/0_CentralCavern.oel";
+	m_sLevelCreationParameters.szLevelName				= "Central Cavern";
+	m_sLevelCreationParameters.v2PlayerStartPos			= CC_V2( 120.0f + 30.0f, 120.0f );
+	m_sLevelCreationParameters.bShouldFaceRight			= true;
+	m_sLevelCreationParameters.pszPlatformBackground    = "TexturePacker/Backgrounds/Cavern/Platforms.plist";
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
-
-	// Step 3:	New the CHUD and CAirManager.
-	m_pCHUD = new CHUD(*this, m_pointOrigin, m_sizeVisible );	
-	m_pcAirManager = new CAirManager(m_pointOrigin, m_sizeVisible);
-	m_pcAirManager->Init(*this);
-
-	
-	//auto emitter = cocos2d::ParticleExplosion::create();
-	//emitter->setTotalParticles( 100 );
-	//addChild( emitter, 10 );
 }
 
-void CMLCentralCavern::VInitParams()
-{
-	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
-	m_pcGameManager	->SetCHUD				( m_pCHUD		  );
-	m_pcGameManager	->SetCPlayer			( &GetPlayer()	  );
-	m_pcGameManager	->SetCAirManager		( m_pcAirManager  );
-	m_pcAirManager	->SetGameManager		( m_pcGameManager );
-	m_pcGameManager	->SetLevelRequirements	( m_sLevelCreationParameters.sLevelValues );
-
-	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
-}
-
-void CMLCentralCavern::VInitializeBackground()
-{
-	CManicLayer::VInitializeBackground();
-	GetParallax().AddPlatformOutlines( "TexturePacker/Backgrounds/Cavern/Platforms.plist" );
-}
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnDestroy(void)
 {
-	safeDelete( m_pCHUD );
-
 	// Call base class last
 	CManicLayer::VOnDestroy();
 }

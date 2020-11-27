@@ -129,7 +129,7 @@ void CHUD::Init(std::string szLevelName, int life, int iScore, int iHighscore)
 		m_apcLives[i] = new CGCObjSprite();
 		m_apcLives[i]->CreateSprite( m_kpszPlistPlayerLifeLost );							// Initial sprite should be empty (as only 3 of them would be full.
 		m_apcLives[i]->SetSpriteGlobalZOrder( 2.f );										// We set the z order for it to be above.
-		m_apcLives[i]->SetSpriteScale( 0.5f, 0.5f );								// Half the scale as they are too large (since there are 10 instead of 3.
+		m_apcLives[i]->SetSpriteScale( 0.7f, 0.7f );								// Half the scale as they are too large (since there are 10 instead of 3.
 		m_apcLives[i]->SetResetPosition( v2InitialPlacement );								// Set the reset position to be our temporary vector 2.
 		m_apcLives[i]->GetSprite()->setPosition( m_apcLives[i]->GetResetPosition() );	// Set the position to be it's reset position.
 		m_apcLives[i]->SetParent( m_pglOwnerGameLayer );									// Finally add it to the parent layer.
@@ -194,7 +194,7 @@ void CHUD::ReDrawSprite( CGCObjSprite* pSprite,  const char* pzcPlist) const
 		pSprite->CreateSprite( pzcPlist );												   		// Set the sprite (texture)
 		pSprite->SetSpriteGlobalZOrder( 2.f );													// Set the Z order.
 		pSprite->GetSprite()->setPosition( pSprite->GetResetPosition() );				   	// Set it's position to it's original reset position.
-		pSprite->SetSpriteScale( 0.5f, 0.5f );										// Set the scale.
+		pSprite->SetSpriteScale( 1.0f, 1.0f );										// Set the scale.
 		pSprite->SetParent( m_pglOwnerGameLayer );										   		// Finally add it to the parent layer.
 	}
 }
