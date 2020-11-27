@@ -77,6 +77,8 @@ void CMLWillyMeetsKong::VOnCreate( void )
 	//pcEnemy->ModifyEnemyDestinationPoint(cocos2d::Vec2(1150.0f,240.0f));
 
 
+	CKong->TriggerKongToFall();
+	
 
 
 }
@@ -91,6 +93,11 @@ void CMLWillyMeetsKong::VInitParams()
 	m_pcGameManager->SetLevelRequirements( m_sLevelCreationParameters.sLevelValues );
 	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
 }
+
+
+
+
+
 
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
