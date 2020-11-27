@@ -15,12 +15,18 @@ class CCollectible
 {
 private:
 	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;			// Reference to creation params that will be set via the collectible group
-	bool										m_bHasBeenCollected;				// Used to stop multi function calls in one frame 
+	bool										m_bHasBeenCollected;				// Used to stop multi function calls in one frame
+	// For animations
+	std::string									m_pszAnimation;
+	std::string									m_pszPlist;
+	cocos2d::Animation*							pAnimation;
 
 	// Overrides from CGCObjSpritePhysics
 	virtual void VOnResourceAcquire( void ) override;
 	virtual void VOnReset() override;
 	virtual void VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition ) override;
+	virtual void VOnResourceRelease( void ) override;
+	
 public:
 	// Constructor, takes in the following params:
 	CCollectible();

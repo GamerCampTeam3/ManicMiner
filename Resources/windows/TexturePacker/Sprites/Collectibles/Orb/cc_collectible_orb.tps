@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>cocos2d-x</string>
         <key>textureFileName</key>
-        <filename>ui_life_full.png</filename>
+        <filename></filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -56,7 +56,7 @@
         <key>jxrCompressionLevel</key>
         <uint>0</uint>
         <key>ditherType</key>
-        <enum type="SettingsBase::DitherType">NearestNeighbour</enum>
+        <enum type="SettingsBase::DitherType">PngQuantLow</enum>
         <key>backgroundColor</key>
         <uint>0</uint>
         <key>libGdx</key>
@@ -82,7 +82,7 @@
         <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
-        <enum type="SettingsBase::TextureFormat">png</enum>
+        <enum type="SettingsBase::TextureFormat">png8</enum>
         <key>borderPadding</key>
         <uint>0</uint>
         <key>maxTextureSize</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>cc_life_full.plist</filename>
+                <filename>cc_collectible_orb.plist</filename>
             </struct>
             <key>header</key>
             <key>source</key>
@@ -187,7 +187,63 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">ui_life_full.png</key>
+            <key type="filename">Frames/Bob/final-0001.png</key>
+            <key type="filename">Frames/Bob/final-0002.png</key>
+            <key type="filename">Frames/Bob/final-0003.png</key>
+            <key type="filename">Frames/Bob/final-0004.png</key>
+            <key type="filename">Frames/Bob/final-0005.png</key>
+            <key type="filename">Frames/Bob/final-0006.png</key>
+            <key type="filename">Frames/Bob/final-0007.png</key>
+            <key type="filename">Frames/Bob/final-0008.png</key>
+            <key type="filename">Frames/Bob/final-0009.png</key>
+            <key type="filename">Frames/Bob/final-0010.png</key>
+            <key type="filename">Frames/Bob/final-0011.png</key>
+            <key type="filename">Frames/Bob/final-0012.png</key>
+            <key type="filename">Frames/Bob/final-0013.png</key>
+            <key type="filename">Frames/Bob/final-0014.png</key>
+            <key type="filename">Frames/Bob/final-0015.png</key>
+            <key type="filename">Frames/Bob/final-0016.png</key>
+            <key type="filename">Frames/Bob/final-0017.png</key>
+            <key type="filename">Frames/Bob/final-0018.png</key>
+            <key type="filename">Frames/Bob/final-0019.png</key>
+            <key type="filename">Frames/Bob/final-0020.png</key>
+            <key type="filename">Frames/Bob/final-0021.png</key>
+            <key type="filename">Frames/Bob/final-0022.png</key>
+            <key type="filename">Frames/Bob/final-0023.png</key>
+            <key type="filename">Frames/Bob/final-0024.png</key>
+            <key type="filename">Frames/Bob/final-0025.png</key>
+            <key type="filename">Frames/Bob/final-0026.png</key>
+            <key type="filename">Frames/Bob/final-0027.png</key>
+            <key type="filename">Frames/Bob/final-0028.png</key>
+            <key type="filename">Frames/Bob/final-0029.png</key>
+            <key type="filename">Frames/Bob/final-0030.png</key>
+            <key type="filename">Frames/Bob/final-0031.png</key>
+            <key type="filename">Frames/Bob/final-0032.png</key>
+            <key type="filename">Frames/Bob/final-0033.png</key>
+            <key type="filename">Frames/Bob/final-0034.png</key>
+            <key type="filename">Frames/Bob/final-0035.png</key>
+            <key type="filename">Frames/Bob/final-0036.png</key>
+            <key type="filename">Frames/Bob/final-0037.png</key>
+            <key type="filename">Frames/Bob/final-0038.png</key>
+            <key type="filename">Frames/Bob/final-0039.png</key>
+            <key type="filename">Frames/Bob/final-0040.png</key>
+            <key type="filename">Frames/Bob/final-0041.png</key>
+            <key type="filename">Frames/Bob/final-0042.png</key>
+            <key type="filename">Frames/Bob/final-0043.png</key>
+            <key type="filename">Frames/Bob/final-0044.png</key>
+            <key type="filename">Frames/Bob/final-0045.png</key>
+            <key type="filename">Frames/Bob/final-0046.png</key>
+            <key type="filename">Frames/Bob/final-0047.png</key>
+            <key type="filename">Frames/Bob/final-0048.png</key>
+            <key type="filename">Frames/Bob/final-0049.png</key>
+            <key type="filename">Frames/Bob/final-0050.png</key>
+            <key type="filename">Frames/Bob/final-0051.png</key>
+            <key type="filename">Frames/Bob/final-0052.png</key>
+            <key type="filename">Frames/Bob/final-0053.png</key>
+            <key type="filename">Frames/Bob/final-0054.png</key>
+            <key type="filename">Frames/Bob/final-0055.png</key>
+            <key type="filename">Frames/Bob/final-0056.png</key>
+            <key type="filename">cc_collectible_orb.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -196,16 +252,17 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>15,60,30,120</rect>
+                <rect>15,15,30,30</rect>
                 <key>scale9Paddings</key>
-                <rect>15,60,30,120</rect>
+                <rect>15,15,30,30</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>ui_life_full.png</filename>
+            <filename>Frames</filename>
+            <filename>cc_collectible_orb.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
