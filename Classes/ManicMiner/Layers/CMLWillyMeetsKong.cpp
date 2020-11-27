@@ -42,6 +42,17 @@ void CMLWillyMeetsKong::VOnCreate( void )
 
 	m_pcKong = new CGCObjKong(cocos2d::Vec2(960.0, 900.0), cocos2d::Vec2(100.0, 360.0), 2.0f, s_cCreationParams_CGCObj_EKong);
 	m_pcMovingDoor = new CMovingDoor(*m_pcGameManager);
+
+
+	/////////////////////////////////////////////
+	// Find Extendable enemy in the object list. 
+	//CGCObjEnemy* pcEnemy;
+	//CGCObject* pcBaseObject;
+	//pcBaseObject = CGCObjectManager::FindObject( "KongExtend", GetGCTypeIDOf( CGCObjEnemy ) );
+	//pcEnemy = static_cast<CGCObjEnemy*>(pcBaseObject);
+	//
+	// This operation can be called when the enemy movement is required to be extended (wall removed), and the correct enemy will have its movement window extended.
+	//pcEnemy->ModifyEnemyDestinationPoint(cocos2d::Vec2(1150.0f,240.0f));
 }
 
 void CMLWillyMeetsKong::VLevelSpecificInteraction()
