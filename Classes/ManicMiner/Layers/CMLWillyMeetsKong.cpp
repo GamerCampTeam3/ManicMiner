@@ -69,7 +69,7 @@ void CMLWillyMeetsKong::VLevelSpecificInteraction()
 
 		case ESpecialInteraction::Boss:
 			// TODO: Call Kong to drop.
-			CKong->TriggerKongToFall();
+			m_pcKong->TriggerKongToFall();
 			break;
 	}
 }
