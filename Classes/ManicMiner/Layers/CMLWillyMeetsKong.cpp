@@ -69,9 +69,15 @@ void CMLWillyMeetsKong::VLevelSpecificInteraction()
 
 		case ESpecialInteraction::Boss:
 			// TODO: Call Kong to drop.
+			CKong->TriggerKongToFall();
 			break;
 	}
 }
+
+
+
+
+
 
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
