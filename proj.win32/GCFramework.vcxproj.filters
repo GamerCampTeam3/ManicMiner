@@ -232,6 +232,9 @@
     <Filter Include="Classes\ManicMiner\Parallax\Layers">
       <UniqueIdentifier>{8f91cbc0-0fcd-4346-9fbc-8a866c8ecc8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Platforms\Triggerable">
+      <UniqueIdentifier>{55785553-ea4d-4724-9e41-de0937f40ace}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -515,6 +518,14 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Parallax\AnimatedParallaxLayer.cpp">
       <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CObjGroupTriggerablePlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -862,6 +873,14 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Parallax\ScrollingParallaxLayer.h">
       <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CObjGroupTriggerablePlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
