@@ -264,6 +264,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CGroundPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CMovingPlatform.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CObjGroupTriggerablePlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.cpp" />
@@ -406,6 +407,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CGroundPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CMovingPlatform.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CObjGroupTriggerablePlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.h" />

@@ -1,16 +1,25 @@
 #ifndef _CTRIGGERPLATFORMS_H_
 #define _CTRIGGERPLATFORMS_H_
 
+#ifndef _GCOBJSPRITEPHYSICS_H_
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
+#endif
 
 class CTriggerPlatform
 	: public CGCObjSpritePhysics
 {
-	CTriggerPlatform(cocos2d::Vec2 SpawnLocation);
-	
+private:
+
+        // Whether Crumbling has been triggered 
+	bool m_bHasBeenTriggered;
+
+        // Holds the Crumble Animation
+	cocos2d::Animation* m_pcCrumbleAnimation;
+
 public:
 
-	void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
+	CTriggerPlatform(cocos2d::Vec2 v2SpawnLocation);
+	~CTriggerPlatform();
 	
 	void VOnResourceAcquire() override;
 
@@ -18,7 +27,9 @@ public:
 	 
 	void VOnReset() override;
 
-	void TriggerCrumble();
+        // Plays Crumble Animation and Disables Physics Body
+        void TriggerCrumble();
+
 };
 
 #endif

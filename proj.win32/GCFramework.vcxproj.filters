@@ -522,6 +522,11 @@
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Platforms\CObjGroupTriggerablePlatform.cpp">
+      <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -870,6 +875,11 @@
       <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.h">
+      <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Platforms\CObjGroupTriggerablePlatform.h">
       <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
     </ClInclude>
   </ItemGroup>
