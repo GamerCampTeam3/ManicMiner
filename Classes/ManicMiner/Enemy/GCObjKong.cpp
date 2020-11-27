@@ -24,7 +24,7 @@ CGCObjKong::CGCObjKong(const cocos2d::Vec2& rcAnchorPoint, const cocos2d::Vec2& 
 	m_cKongState = EKongState::EWaitingToFall;
 
 	m_currentTime = 0.0f;
-
+	m_bKongIsFalling = true;
 
 	//SetSpritePosition(Vec2(0.0f, 0.0f));
 
@@ -92,6 +92,7 @@ void CGCObjKong::VOnResourceAcquire( void )
 
 }
 
+
 void CGCObjKong::VOnReset()
 {
 	// Call base class version first.
@@ -99,10 +100,6 @@ void CGCObjKong::VOnReset()
 
 
 }
-
-
-
-
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -124,10 +121,23 @@ void CGCObjKong::VOnUpdate(float fTimeStep)
 {
 	// Call base class version first.
 	CGCObject::VOnUpdate(fTimeStep);
-	   	 
 
+	// Note this would be an ideal candiate to be event driven rather than VOnUpdate!
 
+	if (m_bKongIsFalling)
+	{
+		// Flip his sprite to falling position and increase his velocity.
+		SetFlippedY(true);
+		SetVelocity(cocos2d::Vec2(0.0f, -10.0f));
 
+		// increment his position for a short time to ensure off bottom of screen, then halt so never re-appears.
+		m_currentTime += fTimeStep;
+		if (m_currentTime > m_kfKongFallDuration)
+		{
+			SetVelocity(cocos2d::Vec2(0.0f, 0.0f));
+			SetResetPosition(cocos2d::Vec2(-100.0f, -100.0f));
+		}
+	}
 }
 
 
@@ -148,3 +158,13 @@ void CGCObjKong::VOnResourceRelease()
 	}
 }
 
+
+
+
+void CGCObjKong::TriggerKongToFall()
+{
+	
+	m_bKongIsFalling = true;
+
+
+}
