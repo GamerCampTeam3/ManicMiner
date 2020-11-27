@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>ui_life_full.png</key>
+            <key>full_heart.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{60,240}</string>
+                <string>{60,60}</string>
                 <key>spriteSourceSize</key>
-                <string>{60,240}</string>
+                <string>{60,60}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{60,240}}</string>
+                <string>{{0,0},{60,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -29,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>ui_life_full.png</string>
+            <string>full_heart.png</string>
             <key>size</key>
-            <string>{60,240}</string>
+            <string>{60,60}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:1aefaf7ed9a9effe7e5597001bb0a8e2:cf75edebb6d631d73b0959ffb53e386e:a7991d59fc3ac2357db85d9640a2f7e9$</string>
+            <string>$TexturePacker:SmartUpdate:ded4a970242a5eb7d25ec9821532be01:82cfa1e8ae18f507bcded60baf606e09:19dfe84d45f9d7f3a30069140a93cadd$</string>
             <key>textureFileName</key>
-            <string>ui_life_full.png</string>
+            <string>full_heart.png</string>
         </dict>
     </dict>
 </plist>

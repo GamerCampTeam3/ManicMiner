@@ -1,14 +1,18 @@
 #include "ManicMiner/Collectible/CCollectible.h"
 
+
+#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
+#include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
+
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "ManicMiner/AudioHelper/ManicAudio.h"
 
 #ifndef TINYXML2_INCLUDED
-	#include "external\tinyxml2\tinyxml2.h"
+#include "external\tinyxml2\tinyxml2.h"
 #endif
 
 #ifndef _GCLEVELLOADER_OGMO_H_
-	#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
 #endif
 
 USING_NS_CC;
@@ -17,15 +21,44 @@ GCFACTORY_IMPLEMENT_CREATEABLECLASS( CCollectible );
 
 CCollectible::CCollectible()
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
-	, m_pCustomCreationParams			( nullptr )
-	, m_bHasBeenCollected				( false )
-{	
+	, m_pCustomCreationParams( nullptr )
+	, m_bHasBeenCollected( false )
+{
 }
 
 
 void CCollectible::VOnResourceAcquire( void )
 {
 	CGCObjSpritePhysics::VOnResourceAcquire();
+
+	if (m_pszAnimation.length() > 0)
+	{
+
+		const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+
+		std::string m_pszPlist = pcCreateParams->strPlistFile;
+
+		// Note m_pszAnimation is sourced from the data file so not set here.
+		cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist( m_pszPlist );
+		pAnimation = GCCocosHelpers::CreateAnimation( rdictPList, m_pszAnimation );
+		pAnimation->retain();
+
+		RunAction( GCCocosHelpers::CreateAnimationActionLoop( pAnimation ) );
+
+		//pAnimation->setDelayPerUnit(0.0f);
+	}
+}
+
+
+void CCollectible::VOnResourceRelease()
+{
+	CGCObjSpritePhysics::VOnResourceRelease();
+
+	if (m_pszAnimation.length() > 0)
+	{
+		pAnimation->release();
+		pAnimation = nullptr;
+	}
 }
 
 
@@ -52,7 +85,13 @@ void CCollectible::VHandleFactoryParams( const CGCFactoryCreationParams& rCreati
 	// Read in the custom plist
 	if (nullptr != pCurrentObjectXmlData)
 	{
-
+		
+		const tinyxml2::XMLAttribute* pAnimationName = pCurrentObjectXmlData->FindAttribute( "AnimationName" );
+		if (pAnimationName != nullptr)
+		{
+			m_pszAnimation = pAnimationName->Value();
+		}
+		
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute( "CustomPlist" );
 
 		if ((nullptr != pCustomPlistPath)
@@ -80,7 +119,7 @@ void CCollectible::InteractEvent()
 		PlaySoundEffect( ESoundName::KeyCollected );
 
 		CGCObjectManager::ObjectKill( this );
-		
+
 		m_bHasBeenCollected = true;
 	}
 }

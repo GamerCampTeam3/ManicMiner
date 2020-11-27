@@ -16,7 +16,8 @@ enum class ELifeUpdateType;
 	class CAirManager;																																					//
 	class CPlayer;																																						//
 	class CHUD;																																							//
-	class CLevelManager;																																				//
+	class CLevelManager;
+	class CMovingDoor;																																					//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 
@@ -59,6 +60,7 @@ class CGameManager
 	//--------------------------------------------------------------  Getters  -----------------------------------------------------------------------------------------//	
 	bool	GetCanDrainToScore() const { return m_bDrainToScore; }			// Returns bDrainsToScore																	//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+	void	SetMovingDoors( CMovingDoor* rcMovingDoor ) { m_pcMovingDoor = rcMovingDoor; }
 
 	
 																	 private:
@@ -83,6 +85,7 @@ class CGameManager
 	CHUD*			 m_pcCHUD;									// The CHUD, *this will tell it when to update.															//
 	CLevelManager*	 m_pcLevelManager;							// What instantiate this classes, through this, we get access to the current manic layer.				//
 	CPlayer*		 m_pcCPlayer;								// The player, needed to let it know how much lives it has on a new map.								//
+	CMovingDoor*	 m_pcMovingDoor;																																	//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	//																																									//
 	//---------------------------------------------------------  STRUCTS/ENUMS -----------------------------------------------------------------------------------------//
