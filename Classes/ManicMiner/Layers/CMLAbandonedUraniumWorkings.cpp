@@ -1,9 +1,6 @@
 #include "CMLAbandonedUraniumWorkings.h"
 
 #include "ManicMiner/GameManager/CGameManager.h"
-#include "ManicMiner/HUD/CHUD.h"
-#include "ManicMiner/AirManager/AirManager.h"
-#include "ManicMiner/Helpers/Helpers.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLAbandonedUraniumWorkings::CMLAbandonedUraniumWorkings()
@@ -34,35 +31,13 @@ void CMLAbandonedUraniumWorkings::VOnCreate( void )
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
-
-	// Step 3:	New the CHUD and CAirManager.
-	m_pCHUD			= new CHUD(*this, m_pointOrigin, m_sizeVisible );
-	//m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
-	
-	m_pcAirManager	= new CAirManager( m_pointOrigin, m_sizeVisible );
-	m_pcAirManager->Init( *this );
 }
 
-
-
-void CMLAbandonedUraniumWorkings::VInitParams()
-{
-	// Sets the references required by the player
-	m_pcGameManager->SetCHUD			( m_pCHUD			);
-	m_pcGameManager->SetCPlayer			( &GetPlayer()		);
-	m_pcGameManager->SetCAirManager		( m_pcAirManager	);
-	m_pcAirManager->SetGameManager		( m_pcGameManager	);
-	m_pcGameManager->ResetValues();
-	m_pcGameManager->SetLevelRequirements( m_sLevelCreationParameters.sLevelValues );
-	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
-}
 
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLAbandonedUraniumWorkings::VOnDestroy( void )
-{
-	safeDelete( m_pCHUD );
-	
+{	
 	// Call base class last
 	CManicLayer::VOnDestroy();
 }

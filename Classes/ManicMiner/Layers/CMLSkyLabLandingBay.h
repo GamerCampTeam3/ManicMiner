@@ -12,10 +12,6 @@
 #define _CMLSKYLABLANDINGBAY_H_
 
 #include "ManicMiner/Layers/CManicLayer.h"
-// ----------------------------------------- Fwd declares ------------------------------------------------------------- //
-class CAirManager;																										//
-class CHUD;																												//
-// -------------------------------------------------------------------------------------------------------------------- //
 
 class CMLSkyLabLandingBay : public CManicLayer
 {
@@ -32,14 +28,5 @@ public:
 	virtual	void VOnDestroy( void ) override;																			//
 // -------------------------------------------------------------------------------------------------------------------- //
 
-private:
-
-	// --- HUD ------------------------------------------------------------------------------------------------------------ //
-	CHUD* m_pCHUD;
-
-	// --- Air Manager ---------------------------------------------------------------------------------------------------- //
-	CAirManager* m_pcAirManager;
-
-	virtual void VInitParams() override;
 };
 #endif //#ifndef _CMLSKYLABLANDINGBAY_H_

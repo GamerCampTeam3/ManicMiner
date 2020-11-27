@@ -46,11 +46,6 @@
 #include "ManicMiner/Layers/CMLTheFinalBarrier.h"
 
 
-
-
-
-
-
 USING_NS_CC;
 
 
@@ -217,9 +212,9 @@ void CLevelManager::GoToNextLevel()
 		// Assign Game Manager pointer to instantiated Game Manager on this class
 		newManicLayer->SetGameManager( *m_pcCGameManager );
 
-		// Initialize any info the game manager needs
-		newManicLayer->PostInit();
-
+		// We initialize the values here
+		newManicLayer->Init();
+		
 		// Begin transition
 		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionPageTurn::create( 1.0f, pScene, false ) );
 	}

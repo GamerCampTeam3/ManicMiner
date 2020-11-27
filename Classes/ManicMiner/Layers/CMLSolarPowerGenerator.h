@@ -12,10 +12,6 @@
 #define _CMLSOLARPOWERGENERATOR_H_
 
 #include "ManicMiner/Layers/CManicLayer.h"
-// ----------------------------------------- Fwd declares ------------------------------------------------------------- //
-class CAirManager;																										//
-class CHUD;																												//
-// -------------------------------------------------------------------------------------------------------------------- //
 
 class CMLSolarPowerGenerator : public CManicLayer
 {
@@ -31,15 +27,5 @@ public:
 // VOnDestroy needs to cleanup the unique elements to this level ------------------------------------------------------ //
 	virtual	void VOnDestroy( void ) override;																			//
 // -------------------------------------------------------------------------------------------------------------------- //
-
-private:
-
-	// --- HUD ------------------------------------------------------------------------------------------------------------ //
-	CHUD* m_pCHUD;
-
-	// --- Air Manager ---------------------------------------------------------------------------------------------------- //
-	CAirManager* m_pcAirManager;
-
-	virtual void VInitParams() override;
 };
 #endif //#ifndef _CMLSOLARPOWERGENERATOR_H_

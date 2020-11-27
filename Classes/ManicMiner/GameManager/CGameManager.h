@@ -21,11 +21,18 @@ enum class ELifeUpdateType;
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 
+	enum class ESpecialInteraction
+	{
+		Default = 0,
+		Door = 1,
+		Boss
+	};
 
 class CGameManager
 {
 																	 public:
-	
+																		 ESpecialInteraction GetCanProceed() { return m_ESpecialInteractionType; }
+																		 void SetCanProceed( ESpecialInteraction eSpecialInteraction ) { m_ESpecialInteractionType = eSpecialInteraction; }
 	//------------------------------------------------------------  CTOR/DTOR ------------------------------------------------------------------------------------------//	
 	CGameManager(CLevelManager& rcLevelManager );																														//
 	~CGameManager();																																					//
@@ -58,10 +65,11 @@ class CGameManager
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	//																																									//
 	//--------------------------------------------------------------  Getters  -----------------------------------------------------------------------------------------//	
-	bool	GetCanDrainToScore() const { return m_bDrainToScore; }			// Returns bDrainsToScore																	//
+	bool	GetCanDrainToScore() const { return m_bDrainToScore; }			// Returns bDrainsToScore
+	bool	GetDoOnce() const {		return m_bDoOnce;	}//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	void	SetMovingDoors( CMovingDoor* rcMovingDoor ) { m_pcMovingDoor = rcMovingDoor; }
-
+	void SetDoOnce( const bool bDoOnce ) { m_bDoOnce = bDoOnce; }
 	
 																	 private:
 	//------------------------------------------------------------  CONST VARS -----------------------------------------------------------------------------------------//
@@ -78,7 +86,8 @@ class CGameManager
 	int				 m_iCurrentCollectibles;					// The amount of collectibles the player has currently collected.										//
 	int				 m_iCurrentSwitches;						// The amount of switches the player has currently flipped.												//
 	bool			 m_bDrainToScore;							// Can the air manager update the score?																//
-	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+	bool m_bDoOnce;
+  //------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	//																																									//
 	//------------------------------------------------------------  POINTERS -------------------------------------------------------------------------------------------//
 	CAirManager*	 m_pcAirManager;							// The air manager, used for the drain.																	//
@@ -97,13 +106,13 @@ class CGameManager
 	void			 WriteHighScore();							// Called when the score exceeds the highscore, writes the new highscore to "Highscore.bin".			//
 	void			 DrainAirForScore();						// Called by the AirManager (for now), drains remaining air into score									//
 	bool 			 IsScoreGreaterThanHighscore() const;		// Checks to see if score exceeds the highscore.														//
-	bool			 CheckIfLevelRequirementsAreMet() const;	// Checks if the level has collected everything set in the SLevelValues.								//
+	bool			 CheckIfLevelRequirementsAreMet() ;	// Checks if the level has collected everything set in the SLevelValues.								//
 	void			 ExtraLifeCheck( int iScore );				// Checks if player has acquired more than 10,000 score, then awards a life if so.						//
 	void			 CheckHighScoreForUpdate();					// Checks if Highscore should be updated.																//
 	void			 IncreaseScore();							// Increases the score by a flat amount which is 100 (just like the original Manic Miner)				//
 	void			 UpdateHighScore() const;					// Tells the CHUD to update the high score with the current high score.									//
 	void			 UpdateScore()	  const;					// Tells the CHUD to update the score.																	//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-	
+	ESpecialInteraction m_ESpecialInteractionType;
 };
 #endif // #ifndef _CGAMEMANAGER_H_
