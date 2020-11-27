@@ -8,6 +8,7 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/Parallax/Parallax.h"
 
 
 
@@ -32,7 +33,7 @@ void CMLCentralCavern::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5);
-	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/CN_Background.plist");
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/0_CentralCavern.oel";
 	m_sLevelCreationParameters.szLevelName			= "Central Cavern";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );
@@ -52,7 +53,7 @@ void CMLCentralCavern::VOnCreate( void )
 	//addChild( emitter, 10 );
 }
 
-void CMLCentralCavern::InitParams()
+void CMLCentralCavern::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager	->SetCHUD				( m_pCHUD		  );
@@ -64,6 +65,11 @@ void CMLCentralCavern::InitParams()
 	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
 }
 
+void CMLCentralCavern::VInitializeBackground()
+{
+	CManicLayer::VInitializeBackground();
+	GetParallax().AddPlatformOutlines( "TexturePacker/Backgrounds/Cavern/Platforms.plist" );
+}
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLCentralCavern::VOnDestroy(void)

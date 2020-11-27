@@ -229,6 +229,9 @@
     <Filter Include="Classes\ManicMiner\Parallax">
       <UniqueIdentifier>{af49e63c-6d6e-4a08-be6f-b1cec3f224ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Parallax\Layers">
+      <UniqueIdentifier>{8f91cbc0-0fcd-4346-9fbc-8a866c8ecc8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -501,8 +504,17 @@
     <ClCompile Include="..\Classes\ManicMiner\Parallax\Parallax.cpp">
       <Filter>Classes\ManicMiner\Parallax</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjKong.cpp">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.cpp">
-      <Filter>Classes\ManicMiner\Parallax</Filter>
+      <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\ScrollingParallaxLayer.cpp">
+      <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\AnimatedParallaxLayer.cpp">
+      <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -830,14 +842,26 @@
     <ClInclude Include="..\Classes\ManicMiner\Parallax\Parallax.h">
       <Filter>Classes\ManicMiner\Parallax</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.h">
-      <Filter>Classes\ManicMiner\Parallax</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayerData.h">
-      <Filter>Classes\ManicMiner\Parallax</Filter>
-	</ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Enums\ELifeUpdateType.h">
       <Filter>Classes\ManicMiner\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\EParallaxTheme.h">
+      <Filter>Classes\ManicMiner\Parallax</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjKong.h">
+      <Filter>Classes\ManicMiner\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayerData.h">
+      <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.h">
+      <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\AnimatedParallaxLayer.h">
+      <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\ScrollingParallaxLayer.h">
+      <Filter>Classes\ManicMiner\Parallax\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

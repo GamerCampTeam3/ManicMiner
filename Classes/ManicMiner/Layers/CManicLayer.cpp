@@ -16,10 +16,12 @@
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Helpers/Helpers.h"
-#include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
+#include "ManicMiner/Parallax/Parallax.h"
+#include "ManicMiner/Parallax/ParallaxLayerData.h"
 #include "ManicMiner/Structs/SLevelValues.h"
 
 // Include different platform types for collision checks
@@ -53,6 +55,7 @@ USING_NS_CC;
 
 #endif
 
+
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
@@ -62,9 +65,6 @@ CManicLayer::CManicLayer()
 	, m_eGameState					( EGameState::Looting )
 	, m_bWasResetRequested			( false )
 	, m_bWasNextLevelRequested		( false )
-	, m_pcGCSprForeGround			( nullptr )
-	, m_pcGCSprMidGround			( nullptr )
-	, m_pcGCSprBackGround			( nullptr )
 	, m_pcParallax					( nullptr )
 	, m_pcPlayer					( nullptr )
 {
@@ -114,12 +114,7 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 
 
-	// Adds the background
-	// Make sure to set the value of m_pczBackGround before this is ran otherwise it will never have a texture.
-	if (m_sLevelCreationParameters.pszLevelBackground != nullptr )
-	{
-		InitializeBackground( m_sizeVisible );
-	}
+
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -168,7 +163,6 @@ void CManicLayer::VOnCreate()
 	groundBody->CreateFixture( &groundBox, 0 );
 
 
-
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. this is where you would load a level file, using the factory to
 	// create the class instances specified by the level file by passing their
@@ -198,6 +192,7 @@ void CManicLayer::VOnCreate()
 	///////////////////////////////////////////////////////////////////////////
 	m_pcPlayer = new CPlayer( *this, m_sLevelCreationParameters.v2PlayerStartPos, m_sLevelCreationParameters.bShouldFaceRight );
 
+	// ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
@@ -222,57 +217,44 @@ void CManicLayer::VOnCreate()
 
 }
 
-void CManicLayer::InitializeBackground( const cocos2d::Size& rSize )
+void CManicLayer::VInitializeBackground()
 {
-	m_pcGCSprBackGround = new CGCObjSprite();
-	m_pcGCSprBackGround->CreateSprite( m_sLevelCreationParameters.pszLevelBackground );
-	m_pcGCSprBackGround->SetResetPosition( Vec2( rSize.width / 2, ( rSize.height / 2 ) ) );
-	m_pcGCSprBackGround->SetParent( IGCGameLayer::ActiveInstance() );
+	auto pcScene = static_cast< cocos2d::Scene* >( getParent() );
+	if ( pcScene && m_pcPlayer )
+	{
+		int kiNumScrollingLayers = 3;
+		//const int kiNumAnimatedLayers = 4;
+		//if( m_pzsPlatformOutlinePlist == nullptr )
+		//{
+		//	kiNumScrollingLayers--;
+		//}
+		m_pcParallax = new CParallax( kiNumScrollingLayers, 0, *pcScene, *m_pcPlayer );
 
+		const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Cavern/Background_0.plist", -3 );
+		const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -4 );
+		const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -5 );
 
-	//auto pcBackgroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
-	//pcBackgroundSprite->retain();
-	//
-	//auto pcForegroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
-	//pcForegroundSprite->retain();
-	//
-	//auto pcMidgroundSprite = GCCocosHelpers::CreateSpriteFromPlist( m_sLevelCreationParameters.pszLevelBackground );
-	//pcMidgroundSprite->retain();
+		m_pcParallax->AddScrollingLayer( sData1, 5.0f );
+		m_pcParallax->AddScrollingLayer( sData2, 1.5f );
+		m_pcParallax->AddScrollingLayer( sData3, 0.5f );
 
-
-	//// Parallax
-	//m_pcParallax = ParallaxNode::create();
-
-
-	//m_pcParallax->addChild( pcBackgroundSprite, -1, Vec2( 0.1f, 0.1f ), Vec2( 1920.0f * 0.5f, 1080.0f * 0.5f ) );
-
-	//m_pcParallax->addChild( pcMidgroundSprite, 1, Vec2( 0.3f, 0.3f ), Vec2(1920.0f * 0.5f, 1080.0f * 0.5f)  );
-
-	//m_pcParallax->addChild( pcForegroundSprite, 2, Vec2( 1.5f, 1.2f ), Vec2( 1920.0f * 0.5f, 1080.0f * 0.5f ) );
-
-	//auto v2PlayerPos = m_pcPlayer->GetSpritePosition();
-	//Vec2 v2PlayerOffsetFromCentre( ( 1920 * 0.5f - v2PlayerPos.x ), ( 1080 * 0.5f - v2PlayerPos.y ) );
-
-	//auto updateParallaxAction = MoveTo::create( 0.0f, v2PlayerOffsetFromCentre );
-	//m_pcParallax->runAction( updateParallaxAction );
-
-	//this->addChild( m_pcParallax, -5 );
+		m_pcParallax->Reset();
+	}
 }
 
 
 //////////////////////////////////////////////////////////////////////////
 // on update
 //////////////////////////////////////////////////////////////////////////
-//virtual 
+//virtual		
 void CManicLayer::VOnUpdate( f32 fTimeStep )
 {
 	IGCGameLayer::VOnUpdate( fTimeStep );
 
-	//auto v2PlayerPos = m_pcPlayer->GetSpritePosition();
-	//Vec2 v2PlayerOffsetFromCentre ( ( 1920 * 0.5f - v2PlayerPos.x ), ( 1080 * 0.5f - v2PlayerPos.y ) );
-
-	//auto updateParallaxAction = MoveTo::create( 0.0f, v2PlayerOffsetFromCentre );
-	//m_pcParallax->runAction( updateParallaxAction );
+	if ( m_pcParallax )
+	{
+		m_pcParallax->Update();
+	}
 
 	// Reset level request ( and not going to next level )
 	if( GetWasResetRequested() && !GetWasNextLevelRequested() )
@@ -293,15 +275,28 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 ///////////////////////////////////////////////////////////////////////////////
 // on destroy
 ///////////////////////////////////////////////////////////////////////////////
-// virtual
+// virtual				
 void CManicLayer::VOnDestroy()
 {
 	///////////////////////////////////////////////////////////////////////////
 	// clean up anything we allocated in opposite order to creation
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	// Clean up the level
 	m_cLevelLoader.DestroyObjects();
+	
+	// Delete Parallax
+	//if ( m_pzsPlatformOutlinePlist )
+	//{
+	//	delete m_pzsPlatformOutlinePlist;
+	//	m_pzsPlatformOutlinePlist = nullptr;
+	//}
+	if ( m_pcParallax ) 
+	{
+		delete m_pcParallax;
+		m_pcParallax = nullptr;
+	}
+
 	
 	IGCGameLayer::VOnDestroy();
 }
@@ -743,6 +738,13 @@ bool CManicLayer::GetWasNextLevelRequested() const																		//
 {																														//
 	return m_bWasNextLevelRequested;																					//
 }																														//
+
+CParallax& CManicLayer::GetParallax() const
+{
+	CC_ASSERT( m_pcParallax != nullptr );
+	return *m_pcParallax;
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -917,9 +919,6 @@ void CManicLayer::RequestNextLevel()
 }
 
 
-
-
-
 void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 {
 	if( rcPlatform.GetCollisionEnabled() )																	//
@@ -1023,4 +1022,13 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 void CManicLayer::CB_OnGameExitButton( Ref* pSender )
 {
 	RequestNextLevel();
+}
+
+void CManicLayer::PostInit()
+{
+	// Init level params
+	VInitParams();
+
+	// Parallax initiation
+	VInitializeBackground();
 }

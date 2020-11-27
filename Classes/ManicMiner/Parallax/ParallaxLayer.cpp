@@ -1,8 +1,7 @@
 #include "ParallaxLayer.h"
 
-#include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "2d/CCScene.h"
-#include "2d/CCSprite.h"
+#include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 
 CParallaxLayer::CParallaxLayer()
 	: m_pcSprite	( nullptr )
@@ -12,11 +11,15 @@ CParallaxLayer::CParallaxLayer()
 
 CParallaxLayer::~CParallaxLayer()
 {
-	if( m_pcSprite )
+	// Clean up layer sprite
+	if( m_pcSprite ) 
 	{
+		m_pcSprite->DestroySprite();
+
 		delete m_pcSprite;
 		m_pcSprite = nullptr;
 	}
+
 	if( m_psData )
 	{
 		delete m_psData;
@@ -30,10 +33,12 @@ void CParallaxLayer::Init( cocos2d::Scene& rcScene, const SParallaxLayerData& rs
 	m_psData = new SParallaxLayerData( rsData );
 
 	m_pcSprite = new CGCObjSprite();
-	m_pcSprite->CreateSprite( m_psData->pszPlist_image );
-	m_pcSprite->SetResetPosition( cocos2d::Vec2::ZERO );
-	rcScene.addChild( GetSprite(), 0 );
-
+	if( m_psData->kpszPlist_image )
+	{
+		m_pcSprite->CreateSprite( m_psData->kpszPlist_image );
+		m_pcSprite->SetResetPosition( cocos2d::Vec2::ZERO );
+		rcScene.addChild( GetSprite(), m_psData->kiZOrder );
+	}
 }
 
 cocos2d::Sprite* CParallaxLayer::GetSprite() const
@@ -47,4 +52,9 @@ cocos2d::Sprite* CParallaxLayer::GetSprite() const
 		return nullptr;
 		CCLOG( "ERROR: CParallaxLayer::GetSprite() CALLED BEFORE CParallaxLayer::Init(), GOT NULLPTR FOR SPRITE" );
 	}
+}
+
+const SParallaxLayerData* CParallaxLayer::GetData() const
+{
+	return m_psData;
 }

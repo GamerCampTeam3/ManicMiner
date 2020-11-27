@@ -32,12 +32,13 @@
 #define CC_V2(param0, param1)  cocos2d::Vec2(param0, param1) 
 
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
-class CCollectible;																										//																							
+class CCollectible;																										//
 class CDoor;																											//
 class CGameManager;																									    //
 class CGCObjEnemy;																										//
 class CGCObjHazard;																										//
 class CLevelManager;																									//
+class CParallax;																										//
 class CPlatform;																										//
 class CPlayer;																											//
 class CSwitch;																											//
@@ -75,18 +76,11 @@ private:
 	bool				m_bWasNextLevelRequested;																		//
 																														//
 // Pointer to Background Sprites																						//
-	CGCObjSprite*		m_pcGCSprForeGround;																			//
-	CGCObjSprite*		m_pcGCSprMidGround;																				//
-	CGCObjSprite*		m_pcGCSprBackGround;																			//
-	cocos2d::ParallaxNode* m_pcParallax;																				//
+	CParallax*			m_pcParallax;																					//
 																														//
 // Pointer to player, for easy play access																				//
 	CPlayer*			m_pcPlayer;																						//
 // -------------------------------------------------------------------------------------------------------------------- //
-
-
-
-
 
 
 public:
@@ -141,6 +135,7 @@ public:
 	const EGameState	GetGameState()					const;															//
 	bool				GetWasResetRequested()			const;															//
 	bool				GetWasNextLevelRequested()		const;															//
+	CParallax&			GetParallax()					const;															//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -324,13 +319,16 @@ public:																													//
 
 private:
 	void PlayerBeganContactWithPlatform( CPlatform& rcPlatform );
-	void InitializeBackground( const cocos2d::Size&  rSize );
 
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
 	void CB_OnGameExitButton( Ref* pSender );
 
 public:
-	virtual void InitParams() {};
+	virtual void VInitParams() = 0;
+	void PostInit();
+
+protected:
+	virtual void VInitializeBackground();
 };
 #endif // #ifndef _CMANICLAYER_H_

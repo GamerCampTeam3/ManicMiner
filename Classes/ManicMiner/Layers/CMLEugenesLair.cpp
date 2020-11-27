@@ -32,7 +32,7 @@ void CMLEugenesLair::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
-	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/4_Eugene'sLair.oel";
 	m_sLevelCreationParameters.szLevelName			= "Eugene's Lair";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 60.0f + 30.0f, 720.0f );
@@ -53,7 +53,7 @@ void CMLEugenesLair::VOnCreate( void )
 	//addChild( emitter, 10 );
 }
 
-void CMLEugenesLair::InitParams()
+void CMLEugenesLair::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager->SetCHUD( m_pCHUD );

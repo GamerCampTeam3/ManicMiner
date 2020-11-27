@@ -24,6 +24,21 @@ class CGCObjLander
 : public CGCObjSpritePhysics
 {
 private:
+
+	enum class ELanderState {
+		EWaitingToDeploy,
+		EDeploying,
+
+	};
+
+
+
+	float m_currentTime;
+
+
+
+	ELanderState				m_cLanderState;
+
 	cocos2d::Vec2				m_cAnchorPoint;
 	float						m_fSpeed;
     float 						m_fStartDelay;
@@ -33,7 +48,7 @@ private:
 
 	std::string					m_pszAnimation;
 	std::string                 m_pszPlist;
-	//CGCFactoryCreationParams&	m_rFactoryCreationParams;
+	CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
 	cocos2d::Vec2				m_cDest;
 	cocos2d::Vec2				m_cCurrentPos;
@@ -52,7 +67,7 @@ public:
 	//CGCObjLander(GCTypeID idDerivedType);
 
 
-	CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const cocos2d::Vec2& rcDestinationPoint, const float fSpeed, const float fStartDelay, const float fReDeployDelay);
+	CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const cocos2d::Vec2& rcDestinationPoint, const float fSpeed, const float fStartDelay, const float fReDeployDelay, CGCFactoryCreationParams& ParamsInput);
 		//CGCFactoryCreationParams& ParamsInput);
 
 	//GCFACTORY_DECLARE_CREATABLECLASS(CGCObjLander);
@@ -74,4 +89,4 @@ public:
 
 
 };
-#endif // #ifndef _GCOBJENEMY_H_
+#endif // #ifndef _GCOBJLANDER_H_

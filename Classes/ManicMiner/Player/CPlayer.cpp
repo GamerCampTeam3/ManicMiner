@@ -718,7 +718,7 @@ void CPlayer::OnLanded()
 		// IE landed and now is on 4.99836f instead of 5.0f or above
 			if( fNewHeight > fCurrentHeight )
 			{
-				float fHeightDelta = fNewHeight - fCurrentHeight + 0.01f;
+				float fHeightDelta = fNewHeight - fCurrentHeight + 0.015f;
 
 				// v = ( p1 - p0 ) / t
 				float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();

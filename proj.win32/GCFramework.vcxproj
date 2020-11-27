@@ -217,6 +217,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjEugene.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\AirManager\AirManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Enemy\GCObjKong.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjGroupLander.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\GameInstance\CGameInstance.cpp">
@@ -253,6 +254,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\LevelManager\CLevelManager.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\AnimatedParallaxLayer.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\ScrollingParallaxLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Parallax\Parallax.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.cpp" />
@@ -344,6 +347,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjEugene.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjGroupEnemy.h" />
     <ClInclude Include="..\Classes\ManicMiner\AirManager\AirManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Enemy\GCObjKong.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjGroupLander.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enemy\SkylabLandingBay\GCObjLander.h" />
     <ClInclude Include="..\Classes\ManicMiner\Enums\ECollectibleRequirements.h" />
@@ -389,6 +393,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h" />
     <ClInclude Include="..\Classes\ManicMiner\LevelManager\CLevelManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\AnimatedParallaxLayer.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\ScrollingParallaxLayer.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\EParallaxTheme.h" />
     <ClInclude Include="..\Classes\ManicMiner\Parallax\Parallax.h" />
     <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayerData.h" />

@@ -32,7 +32,7 @@ void CMLAmoebatronsRevenge::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 1 );
-	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/17_Amoebatrons'Revenge.oel";
 	m_sLevelCreationParameters.szLevelName			= "Amoebatrons' Revenge";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 1830.0f, 120.0f );
@@ -53,7 +53,7 @@ void CMLAmoebatronsRevenge::VOnCreate( void )
 	//addChild( emitter, 10 );
 }
 
-void CMLAmoebatronsRevenge::InitParams()
+void CMLAmoebatronsRevenge::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager->SetCHUD( m_pCHUD );

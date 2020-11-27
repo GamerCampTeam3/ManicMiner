@@ -218,7 +218,7 @@ void CLevelManager::GoToNextLevel()
 		newManicLayer->SetGameManager( *m_pcCGameManager );
 
 		// Initialize any info the game manager needs
-		newManicLayer->InitParams();
+		newManicLayer->PostInit();
 
 		// Begin transition
 		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionPageTurn::create( 1.0f, pScene, false ) );

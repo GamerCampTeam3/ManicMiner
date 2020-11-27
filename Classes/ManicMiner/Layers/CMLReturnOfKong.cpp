@@ -8,8 +8,9 @@
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/Enemy/GCObjKong.h"
 
-
+static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLReturnOfKong::CMLReturnOfKong()
@@ -32,7 +33,7 @@ void CMLReturnOfKong::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible_And_Switches, 2, 5 );
-	m_sLevelCreationParameters.pszLevelBackground	= static_cast<char*>("TexturePacker/Backgrounds/Placeholder/TemporaryBackground.plist");
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/11_ReturnOfTheAlienKongBeast.oel";
 	m_sLevelCreationParameters.szLevelName			= "Return of the Alien Kong Beast";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );
@@ -51,9 +52,16 @@ void CMLReturnOfKong::VOnCreate( void )
 	//auto emitter = cocos2d::ParticleExplosion::create();
 	//emitter->setTotalParticles( 100 );
 	//addChild( emitter, 10 );
+
+
+	CGCObjKong* CKong = new CGCObjKong(cocos2d::Vec2(960.0, 900.0), cocos2d::Vec2(100.0, 360.0), 2.0f, s_cCreationParams_CGCObj_EKong);
+
+
+
+
 }
 
-void CMLReturnOfKong::InitParams()
+void CMLReturnOfKong::VInitParams()
 {
 	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
 	m_pcGameManager->SetCHUD( m_pCHUD );
