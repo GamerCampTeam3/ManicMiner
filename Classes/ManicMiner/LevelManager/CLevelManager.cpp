@@ -122,7 +122,7 @@ void CLevelManager::GoToNextLevel()
 		break;
 	case 1:
 		// THE COLD ROOM
-		pScene = TGCGameLayerSceneCreator< CMLTheColdRoom >::CreateScene();
+		pScene = TGCGameLayerSceneCreator< CMLSkyLabLandingBay >::CreateScene();
 		break;
 	case 2:
 		// THE MENAGERIE
@@ -201,7 +201,7 @@ void CLevelManager::GoToNextLevel()
 		
 	default:
 		// Should not run
-		int z = 0;	// BREAKPOINT something went wrong!
+		CC_ASSERT( false );
 		break;
 	}
 

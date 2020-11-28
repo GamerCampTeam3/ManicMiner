@@ -54,30 +54,25 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 	//emitter->setTotalParticles( 100 );
 	//addChild( emitter, 10 );
 
+	const float fPTM = 60.0f;
 
-	CGCObjLander* CLander1 = new CGCObjLander(cocos2d::Vec2(100.0,900.0), cocos2d::Vec2(100.0, 360.0), 2.0f, 3.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
-	
-	CGCObjLander* CLander2 = new CGCObjLander(cocos2d::Vec2(240.0, 900.0), cocos2d::Vec2(240.0, 660.0), 1.0f, 0.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
-	
-	CGCObjLander* CLander3 = new CGCObjLander(cocos2d::Vec2(360.0, 900.0), cocos2d::Vec2(360.0, 480.0), 3.0f, 3.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
-	
-	CGCObjLander* CLander5 = new CGCObjLander(cocos2d::Vec2(590.0, 900.0), cocos2d::Vec2(590.0, 360.0), 7.0f, 1.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+	// All data replicated from the following clip:
+	// https://youtu.be/BgUzteADsRI?t=890
+	// There are only 3 enemies in this level at any given frame
+	// Once a lander explodes, it will redeploy on its next defined position
+	// A single lander will always explode on a certain Y coordinate, it just redeploys in different X coordinates
+	// Conveniently this level starts on 14:50
+	// The White and Yellow Landers land for the first time on 14:52,
+	// Whereas the Cyan Lander lands on 14:53
+	// Therefore the time they take for their first collision is 2s ( White & Yellow ) and 3s ( Cyan )
+	// This also means that White and Yellow always land at the same time, no matter their current spawn
 
-	CGCObjLander* CLander6 = new CGCObjLander(cocos2d::Vec2(730.0, 900.0), cocos2d::Vec2(730.0, 650.0), 3.0f, 4.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+	// Time for Collision / Start Delay / Redeploy Delay
+	CGCObjLander* CLanderWhite = new CGCObjLander( { 2, 10, 18, 26 }, 4, 2.0f, s_cCreationParams_CGCObj_ELander );
 
-	CGCObjLander* CLander7 = new CGCObjLander(cocos2d::Vec2(840.0, 900.0), cocos2d::Vec2(840.0, 480.0), 8.0f, 2.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+	CGCObjLander* CLanderCyan = new CGCObjLander( { 12, 20, 28, 4 }, 9, 3.0f, s_cCreationParams_CGCObj_ELander );
 
-	CGCObjLander* CLander9 = new CGCObjLander(cocos2d::Vec2(1090.0, 900.0), cocos2d::Vec2(1090.0, 360.0), 7.0f, 0.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
-
-	CGCObjLander* CLander10 = new CGCObjLander(cocos2d::Vec2(1190.0, 900.0), cocos2d::Vec2(1190.0, 650.0), 7.0f, 0.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
-
-	CGCObjLander* CLander11 = new CGCObjLander(cocos2d::Vec2(1320.0, 900.0), cocos2d::Vec2(1320.0, 480.0), 1.0f, 3.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
-
-	CGCObjLander* CLander13 = new CGCObjLander(cocos2d::Vec2(1560.0, 900.0), cocos2d::Vec2(1560.0, 360.0), 2.0f, 2.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
-
-	CGCObjLander* CLander14 = new CGCObjLander(cocos2d::Vec2(1670.0, 900.0), cocos2d::Vec2(1670.0, 650.0), 4.0f, 1.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
-
-	CGCObjLander* CLander15 = new CGCObjLander(cocos2d::Vec2(1810.0, 900.0), cocos2d::Vec2(1810.0, 480.0), 1.0f, 0.0f, 1.0f, s_cCreationParams_CGCObj_ELander);
+	CGCObjLander* CLanderYellow = new CGCObjLander( { 22, 30, 6, 14 }, 6, 2.0f, s_cCreationParams_CGCObj_ELander );
 
 }
 
