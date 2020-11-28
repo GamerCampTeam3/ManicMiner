@@ -18,8 +18,8 @@
 #include "GamerCamp/GameController/GCController.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Layers/CManicLayer.h"
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
-#include "../AudioHelper/ManicAudio.h"
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
 USING_NS_CC;
@@ -266,7 +266,6 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 		{
 			// End arch-like movement  - >   just drop straight down from now on
 			ApplyDirectionChange( EPlayerDirection::Static );
-			CCLOG( "ARCH" );
 		}
 	}
 	
@@ -796,7 +795,7 @@ void CPlayer::LeftGround()
 	m_bIsGrounded = false;
 
 // If there is no ground below feet -> player is dropping off ledge
-	if( m_iSensorContactCount == 0 || m_bCanJump == true )
+	if( m_iSensorContactCount == 0 && m_bCanJump == true )
 	{
 	// Drop straight down
 		ApplyDirectionChange( EPlayerDirection::Static );
