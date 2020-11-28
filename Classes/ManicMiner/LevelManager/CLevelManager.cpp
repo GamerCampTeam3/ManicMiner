@@ -122,7 +122,7 @@ void CLevelManager::GoToNextLevel()
 		break;
 	case 1:
 		// THE COLD ROOM
-		pScene = TGCGameLayerSceneCreator< CMLSkyLabLandingBay >::CreateScene();
+		pScene = TGCGameLayerSceneCreator< CMLTheColdRoom >::CreateScene();
 		break;
 	case 2:
 		// THE MENAGERIE
