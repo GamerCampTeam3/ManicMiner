@@ -23,29 +23,29 @@ class CGCObjEnemy
 : public CGCObjSpritePhysics
 {
 private:
-
-	cocos2d::Vec2				m_cAnchorPoint;
+	
 	float						m_fSpeed;
 	float						m_fInitialDistanceFromAnchor;    
 	float						m_fMovementWindowLength;
+	float						m_fPreviousXPos;
+	float						m_fMoveDelta;
+	float						m_kfOne = 1.0f;
+	float						m_kfZero = 0.0f;
 	bool						m_bMovingAwayFromAnchorPoint;
-	bool						m_bInitialyMovingAwayFromAnchorPoint;
 	bool                        m_bBounceCollisionDisabled;
 	bool						m_bSpriteIsFlippable;
 	bool						m_bHasBeenCollided;
-	
+	bool						m_bTemporaryAnchorPositionActive;
+	bool						m_bInitialiseToOne;
+	bool						m_bEnemyJustReceivedANewDestination;
 	std::string                 m_pszPlist;
-
+	std::string                 m_psName;
+	cocos2d::Vec2				m_cAnchorPoint;
 	cocos2d::Vec2				m_cDest;
 	cocos2d::Vec2				m_cCurrentPos;
 	cocos2d::Vec2				m_cNewDestination;
-	std::string                 m_psName;
-	float						m_fMoveDelta;
-	bool						m_bTemporaryAnchorPositionActive;
 	cocos2d::Vec2				m_cTemporaryAnchorPosition;
-	bool						m_bInitialiseToOne;
-	float						m_fPreviousXPos;
-	bool						m_bEnemyJustReceivedANewDestination;
+	cocos2d::Vec2				m_cOriginalDestination;
 
 	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
 
