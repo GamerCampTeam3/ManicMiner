@@ -74,14 +74,14 @@ public:
 	
 	//////////////////////////////////////////////////////////////////////////
 	// overridden virtuals from the game object interface
-	virtual void VOnResourceAcquire	( void ) override;
-	virtual void VOnResurrected		( void ) override;
-	virtual void VOnUpdate			(float fTimeStep) override;
-	virtual void VOnResourceRelease	() override;
-	virtual void VOnReset() override;
+	virtual void VOnResourceAcquire		( void ) override;
+	virtual void VOnResurrected			( void ) override;
+	virtual void VOnUpdate				(float fTimeStep) override;
+	virtual void VOnResourceRelease		() override;
+	virtual void VOnReset				() override;
+	virtual void VHandleFactoryParams	(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 
 	void ModifyEnemyDestinationPoint(cocos2d::Vec2& rcNewDestination);
-	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 
 };
 #endif // #ifndef _GCOBJENEMY_H_

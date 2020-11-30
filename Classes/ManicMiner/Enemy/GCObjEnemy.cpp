@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// (C) Gamer Camp / Dave O'Dwyer October 2020
+// (C) Gamer Camp / Dave O'Dwyer November 2020
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <string.h>
@@ -22,26 +22,25 @@ CGCObjEnemy::CGCObjEnemy()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
 	, m_pCustomCreationParams(nullptr)
 {
-	m_fMoveDelta = m_kfZero;
-	m_bTemporaryAnchorPositionActive = false;
-	m_bInitialiseToOne = false;
-	m_fPreviousXPos = m_kfZero;
-	m_bEnemyJustReceivedANewDestination = false;
-	m_cNewDestination = cocos2d::Vec2::ZERO;
-	m_cOriginalDestination = cocos2d::Vec2::ZERO;
+	m_fMoveDelta							= m_kfZero;
+	m_bTemporaryAnchorPositionActive		= false;
+	m_bInitialiseToOne						= false;
+	m_fPreviousXPos							= m_kfZero;
+	m_bEnemyJustReceivedANewDestination		= false;
+	m_cNewDestination						= cocos2d::Vec2::ZERO;
+	m_cOriginalDestination					= cocos2d::Vec2::ZERO;
 }
 
 CGCObjEnemy::CGCObjEnemy(GCTypeID idDerivedType)
 	: m_pCustomCreationParams(nullptr)
 {
-	m_fMoveDelta = m_kfZero;
-	m_bTemporaryAnchorPositionActive = false;
-	m_bInitialiseToOne = false;
-	m_fPreviousXPos = m_kfZero;
-	m_bEnemyJustReceivedANewDestination = false;
-	m_cNewDestination = cocos2d::Vec2::ZERO;
-	m_cOriginalDestination = cocos2d::Vec2::ZERO;
-
+	m_fMoveDelta							= m_kfZero;
+	m_bTemporaryAnchorPositionActive		= false;
+	m_bInitialiseToOne						= false;
+	m_fPreviousXPos							= m_kfZero;
+	m_bEnemyJustReceivedANewDestination		= false;
+	m_cNewDestination						= cocos2d::Vec2::ZERO;
+	m_cOriginalDestination					= cocos2d::Vec2::ZERO;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -50,7 +49,6 @@ CGCObjEnemy::CGCObjEnemy(GCTypeID idDerivedType)
 // virtual
 CGCObjEnemy::~CGCObjEnemy()
 {
-	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -62,16 +60,10 @@ CGCObjEnemy::~CGCObjEnemy()
 void CGCObjEnemy::VOnResourceAcquire( void )
 {
 
-    // Removed maco call so the reference m_rFactorCreationParams could be passed 
-	// into VHandleFactoryParms.  Pending module 2 framework his may be done differently.
-	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjEnemy );    
-	//VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
-
 	// Call base class verion.
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
-	
-    // Only set up and run an animation if the data from the OGMO field has one specified.		   	 
+	    // Only set up and run an animation if the data from the OGMO field has one specified.		   	 
 	if (m_pszAnimation.length() > 0)
 	{
 		// Fetch the factory creation params and extract the plist for this object.
@@ -86,7 +78,6 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 		// Note below can be used to set animation speed if required? (and driven from OGMO data value...)
 		//pAnimation->setDelayPerUnit(m_kfZerof);
-
 	}
 	
 	m_cAnchorPoint = GetResetPosition();
@@ -114,7 +105,6 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 		// first walk window pass.
 		if (m_bMovingAwayFromAnchorPoint)
 		{
-
 			m_cTemporaryAnchorPosition = m_cAnchorPoint;
 			m_cAnchorPoint = cArbitraryPoint;
 
@@ -123,7 +113,6 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 			//   |-----------|---->--->---->--->-----|
 			//               0  (LERP)               1			     
 			//   			 Anc					Dest
-
 		}
 		else
 		{
@@ -140,20 +129,15 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 			m_fMoveDelta = m_kfOne;
 			m_bInitialiseToOne = true;
 		}
-
 	}
 	else
 	{
 		// Normal walk window size so nothing special to do here.
 		m_cCurrentPos = m_cAnchorPoint;
-
-
 		SetResetPosition(m_cAnchorPoint);
 
 	}
-
 	m_fPreviousXPos = m_cCurrentPos.x;
-
 }
 
 void CGCObjEnemy::VOnReset()
@@ -176,39 +160,25 @@ void CGCObjEnemy::VOnReset()
 
 }
 
-
-
-
-
 void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
 {
 
 	const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
 
-
-
-	
 	//Fetch a pointer into the OGMO Xml edtior element containing the data.
 	const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
 
 	if (nullptr != pCurrentObjectXmlData)
 	{
 		// Read in all Enemy specific values defined for the Enemy entity in the OGMO file and assign to member values.
-
 		const tinyxml2::XMLAttribute* pAnimationName = pCurrentObjectXmlData->FindAttribute("AnimationName");
 		CCLOG((nullptr == pAnimationName) ? "AnimationName not found for Enemy!" : pAnimationName->Value());
 		m_pszAnimation = pAnimationName->Value();
-		
-		//const tinyxml2::XMLAttribute* pMovementRange = pCurrentObjectXmlData->FindAttribute("MovementRange");
-		//CCLOG((nullptr == pMovementRange) ? "MovementRange not found for Enemy!" : pMovementRange->Value());
-		//m_fMovementWindowLength = pMovementRange->FloatValue();
-
 				
 		const tinyxml2::XMLAttribute* pInitialDistanceFromAnchor = pCurrentObjectXmlData->FindAttribute("InitialDistanceFromAnchor");
 		CCLOG((nullptr == pInitialDistanceFromAnchor) ? "InitialDistanceFromAnchor not found for Enemy!" : pInitialDistanceFromAnchor->Value());
 		m_fInitialDistanceFromAnchor = pInitialDistanceFromAnchor->FloatValue();
-
-
+		
 		const tinyxml2::XMLAttribute* pMovingAwayFromAnchorPoint = pCurrentObjectXmlData->FindAttribute("MovingAwayFromAnchorPoint");
 		CCLOG((nullptr == pMovingAwayFromAnchorPoint) ? "MovingAwayFromAnchorPoint not found for Enemy!" : pMovingAwayFromAnchorPoint->Value());
 		m_bMovingAwayFromAnchorPoint = pMovingAwayFromAnchorPoint->BoolValue();
@@ -220,9 +190,6 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		const tinyxml2::XMLAttribute* pSpriteIsFlippable = pCurrentObjectXmlData->FindAttribute("SpriteIsFlippable");
 		CCLOG((nullptr == pMovingAwayFromAnchorPoint) ? "SpriteIsFlippable not found for Enemy!" : pSpriteIsFlippable->Value());
 		m_bSpriteIsFlippable = pSpriteIsFlippable->BoolValue();
-			
-
-
 			   		 	  	  		
 		const tinyxml2::XMLAttribute* pDestinationX = pCurrentObjectXmlData->FindAttribute("DestinationX");
 		CCLOG((nullptr == pDestinationX) ? "DestX not found for Enemy!" : pDestinationX->Value());
@@ -238,10 +205,6 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		m_psName = pName->Value();
 		SetName(m_psName);
 
-
-
-
-
 		// Modify destination axis inputs values just read as OGMO  origin is top left, but cocos2dx is bottom left.
 		// (Use same method as GCLevelLoader_Ogmo uses).
 
@@ -252,11 +215,6 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		m_cDest.y = cLevelDimensions.y - m_cDest.y;
 		m_cOriginalDestination.x = m_cDest.x;
 		m_cOriginalDestination.y = m_cDest.y;
-
-
-
-
-
 
 		// Read in the custom plist and shape
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
@@ -273,14 +231,10 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 
 			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
 		}
-
 	}
-
 	// Call base class version 	
 	CGCObjSpritePhysics::VHandleFactoryParams((*pParamsToPassToBaseClass), v2InitialPosition);
-
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 // This function is called when an enemy is resurected from the dead-list to the 
@@ -323,10 +277,6 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 	// Finally update the actual current position of the sprite by calling LERP.
 	m_cCurrentPos = m_cAnchorPoint.lerp(m_cDest, m_fMoveDelta);
 
-
-
-
-
 	if (m_fMoveDelta > m_kfZero && m_fMoveDelta < m_kfOne)
 	{
 		// This is the normal path taken during an enemies traverse of its movement window.
@@ -347,25 +297,19 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 
 			// Clear this flag and this path will not be taken again.
 			m_bTemporaryAnchorPositionActive = false;
-
 		}
-
 
 		// This is the situation when the movement window is updated with a new wider position (kong beast levels).
 		// 
-
 		if (m_bEnemyJustReceivedANewDestination)
 		{
 			// This path signifies that the enemy destination has been updated to a new position during this walk cycle.
-
 			if (m_fMoveDelta < m_kfZero)
 			{
 				// At start side of 0-1 LERP calcuation so no need to worry about a visible step jump for the new window width.
 			    // The new destination can just be slotted in and the LERP will recalculate correctly.
 				m_cDest = m_cNewDestination;
-
 			}
-
 			else if (m_fMoveDelta > m_kfOne)
 			{
 				// For this case we need to calculate for the journey to the new destination point as a 'temporaryAnchorPositionActive',
@@ -382,12 +326,9 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
                 // Set these values to ensure a standard walk cycle occurs for the temporary movement.
 				m_bMovingAwayFromAnchorPoint = true;
 				m_fMoveDelta = m_kfZero;
-
 			}
-
 			// Clear this flag and this path will not be taken again until triggered.
 			m_bEnemyJustReceivedANewDestination = false;
-
 		}
 		//-----------------------------------------------------------------------------
 		else
@@ -395,19 +336,15 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 			// This path is not taken if m_bEnemyJustReceivedANewDestination is True as we don't want to perform a sprite flip
 			// or clamp m_fMoveDelta.  This is because we are somewhere within the  movement window at this point.
 
-
 			// Flip moving logic and facing orientation if required.
 			m_bMovingAwayFromAnchorPoint = !m_bMovingAwayFromAnchorPoint;
 			if (m_bSpriteIsFlippable)
 			{
 				SetFacingOrientation();
 			}
-
 			// Clamp value between 0 and 1 to avoid any 'stuck' situations occuring just outside of the 0 to 1 range.
 			m_fMoveDelta = std::max(m_kfZero, std::min(m_fMoveDelta, m_kfOne));
 		}
-
-
 	}
 }
 
@@ -419,35 +356,21 @@ void CGCObjEnemy::SetFacingOrientation()
 	SetFlippedX(m_fPreviousXPos >= m_cCurrentPos.x);
 }
 
-
-//////////////////////////////////////////////////////////////////////////
-
 void CGCObjEnemy::VOnResourceRelease()
 {
 	// call base class first.
 	CGCObjSpritePhysics::VOnResourceRelease();
 
-
 	if (m_pszAnimation.length() > 0)
 	{
 		pAnimation->release();
 		pAnimation = nullptr;
-
 	}
 }
 
-
-
-
-
-
-
-
 void CGCObjEnemy::ModifyEnemyDestinationPoint(cocos2d::Vec2& rcNewDestination)
 {
-	
 	m_bEnemyJustReceivedANewDestination = true;
 	m_cNewDestination = rcNewDestination;
-
 }
 

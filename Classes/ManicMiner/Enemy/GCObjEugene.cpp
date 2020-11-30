@@ -35,7 +35,6 @@ CGCObjEugene::~CGCObjEugene()
 {
 }
 
-
 void CGCObjEugene::TriggerEugenesAlternativeAnimation(void)
 {
 	// When triggered, Eugene needs to provide an alternative animation.
@@ -52,6 +51,6 @@ void CGCObjEugene::TriggerEugenesAlternativeAnimation(void)
 	pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
 	pAnimation->retain();
 	RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
-   
+
 }
 
