@@ -69,23 +69,20 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	CGCObjSpritePhysics::VOnResourceAcquire();
 
 	
-		   	 
+    // Only set up and run an animation if the data from the OGMO field has one specified.		   	 
 	if (m_pszAnimation.length() > 0)
 	{
-	
+		// Fetch the factory creation params and extract the plist for this object.
 		const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
-
 		std::string m_pszPlist = pcCreateParams->strPlistFile;
 
-		// Note m_pszAnimation is sourced from the data file so not set here.
+		// Note m_pszAnimation is sourced from the data file so set in VHandleFactoyParams.
 		cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
 		pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
 		pAnimation->retain();
-
 		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 
-
-		// use below as data driven from OGMO to set animation speed if required?
+		// Note below can be used to set animation speed if required? (and driven from OGMO data value...)
 		//pAnimation->setDelayPerUnit(0.0f);
 
 	}
@@ -94,7 +91,7 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 	SetFacingOrientation();
 
-	// Special consideration required if this value > 0 which means the first walk window path is shorter than the others.
+	// Special consideration required if this value > 0 which means the first walk window path is shorter than the others,
 	if (m_fInitialDistanceFromAnchor > 0)
 	{
 
@@ -388,7 +385,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 		else
 		{
 			// This path is not taken if m_bEnemyJustReceivedANewDestination is True as we don't want to perform a sprite flip
-			// or clamp m_fMoveDelta for that situation.
+			// or clamp m_fMoveDelta.  This is because we are somewhere within the  movement window at this point.
 
 
 			// Flip moving logic and facing orientation if required.
