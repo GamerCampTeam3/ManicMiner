@@ -18,8 +18,8 @@
 #include "GamerCamp/GameController/GCController.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Layers/CManicLayer.h"
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
-#include "../AudioHelper/ManicAudio.h"
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
 USING_NS_CC;
@@ -34,6 +34,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_rcB2World						( *rcManicLayer.B2dGetWorld() )
 	, m_rcManicLayer					( rcManicLayer )
 	, m_ePlayerDirection				( EPlayerDirection::Static )
+	, m_eJumpDirection					( EPlayerDirection::Static )
 	, m_ePendingDirection				( EPlayerDirection::Static )
 	, m_bCanJump						( true )
 	, m_bCanBeControlled				( true )
@@ -266,7 +267,6 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 		{
 			// End arch-like movement  - >   just drop straight down from now on
 			ApplyDirectionChange( EPlayerDirection::Static );
-			CCLOG( "ARCH" );
 		}
 	}
 	
@@ -563,45 +563,29 @@ void CPlayer::JumpEvent()
 	}
 	else
 	{
-	// If on normal platform, jump normally
-		if( !m_bIsPendingDirection )
+		switch( m_ePlayerDirection )
 		{
-			switch( m_ePlayerDirection )
-			{
-			case EPlayerDirection::Right:
-				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, m_fJumpSpeed ) );
-				break;
-			case EPlayerDirection::Left:
-				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
-				break;
-			case EPlayerDirection::Static:
-				SetVelocity( cocos2d::Vec2( 0.0f, m_fJumpSpeed ) );
-				break;
-			}
-		}
-	// Else, on top of conveyor, jump that way
-		else
-		{
-			switch( m_ePendingDirection )
-			{
-			case EPlayerDirection::Right:
-				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, m_fJumpSpeed ) );
-				break;
-			case EPlayerDirection::Left:
-				SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
-				break;
-			}
-			m_ePlayerDirection = m_ePendingDirection;
+		case EPlayerDirection::Right:
+			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, m_fJumpSpeed ) );
+			break;
+		case EPlayerDirection::Left:
+			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
+			break;
+		case EPlayerDirection::Static:
+			SetVelocity( cocos2d::Vec2( 0.0f, m_fJumpSpeed ) );
+			break;
 		}
 
 		m_bCanJump = false;
+
+		// Set Jump Direction
+		m_eJumpDirection = m_ePlayerDirection;
 
 	// Unlock from conveyor belt always
 		m_bCanBeControlled = true;
 
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 		m_uiJumpSoundID = PlaySoundEffect( ESoundName::Jump );
-		//CCLOG( "Jumped" );
 	}
 }
 
@@ -796,10 +780,11 @@ void CPlayer::LeftGround()
 	m_bIsGrounded = false;
 
 // If there is no ground below feet -> player is dropping off ledge
-	if( m_iSensorContactCount == 0 || m_bCanJump == true )
+	if( m_iSensorContactCount == 0 && m_bCanJump == true )
 	{
 	// Drop straight down
 		ApplyDirectionChange( EPlayerDirection::Static );
+		m_eJumpDirection = EPlayerDirection::Static;
 		CCLOG( "Dropping straight down" );
 		m_bCanJump = false;
 		m_uiFallingSoundID = PlaySoundEffect( ESoundName::Falling );
@@ -869,11 +854,12 @@ void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 		m_bIsPendingDirection = true;
 		JumpEvent();
 	}
-	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //	LEFT INPUT																																	//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left  ) ) && ( eDirectionLock == EPlayerDirection::Right ) )
+	else if( m_eJumpDirection == EPlayerDirection::Left				&&
+			 pKeyManager->ActionIsPressed( CManicLayer::EPA_Left  ) &&
+			 eDirectionLock == EPlayerDirection::Right  )
 	{
 		ApplyDirectionChange( EPlayerDirection::Left, true );
 		m_bCanBeControlled = true;
@@ -882,13 +868,14 @@ void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //	RIGHT INPUT																																	//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	else if( ( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) ) && ( eDirectionLock == EPlayerDirection::Left ) )
+	else if( m_eJumpDirection == EPlayerDirection::Right			&&
+			 pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) &&
+			 eDirectionLock == EPlayerDirection::Left )
 	{
 		ApplyDirectionChange( EPlayerDirection::Right, true);
 		m_bCanBeControlled = true;
 		m_bIsPendingDirection = true;
 	}
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //	NO INPUT																																	//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

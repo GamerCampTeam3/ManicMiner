@@ -196,7 +196,7 @@ void CLevelManager::GoToNextLevel()
 		
 	default:
 		// Should not run
-		int z = 0;	// BREAKPOINT something went wrong!
+		CC_ASSERT( false );
 		break;
 	}
 
