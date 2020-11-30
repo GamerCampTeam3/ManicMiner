@@ -11,11 +11,14 @@ CBlock::CBlock( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPos
 void CBlock::DisableCollisions()
 {
 	GetPhysicsBody()->SetActive( false );
+	SetPhysicsTransform( cocos2d::Vec2( 2000.0f, 2000.0f ), 0.0f );
+	
 }
 
 void CBlock::VOnReset()
 {
 	CGCObjSpritePhysics::VOnReset();
+	SetSpriteOpacity( 200 );	
 }
 
 void CBlock::VOnResourceAcquire()

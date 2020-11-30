@@ -33,6 +33,7 @@ class CGameManager
 																	 public:
 																		 ESpecialInteraction GetCanProceed() { return m_ESpecialInteractionType; }
 																		 void SetCanProceed( ESpecialInteraction eSpecialInteraction ) { m_ESpecialInteractionType = eSpecialInteraction; }
+																		 void ResetInteractionCounter() { m_iInteractionCounter = 0; }
 	//------------------------------------------------------------  CTOR/DTOR ------------------------------------------------------------------------------------------//	
 	CGameManager(CLevelManager& rcLevelManager );																														//
 	~CGameManager();																																					//
@@ -114,5 +115,6 @@ class CGameManager
 	void			 UpdateScore()	  const;					// Tells the CHUD to update the score.																	//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 	ESpecialInteraction m_ESpecialInteractionType;
+	int					m_iInteractionCounter;
 };
 #endif // #ifndef _CGAMEMANAGER_H_

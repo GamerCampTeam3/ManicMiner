@@ -26,11 +26,13 @@ private:
 public:
 	// Default Constructor
 	CSwitch();
-	GCFACTORY_DECLARE_CREATABLECLASS( CDoor );
+	GCFACTORY_DECLARE_CREATABLECLASS( CSwitch );
 
 	// The interact event called in collision
 	// Has a switch depending on type on creation.
 	void InteractEvent();
+
+	bool GetHasBeenCollected() const { return m_bHasBeenCollected; }
 
 };
 #endif // #ifndef _CSWITCH_H_

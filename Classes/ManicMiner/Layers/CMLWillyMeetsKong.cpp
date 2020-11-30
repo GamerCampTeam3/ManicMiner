@@ -8,6 +8,7 @@
 #include "ManicMiner/Doors/CMovingDoor.h"
 #include "ManicMiner/Enemy/GCObjKong.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Platforms/CTriggerPlatform.h"
 
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EKong", "TexturePacker/Sprites/Kong/Kong.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
@@ -58,14 +59,18 @@ void CMLWillyMeetsKong::VLevelSpecificInteraction()
 			CGCObject* pcBaseObject;
 			pcBaseObject = CGCObjectManager::FindObject( "KongExtend", GetGCTypeIDOf( CGCObjEnemy ) );
 			pcEnemy = static_cast<CGCObjEnemy*>(pcBaseObject);
-			// This operation can be called when the enemy movement is required to be extended (wall removed), and the correct enemy will have its movement window extended.
 			pcEnemy->ModifyEnemyDestinationPoint( cocos2d::Vec2( 1150.0f, 240.0f ) );
 		
 			m_pcMovingDoor->MoveBlocksAside();
 			break;
 
 		case ESpecialInteraction::Boss:
-			// TODO: Call Kong to drop.
+			CTriggerPlatform* pcTriggerPlatform;
+			CGCObject* pcBasePlatform;
+			pcBasePlatform = CGCObjectManager::FindObject( "TriggerPlatform", GetGCTypeIDOf( CTriggerPlatform ) );
+			pcTriggerPlatform = static_cast<CTriggerPlatform*>(pcBasePlatform);
+			pcTriggerPlatform->TriggerCrumble();
+		
 			m_pcKong->TriggerKongToFall();
 			break;
 	}

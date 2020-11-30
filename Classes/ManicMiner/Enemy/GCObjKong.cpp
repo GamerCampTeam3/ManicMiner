@@ -97,6 +97,8 @@ void CGCObjKong::VOnReset()
 {
 	// Call base class version first.
 	CGCObjSpritePhysics::VOnReset();
+	m_bKongIsFalling = false;
+	SetFlippedY( false );
 
 
 }
