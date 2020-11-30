@@ -63,7 +63,7 @@ void CFish::Init()
 			m_pcSprFish->CreateSprite(pszPlist_Fish);
 		}
 
-		m_pcSprFish->SetSpritePosition(cocos2d::Vec2(380.f, 600.f));
+		m_pcSprFish->SetResetPosition(cocos2d::Vec2(380.f, 600.f));
 	}
 
 }
