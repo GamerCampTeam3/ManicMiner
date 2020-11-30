@@ -25,7 +25,6 @@ class  CMLEugenesLair;
 CGCObjEugene::CGCObjEugene()
 	: CGCObjEnemy(GetGCTypeIDOf(CGCObjEugene)) 
 {
-	m_bAngryEugeneTriggered = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -34,54 +33,25 @@ CGCObjEugene::CGCObjEugene()
 // virtual
 CGCObjEugene::~CGCObjEugene()
 {
-	
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//Function to provide the frame update of this object
-//////////////////////////////////////////////////////////////////////////
-//virtual function
-void CGCObjEugene::VOnUpdate(float fTimeStep)
-{
-	// Call base class version first.
-	CGCObjEnemy::VOnUpdate(fTimeStep);
-	
-	// Do Eugene specific functionality below:
-	
-	// ie, if accessor 'set euguene flashing'
-	// animation?
-
-	if (m_bAngryEugeneTriggered)
-	{
-		SetSpriteRotation(fTimeStep);
-
-
-
-
-
-	}
-
-
-
-
-}
-
-
-void  CGCObjEugene::VOnResourceAcquire(void)
-{
-	CGCObjEnemy::VOnResourceAcquire();
-
-	SetName("Eugene");
-
-
 }
 
 
 void CGCObjEugene::TriggerEugenesAlternativeAnimation(void)
 {
-	m_bAngryEugeneTriggered = true;
-	
+	// When triggered, Eugene needs to provide an alternative animation.
 
+	// Fetch the factory creation params and extract the plist for this object.
+	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+	std::string m_pszPlist = pcCreateParams->strPlistFile;
+	cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
+
+	// Specifiy alternate animation name.
+	
+	m_pszAnimation = "Angry";
+
+	pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
+	pAnimation->retain();
+	RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
+   
 }
 
