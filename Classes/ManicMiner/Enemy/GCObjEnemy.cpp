@@ -22,23 +22,25 @@ CGCObjEnemy::CGCObjEnemy()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjEnemy))
 	, m_pCustomCreationParams(nullptr)
 {
-	m_fMoveDelta = 0.0;
+	m_fMoveDelta = m_kfZero;
 	m_bTemporaryAnchorPositionActive = false;
 	m_bInitialiseToOne = false;
-	m_fPreviousXPos = 0.0;
+	m_fPreviousXPos = m_kfZero;
 	m_bEnemyJustReceivedANewDestination = false;
 	m_cNewDestination = cocos2d::Vec2::ZERO;
+	m_cOriginalDestination = cocos2d::Vec2::ZERO;
 }
 
 CGCObjEnemy::CGCObjEnemy(GCTypeID idDerivedType)
 	: m_pCustomCreationParams(nullptr)
 {
-	m_fMoveDelta = 0.0;
+	m_fMoveDelta = m_kfZero;
 	m_bTemporaryAnchorPositionActive = false;
 	m_bInitialiseToOne = false;
-	m_fPreviousXPos = 0.0;
+	m_fPreviousXPos = m_kfZero;
 	m_bEnemyJustReceivedANewDestination = false;
 	m_cNewDestination = cocos2d::Vec2::ZERO;
+	m_cOriginalDestination = cocos2d::Vec2::ZERO;
 
 }
 
@@ -83,7 +85,7 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 
 		// Note below can be used to set animation speed if required? (and driven from OGMO data value...)
-		//pAnimation->setDelayPerUnit(0.0f);
+		//pAnimation->setDelayPerUnit(m_kfZerof);
 
 	}
 	
@@ -134,8 +136,8 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 			//   0  (LERP)   1
 			//   Anc        Dest
 
-			// For this case need to initialise the LERP input to 1.0 as we are starting from the Destination and moving to the Anchor point.
-			m_fMoveDelta = 1.0f;
+			// For this case need to initialise the LERP input to m_kfOne(1.0f) as we are starting from the Destination and moving to the Anchor point.
+			m_fMoveDelta = m_kfOne;
 			m_bInitialiseToOne = true;
 		}
 
@@ -161,12 +163,16 @@ void CGCObjEnemy::VOnReset()
 
 	if (m_bInitialiseToOne)
 	{
-		m_fMoveDelta = 1.0f;
+		m_fMoveDelta = m_kfOne;
 	}
 	else
 	{
-		m_fMoveDelta = 0.0f;
+		m_fMoveDelta = m_kfZero;
 	}
+
+	// In case the destination has been modifed (via a call to ModifyEnemyDestinationPoint), restore the original destination.
+	m_cDest.x = m_cOriginalDestination.x;
+	m_cDest.y = m_cOriginalDestination.y;
 
 }
 
@@ -221,14 +227,11 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		const tinyxml2::XMLAttribute* pDestinationX = pCurrentObjectXmlData->FindAttribute("DestinationX");
 		CCLOG((nullptr == pDestinationX) ? "DestX not found for Enemy!" : pDestinationX->Value());
 		m_cDest.x = pDestinationX->FloatValue();
-
-		
+			
 		const tinyxml2::XMLAttribute* pDestinationY = pCurrentObjectXmlData->FindAttribute("DestinationY");
 		CCLOG((nullptr == pDestinationY) ? "DestX not found for Enemy!" : pDestinationY->Value());
 		m_cDest.y = (pDestinationY->FloatValue());
-
-
-
+				
 
 		const tinyxml2::XMLAttribute* pName = pCurrentObjectXmlData->FindAttribute("Name");
 		CCLOG((nullptr == pName) ? "Name not found for Enemy!" : pName->Value());
@@ -247,6 +250,13 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		cocos2d::Vec2 v2Origin(origin.x, origin.y);
 		m_cDest = v2Origin + m_cDest;
 		m_cDest.y = cLevelDimensions.y - m_cDest.y;
+		m_cOriginalDestination.x = m_cDest.x;
+		m_cOriginalDestination.y = m_cDest.y;
+
+
+
+
+
 
 		// Read in the custom plist and shape
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
@@ -280,7 +290,7 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 void CGCObjEnemy::VOnResurrected( void )
 {
 	CGCObjSpritePhysics::VOnResurrected();
-	GetPhysicsBody()->SetGravityScale( 0.0f );
+	GetPhysicsBody()->SetGravityScale( m_kfZero );
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -292,18 +302,15 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 	// Call base class version first.
 	CGCObject::VOnUpdate(fTimeStep);
 	   	 
-
-
-
 	// Calulate a vector to represent the movement window.
 	cocos2d::Vec2 fVectorWindow = m_cAnchorPoint - m_cDest;
-
-
+	
 	// Calculate movement % increment amount as a function of the movment window length and the frame rate * speed modifier.
 	// This value is the input into the LERP function to calculate m_cCurrentPos.
 	float fLerpInput = ((fTimeStep * m_fSpeed) / fVectorWindow.length()) * 100.0f;
 
 
+	// Add or subtract from movement amount depending on direction from anchor point
 	if (m_bMovingAwayFromAnchorPoint)
 	{
 		m_fMoveDelta += fLerpInput;
@@ -313,13 +320,14 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 		m_fMoveDelta -= fLerpInput;
 	}
 
+	// Finally update the actual current position of the sprite by calling LERP.
 	m_cCurrentPos = m_cAnchorPoint.lerp(m_cDest, m_fMoveDelta);
 
 
 
 
 
-	if (m_fMoveDelta > 0.0f && m_fMoveDelta < 1.0f)
+	if (m_fMoveDelta > m_kfZero && m_fMoveDelta < m_kfOne)
 	{
 		// This is the normal path taken during an enemies traverse of its movement window.
 		MoveToPixelPosition(m_cCurrentPos);
@@ -350,7 +358,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 		{
 			// This path signifies that the enemy destination has been updated to a new position during this walk cycle.
 
-			if (m_fMoveDelta < 0.0f)
+			if (m_fMoveDelta < m_kfZero)
 			{
 				// At start side of 0-1 LERP calcuation so no need to worry about a visible step jump for the new window width.
 			    // The new destination can just be slotted in and the LERP will recalculate correctly.
@@ -358,7 +366,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 
 			}
 
-			else if (m_fMoveDelta > 1.0f)
+			else if (m_fMoveDelta > m_kfOne)
 			{
 				// For this case we need to calculate for the journey to the new destination point as a 'temporaryAnchorPositionActive',
 				// using the same method as for if the initial distance from the anchor is set > 0 at startup.
@@ -373,7 +381,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 				
                 // Set these values to ensure a standard walk cycle occurs for the temporary movement.
 				m_bMovingAwayFromAnchorPoint = true;
-				m_fMoveDelta = 0.0f;
+				m_fMoveDelta = m_kfZero;
 
 			}
 
@@ -396,7 +404,7 @@ void CGCObjEnemy::VOnUpdate(float fTimeStep)
 			}
 
 			// Clamp value between 0 and 1 to avoid any 'stuck' situations occuring just outside of the 0 to 1 range.
-			m_fMoveDelta = std::max(0.0f, std::min(m_fMoveDelta, 1.0f));
+			m_fMoveDelta = std::max(m_kfZero, std::min(m_fMoveDelta, m_kfOne));
 		}
 
 
@@ -429,7 +437,11 @@ void CGCObjEnemy::VOnResourceRelease()
 }
 
 
-//////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
 void CGCObjEnemy::ModifyEnemyDestinationPoint(cocos2d::Vec2& rcNewDestination)
 {

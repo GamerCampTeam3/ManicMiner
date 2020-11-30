@@ -10,7 +10,7 @@
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "ManicMiner/Platforms/CTriggerPlatform.h"
 
-static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
+static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EKong", "TexturePacker/Sprites/Kong/Kong.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLWillyMeetsKong::CMLWillyMeetsKong()
