@@ -14,6 +14,7 @@
 #include "GamerCamp/Win32Input/GCKeyboardManager.h"
 
 #include "ManicMiner/Collectible/CCollectible.h"
+#include "ManicMiner/Switch/CSwitch.h"
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "ManicMiner/GameManager/CGameManager.h"
@@ -201,6 +202,11 @@ void CManicLayer::VOnCreate()
 			ItemCollected( rcCollectible, rcPlayer, rcContact );
 		} );
 
+	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CSwitch& rcSwitch, const b2Contact& rcContact ) -> void
+	{
+		SwitchInteracted( rcSwitch, rcPlayer, rcContact );
+	} );
+
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact ) -> void
 		{
 			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
@@ -215,6 +221,8 @@ void CManicLayer::VOnCreate()
 		{
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
 		});
+
+	
 
 }
 
@@ -663,7 +671,6 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 	if( rcContact.IsTouching() )																						//
 	{																													//
 		OnDeath();
-		//m_pcGameManager->UpdateLives(ELifeUpdateType::Minus);
 	}																													//
 }																														//
 																														//
@@ -677,7 +684,6 @@ void CManicLayer::PlayerCollidedHazard( CPlayer& rcPlayer, CGCObjHazard& rcHazar
 
 			OnDeath();
 			rcHazard.SetCanCollide( false );
-			//m_pcGameManager->UpdateLives( ELifeUpdateType::Minus );//
 		}
 
 	}																													//
@@ -705,9 +711,14 @@ void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer,
 void CManicLayer::SwitchInteracted(CSwitch& rcSwitch, CPlayer& rcPlayer, const b2Contact& rcContact)					//
 {																														//
 	if (rcContact.IsTouching())																							//
-	{																													//
-		rcSwitch.InteractEvent();																						//
-		m_pcGameManager->CSwitchInteractEvent();																		//
+	{
+		if (!rcSwitch.GetHasBeenCollected())
+		{
+			m_pcGameManager->CSwitchInteractEvent();
+		}
+		
+		rcSwitch.InteractEvent();
+
 	}																													//
 }																														//
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -842,7 +853,8 @@ void CManicLayer::OnEscaped()
 void CManicLayer::OnDeath()
 {
 	m_pcPlayer->Die();
-	m_pcGameManager->UpdateLives( ELifeUpdateType::Minus );	
+	m_pcGameManager->UpdateLives( ELifeUpdateType::Minus );
+	m_pcGameManager->ResetInteractionCounter();
 
 	if( m_pcPlayer->GetLives() > 0 )
 	{

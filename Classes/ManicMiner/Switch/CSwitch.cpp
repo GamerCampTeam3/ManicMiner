@@ -9,6 +9,8 @@
 #endif
 
 
+GCFACTORY_IMPLEMENT_CREATEABLECLASS( CSwitch );
+
 CSwitch::CSwitch()
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CSwitch ) )
 	, m_pCustomCreationParams			( nullptr )
@@ -52,7 +54,7 @@ void CSwitch::VHandleFactoryParams( const CGCFactoryCreationParams& rCreationPar
 	}
 
 	// Call base class version 	
-	CGCObjSpritePhysics::VHandleFactoryParams( (*pParamsToPassToBaseClass), v2InitialPosition );
+	CGCObjSpritePhysics::VHandleFactoryParams( *pParamsToPassToBaseClass, v2InitialPosition );
 }
 
 
