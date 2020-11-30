@@ -241,9 +241,9 @@ void CManicLayer::VInitializeBackground()
 		m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
 
 		const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Cavern/Background_0.plist", -3 );
-		const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -4 );
-		const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -5 );
-		const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -6 );
+		const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -5 );
+		const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -6 );
+		const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -4 );
 
 		m_pcParallax->AddScrollingLayer( sData1, 5.0f );
 		m_pcParallax->AddAnimatedLayer(sData4);

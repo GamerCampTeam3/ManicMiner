@@ -15,11 +15,12 @@ CAnimatedParallaxLayer::~CAnimatedParallaxLayer()
 void CAnimatedParallaxLayer::Init(cocos2d::Scene& pcScene, const SParallaxLayerData& rsData)
 {
 	CParallaxLayer::Init(pcScene, rsData);
-	GetSprite()->setContentSize(cocos2d::Size(100.f, 100.f));
-	/*
-	m_pcVisualElementSprite->CreateSprite(rsData.kpszPlist_image);
-	m_pcVisualElementSprite->SetResetPosition(cocos2d::Vec2(100.f, 200.f));
-		m_pcVisualElementSprite->SetSpriteScale(10.f, 10.f);*/
+
+	const float kfScreenCentreX = 960.0f;
+	const float kfScreenCentreY = 540.0f;
+	cocos2d::Vec2 v2CentreScreen = cocos2d::Vec2(kfScreenCentreX, kfScreenCentreY);
+	auto updateParallaxAction = cocos2d::MoveTo::create(0.0f, v2CentreScreen);
+	GetSprite()->runAction(updateParallaxAction);
 }
 
 void CAnimatedParallaxLayer::VUpdate()
@@ -61,6 +62,6 @@ void CAnimatedParallaxLayer::GetDistanceToCurrentMoveToPosition(bool bInitialDis
 	}
 	else
 	{
-		m_f
+		m_fInitialDistanceToMoveToPosition = currentPosition.getDistance(m_v2CurrentMoveToLocation);
 	}
 }
