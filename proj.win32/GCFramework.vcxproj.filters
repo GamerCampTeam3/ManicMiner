@@ -235,17 +235,8 @@
     <Filter Include="Classes\ManicMiner\Platforms\Triggerable">
       <UniqueIdentifier>{55785553-ea4d-4724-9e41-de0937f40ace}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ManicMiner\MovingDoor">
-      <UniqueIdentifier>{1ebe17a1-9c7b-4808-a86c-ab938d87f7d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ManicMiner\MovingDoor\Block">
-      <UniqueIdentifier>{291e3400-2fac-41fc-aa9c-03d96e850c30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ManicMiner\Scenes">
-      <UniqueIdentifier>{f65a85db-62d0-454d-a4d1-866a12518a07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ManicMiner\Scenes\GameOver">
-      <UniqueIdentifier>{6c6720df-58ee-47ad-b62c-fec89832f05b}</UniqueIdentifier>
+    <Filter Include="Classes\ManicMiner\Parallax\VisualElements">
+      <UniqueIdentifier>{92eb5825-65b2-47cf-b128-57f696283852}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -534,14 +525,10 @@
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp">
-      <Filter>Classes\ManicMiner\MovingDoor\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp">
-      <Filter>Classes\ManicMiner\MovingDoor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.cpp">
-      <Filter>Classes\ManicMiner\Scenes\GameOver</Filter>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\VisualElements\Fish.cpp">
+      <Filter>Classes\ManicMiner\Parallax\VisualElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -893,14 +880,10 @@
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.h">
       <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h">
-      <Filter>Classes\ManicMiner\MovingDoor\Block</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h">
-      <Filter>Classes\ManicMiner\MovingDoor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.h">
-      <Filter>Classes\ManicMiner\Scenes\GameOver</Filter>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\VisualElements\Fish.h">
+      <Filter>Classes\ManicMiner\Parallax\VisualElements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

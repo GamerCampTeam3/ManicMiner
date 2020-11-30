@@ -6,15 +6,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class HazardTypes
 {
-public:
-
-	enum class EHazardId {
-		EBush,
-		EDownwardSpike,
-		EUpwardSpike,
-		ECross,
-		ESpider,
-		EThorn
-	};
+	
 };
 #endif //ifndef _EHAZARD_		#pragma once

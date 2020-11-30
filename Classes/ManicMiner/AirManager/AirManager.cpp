@@ -182,6 +182,7 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 
 				m_pcGCSprAirVignette->SetSpriteScale( 1.f, 1.f );
 				m_pcGCSprAirVignette->SetSpriteGlobalZOrder( 2.f );
+				m_pcGCSprAirVignette->SetSpriteScale(2.f, 2.f);
 				m_pcGCSprAirVignette->SetResetPosition( Vec2( ( ( m_visibleSize ).width / 2 ), ( ( m_visibleSize ).height / 2 ) ) );
 				m_pcGCSprAirVignette->GetSprite()->setPosition( m_pcGCSprAirVignette->GetResetPosition() );
 				m_pcGCSprAirVignette->SetParent( &rglOwnerGameLayer );
