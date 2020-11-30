@@ -17,15 +17,6 @@ USING_NS_CC;
 
 GCFACTORY_IMPLEMENT_CREATEABLECLASS(CGCObjHazard);
 
-//Module 1 
-//CGCObjHazard::CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcFactoryCreationParamsInput)
-//	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjHazard))
-//	, m_rFactoryCreationParams(rcFactoryCreationParamsInput)
-//	, m_cAnchorPoint(rcAnchorPoint)
-//	, m_eHazardIdentifier(eHazardId)
-//{
-//}
-
 CGCObjHazard::CGCObjHazard()
 	: CGCObjSpritePhysics(GetGCTypeIDOf(CGCObjHazard))
 	, m_pCustomCreationParams(nullptr)
@@ -39,21 +30,9 @@ CGCObjHazard::CGCObjHazard()
 //virtual function
 void CGCObjHazard::VOnResourceAcquire( void )
 {
-	// Removed maco call so the reference m_rFactorCreationParams could be passed 
-	// into VHandleFactoryParms.  Pending module 2 framework his may be done differently.
-	//IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CGCObjHazard );    
-	//VHandleFactoryParams(m_rFactoryCreationParams, GetResetPosition());
-
+	
 	CGCObjSpritePhysics::VOnResourceAcquire();
-
-
-
-
-
-
-
-
-
+	   
 	if (m_pszAnimation.length() > 0)
 	{
 
@@ -73,29 +52,7 @@ void CGCObjHazard::VOnResourceAcquire( void )
 		//pAnimation->setDelayPerUnit(0.0f);
 
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//SetResetPosition(m_cAnchorPoint);
 }
-
-
 
 void CGCObjHazard::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition)
 {
@@ -130,20 +87,12 @@ void CGCObjHazard::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 
 			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
 		}
-
 	}
 
 	// Call base class version 	
 	CGCObjSpritePhysics::VHandleFactoryParams((*pParamsToPassToBaseClass), v2InitialPosition);
 
 }
-
-
-
-
-
-
-
 
 
 //////////////////////////////////////////////////////////////////////////

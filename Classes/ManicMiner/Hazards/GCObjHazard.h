@@ -27,32 +27,18 @@ public:
 	void SetCanCollide( bool bCanCollide ) { m_bCanCollide = bCanCollide; }
 	
 private:
-	HazardTypes::EHazardId	    m_eHazardIdentifier;
 	cocos2d::Vec2				m_cAnchorPoint;
-
-
-	// For animations
 	std::string					m_pszAnimation;
 	std::string                 m_pszPlist;
 	cocos2d::Animation*			pAnimation;
 	bool						m_bCanCollide;
 
-
-
-
-	//CGCFactoryCreationParams&	m_rFactoryCreationParams;
-
-
 	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
-
 
 public:
 
 	CGCObjHazard();
 
-	// Module 1 constructor
-	//CGCObjHazard(const cocos2d::Vec2& rcAnchorPoint, const HazardTypes::EHazardId eHazardId, CGCFactoryCreationParams& rcFactoryCreationParamsInput);
-	   
 	GCFACTORY_DECLARE_CREATABLECLASS(CGCObjHazard);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -63,16 +49,11 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 	// overridden virtuals from the game object interface
-	virtual void VOnResourceAcquire	( void ) override;
-	virtual void VOnResurrected		( void ) override;
-	virtual void VOnUpdate			(float fTimeStep) override;
-	virtual void VOnResourceRelease	(void) override;
-
-	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
-
-	inline  HazardTypes::EHazardId GetHazardIdentifier()
-	{
-		return m_eHazardIdentifier;
-	}
+	virtual void VOnResourceAcquire		( void ) override;
+	virtual void VOnResurrected			( void ) override;
+	virtual void VOnUpdate				(float fTimeStep) override;
+	virtual void VOnResourceRelease		(void) override;
+	virtual void VHandleFactoryParams	(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
+	
 };
 #endif // #ifndef _GCOBJHAZARD_H_

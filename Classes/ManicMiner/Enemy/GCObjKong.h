@@ -27,46 +27,24 @@ private:
 	enum class EKongState {
 		EWaitingToFall,
 		EFalling,
-
 	};
 
-
-
-	float m_currentTime;
-
-
-
 	EKongState					m_cKongState;
-
 	cocos2d::Vec2				m_cAnchorPoint;
 	float						m_fSpeed;
-    
-
 	float						m_kfKongFallDuration = 4.0f;
-
-
-
+	float						m_currentTime;
 	std::string					m_pszAnimation;
 	std::string                 m_pszPlist;
 	CGCFactoryCreationParams&	m_rFactoryCreationParams;
-
 	cocos2d::Vec2				m_cDest;
 	cocos2d::Vec2				m_cCurrentPos;
-	float m_fMoveDelta;
-
-
-
-
-	cocos2d::Animation* pAnimation;
+	float						m_fMoveDelta;
+	cocos2d::Animation*			pAnimation;
 		
 public:
-
 	
-
 	CGCObjKong(const cocos2d::Vec2& rcAnchorPoint, const cocos2d::Vec2& rcDestinationPoint, const float fSpeed, CGCFactoryCreationParams& ParamsInput);
-		//CGCFactoryCreationParams& ParamsInput);
-
-	//GCFACTORY_DECLARE_CREATABLECLASS(CGCObjKong);
 	
 	bool m_bKongIsFalling;
 
@@ -82,13 +60,8 @@ public:
 	virtual void VOnUpdate			(float fTimeStep) override;
 	virtual void VOnResourceRelease	() override;
 	virtual void VOnReset() override;
-
-	//virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
-
 	
-
 	void TriggerKongToFall();
-
 
 };
 #endif // #ifndef _GCOBJKONG_H_
