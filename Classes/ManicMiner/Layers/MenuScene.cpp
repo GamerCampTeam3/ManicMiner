@@ -78,12 +78,12 @@ bool CMenuLayer::init()
 
     // add a "close" icon to exit the progress. it's an autorelease object
     MenuItemImage* pItemStartGame = MenuItemImage::create(
-                                        "Loose/CloseNormal.png",
-                                        "Loose/CloseSelected.png",
+                                        "Loose/play_normal.png",
+                                        "Loose/play_pressed.png",
                                         CC_CALLBACK_1( CMenuLayer::CB_OnGameStartButton, this ) );
         
-    pItemStartGame->setPosition( Vec2(	origin.x + (visibleSize.width * 0.5f ),
-										origin.y + (visibleSize.height * 0.5f ) ) );
+    pItemStartGame->setPosition( Vec2(	origin.x + (visibleSize.width * 0.61f ),
+										origin.y + (visibleSize.height * 0.52f ) ) );
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pItemStartGame, nullptr);
@@ -107,7 +107,7 @@ bool CMenuLayer::init()
     ///////////////////////////////////////////////////////////////////////////
 
     // add "HelloWorld" splash screen"
-    Sprite* pSprite = Sprite::create("Loose/HelloWorld.png");
+    Sprite* pSprite = Sprite::create("Loose/main_menu.png");
 
     // position the sprite on the center of the screen
     pSprite->setPosition( Vec2( visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y ) );

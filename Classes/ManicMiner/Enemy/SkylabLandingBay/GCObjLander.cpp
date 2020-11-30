@@ -258,7 +258,7 @@ void CGCObjLander::VOnResourceRelease()
 	}
 }
 
-CGCObjLander::ELanderState CGCObjLander::GetState() const
+ELanderState CGCObjLander::GetState() const
 {
 	return m_eLanderState;
 }

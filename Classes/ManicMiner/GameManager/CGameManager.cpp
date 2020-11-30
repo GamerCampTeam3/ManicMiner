@@ -25,6 +25,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_pcLevelManager			( &rcLevelManager )
 	, m_pcCPlayer				( nullptr )
 	, m_sLevelValues			( ECollectibleRequirements::Collectible, 0, 0 )
+	, m_iInteractionCounter(0)
 {
 	ReadHighScore();
 }
@@ -243,9 +244,7 @@ void CGameManager::CCollectibleInteractEvent()
 
 void CGameManager::CSwitchInteractEvent()
 {
-	static int iTempSwitch = 0;
-	
-	iTempSwitch++;
+	m_iInteractionCounter++;	
 	m_iCurrentSwitches++;
 	
 	if (CheckIfLevelRequirementsAreMet() )
@@ -253,15 +252,15 @@ void CGameManager::CSwitchInteractEvent()
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
 
-	if (iTempSwitch == 1)
+	if (m_iInteractionCounter == 1)
 	{
 		m_ESpecialInteractionType = ESpecialInteraction::Door;
 	}
 
-	if ( iTempSwitch == 2)
+	if (m_iInteractionCounter == 2)
 	{
 		m_ESpecialInteractionType = ESpecialInteraction::Boss;
-		iTempSwitch = 0;
+		m_iInteractionCounter = 0;
 	}
 	
 	m_pcLevelManager->GetCurrentManicLayer().VLevelSpecificInteraction();

@@ -44,8 +44,6 @@ void CCollectible::VOnResourceAcquire( void )
 		pAnimation->retain();
 
 		RunAction( GCCocosHelpers::CreateAnimationActionLoop( pAnimation ) );
-
-		//pAnimation->setDelayPerUnit(0.0f);
 	}
 }
 
