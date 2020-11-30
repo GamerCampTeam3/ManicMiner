@@ -563,16 +563,17 @@ void CPlayer::JumpEvent()
 	}
 	else
 	{
+		const float fVerticalSpeed = m_fJumpSpeed + m_fVerticalSpeedAdjust;
 		switch( m_ePlayerDirection )
 		{
 		case EPlayerDirection::Right:
-			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, m_fJumpSpeed ) );
+			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, fVerticalSpeed ) );
 			break;
 		case EPlayerDirection::Left:
-			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
+			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, fVerticalSpeed ) );
 			break;
 		case EPlayerDirection::Static:
-			SetVelocity( cocos2d::Vec2( 0.0f, m_fJumpSpeed ) );
+			SetVelocity( cocos2d::Vec2( 0.0f, fVerticalSpeed ) );
 			break;
 		}
 
@@ -689,11 +690,9 @@ void CPlayer::OnLanded()
 			}
 		
 		// -----------------------------------------------------------------------------------------------------------
-		// Manually adjust height ( if not trying to jump )
-		const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
-		TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, ( *m_pcControllerActionToKeyMap ) );
-		if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) ) 
-		{
+		// Manually adjust height
+			const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
+			TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, ( *m_pcControllerActionToKeyMap ) );
 			float fCurrentHeight = GetPhysicsTransform().p.y;
 			float fNewHeight = fCurrentHeight;
 			fNewHeight += 0.5f;
@@ -702,7 +701,7 @@ void CPlayer::OnLanded()
 		// IE landed and now is on 4.99836f instead of 5.0f or above
 			if( fNewHeight > fCurrentHeight )
 			{
-				float fHeightDelta = fNewHeight - fCurrentHeight + 0.015f;
+				float fHeightDelta = fNewHeight - fCurrentHeight + 0.025f;
 
 				// v = ( p1 - p0 ) / t
 				float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
@@ -719,23 +718,16 @@ void CPlayer::OnLanded()
 					fHorizontalSpeed = m_kfWalkSpeed;
 				}
 
-
-
+				// n.b. need to cache this so we can remove it from the velocity after the
+				// physics simulation has stepped handily we can do this in 
+				m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
 
 				cocos2d::Vec2 v2NewVelocity = Vec2( fHorizontalSpeed, fVerticalSpeedToMoveByDeltaInOneFrame );
 				SetVelocity( v2NewVelocity * 0.95f );
 
-				// n.b. need to cache this so we can remove it from the velocity after the
-				// physics simulation has stepped handily we can do this in 
-				m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
 				GetPhysicsBody()->SetGravityScale( 0.0f );
 				CCLOG( "Adjusting Y coordinate manually" );
 			}
-		}
-		
-		
-
-
 #ifdef PLAYER_DEBUG_LANDING
 		CCLOG( "Landed" );
 #endif
