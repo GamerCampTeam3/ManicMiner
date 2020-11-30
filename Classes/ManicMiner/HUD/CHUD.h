@@ -55,7 +55,6 @@ private:
 	cocos2d::Label*		m_pHighScoreValueLabel;				// HighScore Value
 	cocos2d::Label*		m_pHighscoreTextLabel;				// HighScore Text
 	cocos2d::Label*		m_pLevelName;						// Level name Text
-
 	
 	CManicLayer*		m_pglOwnerGameLayer;				// Pointer to the current CManicLayer
 
@@ -74,7 +73,7 @@ private:
 	CGCObjSprite*		m_apcLives [m_kiMaximumLives ] ;	// Array of Sprites to represent lives
 	float				m_fXPlacement;						// The X position of the first Sprite
 	const float			m_kfYPlacement		= 1050.f;		// The Y position of the sprites
-	const float			m_kfOffsetIncrement = 40.0f;		// The X offset between sprites
+	const float			m_kfOffsetIncrement = 45.0f;		// The X offset between sprites
 
 	//--------------------- FUNCTIONS----------------------------------------------------------//
 	
@@ -107,9 +106,9 @@ private:
 
 	//------------------ SPRITES LOCATION ------------------------------------------------------//
 	// The Full Life Battery .plist
-	const char* m_kpszPlistPlayerLifeFull = "TexturePacker/Sprites/Life/cc_life_full.plist";
+	const char* m_kpszPlistPlayerLifeFull = "TexturePacker/Sprites/Life/full_heart.plist";
 	// The Lost Life Batter .plist
-	const char* m_kpszPlistPlayerLifeLost = "TexturePacker/Sprites/Life/cc_life_lost.plist";
+	const char* m_kpszPlistPlayerLifeLost = "TexturePacker/Sprites/Life/empty_heart.plist";
 
 };
 

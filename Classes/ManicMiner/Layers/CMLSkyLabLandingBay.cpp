@@ -4,9 +4,6 @@
 
 #include "CMLSkyLabLandingBay.h"
 
-#include "ManicMiner/AirManager/AirManager.h"
-#include "ManicMiner/Helpers/Helpers.h"
-#include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Enemy/SkylabLandingBay/GCObjLander.h"
 
@@ -77,23 +74,9 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 }
 
 
-void CMLSkyLabLandingBay::VInitParams()
-{
-	// Step 4:  Set the references for the GameManager, this will be called by the LevelManager.
-	m_pcGameManager->SetCHUD( m_pCHUD );
-	m_pcGameManager->SetCPlayer( &GetPlayer() );
-	m_pcGameManager->SetCAirManager( m_pcAirManager );
-	m_pcAirManager->SetGameManager( m_pcGameManager );
-	m_pcGameManager->SetLevelRequirements( m_sLevelCreationParameters.sLevelValues );
-	m_pcGameManager->InitCHUD( m_sLevelCreationParameters.szLevelName );
-}
-
-
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
 void CMLSkyLabLandingBay::VOnDestroy( void )
 {
-	safeDelete( m_pCHUD );
-
 	// Call base class last
 	CManicLayer::VOnDestroy();
 }

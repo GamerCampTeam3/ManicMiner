@@ -1013,8 +1013,10 @@ void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 	if (bHasAnimation)
 	{
 		auto pAnimation = m_pcPlayerAnimationList[pszAnim];
-		CC_ASSERT( pAnimation );
-		RunAction(GCCocosHelpers::CreateAnimationActionLoop( pAnimation ));
+		if (nullptr != pAnimation)
+		{
+			RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
+		}
 	}
 }
 

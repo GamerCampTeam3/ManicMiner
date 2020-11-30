@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>full_heart.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{60,60}</string>
+                <key>spriteSourceSize</key>
+                <string>{60,60}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{60,60}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>full_heart.png</string>
+            <key>size</key>
+            <string>{60,60}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:ded4a970242a5eb7d25ec9821532be01:82cfa1e8ae18f507bcded60baf606e09:19dfe84d45f9d7f3a30069140a93cadd$</string>
+            <key>textureFileName</key>
+            <string>full_heart.png</string>
+        </dict>
+    </dict>
+</plist>

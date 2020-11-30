@@ -42,6 +42,9 @@ private:
 	float						m_fSpeed;
     
 
+	float						m_kfKongFallDuration = 4.0f;
+
+
 
 	std::string					m_pszAnimation;
 	std::string                 m_pszPlist;
@@ -65,6 +68,8 @@ public:
 
 	//GCFACTORY_DECLARE_CREATABLECLASS(CGCObjKong);
 	
+	bool m_bKongIsFalling;
+
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
 	// this class to delete derived types.
@@ -79,6 +84,10 @@ public:
 	virtual void VOnReset() override;
 
 	//virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
+
+	
+
+	void TriggerKongToFall();
 
 
 };
