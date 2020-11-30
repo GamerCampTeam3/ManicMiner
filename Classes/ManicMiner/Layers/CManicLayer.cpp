@@ -879,7 +879,9 @@ void CManicLayer::OutOfLives()
 {
 	m_pcGameManager->ResetHUD();
 	m_pcGameManager->ResetLives();
-	m_pcLevelManager->GoToMainMenu();
+		
+	m_pcLevelManager->GoToGameOverScene();
+	
 }
 
 
@@ -934,6 +936,7 @@ void CManicLayer::RequestNextLevel()
 {
 	m_bWasNextLevelRequested = true;
 	m_pcGameManager->ResetHUD();
+	m_pcGameManager->ResetValues();
 }
 
 

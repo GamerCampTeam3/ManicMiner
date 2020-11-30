@@ -49,7 +49,7 @@ void CMLWillyMeetsKong::VOnCreate( void )
 
 void CMLWillyMeetsKong::VLevelSpecificInteraction()
 {
-	switch (m_pcGameManager->GetCanProceed())
+	switch (m_pcGameManager->GetInteractionStage())
 	{
 		case ESpecialInteraction::Default:
 			break;

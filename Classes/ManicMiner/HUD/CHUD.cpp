@@ -136,25 +136,33 @@ void CHUD::Init(std::string szLevelName, int life, int iScore, int iHighscore)
 				
 		m_fXPlacement += m_kfOffsetIncrement;												// Increment our X, so they do not overlap each other.
 	}
-	
-	static float fXPlacement = 700.0f;
-	
-	for (int i = 0; i < 3; i++)
-	{
-		const cocos2d::Vec2 v2InitialPlacement = cocos2d::Vec2( fXPlacement, m_kfYPlacement );
-		
-		CGCObjSprite* pcSprite = new CGCObjSprite();
-		pcSprite->CreateSprite( m_kpszPlistPlayerLifeLost );
-		pcSprite->SetSpriteGlobalZOrder( 2.0f );
-		pcSprite->SetSpriteScale( 1.0f, 1.0f );
-		pcSprite->SetResetPosition( v2InitialPlacement );
-		pcSprite->GetSprite()->setPosition( pcSprite->GetResetPosition() );
-		pcSprite->SetParent( m_pglOwnerGameLayer );
 
-		fXPlacement += m_kfOffsetIncrement;
-	}
-
-	fXPlacement = 700.0f;
+	////--------------------------------------- TEMP CODE ---------------------------------------////
+	// A temporary int that copies the original X placement position							   //
+	// It will be used to add 3 empty hearts at the location of the original heart				   //
+	// This is made since the hearts are meant to have the outline behind them, but since the code //
+	// for drawing hearts works by replacing the sprite in an array, this is a quick fix.		   //
+	static float fXPlacement = 700.0f;															   //
+																								   //
+	// A for loop to create the 3 extra empty hearts.											   //
+	for (int i = 0; i < 3; i++)																	   //
+	{																							   //
+		const cocos2d::Vec2 v2Pos = cocos2d::Vec2( fXPlacement, m_kfYPlacement );			   //
+																								   //
+		CGCObjSprite* pcSprite = new CGCObjSprite();											   //
+		pcSprite->CreateSprite( m_kpszPlistPlayerLifeLost );									   //
+		pcSprite->SetSpriteGlobalZOrder( 2.0f );												   //
+		pcSprite->SetSpriteScale( 1.0f, 1.0f );										   //
+		pcSprite->SetResetPosition( v2Pos );													   //
+		pcSprite->GetSprite()->setPosition( pcSprite->GetResetPosition() );					   //
+		pcSprite->SetParent( m_pglOwnerGameLayer );												   //
+																								   //
+		fXPlacement += m_kfOffsetIncrement;														   //
+	}																							   //
+																								   //
+	// and finally we reset the static int since otherwise the next levels will offset again.	   //
+	fXPlacement = 700.0f;																		   //
+	/////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Set full the current lives (this will change level to level)
 	for (int i = 0; i < life; i++)

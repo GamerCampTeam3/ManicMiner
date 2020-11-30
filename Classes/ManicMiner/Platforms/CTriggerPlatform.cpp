@@ -104,7 +104,7 @@ void CTriggerPlatform::TriggerCrumble()
 {
 	if(nullptr != m_pcCrumbleAnimation) 
 	{
-		RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcCrumbleAnimation));
+		RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcCrumbleAnimation));
                 m_bHasBeenTriggered = true;
                 GetPhysicsBody()->SetActive(false);
 	}

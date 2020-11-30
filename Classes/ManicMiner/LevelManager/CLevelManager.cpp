@@ -44,6 +44,7 @@
 #include "ManicMiner/Layers/CMLAmoebatronsRevenge.h"
 #include "ManicMiner/Layers/CMLSolarPowerGenerator.h"
 #include "ManicMiner/Layers/CMLTheFinalBarrier.h"
+#include "ManicMiner/Scenes/GameOver/CGameOverScene.h"
 
 
 USING_NS_CC;
@@ -88,6 +89,16 @@ void CLevelManager::GoToMainMenu()
 	Scene* pScene = CMenuLayer::scene( *this );
 	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );
 }
+
+void CLevelManager::GoToGameOverScene()
+{
+	// Reset level index to 0 
+	m_iCurrentLevelIndex = 0;
+	
+	Scene* pScene = CGameOverScene::scene( *this );
+	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );	
+}
+
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	GoToNextLevel																						//
@@ -192,7 +203,6 @@ void CLevelManager::GoToNextLevel()
 		pScene = TGCGameLayerSceneCreator< CMLTheFinalBarrier >::CreateScene();
 		break;
 
-
 		
 	default:
 		// Should not run
@@ -214,6 +224,7 @@ void CLevelManager::GoToNextLevel()
 
 		// We initialize the values here
 		newManicLayer->Init();
+
 		
 		// Begin transition
 		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionPageTurn::create( 1.0f, pScene, false ) );
