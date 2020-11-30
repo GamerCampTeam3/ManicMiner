@@ -23,8 +23,7 @@ class CGCObjEnemy
 : public CGCObjSpritePhysics
 {
 private:
-	EnemyTypes::EMovementAxis	m_eMovementAxis;
-	EnemyTypes::EEnemyId	    m_eEnemyId;
+
 	cocos2d::Vec2				m_cAnchorPoint;
 	float						m_fSpeed;
 	float						m_fInitialDistanceFromAnchor;    
@@ -34,56 +33,37 @@ private:
 	bool                        m_bBounceCollisionDisabled;
 	bool						m_bSpriteIsFlippable;
 	bool						m_bHasBeenCollided;
-	std::string					m_pszAnimation;
+	
 	std::string                 m_pszPlist;
-	//CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
 	cocos2d::Vec2				m_cDest;
 	cocos2d::Vec2				m_cCurrentPos;
-	
-	
 	cocos2d::Vec2				m_cNewDestination;
-
-
 	std::string                 m_psName;
-
-	
-	float m_fMoveDelta;
-
-	bool m_bTemporaryAnchorPositionActive;
-	cocos2d::Vec2 m_cTemporaryAnchorPosition;
-
-	bool m_bInitialiseToOne;
-
-	float m_fPreviousXPos;
-
-
-	bool m_bEnemyJustReceivedANewDestination;
-
-
+	float						m_fMoveDelta;
+	bool						m_bTemporaryAnchorPositionActive;
+	cocos2d::Vec2				m_cTemporaryAnchorPosition;
+	bool						m_bInitialiseToOne;
+	float						m_fPreviousXPos;
+	bool						m_bEnemyJustReceivedANewDestination;
 
 	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
-	
-	cocos2d::Animation* pAnimation;
-
 
 	bool CheckForBoundaryReached(const float fCurrentPosition, const float fAnchorPoint, const float fMovementWindowLength);
 	bool CheckForDirectionFlip	();
 	void SetFacingOrientation	();
 
+protected:
 
+	// This is proteced so sub classes like Eugene can access to change the animation mid game when triggered.
+	cocos2d::Animation* pAnimation;
+	std::string			m_pszAnimation;
 
-		
 public:
 
 	CGCObjEnemy();
 
 	CGCObjEnemy(GCTypeID idDerivedType);
-
-	// Module 1 constructor.
-//GCObjEnemy(const EnemyTypes::EMovementAxis EMovementAxisInput, const cocos2d::Vec2& rcAnchorPoint, const float fMovementRange, const float fInitialDistanceFromAnchor,
-	//bool bMovingAwayFromAnchorPoint, const float fSpeed, const bool bSpriteIsFlippable, const EnemyTypes::EEnemyId eEnemyIdentifier,
-		//CGCFactoryCreationParams& ParamsInput);
 
 	GCFACTORY_DECLARE_CREATABLECLASS(CGCObjEnemy);
 	
@@ -100,14 +80,8 @@ public:
 	virtual void VOnResourceRelease	() override;
 	virtual void VOnReset() override;
 
-
 	void ModifyEnemyDestinationPoint(cocos2d::Vec2& rcNewDestination);
-
 	virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
 
-	inline  EnemyTypes::EEnemyId GetEnemyIdentifier()
-	{
-		return m_eEnemyId;
-	}
 };
 #endif // #ifndef _GCOBJENEMY_H_

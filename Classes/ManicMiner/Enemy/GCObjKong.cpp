@@ -24,7 +24,7 @@ CGCObjKong::CGCObjKong(const cocos2d::Vec2& rcAnchorPoint, const cocos2d::Vec2& 
 	m_cKongState = EKongState::EWaitingToFall;
 
 	m_currentTime = 0.0f;
-	m_bKongIsFalling = true;
+	m_bKongIsFalling = false;
 
 	//SetSpritePosition(Vec2(0.0f, 0.0f));
 

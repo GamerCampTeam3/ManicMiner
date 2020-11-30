@@ -13,7 +13,7 @@ CMovingDoor::CMovingDoor( CGameManager& rcGameManager )
 	, m_pcLowerBlock	( nullptr )
 	, m_cCreationParams( "CPlatform_Regular_1x1", "TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/Platform_Regular_1x1.plist", "CN_Platform_Regular_1x1", b2_staticBody, true )
 {
-	
+	Init();
 }
 
 // Initialize the 2 blocks here.
@@ -68,7 +68,7 @@ bool CMovingDoor::VHandlesThisTypeId( GCTypeID idQueryType )							//
 void CMovingDoor::VOnGroupResourceAcquire()												//
 {																						//
 	CGCObjectGroup::VOnGroupResourceAcquire();											//
-	Init();																				//
+	//Init();																				//
 }																						//
 																						//
 void CMovingDoor::VOnGroupResourceAcquire_PostObject()									//
