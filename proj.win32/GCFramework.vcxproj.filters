@@ -235,6 +235,9 @@
     <Filter Include="Classes\ManicMiner\Platforms\Triggerable">
       <UniqueIdentifier>{55785553-ea4d-4724-9e41-de0937f40ace}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Parallax\VisualElements">
+      <UniqueIdentifier>{92eb5825-65b2-47cf-b128-57f696283852}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -524,6 +527,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Parallax\VisualElements\Fish.cpp">
+      <Filter>Classes\ManicMiner\Parallax\VisualElements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -876,6 +882,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h" />
     <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Parallax\VisualElements\Fish.h">
+      <Filter>Classes\ManicMiner\Parallax\VisualElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

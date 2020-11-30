@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>auw_fish_3.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{1,0.5}</string>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{40,19}</string>
+                <key>spriteSourceSize</key>
+                <string>{40,19}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{40,19}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>Fish.png</string>
+            <key>size</key>
+            <string>{42,21}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:df0ccd9640ae3d4f6aa1dfd6c8ac1f80:ec16f2a7bfdd7ae070095b52d3a72ac2:f4ab007bf533dedae610c2c37be095ed$</string>
+            <key>textureFileName</key>
+            <string>Fish.png</string>
+        </dict>
+    </dict>
+</plist>
