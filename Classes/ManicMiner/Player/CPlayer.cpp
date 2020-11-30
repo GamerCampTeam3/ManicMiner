@@ -732,7 +732,7 @@ void CPlayer::LeftGround()
 	m_bIsGrounded = false;
 
 // If there is no ground below feet -> player is dropping off ledge
-	if( m_iSensorContactCount == 0 && m_bCanJump == true )
+	if( m_bCanJump == true )
 	{
 	// Drop straight down
 		ApplyDirectionChange( EPlayerDirection::Static );
@@ -992,4 +992,3 @@ void CPlayer::ResetIdle()
 	m_iAlternateIdleTimer = 0;
 	m_bSelectedStandardIdle = false;
 }
-
