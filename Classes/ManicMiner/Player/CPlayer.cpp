@@ -688,46 +688,6 @@ void CPlayer::OnLanded()
 				StopSoundEffect( m_uiFallingSoundID );
 				m_uiFallingSoundID = 0;
 			}
-		
-		// -----------------------------------------------------------------------------------------------------------
-		// Manually adjust height
-			const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
-			TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, ( *m_pcControllerActionToKeyMap ) );
-			float fCurrentHeight = GetPhysicsTransform().p.y;
-			float fNewHeight = fCurrentHeight;
-			fNewHeight += 0.5f;
-			fNewHeight = floor( fNewHeight ) + 0.006f;
-		// If landed on an inferior y than expected
-		// IE landed and now is on 4.99836f instead of 5.0f or above
-			if( fNewHeight > fCurrentHeight )
-			{
-				float fHeightDelta = fNewHeight - fCurrentHeight + 0.025f;
-
-				// v = ( p1 - p0 ) / t
-				float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
-
-
-				// Calculate horizontal speed
-				float fHorizontalSpeed = 0.0f;
-				if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left ) )
-				{
-					fHorizontalSpeed = m_kfWalkSpeed * -1.0f;
-				}
-				else if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) )
-				{
-					fHorizontalSpeed = m_kfWalkSpeed;
-				}
-
-				// n.b. need to cache this so we can remove it from the velocity after the
-				// physics simulation has stepped handily we can do this in 
-				m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
-
-				cocos2d::Vec2 v2NewVelocity = Vec2( fHorizontalSpeed, fVerticalSpeedToMoveByDeltaInOneFrame );
-				SetVelocity( v2NewVelocity * 0.95f );
-
-				GetPhysicsBody()->SetGravityScale( 0.0f );
-				CCLOG( "Adjusting Y coordinate manually" );
-			}
 #ifdef PLAYER_DEBUG_LANDING
 		CCLOG( "Landed" );
 #endif
