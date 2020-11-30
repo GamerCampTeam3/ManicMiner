@@ -40,17 +40,6 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
 
-	// Step 3:	New the CHUD and CAirManager.
-	m_pCHUD = new CHUD(*this, m_pointOrigin, m_sizeVisible );
-	//m_pCHUD->UpdateLevelName( m_sLevelCreationParameters.szLevelName );
-
-	m_pcAirManager = new CAirManager( m_pointOrigin, m_sizeVisible );
-	m_pcAirManager->Init( *this );
-
-	//auto emitter = cocos2d::ParticleExplosion::create();
-	//emitter->setTotalParticles( 100 );
-	//addChild( emitter, 10 );
-
 	const float fPTM = 60.0f;
 
 	// All data replicated from the following clip:
