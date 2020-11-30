@@ -61,6 +61,9 @@ private:
 																														//
 // Keeps track of the direction player is heading towards [ horizontal only ]											//
 	EPlayerDirection m_ePlayerDirection;																				//
+																														//
+// Keeps track of the direction player was heading towards when jumping [ needed for conveyor belt ]					//
+	EPlayerDirection m_eJumpDirection;																					//
 // -------------------------------------------------------------------------------------------------------------------- //
 																														//
 // Pending direction, assigned by the last contacted CMovingPlatform													//

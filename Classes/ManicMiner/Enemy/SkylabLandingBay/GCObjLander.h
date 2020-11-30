@@ -1,16 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// (C) Gamer Camp / Dave O'Dwyer October 2020
+// (C) Gamer Camp / Dave O'Dwyer October & Henrique Teixeira 2020
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef _GCOBJLANDER_H_
 #define _GCOBJLANDER_H_
 
-//#ifndef _GCFACTORY_OBJSPRITEPHYSICS_H_
-//#include "../../../GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
-//#endif
-
-#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-
-//#include "ManicMiner/Enums/ELanderTypes.h"
+#include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 
 //////////////////////////////////////////////////////////////////////////
 //  This class defines an invidual instance of an enemy character.
@@ -20,57 +14,37 @@
 //
 //////////////////////////////////////////////////////////////////////////
 
-class CGCObjLander
-: public CGCObjSpritePhysics
+class CGCObjLander: public CGCObjSpritePhysics
 {
 private:
 
-	enum class ELanderState {
-		EWaitingToDeploy,
-		EDeploying,
-
+	enum class ELanderState 
+	{
+		Deploying,
+		Exploding,
+		Resetting
 	};
 
 
-
-	float m_currentTime;
-
-
-
-	ELanderState				m_cLanderState;
-
-	cocos2d::Vec2				m_cAnchorPoint;
-	float						m_fSpeed;
-    float 						m_fStartDelay;
-	float 						m_fReDeployDelay;
-
+	ELanderState				m_eLanderState;
 
 
 	std::string					m_pszAnimation;
 	std::string                 m_pszPlist;
 	CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
-	cocos2d::Vec2				m_cDest;
-	cocos2d::Vec2				m_cCurrentPos;
-	float m_fMoveDelta;
+	const int					m_kaiDeployXSlots[4];
+	const int					m_kiExplosionYSlot;
+	int							m_iCurrentSlotIndex;
+	float						m_fSpeed;
 
-
+	float						m_fCurrentExplosionTime;
 
 
 	//std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
 	cocos2d::Animation* pAnimation;
-		
 public:
-
-	//CGCObjLander();
-
-	//CGCObjLander(GCTypeID idDerivedType);
-
-
-	CGCObjLander(const cocos2d::Vec2& rcAnchorPoint, const cocos2d::Vec2& rcDestinationPoint, const float fSpeed, const float fStartDelay, const float fReDeployDelay, CGCFactoryCreationParams& ParamsInput);
-		//CGCFactoryCreationParams& ParamsInput);
-
-	//GCFACTORY_DECLARE_CREATABLECLASS(CGCObjLander);
+	CGCObjLander( const int ( &paiDeploySlots )[4], const int kiExplosionYSlot, const float kfTimeForFirstCollision, CGCFactoryCreationParams& ParamsInput);
 	
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
@@ -85,8 +59,8 @@ public:
 	virtual void VOnResourceRelease	() override;
 	virtual void VOnReset() override;
 
-	//virtual void VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
+	// TODO: ELanderState getter, will be used in the future so that these dont trigger contacts while moving back to next deploy position, invisible
 
-
+	ELanderState GetState() const;
 };
 #endif // #ifndef _GCOBJLANDER_H_

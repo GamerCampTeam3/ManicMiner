@@ -72,7 +72,7 @@ void CHUD::InitLabel( cocos2d::Label* label, cocos2d::Color4B color, float fontS
 	if (label != nullptr)
 	{
 		label->setTextColor( color );
-		label->setTTFConfig( cocos2d::TTFConfig( "fonts/Pixeled.ttf", fontSize ) );
+		label->setTTFConfig( cocos2d::TTFConfig( "fonts/SMB2.ttf", fontSize ) );
 		label->setGlobalZOrder( 3.f );
 		label->setPosition( textPos );
 		label->setAlignment( alignment );

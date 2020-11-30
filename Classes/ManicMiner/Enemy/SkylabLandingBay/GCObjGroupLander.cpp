@@ -5,6 +5,7 @@
 #include "ManicMiner/Enemy/SkylabLandingBay/GCObjGroupLander.h"
 #include "GamerCamp/GameSpecific/GCGameLayerPlatformer.h"
 #include "ManicMiner/Enemy/SkylabLandingBay/GCObjLander.h"
+#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
 // Static Creation Params lifted out of GCObjEnemy to here to allow GCObjEnemy to be a class which can represent differnt Enemy sprites/animations/physics.
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_ELander("CGCObjEnemy_ELander", "TexturePacker/Sprites/Coin/Coin.plist", "coin", b2_dynamicBody, true);

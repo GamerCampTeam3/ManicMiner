@@ -6,6 +6,8 @@
 
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Enemy/GCObjKong.h"
+#include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "GamerCamp/GCObject/GCObject.h"
 
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
@@ -40,16 +42,6 @@ void CMLReturnOfKong::VOnCreate( void )
 	CManicLayer::VOnCreate();
 
 	m_pcKong = new CGCObjKong(cocos2d::Vec2(960.0, 900.0), cocos2d::Vec2(100.0, 360.0), 2.0f, s_cCreationParams_CGCObj_EKong);
-
-	/////////////////////////////////////////////
-	// Find Extendable enemy in the object list. 
-	//CGCObjEnemy* pcEnemy;
-	//CGCObject* pcBaseObject;
-	//pcBaseObject = CGCObjectManager::FindObject( "KongExtend", GetGCTypeIDOf( CGCObjEnemy ) );
-	//pcEnemy = static_cast<CGCObjEnemy*>(pcBaseObject);
-	// This operation can be called when the enemy movement is required to be extended (wall removed), and the correct enemy will have its movement window extended.
-	//pcEnemy->ModifyEnemyDestinationPoint(cocos2d::Vec2(1370.0f,240.0f));
-
 }
 
 void CMLReturnOfKong::VLevelSpecificInteraction()
@@ -60,6 +52,11 @@ void CMLReturnOfKong::VLevelSpecificInteraction()
 			break;
 
 		case ESpecialInteraction::Door:
+			CGCObjEnemy* pcEnemy;
+			CGCObject* pcBaseObject;
+			pcBaseObject = CGCObjectManager::FindObject( "KongExtend", GetGCTypeIDOf( CGCObjEnemy ) );
+			pcEnemy = static_cast<CGCObjEnemy*>(pcBaseObject);
+			pcEnemy->ModifyEnemyDestinationPoint( cocos2d::Vec2( 1370.0f, 240.0f ) );
 			break;
 
 		case ESpecialInteraction::Boss:

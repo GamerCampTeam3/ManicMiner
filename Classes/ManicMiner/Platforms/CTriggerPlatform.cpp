@@ -6,25 +6,64 @@
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 
+#ifndef TINYXML2_INCLUDED
+#include "external\tinyxml2\tinyxml2.h"
+#endif
 
-CTriggerPlatform::CTriggerPlatform(cocos2d::Vec2 v2ResetPosition)
-	: CGCObjSpritePhysics(GetGCTypeIDOf(CTriggerPlatform))
+
+#ifndef _GCLEVELLOADER_OGMO_H_
+#include "GamerCamp/GCCocosInterface/LevelLoader/GCLevelLoader_Ogmo.h"
+#endif
+
+GCFACTORY_IMPLEMENT_CREATEABLECLASS(CTriggerPlatform);
+CTriggerPlatform::CTriggerPlatform()
+	: CPlatform()
         , m_bHasBeenTriggered		   ( false )
         , m_pcCrumbleAnimation		   ( nullptr )
 {
-    this->SetResetPosition(v2ResetPosition);
+    
 }
 
 CTriggerPlatform::~CTriggerPlatform() {
 }
 
-IN_CPP_CREATION_PARAMS_DECLARE(CTriggerPlatform, "TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Crumbling/KongBeast/KG_CrumblingPlatform.plist", "CN_Platform_Regular_2x1", b2_staticBody, true);
+void CTriggerPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams,
+	cocos2d::Vec2 v2InitialPosition)
+{
+    const CGCFactoryCreationParams* pParamsToPassToBaseClass = &rCreationParams;
+
+    //Fetch a pointer into the OGMO Xml edtior element containing the data.
+    const tinyxml2::XMLElement* pCurrentObjectXmlData = CGCLevelLoader_Ogmo::GetCurrentObjectXmlData();
+
+    if (nullptr != pCurrentObjectXmlData)
+    {
+        // Read in the custom plist and shape
+        const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
+        const tinyxml2::XMLAttribute* pCustomShapePath = pCurrentObjectXmlData->FindAttribute("CustomShape");
+
+        if ((nullptr != pCustomPlistPath)
+            && (0 != strlen(pCustomPlistPath->Value())))
+        {
+            m_pcCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(rCreationParams.strClassName.c_str(),
+                pCustomPlistPath->Value(),
+                pCustomShapePath->Value(),
+                rCreationParams.eB2dBody_BodyType,
+                rCreationParams.bB2dBody_FixedRotation);
+
+            pParamsToPassToBaseClass = m_pcCustomCreationParams.get();
+        }
+    }
+
+    CPlatform::VHandleFactoryParams(*pParamsToPassToBaseClass, v2InitialPosition);
+}
+
 void CTriggerPlatform::VOnResourceAcquire()
 {
-      IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE(CTriggerPlatform);
       
       CGCObjSpritePhysics::VOnResourceAcquire();
 
+      SetName("TriggerPlatform");
+	
       const char* pszAnim_Crumble = "Crumble";
 
       // Load Animation from CreationParams and retain it
