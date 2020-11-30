@@ -13,17 +13,17 @@
 //  platform collision etc.
 //
 //////////////////////////////////////////////////////////////////////////
+enum class ELanderState
+{
+	Deploying,
+	Exploding,
+	Resetting
+};
 
 class CGCObjLander: public CGCObjSpritePhysics
 {
 private:
 
-	enum class ELanderState 
-	{
-		Deploying,
-		Exploding,
-		Resetting
-	};
 
 
 	ELanderState				m_eLanderState;

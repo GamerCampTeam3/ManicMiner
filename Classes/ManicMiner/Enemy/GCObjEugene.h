@@ -33,26 +33,12 @@ public:
 		
 	GCFACTORY_DECLARE_CREATABLECLASS(CGCObjEugene);
 	
-
-	 //static const CGCObjEugene* pEugene;
-	bool m_bAngryEugeneTriggered;
-
-
 	//////////////////////////////////////////////////////////////////////////
 	// we need a virtual destructor since delete will be called on pointers of 
 	// this class to delete derived types.
 	virtual ~CGCObjEugene();
 	
-	//////////////////////////////////////////////////////////////////////////
-	// overridden virtuals from the game object interface
-	
-	virtual void VOnUpdate			(float fTimeStep) override;
-	virtual void VOnResourceAcquire	(void) override;
-
 	void TriggerEugenesAlternativeAnimation(void);
-
-
-
 
 };
 #endif // #ifndef _GCOBJEUGENE_H_

@@ -6,6 +6,7 @@
 
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Enemy/SkylabLandingBay/GCObjLander.h"
+#include "ManicMiner/Player/CPlayer.h"
 
 
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_ELander("CGCObjEnemy_EDuck", "TexturePacker/Sprites/Duck/Duck.plist", "cc_enemy_duck", b2_dynamicBody, true);
@@ -60,6 +61,15 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 
 	CGCObjLander* CLanderYellow = new CGCObjLander( { 22, 30, 6, 14 }, 6, 2.0f, s_cCreationParams_CGCObj_ELander );
 
+	// --------------------------------------------------------------------------------------------------------------------------------
+	// Add collision handler for landers, checks if they are not resetting when colliding with player
+	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CGCObjLander& rcLander, const b2Contact& rcContact ) -> void
+		{
+			if( rcLander.GetState() != ELanderState::Resetting )
+			{
+				OnDeath();
+			}
+		} );
 }
 
 
