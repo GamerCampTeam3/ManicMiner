@@ -59,8 +59,8 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	InitLabel( m_pScoreTextLabel,		textColor, 20.0f, m_v2ScoreTextPosition,			TextHAlignment::LEFT	);
 	InitLabel( m_pScoreValueLabel,		textColor, 20.0f, m_v2ScoreValuePosition,		TextHAlignment::CENTER	);
 	InitLabel( m_pHighscoreTextLabel,	textColor, 20.0f, m_v2HighscoreTextPosition,		TextHAlignment::LEFT	);
-	InitLabel( m_pHighScoreValueLabel,	textColor, 20.0f, m_v2HighscoreValuePosition,	TextHAlignment::CENTER	);
-	InitLabel( m_pLevelName,			textColor, 25.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
+	InitLabel( m_pHighScoreValueLabel,	textColor, 20.0f, m_v2HighscoreValuePosition,		TextHAlignment::CENTER	);
+	InitLabel( m_pLevelName,		textColor, 25.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
 }
 
 CHUD::~CHUD()

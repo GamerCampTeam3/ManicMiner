@@ -1,9 +1,10 @@
 #include "CGameOverScene.h"
 
-#include "ManicMiner/LevelManager/CLevelManager.h"
-#include "ManicMiner/GameManager/CGameManager.h"
 
-#include "ManicMiner/AudioHelper/ManicAudio.h"
+#include "ManicMiner/Helpers/Helpers.h"
+#include "ManicMiner/LevelManager/CLevelManager.h"
+
+#include <fstream>
 
 USING_NS_CC;
 
@@ -77,7 +78,21 @@ bool CGameOverScene::init()
     this->addChild( pBackgroundSprite, 0 );
     // --------------------------------------------------------------------------//
 
-	
+    std::ifstream highScoreFile;
+    highScoreFile.open( "Highscore.bin" );
+
+    unsigned int tempScore = 0;
+    highScoreFile >> tempScore;			
+
+    // We then decrypt it with a division operation
+    tempScore = tempScore >> 16;				
+
+    m_iHighscore = static_cast<int>(tempScore);
+
+
+    Label* pLabel = new cocos2d::Label();
+
+
     return true;
 }
 
