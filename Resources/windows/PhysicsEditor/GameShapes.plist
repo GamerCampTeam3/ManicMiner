@@ -167,10 +167,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -30.000,36.000 }</string>	
+								<string>{ -30.000,60.000 }</string>	
 								<string>{ -30.000,30.000 }</string>	
 								<string>{ 30.000,30.000 }</string>	
-								<string>{ 30.000,36.000 }</string>
+								<string>{ 30.000,60.000 }</string>
 							</array>
 						</array>
                     </dict>
