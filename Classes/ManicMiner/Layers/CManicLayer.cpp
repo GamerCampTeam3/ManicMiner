@@ -13,31 +13,30 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/Win32Input/GCKeyboardManager.h"
 
+#include "ManicMiner/AirManager/AirManager.h"
 #include "ManicMiner/Collectible/CCollectible.h"
-#include "ManicMiner/Switch/CSwitch.h"
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Enums/ELifeUpdateType.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Hazards/GCObjHazard.h"
 #include "ManicMiner/Helpers/Helpers.h"
+#include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
 #include "ManicMiner/Parallax/Parallax.h"
 #include "ManicMiner/Parallax/ParallaxLayerData.h"
-#include "ManicMiner/Structs/SLevelValues.h"
-
-// Include different platform types for collision checks
 #include "ManicMiner/Platforms/CBrickPlatform.h"
 #include "ManicMiner/Platforms/CCrumblingPlatform.h"
 #include "ManicMiner/Platforms/CGroundPlatform.h"
 #include "ManicMiner/Platforms/CMovingPlatform.h"
 #include "ManicMiner/Platforms/CPlatform.h"
 #include "ManicMiner/Platforms/CRegularPlatform.h"
-#include "ManicMiner/Switch/CSwitch.h"
-#include "ManicMiner/HUD/CHUD.h"
-#include "ManicMiner/AirManager/AirManager.h"
 #include "ManicMiner/Player/CPlayer.h"
+#include "ManicMiner/Structs/SLevelValues.h"
+#include "ManicMiner/Switch/CSwitch.h"
 
-#include "ManicMiner/Enums/ELifeUpdateType.h"
+
+
 
 USING_NS_CC;
 
@@ -232,18 +231,21 @@ void CManicLayer::VInitializeBackground()
 	if ( pcScene && m_pcPlayer )
 	{
 		int kiNumScrollingLayers = 3;
+		const int kiNumAnimatedLayers = 1;
 		//const int kiNumAnimatedLayers = 4;
 		//if( m_pzsPlatformOutlinePlist == nullptr )
 		//{
 		//	kiNumScrollingLayers--;
 		//}
-		m_pcParallax = new CParallax( kiNumScrollingLayers, 0, *pcScene, *m_pcPlayer );
+		m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
 
 		const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Cavern/Background_0.plist", -3 );
-		const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -4 );
-		const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -5 );
+		const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -5 );
+		const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -6 );
+		const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -4 );
 
 		m_pcParallax->AddScrollingLayer( sData1, 5.0f );
+		m_pcParallax->AddAnimatedLayer(sData4);
 		m_pcParallax->AddScrollingLayer( sData2, 1.5f );
 		m_pcParallax->AddScrollingLayer( sData3, 0.5f );
 
@@ -388,27 +390,29 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 			// Check if this BeginContact is for feet + platform surface ( sensors only )								//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
 			{																											//
-
-				// GET ID NAME
-				const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
-				auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
-
-				// Check if this platform was already overlapping in terms of hard contact
-				bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) && m_pcPlayer->GetHardContactCount();
-
-				// Activate this platform's collision																	//
-				pcPlatform->SetCollisionEnabled( true );																	//
-																														//
-																														//
-				// Increment sensor count for the player																//
-				m_pcPlayer->SensorContactEvent( true );																	//
-
-				pcPlatform->SetIsSensorOverlapped( true );
-				
-				if( bShouldStartHardContact )
+				if( pcPlatform->GetPlatformType() != EPlatformType::Brick )
 				{
-					//CCLOG( "Forcing a ghosted hard contact start, due to sensor contact now but hard fixtures were already overlapping." );
-					PlayerBeganContactWithPlatform( *pcPlatform );
+					// GET ID NAME
+					const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
+					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
+
+					// Check if this platform was already overlapping in terms of hard contact
+					bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) && m_pcPlayer->GetHardContactCount();
+
+					// Activate this platform's collision																	//
+					pcPlatform->SetCollisionEnabled( true );																	//
+																															//
+																															//
+					// Increment sensor count for the player																//
+					m_pcPlayer->SensorContactEvent( true );																	//
+
+					pcPlatform->SetIsSensorOverlapped( true );
+				
+					if( bShouldStartHardContact )
+					{
+						//CCLOG( "Forcing a ghosted hard contact start, due to sensor contact now but hard fixtures were already overlapping." );
+						PlayerBeganContactWithPlatform( *pcPlatform );
+					}
 				}
 
 			}																											//
@@ -500,18 +504,18 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 																														//
 			// Check if this EndContact is for feet + platform surface sensors only										//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
-			{																											//																														//
+			{																											//
 				// If this platform is not a CBrickPlatform																//
 				if( pcPlatform->GetPlatformType() != EPlatformType::Brick )												//
 				{																										//
 					// Deactivate this platform's collision																//
-					pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );							//
-				}																										//
-																														//
+					//pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
+
 				// Decrement sensor contact count																		//
 				m_pcPlayer->SensorContactEvent( false );																//
 
 				pcPlatform->SetIsSensorOverlapped( false );
+				}																										//
 			}																											//
 																														//
 			// If not 2 sensors																							//
@@ -526,6 +530,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					// Decrement hard contact count																		//
 					m_pcPlayer->HardContactEvent( false );																//
 																														//
+
 					// If feet are no longer touching any ground surface												//
 					if( !m_pcPlayer->GetHardContactCount() && m_pcPlayer->GetIsGrounded() )								//
 					{																									//
@@ -534,16 +539,16 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					// If this was a Crumbling platform, stop crumbling													//
 					switch( pcPlatform->GetPlatformType() )																//
 					{																									//
-					case EPlatformType::Crumbling:																		//
+						case EPlatformType::Crumbling:																	//
 						{						
-							auto pcCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pcPlatform );					//
-																															//
-							if( pcCrumblingPlatform != nullptr )															//
-							{																								//
-								pcCrumblingPlatform->StopCrumbling();														//
-							}																								//
-							break;																							//
+							auto pcCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pcPlatform );				//
+																														//
+							if( pcCrumblingPlatform != nullptr )														//
+							{																							//
+								pcCrumblingPlatform->StopCrumbling();													//
+							}																							//
 						}
+						break;																							//
 					}																									//
 					// If leaving this contact, and sensors aren't overlapping anymore as well
 					if ( !pcPlatform->GetIsSensorOverlapped() && pcPlatform->GetPlatformType() != EPlatformType::Brick )
@@ -582,6 +587,20 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 							pBrickPlatform->SetIsUnderPlayer( false );
 						}
 					}
+					else 
+					if( ( *pszSensorIdA == "ClimbUpLedge" && *pszSensorIdB == "body" )
+					|| ( *pszSensorIdA == "body" && *pszSensorIdB == "ClimbUpLedge" ) )
+					{
+						if( m_pcPlayer->GetVelocity().y > 0.0f )
+						{
+							m_pcPlayer->ClimbUpBrickLedge();
+						}
+					}
+					else
+						if( *pszSensorIdA == "ClimbUpLedge" || *pszSensorIdB == "ClimbUpLedge" )
+						{
+							CCLOG( "aaaaaa %s or %s", *pszSensorIdA, *pszSensorIdB );
+						}
 				}
 			}
 		}																												//
@@ -992,8 +1011,6 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 			// If in mid air and sensor contacts == 0, or if on top of conveyor belt platform				//
 
 			auto pBrickPlatform = static_cast< CBrickPlatform* > ( &rcPlatform );							//
-
-
 			if( pBrickPlatform != nullptr )
 			{
 				if( pBrickPlatform->GetIsUnderPlayer() )

@@ -15,10 +15,10 @@
 
 #include "AppDelegate.h"
 #include "Box2D/Dynamics/b2Fixture.h" 
-#include "GamerCamp/GameController/GCController.h"
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Layers/CManicLayer.h"
-#include "ManicMiner/AudioHelper/ManicAudio.h"
+#include "GamerCamp/GameController/GCController.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
@@ -75,7 +75,13 @@ EPlayerDirection CPlayer::GetCurrentDirection() const																	//
 {																														//
 	return m_ePlayerDirection;																							//
 }																														//
-																														//
+
+EPlayerDirection CPlayer::GetJumpDirection() const
+{
+	return m_eJumpDirection;
+}
+
+//
 bool CPlayer::GetCanJump() const																						//
 {																														//
 	return m_bCanJump;																									//
@@ -538,7 +544,7 @@ void CPlayer::JumpEvent()
 
 // We will need to check on both extremities of the player
 // As if we're shooting a raycast off of both shoulders
-	b2Vec2 v2HorizontalOffset( 0.5f, 0.0f );
+	b2Vec2 v2HorizontalOffset( 0.55f, 0.0f );
 
 // Another possible approach would be AABB querying
 // We could check a whole rectangle area above the player's head
@@ -688,46 +694,6 @@ void CPlayer::OnLanded()
 				StopSoundEffect( m_uiFallingSoundID );
 				m_uiFallingSoundID = 0;
 			}
-		
-		// -----------------------------------------------------------------------------------------------------------
-		// Manually adjust height
-			const CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
-			TGCController< EPlayerActions > cController = TGetActionMappedController( CGCControllerManager::eControllerOne, ( *m_pcControllerActionToKeyMap ) );
-			float fCurrentHeight = GetPhysicsTransform().p.y;
-			float fNewHeight = fCurrentHeight;
-			fNewHeight += 0.5f;
-			fNewHeight = floor( fNewHeight ) + 0.006f;
-		// If landed on an inferior y than expected
-		// IE landed and now is on 4.99836f instead of 5.0f or above
-			if( fNewHeight > fCurrentHeight )
-			{
-				float fHeightDelta = fNewHeight - fCurrentHeight + 0.025f;
-
-				// v = ( p1 - p0 ) / t
-				float fVerticalSpeedToMoveByDeltaInOneFrame = fHeightDelta / m_rcManicLayer.B2dGetTimestep();
-
-
-				// Calculate horizontal speed
-				float fHorizontalSpeed = 0.0f;
-				if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Left ) )
-				{
-					fHorizontalSpeed = m_kfWalkSpeed * -1.0f;
-				}
-				else if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Right ) )
-				{
-					fHorizontalSpeed = m_kfWalkSpeed;
-				}
-
-				// n.b. need to cache this so we can remove it from the velocity after the
-				// physics simulation has stepped handily we can do this in 
-				m_fVerticalSpeedAdjust = fVerticalSpeedToMoveByDeltaInOneFrame;
-
-				cocos2d::Vec2 v2NewVelocity = Vec2( fHorizontalSpeed, fVerticalSpeedToMoveByDeltaInOneFrame );
-				SetVelocity( v2NewVelocity * 0.95f );
-
-				GetPhysicsBody()->SetGravityScale( 0.0f );
-				CCLOG( "Adjusting Y coordinate manually" );
-			}
 #ifdef PLAYER_DEBUG_LANDING
 		CCLOG( "Landed" );
 #endif
@@ -772,7 +738,7 @@ void CPlayer::LeftGround()
 	m_bIsGrounded = false;
 
 // If there is no ground below feet -> player is dropping off ledge
-	if( m_iSensorContactCount == 0 && m_bCanJump == true )
+	if( m_bCanJump == true )
 	{
 	// Drop straight down
 		ApplyDirectionChange( EPlayerDirection::Static );
@@ -789,6 +755,27 @@ void CPlayer::LeftGround()
 	m_fLastHighestY = m_fLastGroundedY;
 }
 
+
+void CPlayer::ClimbUpBrickLedge()
+{
+	const float kfVerticalSpeed = GetVelocity().y;
+	float fHorizontalSpeed = 0.0f;
+	switch( m_eJumpDirection )
+	{
+	case EPlayerDirection::Right:
+	{
+		fHorizontalSpeed = m_kfWalkSpeed;
+	}
+	break;
+	case EPlayerDirection::Left:
+	{
+		fHorizontalSpeed = -m_kfWalkSpeed;
+	}
+	break;
+	}
+	const Vec2 kv2NewVelocity( fHorizontalSpeed, kfVerticalSpeed );
+	SetVelocity( kv2NewVelocity );
+}
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	BumpedWithBricks																					//
@@ -1032,4 +1019,3 @@ void CPlayer::ResetIdle()
 	m_iAlternateIdleTimer = 0;
 	m_bSelectedStandardIdle = false;
 }
-

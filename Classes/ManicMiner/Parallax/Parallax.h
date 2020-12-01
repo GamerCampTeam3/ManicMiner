@@ -20,6 +20,7 @@ public:
 	virtual ~CParallax();
 
 	void AddScrollingLayer( const SParallaxLayerData& rsLayerData, const float kfMovementScale );
+	void AddAnimatedLayer(const SParallaxLayerData& rsLayerData);
 	void AddPlatformOutlines( const char* kpszPlatformOutlinesPlist);
 	void Update();
 	void Reset();
@@ -33,7 +34,7 @@ private:
 	const int m_kiNumAnimatedLayers;
 	CScrollingParallaxLayer* m_pacScrollingLayers;
 	CGCObjSprite* m_pcPlatformOutlineSprite; // Unique to each level
-	//CAnimatedParallaxLayer* m_pacAnimatedLayers;
+	CAnimatedParallaxLayer* m_pacAnimatedLayers;
 	// Used only for init purposes
 	int m_iCurrentLayer;
 };

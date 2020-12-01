@@ -8,8 +8,8 @@
 #include "../../GamerCamp/GCCocosInterface/GCFactory_ObjSpritePhysics.h"
 #endif
 
-#include "CPlatform.h"
 #include "2d/CCActionInterval.h"
+#include "CPlatform.h"
 
 // 
 enum class ECrumbleState

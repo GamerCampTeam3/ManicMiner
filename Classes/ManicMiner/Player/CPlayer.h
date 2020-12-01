@@ -32,7 +32,7 @@ enum class EAnimationState																								//
 	None,																												//
 	Idle,																												//
 	Run,																												//
-	Jump,																												//																												//
+	Jump,																												//
 };																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -170,6 +170,7 @@ public:
 // Getters ------------------------------------------------------------------------------------------------------------ //
 																														//
 	EPlayerDirection GetCurrentDirection	() const;																	//
+	EPlayerDirection GetJumpDirection		() const;																	//
 	bool			 GetCanJump				() const;																	//
 	bool			 GetCanBeControlled		() const;																	//
 	bool			 GetIsGrounded			() const;																	//
@@ -381,7 +382,9 @@ public:
 //																														//
 // See Also		:	CPlatform & CManicLayer's b2ContactListener Interface functions										//
 // -------------------------------------------------------------------------------------------------------------------- //
-	void LeftGround();																									//
+	void LeftGround();																	//
+
+	void ClimbUpBrickLedge();																	//
 																														//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -484,7 +487,7 @@ public:
 	bool m_bSelectedStandardIdle;																						//
 																														//
 	// Alternates between different Idle Animations																		//
-	void AlternateIdleAnimation(bool bPlayStandardIdle);																//																									//
+	void AlternateIdleAnimation(bool bPlayStandardIdle);																//
 
 	void ResetIdle();
 	

@@ -14,15 +14,15 @@ CParallax::CParallax		( const int kiNumScrollingLayers, const int kiNumAnimatedL
 	, m_kiNumScrollingLayers( kiNumScrollingLayers	)
 	, m_kiNumAnimatedLayers	( kiNumAnimatedLayers	)
 	, m_pacScrollingLayers	( nullptr				)
-	//, m_pacAnimatedLayers	( nullptr				)
+	, m_pacAnimatedLayers	( nullptr				)
 	, m_pcPlatformOutlineSprite(nullptr)
 	, m_iCurrentLayer		( 0						)
 {
 	m_pacScrollingLayers	= new CScrollingParallaxLayer[m_kiNumScrollingLayers];
-	//if( m_kiNumAnimatedLayers )
-	//{
-	//	m_pacAnimatedLayers		= new CAnimatedParallaxLayer[m_kiNumAnimatedLayers];
-	//}
+	if( m_kiNumAnimatedLayers )
+	{
+		m_pacAnimatedLayers		= new CAnimatedParallaxLayer[m_kiNumAnimatedLayers];
+	}
 }
 
 CParallax::~CParallax()
@@ -38,11 +38,11 @@ CParallax::~CParallax()
 		delete m_pcPlatformOutlineSprite;
 		m_pcPlatformOutlineSprite = nullptr;
 	}
-	//if( m_pacAnimatedLayers != nullptr )
-	//{
-	//	delete[] m_pacAnimatedLayers;
-	//	m_pacScrollingLayers = nullptr;
-	//}
+	if( m_pacAnimatedLayers != nullptr )
+	{
+		delete[] m_pacAnimatedLayers;
+		m_pacScrollingLayers = nullptr;
+	}
 
 }
 
@@ -55,6 +55,12 @@ void CParallax::AddScrollingLayer( const SParallaxLayerData& rsLayerData, const 
 
 	rcCurrentLayer.Init( m_rcScene, rsLayerData, kfMovementScale, &m_rcPlayer );
 	m_iCurrentLayer++;
+}
+
+void CParallax::AddAnimatedLayer(const SParallaxLayerData& rsLayerData)
+{
+	CAnimatedParallaxLayer& rcCurrentLayer = m_pacAnimatedLayers[0];
+	rcCurrentLayer.Init(m_rcScene, rsLayerData);
 }
 
 void CParallax::AddPlatformOutlines( const char* kpszPlatformOutlinesPlist )
@@ -76,6 +82,7 @@ void CParallax::Update()
 	{
 		m_pacScrollingLayers[ iCurrentLayer ].VUpdate();
 	}
+	m_pacAnimatedLayers[0].VUpdate();
 }
 
 void CParallax::Reset()

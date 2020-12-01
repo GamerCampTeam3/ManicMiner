@@ -7,8 +7,15 @@
 float32 CPlayerB2RayCastCallBack::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction )
 {
 	const b2Body* pB2Body = fixture->GetBody();
-	CGCObjSpritePhysics* pGcSprPhys = ( CGCObjSpritePhysics* )pB2Body->GetUserData();
 
+// If is sensor
+	if( fixture->IsSensor() )
+	// Not relevant, return with failed info
+	{
+		return -1.0f;
+	}
+
+	CGCObjSpritePhysics* pGcSprPhys = ( CGCObjSpritePhysics* )pB2Body->GetUserData();
 // If this is not a GC Object
 	if ( pGcSprPhys == nullptr)
 	{
