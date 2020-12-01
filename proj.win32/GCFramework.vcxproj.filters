@@ -244,6 +244,15 @@
     <Filter Include="Classes\ThirdParty">
       <UniqueIdentifier>{1102046a-10d9-4d18-8c26-422d6c5908ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Door\Block">
+      <UniqueIdentifier>{181376f2-ca37-44f5-8e4f-e01521630e91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Scenes">
+      <UniqueIdentifier>{e17a3ce2-9319-45ed-8a83-1c17eed7eac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ManicMiner\Scenes\GameOver">
+      <UniqueIdentifier>{c88b9318-790d-4a51-9d6a-25ba1bf56e6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -531,14 +540,20 @@
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.cpp">
       <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\SolarLight\SolarLight.cpp">
       <Filter>Classes\ManicMiner\SolarLight</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ThirdParty\TexturedSpline.cpp">
       <Filter>Classes\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp">
+      <Filter>Classes\ManicMiner\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp">
+      <Filter>Classes\ManicMiner\Door\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.cpp">
+      <Filter>Classes\ManicMiner\Scenes\GameOver</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -890,14 +905,20 @@
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.h">
       <Filter>Classes\ManicMiner\Platforms\Triggerable</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.h" />
     <ClInclude Include="..\Classes\ManicMiner\SolarLight\SolarLight.h">
       <Filter>Classes\ManicMiner\SolarLight</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ThirdParty\TexturedSpline.h">
       <Filter>Classes\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h">
+      <Filter>Classes\ManicMiner\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h">
+      <Filter>Classes\ManicMiner\Door\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.h">
+      <Filter>Classes\ManicMiner\Scenes\GameOver</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

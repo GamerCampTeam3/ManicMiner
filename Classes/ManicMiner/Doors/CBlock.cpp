@@ -19,6 +19,21 @@ void CBlock::DissolveBlock()
 	GetPhysicsBody()->SetActive( false );
 	SetPhysicsTransform( cocos2d::Vec2( 2000.0f, 2000.0f ), 0.0f );
 
+	// Animation stuff, un-note when we have an animation
+	// Load in the .Plist
+	//const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+	//std::string m_pszPlist = pcCreateParams->strPlistFile;
+	//cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist( m_pszPlist );
+	//
+	//// Use this animation
+	//const char* m_pszAnimation = "Dissolve";
+	//
+	//// Load it in and play
+	//m_panimDissolve = GCCocosHelpers::CreateAnimation( rdictPList, m_pszAnimation );
+	//m_panimDissolve->retain();
+	//RunAction( GCCocosHelpers::CreateAnimationActionOnce( m_panimDissolve ) );
+
+	
 	// If the animation isn't present, set the opacity to 0
 	if (m_panimDissolve == nullptr)
 	{
