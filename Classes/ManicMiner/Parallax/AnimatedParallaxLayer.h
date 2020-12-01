@@ -3,10 +3,11 @@
 
 #include "ParallaxLayer.h"
 
-enum class EState
+enum class EAIState
 {
 	Idle,
-	
+	Moving,
+	Interpolating,
 };
 
 class CAnimatedParallaxLayer : public CParallaxLayer
@@ -18,7 +19,7 @@ public:
 
 	void Init(cocos2d::Scene& pcScene, const SParallaxLayerData& rsData);
 	
-	virtual void VUpdate() override;
+	void VUpdate() override;
 	virtual void VReset() override;
 
 
@@ -35,12 +36,26 @@ public:
 	// Returns random 2DVector Position in range of X = (min = 200, max = 1720) and Y = (min = 300, max = 680)
 	void FindRandomMoveToPosition();
 
-	void GetDistanceToCurrentMoveToPosition(bool bInitialDistance);
+	float GetDistanceToCurrentMoveToPosition(bool bInitialDistance);
+
+	void FindDistanceToStartInterpolatingTowardsNewPoint();
 
 	float			m_fInitialDistanceToMoveToPosition;
 	float			m_fCurrentDistanceToMoveToPosition;
-	cocos2d::Vec2	m_v2CurrentMoveToLocation;
-	cocos2d::Vec2	m_v2NextMoveToLocation;
+	float			m_fInterpolatingDistance;
+	float			m_ftravelSpeed;
+	cocos2d::Vec2	m_v2CurrentMoveToPosition;
+	cocos2d::Vec2	m_v2NextMoveToPosition;
+	cocos2d::Vec2	m_v2InitialPosition;
+
+	bool m_bHasNotFoundNewPoint;
+
+	bool m_bHasReachedRightMax;
+
+
+	// TEST
+	cocos2d::Vec2 m_v2Right;
+	cocos2d::Vec2 m_v2Left;
 	
 private:
 
