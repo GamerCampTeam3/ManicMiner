@@ -47,14 +47,9 @@ public:
 	// See also		:	CLevelManager, its constructor and CLevelManager::GoToMainMenu()									//
 	// -------------------------------------------------------------------------------------------------------------------- //
 	void SetLevelManager( CLevelManager& rcLevelManager );
-	void SetValues( int iScore, int iHighscore );
 private:
 
 	// Pointer to CLevelManager that creates this instance
 	CLevelManager* m_pcLevelManager;
-	int m_iScore;
-	int m_iHighscore;
-
-
 };
 #endif

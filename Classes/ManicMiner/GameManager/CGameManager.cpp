@@ -109,15 +109,15 @@ void  CGameManager::WriteHighScore()
 	highScoreFile.open( "Highscore.bin" );
 	ASSERT_CHECK( highScoreFile.is_open() );
 
-		unsigned int tempScore = m_iHighScore;				// Sec the temporary int to be the current high score
-		unsigned int comparisonScore = tempScore;			// We then also store it in another variable
+	unsigned int tempScore = m_iHighScore;				// Sec the temporary int to be the current high score
+	unsigned int comparisonScore = tempScore;			// We then also store it in another variable
 
-		tempScore = tempScore << 16;						// We shift the bits here by 8
-		comparisonScore = comparisonScore << 5;				// The second variable is shifted with a different number (so they aren't both the same)
+	tempScore = tempScore << 16;						// We shift the bits here by 8
+	comparisonScore = comparisonScore << 5;				// The second variable is shifted with a different number (so they aren't both the same)
 
-		highScoreFile << tempScore;							// We then write the first value to the file
-		highScoreFile << "\r\n";							// Next line
-		highScoreFile << comparisonScore;					// Store the comparison value into the following line
+	highScoreFile << tempScore;							// We then write the first value to the file
+	highScoreFile << "\r\n";							// Next line
+	highScoreFile << comparisonScore;					// Store the comparison value into the following line
 }
 
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>cc_platform_brick_120x60.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{120,60}</string>
+                <key>spriteSourceSize</key>
+                <string>{120,60}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{120,60}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>cc_platform_brick_120x60.png</string>
+            <key>size</key>
+            <string>{122,62}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:66c04bdd0716079f5c99805b9eba4730:4ca8a0caa86c7b56c7ffda956cb322b4:da501b849e3b54e99401651a557b6775$</string>
+            <key>textureFileName</key>
+            <string>cc_platform_brick_120x60.png</string>
+        </dict>
+    </dict>
+</plist>

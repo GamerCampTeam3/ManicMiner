@@ -87,19 +87,38 @@ bool CGameOverScene::init()
     // We then decrypt it with a division operation
     tempScore = tempScore >> 16;				
 
-    m_iHighscore = static_cast<int>(tempScore);
+    int iHighscore = static_cast<int>(tempScore);
 
 
-    Label* pLabel = new cocos2d::Label();
+    Label* pHighscoreLabel = new cocos2d::Label();
+    Label* pTextLabel = new cocos2d::Label();
+	
+    cocos2d::Vec2 v2HighscorePos = Vec2( origin.x + (visibleSize.width * 0.5f), origin.y + (visibleSize.height * 0.42f) );
+    cocos2d::Vec2 v2TextPos = Vec2( origin.x + (visibleSize.width * 0.5f), origin.y + (visibleSize.height * 0.30f) );
+
+    pHighscoreLabel->setTextColor( cocos2d::Color4B(255, 255, 255, 255) );	
+    pHighscoreLabel->setTTFConfig( cocos2d::TTFConfig( "fonts/SMB2.ttf", 50.0f ) );	
+    pHighscoreLabel->setGlobalZOrder( 3.f );
+    pHighscoreLabel->setPosition( v2HighscorePos );
+	    
+    this->addChild( pHighscoreLabel, 2 );
+
+    pHighscoreLabel->setString( "HIGHSCORE: " + std::to_string(iHighscore) );
+    pHighscoreLabel->updateContent();
+
+    pTextLabel->setTextColor( cocos2d::Color4B( 255, 255, 255, 255 ) );
+    pTextLabel->setTTFConfig( cocos2d::TTFConfig( "fonts/SMB2.ttf", 30.0f ) );
+    pTextLabel->setGlobalZOrder( 3.f );
+    pTextLabel->setPosition( v2TextPos );
+
+    this->addChild( pTextLabel, 2 );
+
+    pTextLabel->setString( "Only " + std::to_string( iHighscore ) + "? Pathetic." );
+    pTextLabel->updateContent();
 
 
+	
     return true;
-}
-
-void CGameOverScene::SetValues(int iScore, int iHighscore)
-{
-    m_iScore        = iScore;
-    m_iHighscore    = iHighscore;
 }
 
 
