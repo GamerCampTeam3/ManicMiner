@@ -897,10 +897,8 @@ void CManicLayer::OnDeath()
 void CManicLayer::OutOfLives()
 {
 	m_pcGameManager->ResetHUD();
-	m_pcGameManager->ResetLives();
-		
-	m_pcLevelManager->GoToGameOverScene();
-	
+	m_pcGameManager->ResetLives();		
+	m_pcLevelManager->GoToGameOverScene();	
 }
 
 
