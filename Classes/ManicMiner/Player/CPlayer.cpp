@@ -15,10 +15,10 @@
 
 #include "AppDelegate.h"
 #include "Box2D/Dynamics/b2Fixture.h" 
-#include "GamerCamp/GameController/GCController.h"
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/Layers/CManicLayer.h"
-#include "ManicMiner/AudioHelper/ManicAudio.h"
+#include "GamerCamp/GameController/GCController.h"
 #include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
@@ -75,7 +75,13 @@ EPlayerDirection CPlayer::GetCurrentDirection() const																	//
 {																														//
 	return m_ePlayerDirection;																							//
 }																														//
-																														//
+
+EPlayerDirection CPlayer::GetJumpDirection() const
+{
+	return m_eJumpDirection;
+}
+
+//
 bool CPlayer::GetCanJump() const																						//
 {																														//
 	return m_bCanJump;																									//
@@ -538,7 +544,7 @@ void CPlayer::JumpEvent()
 
 // We will need to check on both extremities of the player
 // As if we're shooting a raycast off of both shoulders
-	b2Vec2 v2HorizontalOffset( 0.5f, 0.0f );
+	b2Vec2 v2HorizontalOffset( 0.55f, 0.0f );
 
 // Another possible approach would be AABB querying
 // We could check a whole rectangle area above the player's head
@@ -749,6 +755,27 @@ void CPlayer::LeftGround()
 	m_fLastHighestY = m_fLastGroundedY;
 }
 
+
+void CPlayer::ClimbUpBrickLedge()
+{
+	const float kfVerticalSpeed = GetVelocity().y;
+	float fHorizontalSpeed = 0.0f;
+	switch( m_eJumpDirection )
+	{
+	case EPlayerDirection::Right:
+	{
+		fHorizontalSpeed = m_kfWalkSpeed;
+	}
+	break;
+	case EPlayerDirection::Left:
+	{
+		fHorizontalSpeed = -m_kfWalkSpeed;
+	}
+	break;
+	}
+	const Vec2 kv2NewVelocity( fHorizontalSpeed, kfVerticalSpeed );
+	SetVelocity( kv2NewVelocity );
+}
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	BumpedWithBricks																					//

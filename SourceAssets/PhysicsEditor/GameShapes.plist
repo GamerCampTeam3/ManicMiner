@@ -174,6 +174,48 @@
 							</array>
 						</array>
                     </dict>
+					<dict>
+                        <key>density</key> <real>2</real>
+                        <key>friction</key> <real>0</real>
+                        <key>restitution</key> <real>0</real>
+                        <key>filter_categoryBits</key> <integer>4</integer>
+                        <key>filter_groupIndex</key> <integer>0</integer>
+                        <key>filter_maskBits</key> <integer>1</integer>
+                        <key>isSensor</key> <true/>
+                        <key>id</key> <string>ClimbUpLedge</string>
+                        <key>fixture_type</key> <string>POLYGON</string>
+
+						<key>polygons</key>
+						<array>
+							<array>	
+								<string>{ 45.000,22.000 }</string>	
+								<string>{ 45.000,29.000 }</string>	
+								<string>{ 35.000,29.000 }</string>	
+								<string>{ 35.000,22.000 }</string>
+							</array>
+						</array>
+                    </dict>
+					<dict>
+                        <key>density</key> <real>2</real>
+                        <key>friction</key> <real>0</real>
+                        <key>restitution</key> <real>0</real>
+                        <key>filter_categoryBits</key> <integer>4</integer>
+                        <key>filter_groupIndex</key> <integer>0</integer>
+                        <key>filter_maskBits</key> <integer>1</integer>
+                        <key>isSensor</key> <true/>
+                        <key>id</key> <string>ClimbUpLedge</string>
+                        <key>fixture_type</key> <string>POLYGON</string>
+
+						<key>polygons</key>
+						<array>
+							<array>	
+								<string>{ -45.000,29.000 }</string>	
+								<string>{ -45.000,22.000 }</string>	
+								<string>{ -35.000,22.000 }</string>	
+								<string>{ -35.000,29.000 }</string>
+							</array>
+						</array>
+                    </dict>
 				</array>
 			</dict>
 			<key>CN_Platform_Crumbling_1x1</key>

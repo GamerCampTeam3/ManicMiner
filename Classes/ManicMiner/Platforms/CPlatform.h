@@ -35,7 +35,7 @@ public:
 
 	void VOnReset() override;
 	
-	inline EPlatformType GetPlatformType() { return m_ePlatformType; }
+	inline EPlatformType GetPlatformType() const { return m_ePlatformType; }
 
 	bool GetCollisionEnabled() const;
 	void SetCollisionEnabled( bool bCollisionEnabled );
