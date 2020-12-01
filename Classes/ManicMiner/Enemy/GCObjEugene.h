@@ -38,6 +38,8 @@ public:
 	// this class to delete derived types.
 	virtual ~CGCObjEugene();
 	
+	void CGCObjEugene::VOnReset() override;
+
 	void TriggerEugenesAlternativeAnimation(void);
 
 };
