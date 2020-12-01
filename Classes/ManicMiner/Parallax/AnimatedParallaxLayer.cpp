@@ -7,7 +7,8 @@ CAnimatedParallaxLayer::CAnimatedParallaxLayer()
 	, m_bHasNotFoundNewPoint(true)
 	, m_ftravelSpeed(10.f)
 {
-	
+	m_v2Right = cocos2d::Vec2(400.f, 0.f);
+	m_v2Left = cocos2d::Vec2(-400.f, 0.f);
 }
 
 CAnimatedParallaxLayer::~CAnimatedParallaxLayer()
@@ -26,7 +27,7 @@ void CAnimatedParallaxLayer::Init(cocos2d::Scene& pcScene, const SParallaxLayerD
 	auto updateParallaxAction = cocos2d::MoveTo::create(0.0f, v2CentreScreen);
 	GetSprite()->runAction(updateParallaxAction);
 
-	auto updateParallaxAction2 = cocos2d::MoveTo::create(10.0f, m_v2NextMoveToPosition);
+	auto updateParallaxAction2 = cocos2d::MoveTo::create(10.0f, m_v2Right);
 	GetSprite()->runAction(updateParallaxAction2);
 	
 	//cocos2d::RotateBy::create()
@@ -39,6 +40,7 @@ void CAnimatedParallaxLayer::VUpdate()
 	//GetSprite()->runAction(updateParallaxAction);
 
 
+	
 	
 	/*
 	float Distance = GetDistanceToCurrentMoveToPosition(false);
