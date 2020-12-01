@@ -92,10 +92,10 @@ void CParallax::Reset()
 		m_pacScrollingLayers[iCurrentLayer].VReset();
 	}
 
-	//for( int iCurrentLayer = 0; iCurrentLayer < m_kiNumAnimatedLayers; iCurrentLayer++ )
-	//{
-	//	m_pacAnimatedLayers[iCurrentLayer].VReset();
-	//}
+	for( int iCurrentLayer = 0; iCurrentLayer < m_kiNumAnimatedLayers; iCurrentLayer++ )
+	{
+		m_pacAnimatedLayers[iCurrentLayer].VReset();
+	}
 }
 
 cocos2d::Scene& CParallax::GetScene() const

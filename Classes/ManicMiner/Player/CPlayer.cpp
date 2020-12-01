@@ -255,7 +255,6 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 		m_fVerticalSpeedAdjust = 0.0f;
 	}
 	
-	
 	// If player is in mid-air movement
 	if( !GetIsGrounded() )
 	{
@@ -593,6 +592,8 @@ void CPlayer::JumpEvent()
 
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 		m_uiJumpSoundID = PlaySoundEffect( ESoundName::Jump );
+
+		InitiateAnimationStateChange(EAnimationState::Jump);
 	}
 }
 
@@ -683,6 +684,20 @@ void CPlayer::OnLanded()
 	// Else, not dead, proceed with more logic:
 		else 
 		{
+			// Go back to Idle/Moving
+			switch(m_ePlayerDirection)
+			{
+			case EPlayerDirection::Static:
+				InitiateAnimationStateChange(EAnimationState::Idle);
+				break;
+			case EPlayerDirection::Right:
+				InitiateAnimationStateChange(EAnimationState::Run);
+				break;
+			case EPlayerDirection::Left:
+				InitiateAnimationStateChange(EAnimationState::Run);
+				break;
+			}
+
 		// Stop Jump/Fall sound effect
 			if( m_uiJumpSoundID != 0 )
 			{
@@ -910,11 +925,11 @@ void CPlayer::Die()
 void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 {
 	int iCounter;
-	char* pszAnimations[3];
+	char* pszAnimations[4];
 	pszAnimations[0] = "Idle";
 	pszAnimations[1] = "AlternativeIdle";
 	pszAnimations[2] = "Run";
-	//pszAnimations[3] = "Jump";
+	pszAnimations[3] = "Jump";
 	if(bShouldLoadAnimations)
 	{
 		iCounter = 0;
@@ -931,7 +946,7 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 	}
 	else
 	{
-		iCounter = 2;
+		iCounter = 3;
 		for(iCounter; iCounter <= 0; iCounter--)
 		{
 			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->release();
