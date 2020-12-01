@@ -230,7 +230,7 @@
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CGroundPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Ground" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Ground/cc_platform_ground.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/Ground/cc_platform_ground.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -239,6 +239,8 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
