@@ -8,6 +8,7 @@
 #include "ManicMiner/Enemy/GCObjKong.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "GamerCamp/GCObject/GCObject.h"
+#include "ManicMiner/Platforms/CTriggerPlatform.h"
 
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EKong", "TexturePacker/Sprites/Kong/Kong.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
@@ -46,7 +47,7 @@ void CMLReturnOfKong::VOnCreate( void )
 
 void CMLReturnOfKong::VLevelSpecificInteraction()
 {
-	switch (m_pcGameManager->GetCanProceed())
+	switch (m_pcGameManager->GetInteractionStage())
 	{
 		case ESpecialInteraction::Default:
 			break;
@@ -60,7 +61,13 @@ void CMLReturnOfKong::VLevelSpecificInteraction()
 			break;
 
 		case ESpecialInteraction::Boss:
-			// TODO: Call Kong to drop.
+			CTriggerPlatform* pcTriggerPlatform;
+			CGCObject* pcBasePlatform;
+			pcBasePlatform = CGCObjectManager::FindObject( "TriggerPlatform", GetGCTypeIDOf( CTriggerPlatform ) );
+			pcTriggerPlatform = static_cast<CTriggerPlatform*>(pcBasePlatform);
+			pcTriggerPlatform->TriggerCrumble();
+
+			m_pcKong->TriggerKongToFall();
 			break;
 	}
 }

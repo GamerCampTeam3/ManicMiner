@@ -4,9 +4,6 @@
 
 #include "CMLEugenesLair.h"
 
-#include "ManicMiner/AirManager/AirManager.h"
-#include "ManicMiner/Helpers/Helpers.h"
-#include "ManicMiner/HUD/CHUD.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Enemy/GCObjEugene.h"
 
@@ -32,7 +29,7 @@ void CMLEugenesLair::VOnCreate( void )
 	// szLevelPath:			Sets the path where the level will be found.
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
-	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
+	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 1 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/4_Eugene'sLair.oel";
 	m_sLevelCreationParameters.szLevelName			= "Eugene's Lair";
@@ -45,27 +42,16 @@ void CMLEugenesLair::VOnCreate( void )
 
 void CMLEugenesLair::VLevelSpecificInteraction()
 {
-	switch (m_pcGameManager->GetCanProceed())
+	if (m_pcGameManager->CanLevelEnd())
 	{
-		case ESpecialInteraction::Default:
-			break;
-
-		case ESpecialInteraction::Door:
-			break;
-
-		case ESpecialInteraction::Boss:
-			///////////////////////////////////////////////
-			// Find Eugene in the object list 
-			CGCObjEugene* pcEugene;
-			CGCObject* pcBaseObject;
-			pcBaseObject = CGCObjectManager::FindObject( "Eugene", GetGCTypeIDOf( CGCObjEugene ) );
-			pcEugene = static_cast<CGCObjEugene*>(pcBaseObject);
-
-			// This operation can now be call when required, eg. all collectibles have been collected on this level.
-			pcEugene->TriggerEugenesAlternativeAnimation();
-			m_pcGameManager->SetCanProceed( ESpecialInteraction::Default );
-			break;
+		CGCObjEugene* pcEugene;
+		CGCObject* pcBaseObject;
+		pcBaseObject = CGCObjectManager::FindObject( "Eugene", GetGCTypeIDOf( CGCObjEugene ) );
+		pcEugene = static_cast<CGCObjEugene*>(pcBaseObject);
+		// This operation can now be call when required, eg. all collectibles have been collected on this level.
+		pcEugene->TriggerEugenesAlternativeAnimation();
 	}
+
 }
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //

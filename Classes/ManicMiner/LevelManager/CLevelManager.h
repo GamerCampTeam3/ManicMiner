@@ -80,6 +80,8 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 	CManicLayer& GetCurrentManicLayer() const;
 
+	void GoToGameOverScene();
+
 private:
 
 	// Indicates current level through a number

@@ -9,7 +9,6 @@
 #include "CGameManager.h"
 #include <fstream>
 
-#include "ManicMiner/Layers/CMLEugenesLair.h"
 
 
 CGameManager::CGameManager( CLevelManager& rcLevelManager )
@@ -25,7 +24,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_pcLevelManager			( &rcLevelManager )
 	, m_pcCPlayer				( nullptr )
 	, m_sLevelValues			( ECollectibleRequirements::Collectible, 0, 0 )
-	, m_iInteractionCounter(0)
+	, m_iInteractionIndex(0)
 {
 	ReadHighScore();
 }
@@ -240,11 +239,13 @@ void CGameManager::CCollectibleInteractEvent()
 	{
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
+
+	m_pcLevelManager->GetCurrentManicLayer().VLevelSpecificInteraction();
 }
 
 void CGameManager::CSwitchInteractEvent()
 {
-	m_iInteractionCounter++;	
+	m_iInteractionIndex++;	
 	m_iCurrentSwitches++;
 	
 	if (CheckIfLevelRequirementsAreMet() )
@@ -252,15 +253,15 @@ void CGameManager::CSwitchInteractEvent()
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
 
-	if (m_iInteractionCounter == 1)
+	if (m_iInteractionIndex == 1)
 	{
 		m_ESpecialInteractionType = ESpecialInteraction::Door;
 	}
 
-	if (m_iInteractionCounter == 2)
+	if (m_iInteractionIndex == 2)
 	{
 		m_ESpecialInteractionType = ESpecialInteraction::Boss;
-		m_iInteractionCounter = 0;
+		m_iInteractionIndex = 0;
 	}
 	
 	m_pcLevelManager->GetCurrentManicLayer().VLevelSpecificInteraction();
@@ -278,6 +279,7 @@ void CGameManager::ResetValues()
 {
 	m_iCurrentCollectibles	= 0;
 	m_iCurrentSwitches		= 0;
+	m_iInteractionIndex	= 0;
 	m_bDrainToScore			= false;
 	m_sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 0 );
 }
@@ -322,6 +324,31 @@ void CGameManager::DrainToScore()
 }
 
 #pragma endregion Level_Related_Calls
+
+void CGameManager::SetDoOnce(const bool bDoOnce)
+{
+	m_bDoOnce = bDoOnce;
+}
+
+void CGameManager::SetMovingDoors(CMovingDoor* rcMovingDoor)
+{
+	m_pcMovingDoor = rcMovingDoor;
+}
+
+ESpecialInteraction CGameManager::GetInteractionStage() const
+{
+	return m_ESpecialInteractionType;
+}
+
+void CGameManager::SetInteractionStage(ESpecialInteraction eSpecialInteraction)
+{
+	m_ESpecialInteractionType = eSpecialInteraction;
+}
+
+bool CGameManager::CanLevelEnd()
+{
+	return CheckIfLevelRequirementsAreMet();
+}
 
 
 CGameManager::~CGameManager()

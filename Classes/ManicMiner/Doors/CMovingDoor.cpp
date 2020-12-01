@@ -45,12 +45,8 @@ CMovingDoor::~CMovingDoor()
 // This will be called, when the first switch is flipped.
 void CMovingDoor::MoveBlocksAside() const
 {
-	// Will play an animation that shifts the door here.
-	m_pcUpperBlock->DisableCollisions();
-	m_pcLowerBlock->DisableCollisions();
-	
-	m_pcUpperBlock->SetSpriteOpacity( 0 );
-	m_pcLowerBlock->SetSpriteOpacity( 0 );
+	m_pcUpperBlock->DissolveBlock();
+	m_pcLowerBlock->DissolveBlock();
 }
 
 
