@@ -3,6 +3,7 @@
 
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/LevelManager/CLevelManager.h"
+#include "ManicMiner/GameManager/CGameManager.h"
 
 #include <fstream>
 
@@ -78,17 +79,25 @@ bool CGameOverScene::init()
     this->addChild( pBackgroundSprite, 0 );
     // --------------------------------------------------------------------------//
 
-	// We load the highscore here
-    std::ifstream highScoreFile;
-    highScoreFile.open( "Highscore.bin" );
-
     unsigned int iHighscore = 0;
-	
-    highScoreFile >> iHighscore;
+	// We load the highscore here
+    if (!USEBINARYMETHOD)
+    {
+        std::ifstream highScoreFile;
+        highScoreFile.open( "Highscore.bin" );
 
+        highScoreFile >> iHighscore;
+    
     // Bit shift to get oiginal value
     iHighscore = iHighscore >> 16;
-	///////////////////////////////
+	}
+	
+    else
+    {
+        std::ifstream file( "Data.bin", std::ios::in, std::ios::binary );
+        file.read( reinterpret_cast<char*>(&iHighscore), sizeof( iHighscore ) );
+        file.close();
+    }
 
     // We create two labels we will use for the text
 	// Highscore

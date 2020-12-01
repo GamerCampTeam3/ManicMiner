@@ -10,21 +10,22 @@
 #include <fstream>
 
 
-
 CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	: m_iCurrentScore			( 0 )
 	, m_iHighScore				( 0 )
 	, m_iCurrentLives			( m_kiStartingLives )
 	, m_iCurrentCollectibles	( 0 )
 	, m_iCurrentSwitches		( 0 )
+	, m_iInteractionIndex		( 0 )
 	, m_bDrainToScore			( false )
     , m_bDoOnce					( true )
 	, m_pcAirManager			( nullptr )
 	, m_pcCHUD					( nullptr )
 	, m_pcLevelManager			( &rcLevelManager )
 	, m_pcCPlayer				( nullptr )
+	, m_pcMovingDoor			( nullptr )
 	, m_sLevelValues			( ECollectibleRequirements::Collectible, 0, 0 )
-	, m_iInteractionIndex		( 0 )
+	, m_ESpecialInteractionType ( ESpecialInteraction::Default )
 {
 	ReadHighScore();
 }
@@ -69,7 +70,7 @@ void CGameManager::ExtraLifeCheck(int iScore)
 // Checks if score exceeds high score.
 bool  CGameManager::IsScoreGreaterThanHighscore() const
 {
-	return m_iCurrentScore > m_iHighScore;
+	return m_iCurrentScore >= m_iHighScore;
 }
 
 // Upon interacting, checks if enough has been reached.
@@ -102,22 +103,31 @@ bool CGameManager::CheckIfLevelRequirementsAreMet()
 // To avoid consumers from cheating and simply adding whatever high score they want,
 // I have "encrypted" it by bit shifting the value and them multiplying it.
 // Another value is created with a different bit shift to be used later.
-void  CGameManager::WriteHighScore()
+void  CGameManager::WriteHighScore() const
 {
-	// TODO: Look into creating binary file instead
-	std::ofstream highScoreFile;
-	highScoreFile.open( "Highscore.bin" );
-	ASSERT_CHECK( highScoreFile.is_open() );
+	if (!USEBINARYMETHOD)
+	{
+		std::ofstream highScoreFile;
+		highScoreFile.open( "Highscore.bin" );
+		ASSERT_CHECK( highScoreFile.is_open() );
+		
+		unsigned int tempScore = m_iHighScore;				// Sec the temporary int to be the current high score
+		unsigned int comparisonScore = tempScore;			// We then also store it in another variable
+		
+		tempScore = tempScore << 16;						// We shift the bits here by 8
+		comparisonScore = comparisonScore << 5;				// The second variable is shifted with a different number (so they aren't both the same)
+		
+		highScoreFile << tempScore;							// We then write the first value to the file
+		highScoreFile << "\r\n";							// Next line
+		highScoreFile << comparisonScore;					// Store the comparison value into the following line
+	}
 
-	unsigned int tempScore = m_iHighScore;				// Sec the temporary int to be the current high score
-	unsigned int comparisonScore = tempScore;			// We then also store it in another variable
-
-	tempScore = tempScore << 16;						// We shift the bits here by 8
-	comparisonScore = comparisonScore << 5;				// The second variable is shifted with a different number (so they aren't both the same)
-
-	highScoreFile << tempScore;							// We then write the first value to the file
-	highScoreFile << "\r\n";							// Next line
-	highScoreFile << comparisonScore;					// Store the comparison value into the following line
+	else
+	{
+		std::ofstream file( "Data.bin", std::ios::binary );
+		file.write( reinterpret_cast<const char*>(&m_iHighScore), sizeof( m_iHighScore ) );
+		file.close();
+	}
 }
 
 
@@ -126,27 +136,36 @@ void  CGameManager::WriteHighScore()
 // It then compares the two decrypted value to check if any where altered
 // And if so, punish the player by resetting it to 0
 void  CGameManager::ReadHighScore()
-{
-	std::ifstream highScoreFile;
-	highScoreFile.open( "Highscore.bin" );
-	ASSERT_CHECK( highScoreFile.is_open());
-
-	unsigned int tempScore = 0;
-	unsigned int comparisonScore = 0;
-	highScoreFile >> tempScore >> comparisonScore;			// We read the file and store the values
-	
-	// We then decrypt it with a division operation
-	tempScore = tempScore >> 16;							// then shift 8 bits back
-	comparisonScore = comparisonScore >> 5;					// Reverse the operation on comparison as well
-
-	if ( tempScore != comparisonScore)						// Finally we compare the value to see if any where user touched.
+{	
+	if (!USEBINARYMETHOD)
 	{
-		m_iHighScore = 0;									// High score is reset to 0 if so
-	}
+		std::ifstream highScoreFile;
+		highScoreFile.open( "Highscore.bin" );
+		ASSERT_CHECK( highScoreFile.is_open());
+		
+		unsigned int tempScore = 0;
+		unsigned int comparisonScore = 0;
+		highScoreFile >> tempScore >> comparisonScore;			// We read the file and store the values
+		
+		// We then decrypt it with a division operation
+		tempScore = tempScore >> 16;							// then shift 8 bits back
+		comparisonScore = comparisonScore >> 5;					// Reverse the operation on comparison as well
+		
+		if ( tempScore != comparisonScore)						// Finally we compare the value to see if any where user touched.
+		{
+			m_iHighScore = 0;									// High score is reset to 0 if so
+		}
+		else
+		{
+			m_iHighScore = static_cast<int>(tempScore);							// Otherwise, it's all good!
+		}
+	}	
 	else
 	{
-		m_iHighScore = static_cast<int>(tempScore);							// Otherwise, it's all good!
-	}	
+		std::ifstream file( "Data.bin", std::ios::in, std::ios::binary );
+		file.read( reinterpret_cast<char*>(&m_iHighScore), sizeof( m_iHighScore ) );
+		file.close();
+	}
 }
 
 #pragma endregion W/R_Highscore_Value

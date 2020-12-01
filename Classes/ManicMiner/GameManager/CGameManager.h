@@ -10,6 +10,13 @@
 
 #include <string>
 
+	// To use binary file method, set this to true
+	// Otherwise to use the manual bit shifting encryption, set false
+	const bool bUseBinaryFile = true;
+
+	#ifndef USEBINARYMETHOD
+		#define USEBINARYMETHOD bUseBinaryFile
+	#endif
 
 
 	//-------------------------------------------------------- FWD CLS DECLARATION -------------------------------------------------------------------------------------//	
@@ -115,7 +122,7 @@ class CGameManager
 	//																																									
 	//------------------------------------------------------------  FUNCTIONS ------------------------------------------------------------------------------------------
 	void 			 ReadHighScore();										// Called when program begins, reads the values of "Highscore.bin" and sets the Highscore to be that.	
-	void			 WriteHighScore();										// Called when the score exceeds the highscore, writes the new highscore to "Highscore.bin".			
+	void			 WriteHighScore() const;								// Called when the score exceeds the highscore, writes the new highscore to "Highscore.bin".			
 	void			 DrainAirForScore();									// Called by the AirManager (for now), drains remaining air into score									
 	bool 			 IsScoreGreaterThanHighscore() const;					// Checks to see if score exceeds the highscore.														
 	bool			 CheckIfLevelRequirementsAreMet() ;						// Checks if the level has collected everything set in the SLevelValues.								

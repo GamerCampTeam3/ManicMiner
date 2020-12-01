@@ -93,7 +93,6 @@ void CHUD::FlushText() const
 
 void CHUD::Init(std::string szLevelName, int life, int iScore, int iHighscore)
 {
-
 	char* pczLevelname = _strdup( szLevelName.c_str() );
 
 	// SCORE ---------------------------------------------------------------------------------------------------------------------------------------//
@@ -210,7 +209,7 @@ void CHUD::UpdateLives( ELifeUpdateType eLifeUpdateType, int iCurrentLife )
 
 void CHUD::UpdateHighScore( int highScore ) 
 {
-	UpdateLabel( m_pScoreValueLabel, nullptr, highScore, ELabelType::Number );
+	UpdateLabel( m_pHighScoreValueLabel, nullptr, highScore, ELabelType::Number );
 }
 
 void CHUD::ReDrawSprite( CGCObjSprite* pSprite,  const char* pzcPlist) const
