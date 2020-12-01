@@ -15,7 +15,7 @@
                 <key>spriteSourceSize</key>
                 <string>{1800,60}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{1800,60}}</string>
+                <string>{{0,0},{1800,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -31,9 +31,9 @@
             <key>realTextureFileName</key>
             <string>cc_platform_ground.png</string>
             <key>size</key>
-            <string>{1802,62}</string>
+            <string>{1800,60}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:89f6defc1fe0c46bfd2098c1a2d59492:6053d22baf3f55bc41f6d185a62d93e8:8b957f1ebe5374bdf8053160b5bfb1fe$</string>
+            <string>$TexturePacker:SmartUpdate:b101ec468a11bdcbe177b225fca4a9ce:6053d22baf3f55bc41f6d185a62d93e8:8b957f1ebe5374bdf8053160b5bfb1fe$</string>
             <key>textureFileName</key>
             <string>cc_platform_ground.png</string>
         </dict>
