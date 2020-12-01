@@ -82,6 +82,7 @@ void CParallax::Update()
 	{
 		m_pacScrollingLayers[ iCurrentLayer ].VUpdate();
 	}
+	m_pacAnimatedLayers[0].VUpdate();
 }
 
 void CParallax::Reset()
