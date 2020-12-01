@@ -18,13 +18,13 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_iCurrentCollectibles	( 0 )
 	, m_iCurrentSwitches		( 0 )
 	, m_bDrainToScore			( false )
-    , m_bDoOnce(true)
+    , m_bDoOnce					( true )
 	, m_pcAirManager			( nullptr )
 	, m_pcCHUD					( nullptr )
 	, m_pcLevelManager			( &rcLevelManager )
 	, m_pcCPlayer				( nullptr )
 	, m_sLevelValues			( ECollectibleRequirements::Collectible, 0, 0 )
-	, m_iInteractionIndex(0)
+	, m_iInteractionIndex		( 0 )
 {
 	ReadHighScore();
 }
@@ -225,6 +225,13 @@ void CGameManager::SetCAirManager(CAirManager* pcAirManager)
 		m_pcAirManager = pcAirManager;
 	}
 }
+
+// Sets the moving door
+void CGameManager::SetMovingDoors( CMovingDoor* rcMovingDoor )
+{
+	m_pcMovingDoor = rcMovingDoor;
+}
+
 #pragma endregion Pointers_Setters
 
 #pragma region Collectible/Switch Events
@@ -279,7 +286,7 @@ void CGameManager::ResetValues()
 {
 	m_iCurrentCollectibles	= 0;
 	m_iCurrentSwitches		= 0;
-	m_iInteractionIndex	= 0;
+	m_iInteractionIndex		= 0;
 	m_bDrainToScore			= false;
 	m_sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 0 );
 }
@@ -325,30 +332,35 @@ void CGameManager::DrainToScore()
 
 #pragma endregion Level_Related_Calls
 
+#pragma region Setters
 void CGameManager::SetDoOnce(const bool bDoOnce)
 {
 	m_bDoOnce = bDoOnce;
 }
 
-void CGameManager::SetMovingDoors(CMovingDoor* rcMovingDoor)
+// Sets the interaction type.
+void CGameManager::SetInteractionStage( ESpecialInteraction eSpecialInteraction )
 {
-	m_pcMovingDoor = rcMovingDoor;
+	m_ESpecialInteractionType = eSpecialInteraction;
 }
 
+#pragma endregion Setters
+
+
+#pragma region Getters
+// Gets the current interaction stage
 ESpecialInteraction CGameManager::GetInteractionStage() const
 {
 	return m_ESpecialInteractionType;
 }
 
-void CGameManager::SetInteractionStage(ESpecialInteraction eSpecialInteraction)
-{
-	m_ESpecialInteractionType = eSpecialInteraction;
-}
 
 bool CGameManager::CanLevelEnd()
 {
 	return CheckIfLevelRequirementsAreMet();
 }
+
+#pragma endregion Getters
 
 
 CGameManager::~CGameManager()
