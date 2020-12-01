@@ -269,11 +269,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\SolarLight\SolarLight.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Sunlight\CSunlight.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Switch\CSwitch.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\TSingleton\TSingleton.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Classes\ThirdParty\TexturedSpline.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -413,12 +415,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h" />
     <ClInclude Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.h" />
+    <ClInclude Include="..\Classes\ManicMiner\SolarLight\SolarLight.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelCreationParameters.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SLevelValues.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SSwitches.h" />
     <ClInclude Include="..\Classes\ManicMiner\Sunlight\CSunlight.h" />
     <ClInclude Include="..\Classes\ManicMiner\Switch\CSwitch.h" />
+    <ClInclude Include="..\Classes\ThirdParty\TexturedSpline.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

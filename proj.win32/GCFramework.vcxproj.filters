@@ -238,6 +238,12 @@
     <Filter Include="Classes\ManicMiner\Parallax\VisualElements">
       <UniqueIdentifier>{92eb5825-65b2-47cf-b128-57f696283852}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\SolarLight">
+      <UniqueIdentifier>{5723f292-2b84-4b44-a94a-530ecfc4020a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ThirdParty">
+      <UniqueIdentifier>{1102046a-10d9-4d18-8c26-422d6c5908ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -527,6 +533,13 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Doors\CBlock.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\SolarLight\SolarLight.cpp">
+      <Filter>Classes\ManicMiner\SolarLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ThirdParty\TexturedSpline.cpp">
+      <Filter>Classes\ThirdParty</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -879,6 +892,13 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Doors\CBlock.h" />
     <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.h" />
+    <ClInclude Include="..\Classes\ManicMiner\SolarLight\SolarLight.h">
+      <Filter>Classes\ManicMiner\SolarLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ThirdParty\TexturedSpline.h">
+      <Filter>Classes\ThirdParty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
