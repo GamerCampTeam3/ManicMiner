@@ -4,57 +4,57 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Angry/cc_enemy_eugene_angry1.png</key>
+            <key>Angry/cc_enemy_eugene1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1,1},{60,108}}</string>
+                <string>{{1,1},{114,108}}</string>
                 <key>offset</key>
-                <string>{0,-6}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,12},{60,108}}</string>
+                <string>{{1,1},{114,108}}</string>
                 <key>sourceSize</key>
-                <string>{60,120}</string>
+                <string>{116,110}</string>
             </dict>
-            <key>Angry/cc_enemy_eugene_angry2.png</key>
+            <key>Angry/cc_enemy_eugene2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1,111},{60,108}}</string>
+                <string>{{117,1},{114,108}}</string>
                 <key>offset</key>
-                <string>{0,-6}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,12},{60,108}}</string>
+                <string>{{1,1},{114,108}}</string>
                 <key>sourceSize</key>
-                <string>{60,120}</string>
+                <string>{116,110}</string>
             </dict>
             <key>Normal/cc_enemy_eugene.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1,111},{60,108}}</string>
+                <string>{{117,1},{114,108}}</string>
                 <key>offset</key>
-                <string>{0,-6}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,12},{60,108}}</string>
+                <string>{{1,1},{114,108}}</string>
                 <key>sourceSize</key>
-                <string>{60,120}</string>
+                <string>{116,110}</string>
             </dict>
             <key>cc_enemy_eugene.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1,111},{60,108}}</string>
+                <string>{{117,1},{114,108}}</string>
                 <key>offset</key>
-                <string>{0,-6}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,12},{60,108}}</string>
+                <string>{{1,1},{114,108}}</string>
                 <key>sourceSize</key>
-                <string>{60,120}</string>
+                <string>{116,110}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -66,13 +66,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>Eugene.png</string>
+            <string>cc_enemy_eugene.png</string>
             <key>size</key>
-            <string>{62,220}</string>
+            <string>{232,110}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:9fe6026e566b5632d3af339d0b55f6d3:ca5f4c04de0bfb79e1113f8f1995c9d1:6eff63925ec5363d49d80085d171378b$</string>
+            <string>$TexturePacker:SmartUpdate:a7142e9399073d7f9caab5399224eadf:d5cf744275eeecf68377e0df51cee776:1877978a8d2b48373bfd07d14afcba99$</string>
             <key>textureFileName</key>
-            <string>Eugene.png</string>
+            <string>cc_enemy_eugene.png</string>
         </dict>
     </dict>
 </plist>
