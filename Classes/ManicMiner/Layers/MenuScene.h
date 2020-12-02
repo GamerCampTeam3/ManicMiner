@@ -37,6 +37,8 @@ public:
 
 	void CB_OnGameExitButton( Ref* pSender);
 
+	void CB_OnFullScreenButton( Ref* pSender );
+
     // The cocos2d convention is to have the root layer of a scene
 	// be able to create and return a CCScene* (set to autorelease)
 	// which has an instance of itself as a child
@@ -60,6 +62,7 @@ private:
 
 	// Pointer to CLevelManager that creates this instance
 	CLevelManager* m_pcLevelManager;
+	bool m_bFullScreenSwitch;
 };
 
 #endif // __MENUSCENE_H__

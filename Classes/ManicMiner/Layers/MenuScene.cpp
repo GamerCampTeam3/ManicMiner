@@ -51,21 +51,25 @@ bool CMenuLayer::init()
     // Bib Edit
 	// This is a little boolean that allows for quick swapping from fullscreen to windowed
 	// This is required to avoid flickering and alt-tabbing for debugging on Higher resolution screens
-    const bool fullScreenSwitch = false;
-
-    if ( fullScreenSwitch )
+    
+    m_bFullScreenSwitch = false;
+    std::string strIconPath;
+    if (m_bFullScreenSwitch)
     {
+      
         // Stretch to fullscreen
         static_cast< GLViewImpl* >( cocos2d::Director::getInstance()->getOpenGLView() )->setFullscreen();
         // Set resolution
         Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
+        strIconPath = "Loose/to_windowed.png";
     }
     else
     {
 		// Set resolution
-		Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+	Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
+        strIconPath = "Loose/to_fullscreen.png";
     }
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -105,6 +109,18 @@ bool CMenuLayer::init()
     this->addChild(pMenu, 1);
     ///
     ///////////////////////////////////////////////////////////////////////////
+    MenuItemImage* pItemFullScreen = MenuItemImage::create(
+        strIconPath,
+        strIconPath,
+        CC_CALLBACK_1( CMenuLayer::CB_OnFullScreenButton, this ) );
+
+    pItemFullScreen->setPosition( Vec2( 1820.f, 1060.f ) );
+    pMenu = Menu::create( pItemFullScreen, nullptr );
+    //pMenu->getChildByName( "FSButton" );
+    pMenu->setPosition( Vec2::ZERO );
+    this->addChild( pMenu, 1 );
+    //////////////////////////////////////////////////////////
+    
 
     // add "HelloWorld" splash screen"
     Sprite* pSprite = Sprite::create("Loose/main_menu.png");
@@ -117,6 +133,29 @@ bool CMenuLayer::init()
 
     return true;
 }
+
+void CMenuLayer::CB_OnFullScreenButton(Ref *pSender)
+{
+
+    if ( !m_bFullScreenSwitch )
+    {
+        static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+        // Set resolution
+        Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
+        m_bFullScreenSwitch = true;
+    }
+
+    else
+    {
+        static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setWindowed( 1920, 1080 );
+        // Set resolution
+        Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
+        m_bFullScreenSwitch = false;
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 //	CB_OnGameStartButton
