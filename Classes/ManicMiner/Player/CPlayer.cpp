@@ -394,17 +394,6 @@ void CPlayer::CheckKeyboardInput()
 					AlternateIdleAnimation(m_bSelectedStandardIdle); // z check
 					m_bSelectedStandardIdle = !m_bSelectedStandardIdle; // z check
 					
-					/*
-					if(m_bSelectedStandardIdle)
-					{
-						m_bSelectedStandardIdle = false;
-						AlternateIdleAnimation(true);
-					}
-					else
-					{
-						m_bSelectedStandardIdle = true;
-						AlternateIdleAnimation(false);
-					}*/
 
 
 					
