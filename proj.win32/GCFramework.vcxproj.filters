@@ -546,6 +546,12 @@
     <ClCompile Include="..\Classes\ThirdParty\TexturedSpline.cpp">
       <Filter>Classes\ThirdParty</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Physics\SolarLightB2RayCastCallBack.cpp">
+      <Filter>Classes\ManicMiner\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Physics\SolarLightB2AABBQueryCB.cpp">
+      <Filter>Classes\ManicMiner\Physics</Filter>
+	</ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp">
       <Filter>Classes\ManicMiner\Door</Filter>
     </ClCompile>
@@ -911,6 +917,12 @@
     <ClInclude Include="..\Classes\ThirdParty\TexturedSpline.h">
       <Filter>Classes\ThirdParty</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Physics\SolarLightB2RayCastCallBack.h">
+      <Filter>Classes\ManicMiner\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Physics\SolarLightB2AABBQueryCB.h">
+      <Filter>Classes\ManicMiner\Physics</Filter>
+	</ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h">
       <Filter>Classes\ManicMiner\Door</Filter>
     </ClInclude>

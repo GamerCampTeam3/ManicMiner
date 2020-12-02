@@ -5,10 +5,12 @@
 #include "CMLSolarPowerGenerator.h"
 
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/SolarLight/SolarLight.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLSolarPowerGenerator::CMLSolarPowerGenerator()
 	: CManicLayer()
+	, m_pcSolarLight ( nullptr )
 {}
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
@@ -35,6 +37,9 @@ void CMLSolarPowerGenerator::VOnCreate( void )
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
+
+	// Step 3: Create Solar Light
+	m_pcSolarLight = new CSolarLight( *this );
 }
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
@@ -42,4 +47,17 @@ void CMLSolarPowerGenerator::VOnDestroy( void )
 {
 	// Call base class last
 	CManicLayer::VOnDestroy();
+
+	if( m_pcSolarLight )
+	{
+		delete m_pcSolarLight;
+		m_pcSolarLight = nullptr;
+	}
+}
+
+void CMLSolarPowerGenerator::VOnUpdate( f32 fTimeStep )
+{
+	CManicLayer::VOnUpdate( fTimeStep );
+
+	m_pcSolarLight->Update();
 }
