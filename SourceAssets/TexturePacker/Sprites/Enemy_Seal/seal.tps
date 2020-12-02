@@ -209,9 +209,6 @@
             <key type="filename">Frames/Walk/final-0026.png</key>
             <key type="filename">Frames/Walk/final-0027.png</key>
             <key type="filename">Frames/Walk/final-0028.png</key>
-            <key type="filename">Frames/Walk/final-0029.png</key>
-            <key type="filename">Frames/Walk/final-0030.png</key>
-            <key type="filename">Frames/Walk/final-0031.png</key>
             <key type="filename">cc_enemy_seal.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
