@@ -29,6 +29,7 @@
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+	
 	// An enum that is used for the level that have special interactions in them, for instance when 1 switch is flipped, or both.
 	enum class ESpecialInteraction
 	{
@@ -132,7 +133,6 @@ class CGameManager
 	void			 UpdateHighScore() const;								// Tells the CHUD to update the high score with the current high score.									
 	void			 UpdateScore()	  const;								// Tells the CHUD to update the score.																	
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------/
-
 
 };
 #endif // #ifndef _CGAMEMANAGER_H_
