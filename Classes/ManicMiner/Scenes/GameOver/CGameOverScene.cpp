@@ -57,12 +57,12 @@ bool CGameOverScene::init()
 
 	// Exit button --------------------------------------------------------------//
     MenuItemImage* pItemStartGame = MenuItemImage::create(
-        "Loose/play_normal.png",
-        "Loose/play_pressed.png",
+        "Loose/play_button_normal.png",
+        "Loose/play_button_hover.png",
         CC_CALLBACK_1( CGameOverScene::CB_OnGameStartButton, this ) );
 
-    pItemStartGame->setPosition( Vec2( origin.x + (visibleSize.width * 0.61f),
-        origin.y + (visibleSize.height * 0.52f) ) );
+    pItemStartGame->setPosition( Vec2( origin.x + (visibleSize.width * 0.5),
+        origin.y + (visibleSize.height * 0.10f) ) );
 
     Menu* pMenu = Menu::create( pItemStartGame, nullptr );
     pMenu->setPosition( Vec2::ZERO );
@@ -90,7 +90,7 @@ bool CGameOverScene::init()
     
     // Bit shift to get oiginal value
     iHighscore = iHighscore >> 16;
-	}
+    }
 	
     else
     {
@@ -107,9 +107,9 @@ bool CGameOverScene::init()
 
 	// The positions where we will place the labels
 	// Highscore
-    cocos2d::Vec2 v2HighscorePos = Vec2( origin.x + (visibleSize.width * 0.5f), origin.y + (visibleSize.height * 0.42f) );
+    cocos2d::Vec2 v2HighscorePos = Vec2( origin.x + (visibleSize.width * 0.5f), origin.y + (visibleSize.height * 0.25f) );
 	// Flair
-    cocos2d::Vec2 v2TextPos = Vec2( origin.x + (visibleSize.width * 0.5f), origin.y + (visibleSize.height * 0.30f) );
+    cocos2d::Vec2 v2TextPos = Vec2( origin.x + (visibleSize.width * 0.5f), origin.y + (visibleSize.height * 0.19f) );
 
 	// Initialize the label and add it to the layer
     pHighscoreLabel->setTextColor( cocos2d::Color4B(255, 255, 255, 255) );	
@@ -143,10 +143,10 @@ std::string CGameOverScene::GetPhrase(unsigned int score) const
     {
         strPhrase = "Only " + std::to_string( score ) + "? Pathetic.";
     }
-	if (score > 1000 && score <= 5000)
-	{
-        strPhrase = "Not bad! Getting somewhere";
-	}
+    if (score > 1000 && score <= 5000)
+    {
+          strPhrase = "Not bad! Getting somewhere.";
+    }
     if (score > 5000)
     {
         strPhrase = "Pretty good, shame you died.";
