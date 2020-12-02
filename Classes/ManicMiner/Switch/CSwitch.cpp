@@ -66,6 +66,7 @@ void CSwitch::VOnResourceAcquire( void )
 void CSwitch::VOnReset()
 {
 	CGCObjSpritePhysics::VOnReset();
+	SetFlippedX( false );
 	m_bHasBeenCollected = false;
 }
 

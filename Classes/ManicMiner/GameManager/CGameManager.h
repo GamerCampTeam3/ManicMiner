@@ -10,6 +10,13 @@
 
 #include <string>
 
+	// To use binary file method, set this to true
+	// Otherwise to use the manual bit shifting encryption, set false
+	const bool bUseBinaryFile = true;
+
+	#ifndef USEBINARYMETHOD
+		#define USEBINARYMETHOD bUseBinaryFile
+	#endif
 
 
 	//-------------------------------------------------------- FWD CLS DECLARATION -------------------------------------------------------------------------------------//	
@@ -21,19 +28,20 @@
 	enum class	ELifeUpdateType;//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
-
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+	
+	// An enum that is used for the level that have special interactions in them, for instance when 1 switch is flipped, or both.
 	enum class ESpecialInteraction
 	{
 		Default = 0,
 		Door = 1,
 		Boss
 	};
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 class CGameManager
 {
 																	 public:
-																		 
-																		 
 																		 
 	//------------------------------------------------------------  CTOR/DTOR ------------------------------------------------------------------------------------------			
 	CGameManager(CLevelManager& rcLevelManager );																																	
@@ -115,7 +123,7 @@ class CGameManager
 	//																																									
 	//------------------------------------------------------------  FUNCTIONS ------------------------------------------------------------------------------------------
 	void 			 ReadHighScore();										// Called when program begins, reads the values of "Highscore.bin" and sets the Highscore to be that.	
-	void			 WriteHighScore();										// Called when the score exceeds the highscore, writes the new highscore to "Highscore.bin".			
+	void			 WriteHighScore() const;								// Called when the score exceeds the highscore, writes the new highscore to "Highscore.bin".			
 	void			 DrainAirForScore();									// Called by the AirManager (for now), drains remaining air into score									
 	bool 			 IsScoreGreaterThanHighscore() const;					// Checks to see if score exceeds the highscore.														
 	bool			 CheckIfLevelRequirementsAreMet() ;						// Checks if the level has collected everything set in the SLevelValues.								
@@ -125,7 +133,6 @@ class CGameManager
 	void			 UpdateHighScore() const;								// Tells the CHUD to update the high score with the current high score.									
 	void			 UpdateScore()	  const;								// Tells the CHUD to update the score.																	
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------/
-
 
 };
 #endif // #ifndef _CGAMEMANAGER_H_

@@ -84,19 +84,19 @@ void CCrumblingPlatform::VOnUpdate(float fTimeStep)
 		switch(m_eCrumbleState)
 		{
 		case ECrumbleState::Stage_0 :
-			if(IsInRange(m_fCurrentCrumblingTimer, 0.56f, 0.75f))
+			if(IsInRange(m_fCurrentCrumblingTimer, 0.2255f, 0.3375f))
 			{
 				UpdateCrumblingPlatform(ECrumbleState::Stage_1);
 			}
 			break;
 		case ECrumbleState::Stage_1 :
-			if (IsInRange(m_fCurrentCrumblingTimer, 0.26f, 0.55f))
+			if (IsInRange(m_fCurrentCrumblingTimer, 0.113f, 0.225f))
 			{
 				UpdateCrumblingPlatform(ECrumbleState::Stage_2);
 			}
 			break;
 		case ECrumbleState::Stage_2 :
-			if (IsInRange(m_fCurrentCrumblingTimer, 0.01f, 0.25f))
+			if (IsInRange(m_fCurrentCrumblingTimer, 0.01f, 0.1125f))
 			{
 				UpdateCrumblingPlatform(ECrumbleState::Stage_3);
 			}
@@ -122,7 +122,7 @@ void CCrumblingPlatform::VOnReset()
 	m_fCurrentCrumblingTimer = 0;
 
 	m_bInitiatedCrumbling = false;
-	m_fCurrentCrumblingTimer = 1.f;
+	m_fCurrentCrumblingTimer = 0.45f;
 	m_eCrumbleState = ECrumbleState::Stage_0;
 
 	RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[0]));
@@ -191,6 +191,7 @@ void CCrumblingPlatform::UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState)
 	// only if the new state is different to the current state
 	if (eNewCrumbleState != m_eCrumbleState)
 	{
+		GetSprite()->stopAllActions();
 		// for extra functionality - playing sound on each crumble
 		switch (eNewCrumbleState)
 		{

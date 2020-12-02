@@ -15,19 +15,19 @@ USING_NS_CC;
 
 CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	: m_pScoreValueLabel		( nullptr		)
-	, m_pScoreTextLabel			( nullptr		)
+	, m_pScoreTextLabel		( nullptr		)
 	, m_pHighScoreValueLabel	( nullptr		)
 	, m_pHighscoreTextLabel		( nullptr		)
-	, m_pLevelName				( nullptr		)
+	, m_pLevelName			( nullptr		)
 	, m_pglOwnerGameLayer		( &cLayer		)
-	, m_pointOrigin				( pOrigin		)
-	, m_sizeVisible				( visibleSize	)
+	, m_pointOrigin			( pOrigin		)
+	, m_sizeVisible			( visibleSize		)
 	, m_v2ScoreTextPosition		(0,0		)
 	, m_v2HighscoreTextPosition	(0,0		)
 	, m_v2ScoreValuePosition	(0,0		)
-	, m_v2HighscoreValuePosition(0,0		)
+	, m_v2HighscoreValuePosition	(0,0		)
 	, m_v2LevelNamePosition		(0,0		)
-	, m_fXPlacement				( 700.f			)
+	, m_fXPlacement			( 700.f			)
 {
 
 	// We initialized them to 0 to keep the list clean, so we set them up here
@@ -51,16 +51,16 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	cocos2d::Color4B textColor = cocos2d::Color4B( 165, 227, 251, 255 );
 
 	// Then we initialize with the following params:
-	// Label:		The current label we are editing.
-	// Color4B:		The color of the text.
+	// Label:	The current label we are editing.
+	// Color4B:	The color of the text.
 	// Font Size:	The size of the font.
 	// Vector 2:	The position of the text on the screen.
 	// Alignment:	How is the text aligned.
 	InitLabel( m_pScoreTextLabel,		textColor, 20.0f, m_v2ScoreTextPosition,			TextHAlignment::LEFT	);
 	InitLabel( m_pScoreValueLabel,		textColor, 20.0f, m_v2ScoreValuePosition,		TextHAlignment::CENTER	);
 	InitLabel( m_pHighscoreTextLabel,	textColor, 20.0f, m_v2HighscoreTextPosition,		TextHAlignment::LEFT	);
-	InitLabel( m_pHighScoreValueLabel,	textColor, 20.0f, m_v2HighscoreValuePosition,		TextHAlignment::CENTER	);
-	InitLabel( m_pLevelName,		textColor, 25.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
+	InitLabel( m_pHighScoreValueLabel,	textColor, 20.0f, m_v2HighscoreValuePosition,	TextHAlignment::CENTER	);
+	InitLabel( m_pLevelName,			textColor, 25.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
 }
 
 CHUD::~CHUD()
@@ -93,7 +93,6 @@ void CHUD::FlushText() const
 
 void CHUD::Init(std::string szLevelName, int life, int iScore, int iHighscore)
 {
-
 	char* pczLevelname = _strdup( szLevelName.c_str() );
 
 	// SCORE ---------------------------------------------------------------------------------------------------------------------------------------//
@@ -127,41 +126,41 @@ void CHUD::Init(std::string szLevelName, int life, int iScore, int iHighscore)
 
 		// We new and set the sprites here.
 		m_apcLives[i] = new CGCObjSprite();
-		m_apcLives[i]->CreateSprite( m_kpszPlistPlayerLifeLost );							// Initial sprite should be empty (as only 3 of them would be full.
-		m_apcLives[i]->SetSpriteGlobalZOrder( 2.f );										// We set the z order for it to be above.
-		m_apcLives[i]->SetSpriteScale( 1.f, 1.f );								// Half the scale as they are too large (since there are 10 instead of 3.
-		m_apcLives[i]->SetResetPosition( v2InitialPlacement );								// Set the reset position to be our temporary vector 2.
+		m_apcLives[i]->CreateSprite( m_kpszPlistPlayerLifeLost );				// Initial sprite should be empty (as only 3 of them would be full.
+		m_apcLives[i]->SetSpriteGlobalZOrder( 2.f );						// We set the z order for it to be above.
+		m_apcLives[i]->SetSpriteScale( 1.f, 1.f );					// Half the scale as they are too large (since there are 10 instead of 3.
+		m_apcLives[i]->SetResetPosition( v2InitialPlacement );					// Set the reset position to be our temporary vector 2.
 		m_apcLives[i]->GetSprite()->setPosition( m_apcLives[i]->GetResetPosition() );	// Set the position to be it's reset position.
-		m_apcLives[i]->SetParent( m_pglOwnerGameLayer );									// Finally add it to the parent layer.
+		m_apcLives[i]->SetParent( m_pglOwnerGameLayer );					// Finally add it to the parent layer.
 				
-		m_fXPlacement += m_kfOffsetIncrement;												// Increment our X, so they do not overlap each other.
+		m_fXPlacement += m_kfOffsetIncrement;							// Increment our X, so they do not overlap each other.
 	}
 
 	////--------------------------------------- TEMP CODE ---------------------------------------////
-	// A temporary int that copies the original X placement position							   //
-	// It will be used to add 3 empty hearts at the location of the original heart				   //
-	// This is made since the hearts are meant to have the outline behind them, but since the code //
-	// for drawing hearts works by replacing the sprite in an array, this is a quick fix.		   //
-	static float fXPlacement = 700.0f;															   //
-																								   //
-	// A for loop to create the 3 extra empty hearts.											   //
-	for (int i = 0; i < 3; i++)																	   //
-	{																							   //
-		const cocos2d::Vec2 v2Pos = cocos2d::Vec2( fXPlacement, m_kfYPlacement );			   //
-																								   //
-		CGCObjSprite* pcSprite = new CGCObjSprite();											   //
-		pcSprite->CreateSprite( m_kpszPlistPlayerLifeLost );									   //
-		pcSprite->SetSpriteGlobalZOrder( 2.0f );												   //
-		pcSprite->SetSpriteScale( 1.0f, 1.0f );										   //
-		pcSprite->SetResetPosition( v2Pos );													   //
-		pcSprite->GetSprite()->setPosition( pcSprite->GetResetPosition() );					   //
-		pcSprite->SetParent( m_pglOwnerGameLayer );												   //
-																								   //
-		fXPlacement += m_kfOffsetIncrement;														   //
-	}																							   //
-																								   //
-	// and finally we reset the static int since otherwise the next levels will offset again.	   //
-	fXPlacement = 700.0f;																		   //
+	// A temporary int that copies the original X placement position				
+	// It will be used to add 3 empty hearts at the location of the original heart			
+	// This is made since the hearts are meant to have the outline behind them, but since the code 
+	// for drawing hearts works by replacing the sprite in an array, this is a quick fix.		 
+	static float fXPlacement = 700.0f;								
+													
+	// A for loop to create the 3 extra empty hearts.						
+	for (int i = 0; i < 3; i++)									
+	{												
+		const cocos2d::Vec2 v2Pos = cocos2d::Vec2( fXPlacement, m_kfYPlacement );		
+													
+		CGCObjSprite* pcSprite = new CGCObjSprite();						
+		pcSprite->CreateSprite( m_kpszPlistPlayerLifeLost );					
+		pcSprite->SetSpriteGlobalZOrder( 2.0f );						
+		pcSprite->SetSpriteScale( 1.0f, 1.0f );							
+		pcSprite->SetResetPosition( v2Pos );							
+		pcSprite->GetSprite()->setPosition( pcSprite->GetResetPosition() );			
+		pcSprite->SetParent( m_pglOwnerGameLayer );						
+													
+		fXPlacement += m_kfOffsetIncrement;							
+	}												
+													
+	// and finally we reset the static int since otherwise the next levels will offset again.	 
+	fXPlacement = 700.0f;										
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Set full the current lives (this will change level to level)
@@ -210,7 +209,7 @@ void CHUD::UpdateLives( ELifeUpdateType eLifeUpdateType, int iCurrentLife )
 
 void CHUD::UpdateHighScore( int highScore ) 
 {
-	UpdateLabel( m_pScoreValueLabel, nullptr, highScore, ELabelType::Number );
+	UpdateLabel( m_pHighScoreValueLabel, nullptr, highScore, ELabelType::Number );
 }
 
 void CHUD::ReDrawSprite( CGCObjSprite* pSprite,  const char* pzcPlist) const

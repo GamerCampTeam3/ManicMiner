@@ -509,7 +509,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				if( pcPlatform->GetPlatformType() != EPlatformType::Brick )												//
 				{																										//
 					// Deactivate this platform's collision																//
-					//pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
+					pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
 
 				// Decrement sensor contact count																		//
 				m_pcPlayer->SensorContactEvent( false );																//
@@ -897,10 +897,8 @@ void CManicLayer::OnDeath()
 void CManicLayer::OutOfLives()
 {
 	m_pcGameManager->ResetHUD();
-	m_pcGameManager->ResetLives();
-		
-	m_pcLevelManager->GoToGameOverScene();
-	
+	m_pcGameManager->ResetLives();		
+	m_pcLevelManager->GoToGameOverScene();	
 }
 
 

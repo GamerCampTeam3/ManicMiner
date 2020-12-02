@@ -50,12 +50,13 @@ public:
 
 	bool m_bHasNotFoundNewPoint;
 
-	bool m_bHasReachedRightMax;
-
-
+	bool m_bShouldStopMoving;
+	bool m_bMovingRight;
+	
 	// TEST
 	cocos2d::Vec2 m_v2Right;
-	cocos2d::Vec2 m_v2Left;
+
+	int getPt(int n1, int n2, float perc);
 	
 private:
 

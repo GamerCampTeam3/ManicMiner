@@ -33,23 +33,11 @@ public:
 	// which has an instance of itself as a child
 	static cocos2d::Scene* scene( CLevelManager& rcLevelManager );
 
-	// -------------------------------------------------------------------------------------------------------------------- //
-	// Henrique edit																										//
-	// -------------------------------------------------------------------------------------------------------------------- //
-	// Function		:	SetLevelManager																						//
-	// -------------------------------------------------------------------------------------------------------------------- //
-	// Purpose		:	Sets m_pcLevelManager, so that we can proceed to the first level									//
-	//					through CB_OnGameStartButton()																		//
-	//																														//
-	// Parameters	:	CLevelManager& rcLevelManager																		//
-	//					reference to CLevelManager that is creating this CMenuLayer isntance								//
-	//																														//
-	// See also		:	CLevelManager, its constructor and CLevelManager::GoToMainMenu()									//
-	// -------------------------------------------------------------------------------------------------------------------- //
 	void SetLevelManager( CLevelManager& rcLevelManager );
 private:
 
 	// Pointer to CLevelManager that creates this instance
 	CLevelManager* m_pcLevelManager;
+	std::string GetPhrase( unsigned int score ) const;
 };
 #endif
