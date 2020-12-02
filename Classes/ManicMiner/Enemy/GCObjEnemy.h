@@ -13,9 +13,15 @@
 
 //////////////////////////////////////////////////////////////////////////
 //  This class defines an invidual instance of an enemy character.
-//  Its purpose is to provide the functionality an enemy would require with regards to
-//  velocity, direction flipping, horizontal/vertical axis alignment, bouncing on 
-//  platform collision etc.
+//  The following features are provided:
+//  - Movement between two anchor points (not restricted to horizontal/vertical).
+//  - Parameter driven speed.
+//  - Start position within the movement window.
+//  - Initial facing direction.
+//  - Initial movement direction.
+//  - Ability to extend the destination anchor point (note correctly resets with the level).
+//  - 
+
 //
 //////////////////////////////////////////////////////////////////////////
 
@@ -32,7 +38,6 @@ private:
 	float						m_kfOne = 1.0f;
 	float						m_kfZero = 0.0f;
 	bool						m_bMovingAwayFromAnchorPoint;
-	bool                        m_bBounceCollisionDisabled;
 	bool						m_bSpriteIsFlippable;
 	bool						m_bHasBeenCollided;
 	bool						m_bTemporaryAnchorPositionActive;
