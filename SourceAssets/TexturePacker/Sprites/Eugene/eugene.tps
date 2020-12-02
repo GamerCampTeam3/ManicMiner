@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../../Resources/windows/TexturePacker/Sprites/Enemy_Seal/cc_enemy_seal.plist</filename>
+                <filename>cc_enemy_eugene.plist</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,38 +181,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Frames/Walk/final-0001.png</key>
-            <key type="filename">Frames/Walk/final-0002.png</key>
-            <key type="filename">Frames/Walk/final-0003.png</key>
-            <key type="filename">Frames/Walk/final-0004.png</key>
-            <key type="filename">Frames/Walk/final-0005.png</key>
-            <key type="filename">Frames/Walk/final-0006.png</key>
-            <key type="filename">Frames/Walk/final-0007.png</key>
-            <key type="filename">Frames/Walk/final-0008.png</key>
-            <key type="filename">Frames/Walk/final-0009.png</key>
-            <key type="filename">Frames/Walk/final-0010.png</key>
-            <key type="filename">Frames/Walk/final-0011.png</key>
-            <key type="filename">Frames/Walk/final-0012.png</key>
-            <key type="filename">Frames/Walk/final-0013.png</key>
-            <key type="filename">Frames/Walk/final-0014.png</key>
-            <key type="filename">Frames/Walk/final-0015.png</key>
-            <key type="filename">Frames/Walk/final-0016.png</key>
-            <key type="filename">Frames/Walk/final-0017.png</key>
-            <key type="filename">Frames/Walk/final-0018.png</key>
-            <key type="filename">Frames/Walk/final-0019.png</key>
-            <key type="filename">Frames/Walk/final-0020.png</key>
-            <key type="filename">Frames/Walk/final-0021.png</key>
-            <key type="filename">Frames/Walk/final-0022.png</key>
-            <key type="filename">Frames/Walk/final-0023.png</key>
-            <key type="filename">Frames/Walk/final-0024.png</key>
-            <key type="filename">Frames/Walk/final-0025.png</key>
-            <key type="filename">Frames/Walk/final-0026.png</key>
-            <key type="filename">Frames/Walk/final-0027.png</key>
-            <key type="filename">Frames/Walk/final-0028.png</key>
-            <key type="filename">Frames/Walk/final-0029.png</key>
-            <key type="filename">Frames/Walk/final-0030.png</key>
-            <key type="filename">Frames/Walk/final-0031.png</key>
-            <key type="filename">cc_enemy_seal.png</key>
+            <key type="filename">Frames/Angry/cc_enemy_eugene1.png</key>
+            <key type="filename">Frames/Angry/cc_enemy_eugene2.png</key>
+            <key type="filename">Frames/Normal/cc_enemy_eugene.png</key>
+            <key type="filename">cc_enemy_eugene.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -221,16 +193,16 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>15,30,30,60</rect>
+                <rect>29,28,58,55</rect>
                 <key>scale9Paddings</key>
-                <rect>15,30,30,60</rect>
+                <rect>29,28,58,55</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>cc_enemy_seal.png</filename>
+            <filename>cc_enemy_eugene.png</filename>
             <filename>Frames</filename>
         </array>
         <key>ignoreFileList</key>
