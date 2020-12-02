@@ -509,7 +509,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				if( pcPlatform->GetPlatformType() != EPlatformType::Brick )												//
 				{																										//
 					// Deactivate this platform's collision																//
-					//pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
+					pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
 
 				// Decrement sensor contact count																		//
 				m_pcPlayer->SensorContactEvent( false );																//
