@@ -368,6 +368,7 @@ void CManicLayer::VOnDestroy()
 void CManicLayer::VOnReset( void )
 {
 	IGCGameLayer::VOnReset();
+	m_pcGameManager->ResetSwitchCount();
 }
 
 // --- b2ContactListener Interface ------------------------------------------------------------------------------------ //
@@ -735,7 +736,7 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
-		OnDeath();
+		//OnDeath();
 	}																													//
 }																														//
 																														//

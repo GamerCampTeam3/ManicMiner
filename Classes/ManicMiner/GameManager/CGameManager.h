@@ -86,7 +86,7 @@ class CGameManager
 	int		GetScore() const { return m_iCurrentScore; }
 	int		GetHighscore() const { return m_iHighScore; }
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------			
-
+	void ResetSwitchCount() { m_iCurrentSwitches = 0; m_iCurrentCollectibles = 0; }
 
 	
 																	 private:
