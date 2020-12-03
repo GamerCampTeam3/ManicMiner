@@ -112,6 +112,7 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 
 // ---------------------------------- Getters ------------------------------------------------------------------------- //
+	CAirManager&		GetAirManager()					const;
 	CPlayer&			GetPlayer()						const;															//
 	CLevelManager&		GetLevelManager()				const;															//
 	const EGameState	GetGameState()					const;															//
@@ -286,7 +287,7 @@ private:
 	void CB_OnGameExitButton( Ref* pSender );
 
 public:
-	void Init();
+	virtual void Init();
 	virtual void VLevelSpecificInteraction() {};
 };
 #endif // #ifndef _CMANICLAYER_H_

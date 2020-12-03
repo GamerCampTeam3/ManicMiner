@@ -740,6 +740,12 @@ void CManicLayer::SwitchInteracted(CSwitch& rcSwitch, CPlayer& rcPlayer, const b
 
 	}																													//
 }																														//
+
+CAirManager& CManicLayer::GetAirManager() const
+{
+	return *m_pcAirManager;
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 
 

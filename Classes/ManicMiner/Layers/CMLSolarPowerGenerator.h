@@ -30,6 +30,8 @@ public:
 	virtual	void VOnDestroy( void ) override;																			//
 // -------------------------------------------------------------------------------------------------------------------- //
 	virtual void VOnUpdate( f32 fTimeStep )	override;
+
+	virtual void Init() override;
 private:
 	CSolarLight* m_pcSolarLight;
 };

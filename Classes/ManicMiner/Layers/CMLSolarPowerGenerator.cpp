@@ -37,9 +37,6 @@ void CMLSolarPowerGenerator::VOnCreate( void )
 
 	// Step 2:  Call CManicLayer VOnCreate to create everything the level requires e.g collisions, physics.
 	CManicLayer::VOnCreate();
-
-	// Step 3: Create Solar Light
-	m_pcSolarLight = new CSolarLight( *this );
 }
 
 // VOnDestroy - Cleanup unique layout --------------------------------------------------------------------------------- //
@@ -60,4 +57,10 @@ void CMLSolarPowerGenerator::VOnUpdate( f32 fTimeStep )
 	CManicLayer::VOnUpdate( fTimeStep );
 
 	m_pcSolarLight->Update();
+}
+
+void CMLSolarPowerGenerator::Init()
+{
+	CManicLayer::Init();
+	m_pcSolarLight = new CSolarLight( *this );
 }

@@ -2,6 +2,7 @@
 
 #include "Box2D/Collision/b2Collision.h"
 
+#include "ManicMiner/AirManager/AirManager.h"
 #include "ManicMiner/Physics/SolarLightB2AABBQueryCB.h"
 #include "SolarLight.h"
 #include "ThirdParty/TexturedSpline.h"
@@ -10,6 +11,7 @@ static const float s_kfPTM = 60.0f;
 
 CSolarLight::CSolarLight( CMLSolarPowerGenerator& rcSolarLevel )
 	: m_rcB2World( *rcSolarLevel.B2dGetWorld() )
+	, m_rcAirManager ( rcSolarLevel.GetAirManager() )
 	, m_pcTexturedSpline ( nullptr )
 	, m_kiLightRoundness ( 3 )
 	, m_kiStartX		( 23 )
@@ -87,6 +89,8 @@ void CSolarLight::CheckCollisions()
 	// Light goes either down or left, so a bool is enough to keep track of direction
 	bool bGoingDown = true;
 
+	bool bHitPlayer = false;
+
 	// We're starting from the very top of playable area, so on coordinate 16
 	// And the light start shining down on block 23 across
 	int iCurrentX = m_kiStartX;
@@ -118,6 +122,8 @@ void CSolarLight::CheckCollisions()
 		m_rcB2World.QueryAABB( &aabbQueryCB, aabbQuery );
 
 		// Switch on Raycast Hit Result ( ENEMY / PLATFORM / PLAYER )
+		// TODO: turn this into an array of results, because player and something else might be on the same block
+		// this might freeze the game entirely if it never finds a platform so ye pretty huge
 		if( aabbQueryCB.GetQueryResult() != ESolarLightQueryResult::None )
 		{
 			switch( aabbQueryCB.GetQueryResult() )
@@ -168,6 +174,11 @@ void CSolarLight::CheckCollisions()
 				}
 			}
 			break;
+			case ESolarLightQueryResult::Player:
+			{
+				bHitPlayer = true;
+			}
+			break;
 			// We don't really need to do anything if the result is ESolarLightRayCastHitResult::None
 			}
 		}
@@ -184,6 +195,8 @@ void CSolarLight::CheckCollisions()
 	}
 
 	CCLOG( "%d Reflections", iNumOfReflections );
+
+	m_rcAirManager.SunlightDrainAir( bHitPlayer );
 }
 
 void CSolarLight::BuildNewSpline()
