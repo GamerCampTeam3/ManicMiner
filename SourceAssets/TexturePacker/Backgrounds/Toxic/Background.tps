@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>cocos2d-x</string>
         <key>textureFileName</key>
-        <filename>../../../../Resources/windows/TexturePacker/Backgrounds/Lavas/Background.png</filename>
+        <filename>../../../../Resources/windows/TexturePacker/Backgrounds/Toxic/Background.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../../Resources/windows/TexturePacker/Backgrounds/Lavas/Background.plist</filename>
+                <filename>../../../../Resources/windows/TexturePacker/Backgrounds/Toxic/Background.plist</filename>
             </struct>
             <key>header</key>
             <key>source</key>
@@ -187,10 +187,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Backround.png</key>
+            <key type="filename">Background.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,1</point_f>
+                <point_f>0.5,0.5</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
@@ -205,7 +205,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>Backround.png</filename>
+            <filename>Background.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
