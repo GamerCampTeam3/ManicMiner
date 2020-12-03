@@ -77,7 +77,6 @@ void CTriggerPlatform::VOnResourceAcquire()
 
 void CTriggerPlatform::VOnResourceRelease()
 {
-    CGCObjSpritePhysics::VOnResourceRelease();
 
     if (m_bHasBeenTriggered)
     {
@@ -88,6 +87,7 @@ void CTriggerPlatform::VOnResourceRelease()
         m_pcCrumbleAnimation->release();
     }
     m_pcCrumbleAnimation = nullptr;
+    CGCObjSpritePhysics::VOnResourceRelease();
 }
 
 void CTriggerPlatform::VOnReset()

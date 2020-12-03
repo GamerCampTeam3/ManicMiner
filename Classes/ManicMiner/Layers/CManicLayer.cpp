@@ -230,27 +230,73 @@ void CManicLayer::VInitializeBackground()
 	auto pcScene = static_cast< cocos2d::Scene* >( getParent() );
 	if ( pcScene && m_pcPlayer )
 	{
-		int kiNumScrollingLayers = 3;
-		const int kiNumAnimatedLayers = 1;
-		//const int kiNumAnimatedLayers = 4;
-		//if( m_pzsPlatformOutlinePlist == nullptr )
-		//{
-		//	kiNumScrollingLayers--;
-		//}
-		m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
+		switch( m_sLevelCreationParameters.eParallaxTheme )
+		{
 
-		const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Cavern/Background_0.plist", -3 );
-		const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -5 );
-		const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -6 );
-		const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -4 );
+		case EParallaxTheme::Cavern:
+		{
+			int kiNumScrollingLayers = 3;
+			const int kiNumAnimatedLayers = 1;
+			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
 
-		m_pcParallax->AddScrollingLayer( sData1, 5.0f );
-		m_pcParallax->AddAnimatedLayer(sData4);
-		m_pcParallax->AddScrollingLayer( sData2, 1.5f );
-		m_pcParallax->AddScrollingLayer( sData3, 0.5f );
+			const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Cavern/Background_0.plist", -3 );
+			const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -5 );
+			const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -6 );
+			const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -4 );
+
+			m_pcParallax->AddScrollingLayer( sData1, 5.0f );
+			m_pcParallax->AddAnimatedLayer(sData4);
+			m_pcParallax->AddScrollingLayer( sData2, 1.5f );
+			m_pcParallax->AddScrollingLayer( sData3, 0.5f );
+		}
+		break;
+		case EParallaxTheme::Toxic:
+		{
+			int kiNumScrollingLayers = 3;
+			const int kiNumAnimatedLayers = 0;
+			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
+
+			const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Toxic/Background.plist", -10 );
+			const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Toxic/Outline.plist", -2 );
+			const SParallaxLayerData sData4( "TexturePacker/Backgrounds/Toxic/Fog.plist", -7 );
+
+			m_pcParallax->AddScrollingLayer( sData1, 0.0f );
+			m_pcParallax->AddScrollingLayer( sData2, 0.0f );
+			m_pcParallax->AddScrollingLayer( sData4, 5.0f );
+		}
+		break;
+		case EParallaxTheme::Shipwreck:
+		{
+			int kiNumScrollingLayers = 3;
+			const int kiNumAnimatedLayers = 0;
+			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
+
+			const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Shipwreck/ShipwreckBackground.plist", -4 );
+			const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Shipwreck/ShipwreckGodray.plist", -3 );
+			const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Shipwreck/ShipwreckPlatforms.plist", -2 );
+
+			m_pcParallax->AddScrollingLayer( sData1, 0.0f );
+			m_pcParallax->AddScrollingLayer( sData2, 4.0f );
+			m_pcParallax->AddScrollingLayer( sData3, 0.0f );
+		}
+		break;
+		case EParallaxTheme::Magma:
+		{
+			int kiNumScrollingLayers = 1;
+			const int kiNumAnimatedLayers = 0;
+			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
+
+			const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Lava/LavaBackground.plist", -10 );
+
+			m_pcParallax->AddScrollingLayer( sData1, 0.0f );
+		}
+		break;
+		}
+
 
 		m_pcParallax->Reset();
 	}
+
 
 	if (m_sLevelCreationParameters.pszPlatformBackground != nullptr)
 	{
@@ -509,7 +555,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				if( pcPlatform->GetPlatformType() != EPlatformType::Brick )												//
 				{																										//
 					// Deactivate this platform's collision																//
-					//pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
+					pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
 
 				// Decrement sensor contact count																		//
 				m_pcPlayer->SensorContactEvent( false );																//
@@ -740,6 +786,12 @@ void CManicLayer::SwitchInteracted(CSwitch& rcSwitch, CPlayer& rcPlayer, const b
 
 	}																													//
 }																														//
+
+CAirManager& CManicLayer::GetAirManager() const
+{
+	return *m_pcAirManager;
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
