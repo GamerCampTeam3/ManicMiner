@@ -46,9 +46,9 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_fLastGroundedY					( 0.0f )
 	, m_fLastHighestY					( 0.0f )
 	, m_kfWalkSpeed						( 4.0f )
-	, m_fJumpSpeed						( 10.6f )
-	, m_kfGravitionalPull				( 2.3f )
-	, m_kfMaxFallDistance				( 4.7f )
+	, m_fJumpSpeed						( 9.0f )
+	, m_kfGravitionalPull				( 1.6f )
+	, m_kfMaxFallDistance				( 4.8f )
 	, m_fVerticalSpeedAdjust			( 0.0f )
 	, m_uiJumpSoundID					( 0 )
 	, m_uiFallingSoundID				( 0 )
@@ -188,6 +188,17 @@ void CPlayer::VOnResourceRelease()																												//
 																																				//
 
 	LoadAnimations(false);																														//
+	// Stop Jump/Fall sound effect
+	if( m_uiJumpSoundID != 0 )
+	{
+		StopSoundEffect( m_uiJumpSoundID );
+		m_uiJumpSoundID = 0;
+	}
+	if( m_uiFallingSoundID != 0 )
+	{
+		StopSoundEffect( m_uiFallingSoundID );
+		m_uiFallingSoundID = 0;
+	}
 																																				//
 }																																				//
 																																				//
