@@ -5,10 +5,12 @@
 #include "CMLSolarPowerGenerator.h"
 
 #include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/SolarLight/SolarLight.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLSolarPowerGenerator::CMLSolarPowerGenerator()
 	: CManicLayer()
+	, m_pcSolarLight ( nullptr )
 {}
 
 // Destructor --------------------------------------------------------------------------------------------------------- //
@@ -27,7 +29,7 @@ void CMLSolarPowerGenerator::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 3 );
-	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Magma;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/18_SolarPowerGenerator.oel";
 	m_sLevelCreationParameters.szLevelName			= "Solar Power Generator";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 840.0f + 30.0f, 300.0f );
@@ -42,4 +44,23 @@ void CMLSolarPowerGenerator::VOnDestroy( void )
 {
 	// Call base class last
 	CManicLayer::VOnDestroy();
+
+	if( m_pcSolarLight )
+	{
+		delete m_pcSolarLight;
+		m_pcSolarLight = nullptr;
+	}
+}
+
+void CMLSolarPowerGenerator::VOnUpdate( f32 fTimeStep )
+{
+	CManicLayer::VOnUpdate( fTimeStep );
+
+	m_pcSolarLight->Update();
+}
+
+void CMLSolarPowerGenerator::Init()
+{
+	CManicLayer::Init();
+	m_pcSolarLight = new CSolarLight( *this );
 }

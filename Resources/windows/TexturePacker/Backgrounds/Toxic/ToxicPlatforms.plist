@@ -4,20 +4,20 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Backround.png</key>
+            <key>ToxicPlatforms.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>anchor</key>
-                <string>{0.5,0}</string>
+                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{-3,-94}</string>
                 <key>spriteSize</key>
-                <string>{1920,1080}</string>
+                <string>{1844,834}</string>
                 <key>spriteSourceSize</key>
                 <string>{1920,1080}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{1920,1080}}</string>
+                <string>{{0,0},{1844,834}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -31,13 +31,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>Background.png</string>
+            <string>ToxicPlatforms.png</string>
             <key>size</key>
-            <string>{1920,1080}</string>
+            <string>{1844,834}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:d2615ad8892300fdd41ac952713851a7:fd28110099b499b5b61a60e755107982:b66f6d0d745818ce79958cce3ebfdabf$</string>
+            <string>$TexturePacker:SmartUpdate:d0c840495e9c89f245b43d55179a113a:534716f9ca4a6c08809c6d9af84cd018:d2b08d770f079c9851b6a9b07f158d32$</string>
             <key>textureFileName</key>
-            <string>Background.png</string>
+            <string>ToxicPlatforms.png</string>
         </dict>
     </dict>
 </plist>

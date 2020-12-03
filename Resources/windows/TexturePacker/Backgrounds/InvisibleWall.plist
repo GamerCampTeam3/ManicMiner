@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>InvisibleWall.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{60,960}</string>
+                <key>spriteSourceSize</key>
+                <string>{60,960}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{60,960}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>InvisibleWall.png</string>
+            <key>size</key>
+            <string>{60,960}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:f7ca8b9a9ac06f161a5d351587325d05:1474ece7b8dc97d846bf1ca8fb4ac8dd:09aa2c96e72ac960eec08d3ae8ac1cb7$</string>
+            <key>textureFileName</key>
+            <string>InvisibleWall.png</string>
+        </dict>
+    </dict>
+</plist>
