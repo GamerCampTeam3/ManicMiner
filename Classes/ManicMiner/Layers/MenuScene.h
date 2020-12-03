@@ -63,6 +63,10 @@ private:
 	// Pointer to CLevelManager that creates this instance
 	CLevelManager* m_pcLevelManager;
 	bool m_bFullScreenSwitch;
+	cocos2d::Menu* m_pMenu;
+	std::string m_strPath;
+
+	void CreateFullScreenButton();
 };
 
 #endif // __MENUSCENE_H__

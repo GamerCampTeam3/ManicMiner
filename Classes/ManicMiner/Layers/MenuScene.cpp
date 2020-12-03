@@ -53,7 +53,7 @@ bool CMenuLayer::init()
 	// This is required to avoid flickering and alt-tabbing for debugging on Higher resolution screens
     
     m_bFullScreenSwitch = false;
-    std::string strIconPath;
+	
     if (m_bFullScreenSwitch)
     {
       
@@ -62,14 +62,14 @@ bool CMenuLayer::init()
         // Set resolution
         Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
-        strIconPath = "Loose/to_windowed.png";
+        m_strPath = "Loose/to_windowed.png";
     }
     else
     {
 		// Set resolution
-	Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+		Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
-        strIconPath = "Loose/to_fullscreen.png";
+        m_strPath = "Loose/to_fullscreen.png";
     }
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -90,10 +90,9 @@ bool CMenuLayer::init()
 										origin.y + (visibleSize.height * 0.52f ) ) );
 
     // create menu, it's an autorelease object
-    Menu* pMenu = Menu::create(pItemStartGame, nullptr);
-    pMenu->setPosition( Vec2::ZERO );
-    this->addChild(pMenu, 1);
-
+    m_pMenu = Menu::create(pItemStartGame, nullptr);
+    m_pMenu->setPosition( Vec2::ZERO );
+    this->addChild( m_pMenu, 1);
     ///////////////////////////////////////////////////////////////////////////
 	/// - Umeer Rama
 
@@ -104,21 +103,23 @@ bool CMenuLayer::init()
 
     pItemExitGame->setPosition(Vec2(1900.f, 1060.f));
 
-    pMenu = Menu::create(pItemExitGame, nullptr);
-    pMenu->setPosition(Vec2::ZERO);
-    this->addChild(pMenu, 1);
+    m_pMenu = Menu::create(pItemExitGame, nullptr);
+    m_pMenu->setPosition(Vec2::ZERO);
+    this->addChild( m_pMenu, 1);
+
+    CreateFullScreenButton();
     ///
     ///////////////////////////////////////////////////////////////////////////
-    MenuItemImage* pItemFullScreen = MenuItemImage::create(
-        strIconPath,
-        strIconPath,
-        CC_CALLBACK_1( CMenuLayer::CB_OnFullScreenButton, this ) );
-
-    pItemFullScreen->setPosition( Vec2( 1820.f, 1060.f ) );
-    pMenu = Menu::create( pItemFullScreen, nullptr );
-    //pMenu->getChildByName( "FSButton" );
-    pMenu->setPosition( Vec2::ZERO );
-    this->addChild( pMenu, 1 );
+    //MenuItemImage* pItemFullScreen = MenuItemImage::create(
+    //    m_strPath,
+    //    m_strPath,
+    //    CC_CALLBACK_1( CMenuLayer::CB_OnFullScreenButton, this ) );
+    //
+    //pItemFullScreen->setPosition( Vec2( 1820.f, 1060.f ) );
+    //m_pMenu = Menu::create( pItemFullScreen, nullptr );
+    //m_pMenu->setName( "FSButton" );
+    //m_pMenu->setPosition( Vec2::ZERO );
+    //this->addChild( m_pMenu, 1 );
     //////////////////////////////////////////////////////////
     
 
@@ -139,11 +140,14 @@ void CMenuLayer::CB_OnFullScreenButton(Ref *pSender)
 
     if ( !m_bFullScreenSwitch )
     {
-        static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
-        // Set resolution
-        Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
-        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
-        m_bFullScreenSwitch = true;
+       static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+       // Set resolution
+       Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+       Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
+       m_bFullScreenSwitch = true;
+       this->removeChild( this->getChildByName( "FSButton" ) );
+       m_strPath = "Loose/to_windowed.png";
+       CreateFullScreenButton();
     }
 
     else
@@ -153,8 +157,26 @@ void CMenuLayer::CB_OnFullScreenButton(Ref *pSender)
         Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
         m_bFullScreenSwitch = false;
+        this->removeChild( this->getChildByName( "FSButton" ) );
+        m_strPath = "Loose/to_fullscreen.png";
+        CreateFullScreenButton();
     }
 }
+
+void CMenuLayer::CreateFullScreenButton()
+{
+    MenuItemImage* pItemFullScreen = MenuItemImage::create(
+        m_strPath,
+        m_strPath,
+        CC_CALLBACK_1( CMenuLayer::CB_OnFullScreenButton, this ) );
+
+    pItemFullScreen->setPosition( Vec2( 1820.f, 1060.f ) );
+    m_pMenu = Menu::create( pItemFullScreen, nullptr );
+    m_pMenu->setName( "FSButton" );
+    m_pMenu->setPosition( Vec2::ZERO );
+    this->addChild( m_pMenu, 1 );
+}
+
 
 
 //////////////////////////////////////////////////////////////////////////

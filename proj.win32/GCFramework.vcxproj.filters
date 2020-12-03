@@ -253,6 +253,9 @@
     <Filter Include="Classes\ManicMiner\Scenes\GameOver">
       <UniqueIdentifier>{c88b9318-790d-4a51-9d6a-25ba1bf56e6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Scenes\Menu">
+      <UniqueIdentifier>{611a6732-b832-4222-9630-dd6dc466f321}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -438,9 +441,6 @@
     <ClCompile Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.cpp">
       <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp">
-      <Filter>Classes\ManicMiner\Layers</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GamerCamp\GCCocosInterface\LevelLoader\GCLevelLoader_Ogmo.cpp">
       <Filter>Classes\GamerCamp\GCCocosInterface\LevelLoader</Filter>
     </ClCompile>
@@ -551,7 +551,7 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Physics\SolarLightB2AABBQueryCB.cpp">
       <Filter>Classes\ManicMiner\Physics</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Doors\CMovingDoor.cpp">
       <Filter>Classes\ManicMiner\Door</Filter>
     </ClCompile>
@@ -560,6 +560,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.cpp">
       <Filter>Classes\ManicMiner\Scenes\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp">
+      <Filter>Classes\ManicMiner\Scenes\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -794,9 +797,6 @@
     <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h">
       <Filter>Classes\ManicMiner\CollectiblesGroup\CentralCavern</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h">
-      <Filter>Classes\ManicMiner\Layers</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\GamerCamp\GCCocosInterface\LevelLoader\GCLevelLoader_Ogmo.h">
       <Filter>Classes\GamerCamp\GCCocosInterface\LevelLoader</Filter>
     </ClInclude>
@@ -922,7 +922,7 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Physics\SolarLightB2AABBQueryCB.h">
       <Filter>Classes\ManicMiner\Physics</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Doors\CMovingDoor.h">
       <Filter>Classes\ManicMiner\Door</Filter>
     </ClInclude>
@@ -931,6 +931,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.h">
       <Filter>Classes\ManicMiner\Scenes\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h">
+      <Filter>Classes\ManicMiner\Scenes\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
