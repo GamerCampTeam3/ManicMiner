@@ -368,7 +368,7 @@ void CManicLayer::VOnDestroy()
 void CManicLayer::VOnReset( void )
 {
 	IGCGameLayer::VOnReset();
-	m_pcGameManager->ResetSwitchCount();
+	m_pcGameManager->ResetEvent();
 }
 
 // --- b2ContactListener Interface ------------------------------------------------------------------------------------ //
