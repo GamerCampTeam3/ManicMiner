@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Walk/final-0001.png</key>
+            <key>Walk_Seal/final-0001.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{195,89},{54,88}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0002.png</key>
+            <key>Walk_Seal/final-0002.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{195,179},{54,88}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0003.png</key>
+            <key>Walk_Seal/final-0003.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{95,297},{50,88}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0004.png</key>
+            <key>Walk_Seal/final-0004.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,47},{48,90}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0005.png</key>
+            <key>Walk_Seal/final-0005.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,1},{44,92}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0006.png</key>
+            <key>Walk_Seal/final-0006.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{95,1},{46,92}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0007.png</key>
+            <key>Walk_Seal/final-0007.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{93,49},{46,94}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0008.png</key>
+            <key>Walk_Seal/final-0008.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,97},{46,94}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0009.png</key>
+            <key>Walk_Seal/final-0009.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{97,97},{48,96}}</string>
@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0010.png</key>
+            <key>Walk_Seal/final-0010.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{97,147},{48,96}}</string>
@@ -134,7 +134,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0011.png</key>
+            <key>Walk_Seal/final-0011.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,145},{48,94}}</string>
@@ -147,7 +147,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0012.png</key>
+            <key>Walk_Seal/final-0012.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{91,349},{52,94}}</string>
@@ -160,7 +160,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0013.png</key>
+            <key>Walk_Seal/final-0013.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,457},{54,92}}</string>
@@ -173,7 +173,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0014.png</key>
+            <key>Walk_Seal/final-0014.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{95,457},{54,90}}</string>
@@ -186,7 +186,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0015.png</key>
+            <key>Walk_Seal/final-0015.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{187,449},{58,90}}</string>
@@ -199,7 +199,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0016.png</key>
+            <key>Walk_Seal/final-0016.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,513},{56,90}}</string>
@@ -212,7 +212,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0017.png</key>
+            <key>Walk_Seal/final-0017.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{93,513},{56,90}}</string>
@@ -225,7 +225,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0018.png</key>
+            <key>Walk_Seal/final-0018.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{91,403},{52,92}}</string>
@@ -238,7 +238,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0019.png</key>
+            <key>Walk_Seal/final-0019.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{97,197},{48,96}}</string>
@@ -251,7 +251,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0020.png</key>
+            <key>Walk_Seal/final-0020.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{95,247},{48,96}}</string>
@@ -264,7 +264,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0021.png</key>
+            <key>Walk_Seal/final-0021.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,195},{48,94}}</string>
@@ -277,7 +277,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0022.png</key>
+            <key>Walk_Seal/final-0022.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,245},{48,92}}</string>
@@ -290,7 +290,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0023.png</key>
+            <key>Walk_Seal/final-0023.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,295},{48,92}}</string>
@@ -303,7 +303,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0024.png</key>
+            <key>Walk_Seal/final-0024.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{193,269},{52,88}}</string>
@@ -316,7 +316,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0025.png</key>
+            <key>Walk_Seal/final-0025.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,345},{50,88}}</string>
@@ -329,7 +329,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0026.png</key>
+            <key>Walk_Seal/final-0026.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{189,1},{52,86}}</string>
@@ -342,7 +342,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0027.png</key>
+            <key>Walk_Seal/final-0027.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{187,359},{54,88}}</string>
@@ -355,7 +355,7 @@
                 <key>sourceSize</key>
                 <string>{60,120}</string>
             </dict>
-            <key>Walk/final-0028.png</key>
+            <key>Walk_Seal/final-0028.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1,397},{54,88}}</string>
