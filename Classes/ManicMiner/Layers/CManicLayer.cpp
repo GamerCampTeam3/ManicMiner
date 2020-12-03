@@ -736,7 +736,7 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
-		//OnDeath();
+		OnDeath();
 	}																													//
 }																														//
 																														//
