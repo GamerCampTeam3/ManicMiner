@@ -10,6 +10,8 @@
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "ManicMiner/Enums/ELifeUpdateType.h"
 
+#include "ManicMiner/Helpers/Helpers.h"
+
 
 USING_NS_CC;
 
@@ -84,11 +86,6 @@ void CHUD::InitLabel( cocos2d::Label* label, cocos2d::Color4B color, float fontS
 void CHUD::FlushText() const
 {
 	UpdateLabel( m_pLevelName, static_cast<char*>(" "), 0, ELabelType::Text );
-	
-	for (int i = 0; i < m_kiMaximumLives;i++)
-	{
-		m_apcLives[i]->RemoveFromParent();
-	}
 }
 
 void CHUD::Init(std::string szLevelName, int life, int iScore, int iHighscore)
@@ -117,57 +114,33 @@ void CHUD::Init(std::string szLevelName, int life, int iScore, int iHighscore)
 	// ---------------------------------------------------------------------------------------------------------------------------------------------//
 
 
-
-	// Draw life sprites here, all set as empty
+	// We draw lives here
 	for (int i = 0; i < m_kiMaximumLives; i++)
 	{
 		// Create a vector that we will use modified value (to offset the sprites) every loop.
 		const cocos2d::Vec2 v2InitialPlacement = cocos2d::Vec2( m_fXPlacement, m_kfYPlacement );
 
-		// We new and set the sprites here.
-		m_apcLives[i] = new CGCObjSprite();
-		m_apcLives[i]->CreateSprite( m_kpszPlistPlayerLifeLost );				// Initial sprite should be empty (as only 3 of them would be full.
-		m_apcLives[i]->SetSpriteGlobalZOrder( 2.f );						// We set the z order for it to be above.
-		m_apcLives[i]->SetSpriteScale( 1.f, 1.f );					// Half the scale as they are too large (since there are 10 instead of 3.
-		m_apcLives[i]->SetResetPosition( v2InitialPlacement );					// Set the reset position to be our temporary vector 2.
-		m_apcLives[i]->GetSprite()->setPosition( m_apcLives[i]->GetResetPosition() );	// Set the position to be it's reset position.
-		m_apcLives[i]->SetParent( m_pglOwnerGameLayer );					// Finally add it to the parent layer.
-				
+		// Draw the empty heart first then
+		// draw a Full heart for every life the player currently has.
+		// We only require to update the index when we create a Full heart.
+		if (i < life)
+		{
+			DrawSprite( v2InitialPlacement, ELifeSpriteType::Empty);
+			DrawSprite( v2InitialPlacement, ELifeSpriteType::Full,  i );
+		}
+
+		// Then finish drawing the rest of the empty hearts
+		else
+		{
+			DrawSprite( v2InitialPlacement, ELifeSpriteType::Empty);
+		}
+
+		// Then we store the position of the current sprite being created inside our array.
+		m_av2SpritePlacements[i] = v2InitialPlacement;
+
+		// And finally we increment the X by the offset, so the next heart will be next to it.
 		m_fXPlacement += m_kfOffsetIncrement;							// Increment our X, so they do not overlap each other.
 	}
-
-	////--------------------------------------- TEMP CODE ---------------------------------------////
-	// A temporary int that copies the original X placement position				
-	// It will be used to add 3 empty hearts at the location of the original heart			
-	// This is made since the hearts are meant to have the outline behind them, but since the code 
-	// for drawing hearts works by replacing the sprite in an array, this is a quick fix.		 
-	static float fXPlacement = 700.0f;								
-													
-	// A for loop to create the 3 extra empty hearts.						
-	for (int i = 0; i < 3; i++)									
-	{												
-		const cocos2d::Vec2 v2Pos = cocos2d::Vec2( fXPlacement, m_kfYPlacement );		
-													
-		CGCObjSprite* pcSprite = new CGCObjSprite();						
-		pcSprite->CreateSprite( m_kpszPlistPlayerLifeLost );					
-		pcSprite->SetSpriteGlobalZOrder( 2.0f );						
-		pcSprite->SetSpriteScale( 1.0f, 1.0f );							
-		pcSprite->SetResetPosition( v2Pos );							
-		pcSprite->GetSprite()->setPosition( pcSprite->GetResetPosition() );			
-		pcSprite->SetParent( m_pglOwnerGameLayer );						
-													
-		fXPlacement += m_kfOffsetIncrement;							
-	}												
-													
-	// and finally we reset the static int since otherwise the next levels will offset again.	 
-	fXPlacement = 700.0f;										
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	// Set full the current lives (this will change level to level)
-	for (int i = 0; i < life; i++)
-	{
-		ReDrawSprite( m_apcLives[i], m_kpszPlistPlayerLifeFull );						    // Here we then set the sprites to show full depending on player lives.
-	}	
 }
 
 
@@ -184,25 +157,11 @@ void CHUD::UpdateLives( ELifeUpdateType eLifeUpdateType, int iCurrentLife )
 	{
 		case ELifeUpdateType::Plus:
 			i = --iCurrentLife;
-			if (m_apcLives != nullptr)
-			{
-				ReDrawSprite( m_apcLives[i], m_kpszPlistPlayerLifeFull );
-			}
-			else
-			{
-				// Scenario if the player reaches more than 10 lives (highly unlikely without cheating).
-			}
+			DrawSprite( m_av2SpritePlacements[i], ELifeSpriteType::Full, i );
 			break;
 
 		case ELifeUpdateType::Minus:
-			if (m_apcLives != nullptr)
-			{
-				ReDrawSprite( m_apcLives[i], m_kpszPlistPlayerLifeLost );
-			}
-			else
-			{
-				// Scenario if the player reaches more than 10 lives (highly unlikely without cheating).
-			}
+			m_apcLives[i]->RemoveFromParent();
 			break;
 	}
 }
@@ -212,17 +171,39 @@ void CHUD::UpdateHighScore( int highScore )
 	UpdateLabel( m_pHighScoreValueLabel, nullptr, highScore, ELabelType::Number );
 }
 
-void CHUD::ReDrawSprite( CGCObjSprite* pSprite,  const char* pzcPlist) const
+void CHUD::DrawSprite( const cocos2d::Vec2 kv2SpritePos, const ELifeSpriteType eLifeType, int index )
 {
-	if (pSprite != nullptr)
+	const char* pszPath = nullptr;
+
+	// We new the sprite we are going to work on now.
+	CGCObjSprite* pcSprite = new CGCObjSprite();
+
+	// Then depending on which plist to use, set the pszPath to that.
+	// It is worth noting this wrapper function to easily create a sprite could be made in a way
+	// that does not take in an index nor a Enum but instead a char* to the plist file location.
+	// In this context, we know what we want, so it is set up in that way.
+	switch (eLifeType)
 	{
-		pSprite->RemoveFromParent();													   		// Remove *this from parent layer.
-		pSprite->CreateSprite( pzcPlist );												   		// Set the sprite (texture)
-		pSprite->SetSpriteGlobalZOrder( 2.f );													// Set the Z order.
-		pSprite->GetSprite()->setPosition( pSprite->GetResetPosition() );				   	// Set it's position to it's original reset position.
-		pSprite->SetSpriteScale( 1.0f, 1.0f );										// Set the scale.
-		pSprite->SetParent( m_pglOwnerGameLayer );										   		// Finally add it to the parent layer.
+		case ELifeSpriteType::Empty:
+			pszPath = m_kpszPlistPlayerLifeLost;
+			break;
+		
+		case ELifeSpriteType::Full:
+			pszPath = m_kpszPlistPlayerLifeFull;
+			// Important! We have to set the array at the current index to point at the pcSprite we are working
+			// This is absolutely required as it makes removing it from it's parent when you die extremely easy.
+			m_apcLives[index] = pcSprite;
+			break;
 	}
+
+	// Then we initialize the sprite with the values.
+	// Again, since we know how we want the sprite, it is not required for those numbers to be parameters.
+	pcSprite->CreateSprite( pszPath );
+	pcSprite->SetSpriteGlobalZOrder( 2.f );
+	pcSprite->SetSpriteScale( 1.f, 1.f );
+	pcSprite->SetResetPosition( kv2SpritePos );
+	pcSprite->GetSprite()->setPosition( pcSprite->GetResetPosition() );
+	pcSprite->SetParent( m_pglOwnerGameLayer );
 }
 
 

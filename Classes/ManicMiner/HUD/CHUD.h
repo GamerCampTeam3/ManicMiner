@@ -30,6 +30,11 @@ enum class ELabelType
 	TextAndNumber
 };
 
+enum class ELifeSpriteType
+{
+	Empty = 0,
+	Full
+};
 
 
 class CHUD
@@ -74,6 +79,7 @@ private:
 	float				m_fXPlacement;						// The X position of the first Sprite
 	const float			m_kfYPlacement		= 1050.f;		// The Y position of the sprites
 	const float			m_kfOffsetIncrement = 45.0f;		// The X offset between sprites
+	cocos2d::Vec2		m_av2SpritePlacements[m_kiMaximumLives];
 
 	//--------------------- FUNCTIONS----------------------------------------------------------//
 	
@@ -87,11 +93,12 @@ private:
 	void  UpdateLabel		( cocos2d::Label* label, char* labelText, int labelValue, ELabelType eType ) const;
 
 	/// <summary>
-	/// This redraws the sprite with a new .plist.
+	/// This function draws a CGCObjSprite at the given location, with an enum that switches the plist.
 	/// </summary>
-	/// <param name="pSprite"> <c> The sprite that should be changed. </param>
-	/// <param name="pzcPlist"><c> a char* that should point towards the .plist that it should be changed to. </param>
-	void  ReDrawSprite		( CGCObjSprite* pSprite, const char* pzcPlist ) const;
+	/// <param name="kv2SpritePos"> <c> The location that the sprite should be drawn at. </c> </param>
+	/// <param name="eLifeType"><c> A Enum that determines which plist the sprite will use: Empty or Full. See ELifeSpriteType</c>.</param>
+	/// <param name="index"> <c> The index of the current For loop that is currently calling this function. This is required to set the array of CGCObjSprite pointers to the sprite that is set as full, so we can remove it from it's parent when you lose a life. </c> </param>
+	void DrawSprite( const cocos2d::Vec2 kv2SpritePos, const ELifeSpriteType eLifeType, int index = 0);
 
 	/// <summary>
 	/// This redraws the sprite with a new .plist.
@@ -104,7 +111,7 @@ private:
 	void  InitLabel			( cocos2d::Label* label, cocos2d::Color4B color, float fontSize, cocos2d::Vec2 textPos, cocos2d::TextHAlignment alignment) const;
 
 
-	//------------------ SPRITES LOCATION ------------------------------------------------------//
+	//------------------ SPRITES PLIST ------------------------------------------------------//
 	// The Full Life Battery .plist
 	const char* m_kpszPlistPlayerLifeFull = "TexturePacker/Sprites/Life/full_heart.plist";
 	// The Lost Life Batter .plist

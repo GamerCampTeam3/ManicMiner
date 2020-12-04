@@ -301,6 +301,14 @@ void CGameManager::SetLevelRequirements( const SLevelValues& rsLevelValues )
 	m_sLevelValues = rsLevelValues;
 }
 
+void CGameManager::ResetEvent()
+{
+	m_iCurrentSwitches = 0;
+	m_iCurrentCollectibles = 0;
+	m_ESpecialInteractionType = ESpecialInteraction::Default;
+	m_iInteractionIndex = 0;
+}
+
 void CGameManager::ResetValues()
 {
 	m_iCurrentCollectibles	= 0;

@@ -108,20 +108,6 @@ bool CMenuLayer::init()
     this->addChild( m_pMenu, 1);
 
     CreateFullScreenButton();
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    //MenuItemImage* pItemFullScreen = MenuItemImage::create(
-    //    m_strPath,
-    //    m_strPath,
-    //    CC_CALLBACK_1( CMenuLayer::CB_OnFullScreenButton, this ) );
-    //
-    //pItemFullScreen->setPosition( Vec2( 1820.f, 1060.f ) );
-    //m_pMenu = Menu::create( pItemFullScreen, nullptr );
-    //m_pMenu->setName( "FSButton" );
-    //m_pMenu->setPosition( Vec2::ZERO );
-    //this->addChild( m_pMenu, 1 );
-    //////////////////////////////////////////////////////////
-    
 
     // add "HelloWorld" splash screen"
     Sprite* pSprite = Sprite::create("Loose/main_menu.png");
@@ -152,8 +138,8 @@ void CMenuLayer::CB_OnFullScreenButton(Ref *pSender)
 
     else
     {
-        static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setWindowed( 1920, 1080 );
         // Set resolution
+        dynamic_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setWindowed( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
         m_bFullScreenSwitch = false;

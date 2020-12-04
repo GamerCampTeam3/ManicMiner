@@ -60,6 +60,7 @@ class CGameManager
 	void	ResetValues();													// Resets the values required for level management.														
 	void	EndLevel();														// Checks if the level can end.																			
 	void	DrainToScore();													// Called by the air manager, drains air to score. 														
+	void	ResetEvent();													// Resets all logic related integers to 0/Default.
 	void	ResetHUD();														// Called by the CManicLayer when the level ends.														
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------			
 	//																																												
@@ -86,14 +87,14 @@ class CGameManager
 	int		GetScore() const { return m_iCurrentScore; }
 	int		GetHighscore() const { return m_iHighScore; }
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------			
-	void ResetEvent() { m_iCurrentSwitches = 0; m_iCurrentCollectibles = 0; m_ESpecialInteractionType = ESpecialInteraction::Default; m_iInteractionIndex = 0; }
+
 
 	
 																	 private:
 	//------------------------------------------------------------  CONST VARS -----------------------------------------------------------------------------------------			
 	static const int m_kiStartingLives		= 3;							// The lives the player start with.																		
 	static const int m_kIScoreIncrement		= 100;							// The score that collectibles, 100 like original manic miner.											
-	static const int m_kiExtraLifeThreshold = 10000;						// The threshold to reach before an extra life is given.												
+	static const int m_kiExtraLifeThreshold = 100;						// The threshold to reach before an extra life is given.												
 	static const int m_kiScorePerTimeLeft	= 11;							// How much score each tick will give. (almost like the original manic miner							
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//																																									
