@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>auw_platform_regular_120x60.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,4}</string>
+                <key>spriteSize</key>
+                <string>{120,52}</string>
+                <key>spriteSourceSize</key>
+                <string>{120,60}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{120,52}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>auw_platform_regular_120x60.png</string>
+            <key>size</key>
+            <string>{120,52}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:3dadcf8a88924040b8a096897f9a3357:976f0b9097bd0e422b4b822f603eafd2:7ce4196d87cf4ea71f965d1754e76387$</string>
+            <key>textureFileName</key>
+            <string>auw_platform_regular_120x60.png</string>
+        </dict>
+    </dict>
+</plist>

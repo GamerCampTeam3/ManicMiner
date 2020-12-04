@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>auw_platform_brick_240x60.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{240,60}</string>
+                <key>spriteSourceSize</key>
+                <string>{240,60}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{240,60}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>auw_platform_brick_240x60.png</string>
+            <key>size</key>
+            <string>{240,60}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:72f0e5de89a63bc887258f472187ec0e:3e38d2abb6c0708a7939a7c8d0808410:d478a33a51efb0c38149d2e7389e1cf7$</string>
+            <key>textureFileName</key>
+            <string>auw_platform_brick_240x60.png</string>
+        </dict>
+    </dict>
+</plist>
