@@ -1,6 +1,6 @@
 <level width="1920" height="960">
   <Platforms>
-    <Door id="22" x="1800" y="60" class="CDoor" shape="Door" PlistFile="TexturePacker/Sprites/Door/Door.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
+    <Door id="22" x="1800" y="60" class="CDoor" shape="Door" PlistFile="TexturePacker/Sprites/Door/Door.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Door/cc_exit.plist" />
     <GroundPlatform id="113" x="960" y="930" class="CGroundPlatform" shape="CN_Platform_Ground" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Ground/CN_Platform_Ground.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" CustomShape="" />
     <BrickPlatform id="0" x="1710" y="30" class="CBrickPlatform" shape="CN_Platform_Brick_3x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick.plist" CustomShape="CN_Platform_Brick_3x1" />
     <Left_RegularPlatform id="1" x="750" y="330" class="CRegularPlatform" shape="CN_Platform_Regular_1x1" PlistFile="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Left.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Left.plist" CustomShape="CN_Platform_Regular_1x1" />

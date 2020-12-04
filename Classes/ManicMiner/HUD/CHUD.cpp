@@ -33,13 +33,13 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 {
 
 	// We initialized them to 0 to keep the list clean, so we set them up here
-	m_v2ScoreTextPosition		= cocos2d::Vec2( (m_pointOrigin).x + 1400.0f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Score text
+	m_v2ScoreTextPosition		= cocos2d::Vec2( (m_pointOrigin).x + 1300.0f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Score text
 	m_v2HighscoreTextPosition	= cocos2d::Vec2( (m_pointOrigin).x + 1640.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Highscore text
 	
-	m_v2ScoreValuePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1500.0f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Score value
+	m_v2ScoreValuePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1390.0f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Score value
 	m_v2HighscoreValuePosition	= cocos2d::Vec2( (m_pointOrigin).x + 1785.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Highscore value
 	
-	m_v2LevelNamePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1570.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 40 );	//	Level name
+	m_v2LevelNamePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1510.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 40 );	//	Level name
 
 
 	// We new the labels now, and set the content on Init()
@@ -62,7 +62,7 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	InitLabel( m_pScoreValueLabel,		textColor, 20.0f, m_v2ScoreValuePosition,		TextHAlignment::CENTER	);
 	InitLabel( m_pHighscoreTextLabel,	textColor, 20.0f, m_v2HighscoreTextPosition,		TextHAlignment::LEFT	);
 	InitLabel( m_pHighScoreValueLabel,	textColor, 20.0f, m_v2HighscoreValuePosition,	TextHAlignment::CENTER	);
-	InitLabel( m_pLevelName,			textColor, 25.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
+	InitLabel( m_pLevelName,			textColor, 20.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
 }
 
 CHUD::~CHUD()
