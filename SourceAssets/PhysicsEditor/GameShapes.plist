@@ -1873,6 +1873,48 @@
 				<key>fixtures</key>
 				<array>
 
+					<dict>
+                        <key>density</key> <real>2</real>
+                        <key>friction</key> <real>0</real>
+                        <key>restitution</key> <real>0</real>
+                        <key>filter_categoryBits</key> <integer>4</integer>
+                        <key>filter_groupIndex</key> <integer>0</integer>
+                        <key>filter_maskBits</key> <integer>3</integer>
+                        <key>isSensor</key> <false/>
+                        <key>id</key> <string></string>
+                        <key>fixture_type</key> <string>POLYGON</string>
+
+						<key>polygons</key>
+						<array>
+							<array>	
+								<string>{ -780.000,420.000 }</string>	
+								<string>{ 720.000,420.000 }</string>	
+								<string>{ 720.000,480.000 }</string>	
+								<string>{ -780.000,480.000 }</string>
+							</array>
+						</array>
+                    </dict>
+					<dict>
+                        <key>density</key> <real>2</real>
+                        <key>friction</key> <real>0</real>
+                        <key>restitution</key> <real>0</real>
+                        <key>filter_categoryBits</key> <integer>4</integer>
+                        <key>filter_groupIndex</key> <integer>0</integer>
+                        <key>filter_maskBits</key> <integer>3</integer>
+                        <key>isSensor</key> <false/>
+                        <key>id</key> <string></string>
+                        <key>fixture_type</key> <string>POLYGON</string>
+
+						<key>polygons</key>
+						<array>
+							<array>	
+								<string>{ 720.000,480.000 }</string>	
+								<string>{ 720.000,-480.000 }</string>	
+								<string>{ 780.000,-480.000 }</string>	
+								<string>{ 780.000,480.000 }</string>
+							</array>
+						</array>
+                    </dict>
 				</array>
 			</dict>
 			<key>tv_platform_brick_60x240</key>

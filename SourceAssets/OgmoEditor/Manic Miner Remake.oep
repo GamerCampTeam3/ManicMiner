@@ -282,7 +282,7 @@
       </Size>
       <Origin>
         <X>30</X>
-        <Y>120</Y>
+        <Y>60</Y>
       </Origin>
       <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_60x120.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
@@ -301,6 +301,267 @@
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x120.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_brick_60x120" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x180" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>180</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>90</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_60x180.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x180.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x180.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_60x180" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x240" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>240</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>120</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\tv_platform_brick_60x240.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_60x240.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_60x240.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tv_platform_brick_60x240" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x300" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>300</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>150</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_60x300.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x300.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x300.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_60x300" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x360" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>360</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>180</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_60x360.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x360.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x360.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_60x360" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x420" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>420</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>210</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_60x420.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_60x420.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_60x420.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_brick_60x420" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x480" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>480</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>240</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_60x480.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_60x480.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_60x480.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_brick_60x480" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x600" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>600</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>300</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\tv_platform_brick_60x600.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_60x600.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_60x600.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tv_platform_brick_60x600" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x780" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>780</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>390</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_60x780.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x780.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x780.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_60x780" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_120x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>120</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>60</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\tv_platform_brick_120x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_120x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_120x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tv_platform_brick_120x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
@@ -330,6 +591,180 @@
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/CentralCavern/Brick/cc_platform_brick_180x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="cc_platform_brick_180x60" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_240x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>240</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>120</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_240x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_240x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_240x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_240x60" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_360x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>360</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>180</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\amt_platform_brick_360x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_360x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_360x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="amt_platform_brick_360x60" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_720x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>720</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>360</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_720x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_720x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_720x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_brick_720x60" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_960x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>960</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>480</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\amt_platform_brick_960x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_960x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_960x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="amt_platform_brick_960x60" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_1020x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>1020</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>510</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_1020x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_1020x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_1020x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_1020x60" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_1500x960" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>1500</Width>
+        <Height>960</Height>
+      </Size>
+      <Origin>
+        <X>750</X>
+        <Y>480</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\tb_platform_brick_1500x960.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_1500x960.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheMenagerie/Brick/tm_platform_brick_1500x960.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tb_platform_brick_1500x960" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
