@@ -31,6 +31,7 @@ enum class ESoundName
 	Death,
 	MusicTheme,
 	KeyCollected,
+	SwitchFlipped,
 	BabyShark,
 	Jump,
 	Falling,
@@ -51,7 +52,8 @@ const static std::map < const ESoundName, const std::string > k_mapSoundFiles =
 {
 	{ ESoundName::Death,				"audio/Transition.wav"					},
 	{ ESoundName::MusicTheme,			"audio/YouWouldNotBelieveYourEyes.wav"	},
-	{ ESoundName::KeyCollected,			"audio/SnakeBumped.wav"					},
+	{ ESoundName::KeyCollected,			"audio/Collectible.wav"					},
+	{ ESoundName::SwitchFlipped,		"audio/Switch_flip.wav"					},
 	{ ESoundName::BabyShark,			"audio/BabyShark.mp3"					},
 	{ ESoundName::Jump,					"audio/JumpSound.wav"					},
 	{ ESoundName::Falling,				"audio/FallingSound.wav"				},

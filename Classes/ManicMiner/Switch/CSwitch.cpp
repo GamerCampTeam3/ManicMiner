@@ -1,4 +1,5 @@
 #include "CSwitch.h"
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 
 #ifndef TINYXML2_INCLUDED
 	#include "external\tinyxml2\tinyxml2.h"
@@ -76,6 +77,7 @@ void CSwitch::InteractEvent()
 	if (!m_bHasBeenCollected)
 	{
 		SetFlippedX( true );
+		PlaySoundEffect( ESoundName::SwitchFlipped );
 		
 		// Stops collisions from happening again.
 		m_bHasBeenCollected = true;
