@@ -2187,6 +2187,78 @@
                     </dict>
 				</array>
 			</dict>
+			<key>amt_platform_moving_120x60</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+				</array>
+			</dict>
+			<key>spg_platform_moving_240x60</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+				</array>
+			</dict>
+			<key>tb_platform_moving_1440x60</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+				</array>
+			</dict>
+			<key>auw_platform_moving_180x60</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+				</array>
+			</dict>
+			<key>auw_platform_moving_660x60</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+				</array>
+			</dict>
+			<key>auw_platform_moving_1320x60</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+				</array>
+			</dict>
+			<key>tcr_platform_moving_240x60</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+				</array>
+			</dict>
+			<key>tcr_platform_moving_360x60</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5000,0.5000 }</string>
+				<key>fixtures</key>
+				<array>
+
+				</array>
+			</dict>
 		</dict>
 	</dict>
 </plist>
