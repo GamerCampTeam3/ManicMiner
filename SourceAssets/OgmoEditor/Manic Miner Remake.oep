@@ -275,6 +275,35 @@
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x120" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>120</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>120</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_60x120.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x120.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x120.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_brick_60x120" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
     <EntityDefinition Name="Brick_180x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
         <Width>180</Width>
