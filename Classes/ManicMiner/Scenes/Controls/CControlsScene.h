@@ -7,58 +7,55 @@
 // See also	:	CLevelManager																						//
 // ---------------------------------------------------------------------------------------------------------------- //
 
-#ifndef __MENUSCENE_H__
-#define __MENUSCENE_H__
+#ifndef __CCONTROLSSCENE_H__
+#define __CCONTROLSSCENE_H__
 
 #include "cocos2d.h"
 
 //////////////////////////////////////////////////////////////////////////
 // class deriving from CCLayer that creates our main menu scene
 //////////////////////////////////////////////////////////////////////////
-class CLevelManager; 
+class CLevelManager;
 
-class CMenuLayer 
+class CControlsScene
 	: public cocos2d::CCLayer
 {
 public:
-    // cocos2d-x classes all have a static create() function
+	// cocos2d-x classes all have a static create() function
 	// This macro implements the default behaviour of create()
 	// i.e. news an instance, calls init, and calls autorelease 
-    CREATE_FUNC( CMenuLayer );
+	CREATE_FUNC( CControlsScene );
 
-    // Explicit constructor - called from the CREATE_FUNC() macro
+	// Explicit constructor - called from the CREATE_FUNC() macro
 	// n.b. this must back-chain calls to the base class versions of init()
 	// or the behaviour of your code will be 'unexpected'
-    virtual bool init();  
+	virtual bool init();
 
-    // callback passed to the CCMenu system to be called when
+	// callback passed to the CCMenu system to be called when
 	// the Game Start button is pushed
-    void CB_OnGameStartButton( Ref* pSender);
+	void CB_OnReturnToMenu( Ref* pSender );
 
-	void CB_OnGameExitButton( Ref* pSender);
 
 	void CB_OnFullScreenButton( Ref* pSender );
 
-	void CB_GoToHelp( Ref* pSender );
-
-    // The cocos2d convention is to have the root layer of a scene
+	// The cocos2d convention is to have the root layer of a scene
 	// be able to create and return a CCScene* (set to autorelease)
 	// which has an instance of itself as a child
 	static cocos2d::Scene* scene( CLevelManager& rcLevelManager );
 
-// -------------------------------------------------------------------------------------------------------------------- //
-// Henrique edit																										//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Function		:	SetLevelManager																						//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Purpose		:	Sets m_pcLevelManager, so that we can proceed to the first level									//
-//					through CB_OnGameStartButton()																		//
-//																														//
-// Parameters	:	CLevelManager& rcLevelManager																		//
-//					reference to CLevelManager that is creating this CMenuLayer isntance								//
-//																														//
-// See also		:	CLevelManager, its constructor and CLevelManager::GoToMainMenu()									//
-// -------------------------------------------------------------------------------------------------------------------- //
+	// -------------------------------------------------------------------------------------------------------------------- //
+	// Henrique edit																										//
+	// -------------------------------------------------------------------------------------------------------------------- //
+	// Function		:	SetLevelManager																						//
+	// -------------------------------------------------------------------------------------------------------------------- //
+	// Purpose		:	Sets m_pcLevelManager, so that we can proceed to the first level									//
+	//					through CB_OnGameStartButton()																		//
+	//																														//
+	// Parameters	:	CLevelManager& rcLevelManager																		//
+	//					reference to CLevelManager that is creating this CMenuLayer isntance								//
+	//																														//
+	// See also		:	CLevelManager, its constructor and CLevelManager::GoToMainMenu()									//
+	// -------------------------------------------------------------------------------------------------------------------- //
 	void SetLevelManager( CLevelManager& rcLevelManager );
 private:
 
@@ -71,4 +68,4 @@ private:
 	void CreateFullScreenButton();
 };
 
-#endif // __MENUSCENE_H__
+#endif // __CCONTROLSSCENE_H__

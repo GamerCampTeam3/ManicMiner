@@ -44,6 +44,7 @@
 #include "ManicMiner/Layers/CMLAmoebatronsRevenge.h"
 #include "ManicMiner/Layers/CMLSolarPowerGenerator.h"
 #include "ManicMiner/Layers/CMLTheFinalBarrier.h"
+#include "ManicMiner/Scenes/Controls/CControlsScene.h"
 #include "ManicMiner/Scenes/GameOver/CGameOverScene.h"
 
 
@@ -90,6 +91,17 @@ void CLevelManager::GoToMainMenu()
 	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );
 }
 
+void CLevelManager::GoToControlsScene()
+{
+	// Reset level index to 0 
+	m_iCurrentLevelIndex = 0;
+
+	// Create and run CMenuLayer
+	Scene* pScene = CControlsScene::scene( *this );
+	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );
+}
+
+
 void CLevelManager::GoToGameOverScene()
 {
 	// Reset level index to 0 
@@ -124,7 +136,7 @@ void CLevelManager::GoToNextLevel()
 	{
 	case 0:
 		// CENTRAL CAVERN 
-		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
+		pScene = TGCGameLayerSceneCreator< CMLTheFinalBarrier >::CreateScene();
 		break;
 	case 1:
 		// THE COLD ROOM

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <OgmoVersion>1.0</OgmoVersion>
+  <OgmoVersion>2.1.0.6</OgmoVersion>
   <Name>Manic Miner Remake</Name>
   <BackgroundColor A="255" R="171" G="209" B="214" />
   <GridColor A="255" R="81" G="81" B="81" />
@@ -16,7 +16,7 @@
     <Width>1920</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>C:\Github\ManicMiner\SourceAssets\OgmoEditor\Manic Miner Remake.oep</Filename>
+  <Filename>E:\Solutions\TeamProj\ManicMiner\SourceAssets\OgmoEditor\Manic Miner Remake.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -115,7 +115,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Hazards\bush\bush.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../../Resources/windows/TexturePacker/Sprites/Hazards/bush/bush.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -145,7 +145,7 @@
         <X>30</X>
         <Y>60</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Duck\cc_enemy_duck.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../../Resources/windows/TexturePacker/Sprites/Duck/cc_enemy_duck.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -182,7 +182,7 @@
         <X>30</X>
         <Y>60</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Duck\cc_enemy_duck.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../../Resources/windows/TexturePacker/Sprites/Duck/cc_enemy_duck.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -226,7 +226,7 @@
         <X>900</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\Ground\cc_platform_ground.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../../Resources/windows/TexturePacker/Sprites/Platform/CentralCavern/Ground/cc_platform_ground.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -255,7 +255,7 @@
         <X>630</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Ground\spg_platform_ground_1200x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Ground/spg_platform_ground_1200x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -284,7 +284,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Brick\CN_Platform_Brick_1x1.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Brick/CN_Platform_Brick_1x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -313,7 +313,7 @@
         <X>30</X>
         <Y>60</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_60x120.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x120.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -342,7 +342,7 @@
         <X>30</X>
         <Y>90</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_60x180.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x180.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -371,7 +371,7 @@
         <X>30</X>
         <Y>120</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\tv_platform_brick_60x240.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Brick/tv_platform_brick_60x240.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -400,13 +400,13 @@
         <X>30</X>
         <Y>150</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_60x300.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x300.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x300.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x300.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -415,7 +415,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x300.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x300.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_60x300" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -429,13 +429,13 @@
         <X>30</X>
         <Y>180</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_60x360.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x360.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x360.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x360.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -444,7 +444,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x360.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x360.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_60x360" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -458,13 +458,13 @@
         <X>30</X>
         <Y>210</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_60x420.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x420.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_60x420.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x420.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -473,7 +473,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_60x420.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x420.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_brick_60x420" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -487,13 +487,13 @@
         <X>30</X>
         <Y>240</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_60x480.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x480.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_60x480.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x480.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -502,7 +502,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_60x480.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_60x480.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_brick_60x480" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -516,7 +516,7 @@
         <X>30</X>
         <Y>300</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\tv_platform_brick_60x600.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Brick/tv_platform_brick_60x600.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -545,13 +545,13 @@
         <X>30</X>
         <Y>390</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_60x780.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x780.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x780.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x780.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -560,7 +560,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_60x780.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x780.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_60x780" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -574,7 +574,7 @@
         <X>60</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\tv_platform_brick_120x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Brick/tv_platform_brick_120x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -603,7 +603,7 @@
         <X>90</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Brick\cc_platform_brick_180x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Brick/cc_platform_brick_180x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -632,13 +632,13 @@
         <X>120</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_240x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_240x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_240x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_240x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -647,7 +647,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_240x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_240x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_240x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -661,7 +661,7 @@
         <X>180</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\amt_platform_brick_360x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Brick/amt_platform_brick_360x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -690,13 +690,13 @@
         <X>360</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Brick\tcr_platform_brick_720x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_720x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_720x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_720x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -705,7 +705,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom\Brick\tcr_platform_brick_720x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom/Brick/tcr_platform_brick_720x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_brick_720x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -719,7 +719,7 @@
         <X>480</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\amt_platform_brick_960x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Brick/amt_platform_brick_960x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -748,13 +748,13 @@
         <X>510</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Brick\auw_platform_brick_1020x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_1020x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_1020x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_1020x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -763,7 +763,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Brick\auw_platform_brick_1020x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_1020x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_1020x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -777,7 +777,7 @@
         <X>750</X>
         <Y>480</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Brick\tb_platform_brick_1500x960.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Brick/tb_platform_brick_1500x960.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -806,7 +806,7 @@
         <X>30</X>
         <Y>480</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="..\..\Resources\windows\TexturePacker\Backgrounds\InvisibleWall.png" Tiled="false">
+      <ImageDefinition DrawMode="Rectangle" ImagePath="../../Resources/windows/TexturePacker/Backgrounds/InvisibleWall.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -835,7 +835,7 @@
         <X>30</X>
         <Y>480</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Brick\cc_platform_brick_60x960.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Brick/cc_platform_brick_60x960.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -864,7 +864,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Crumbling\CN_Platform_Crumble_1x1.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Crumbling/CN_Platform_Crumble_1x1.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -892,7 +892,7 @@
         <X>600</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Moving\Platform_Moving_Ogmo.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../../Resources/windows/TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Moving/Platform_Moving_Ogmo.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -921,7 +921,7 @@
         <X>60</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Moving\amt_platform_moving_120x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Moving/amt_platform_moving_120x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -950,13 +950,13 @@
         <X>90</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Moving\auw_platform_moving_180x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_180x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CMovingPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="Platform_Moving_20x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Moving\auw_platform_moving_180x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_180x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -965,7 +965,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Moving\auw_platform_moving_180x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_180x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_moving_180x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -979,7 +979,7 @@
         <X>120</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Moving\tcr_platform_moving_240x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Moving/tcr_platform_moving_240x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1008,7 +1008,7 @@
         <X>180</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Moving\tcr_platform_moving_360x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Moving/tcr_platform_moving_360x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1037,13 +1037,13 @@
         <X>330</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Moving\auw_platform_moving_660x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_660x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CMovingPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="Platform_Moving_20x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Moving\auw_platform_moving_660x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_660x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -1052,7 +1052,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Moving\auw_platform_moving_660x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_660x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_moving_660x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -1066,13 +1066,13 @@
         <X>660</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\AbandonedUraniumWorkings\Moving\auw_platform_moving_1320x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_1320x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CMovingPlatform" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="Platform_Moving_20x1" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Moving\auw_platform_moving_1320x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_1320x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
           <Elements>
             <string>b2_staticBody</string>
@@ -1081,7 +1081,7 @@
           </Elements>
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings\Moving\auw_platform_moving_1320x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Moving/auw_platform_moving_1320x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_moving_1320x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -1095,7 +1095,7 @@
         <X>770</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Moving\tb_platform_moving_1440x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Moving/tb_platform_moving_1440x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1124,7 +1124,7 @@
         <X>60</X>
         <Y>60</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Door\cc_exit.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../../Resources/windows/TexturePacker/Sprites/Door/cc_exit.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1152,7 +1152,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_Middle_01.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_01.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1181,7 +1181,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_Right.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Right.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1210,7 +1210,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_Left.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Left.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1239,7 +1239,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_Middle_02.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_02.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1268,7 +1268,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_Middle_03.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_03.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1297,7 +1297,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Regular\CN_Platform_Regular_Middle_04.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_04.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1326,7 +1326,7 @@
         <X>60</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_120x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_120x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1355,7 +1355,7 @@
         <X>90</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_180x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_180x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1384,7 +1384,7 @@
         <X>120</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_240x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_240x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1413,7 +1413,7 @@
         <X>150</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Regular\tcr_platform_regular_300x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Regular/tcr_platform_regular_300x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1442,7 +1442,7 @@
         <X>180</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Regular\tcr_platform_regular_360x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Regular/tcr_platform_regular_360x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1471,7 +1471,7 @@
         <X>210</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_420x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_420x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1500,7 +1500,7 @@
         <X>240</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_480x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_480x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1529,7 +1529,7 @@
         <X>260</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Regular\tcr_platform_regular_540x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Regular/tcr_platform_regular_540x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1558,7 +1558,7 @@
         <X>300</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_600x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_600x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1587,7 +1587,7 @@
         <X>330</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_660x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_660x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1616,7 +1616,7 @@
         <X>390</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_780x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_780x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1645,7 +1645,7 @@
         <X>450</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\Regular\cc_platform_regular_900x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Regular/cc_platform_regular_900x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1674,7 +1674,7 @@
         <X>570</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheColdRoom\Regular\tcr_platform_regular_1140x60.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Regular/tcr_platform_regular_1140x60.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1703,7 +1703,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Key\cc_collectible_key.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../../Resources/windows/TexturePacker/Sprites/Key/cc_collectible_key.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1731,7 +1731,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\..\Resources\windows\TexturePacker\Sprites\Collectibles\Orb\cc_collectible_orb.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../../Resources/windows/TexturePacker/Sprites/Collectibles/Orb/cc_collectible_orb.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
@@ -1788,7 +1788,7 @@
         <X>0</X>
         <Y>0</Y>
       </Origin>
-      <ImageDefinition DrawMode="Rectangle" ImagePath="..\..\..\..\Users\Umeer.Rama.ADM\Desktop\LevelLayout5.png" Tiled="false">
+      <ImageDefinition DrawMode="Rectangle" ImagePath="../../../../Users/Umeer.Rama.ADM/Desktop/LevelLayout5.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions />
@@ -1803,7 +1803,7 @@
         <X>30</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Sunlight\Sunlight.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Sunlight/Sunlight.png" Tiled="false">
         <RectColor A="255" R="255" G="255" B="0" />
       </ImageDefinition>
       <ValueDefinitions />
@@ -1818,7 +1818,7 @@
         <X>60</X>
         <Y>30</Y>
       </Origin>
-      <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\CentralCavern\CentralCavern\Crumbling\KongBeast\KB_CrumblingPlatform.png" Tiled="false">
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Crumbling/KongBeast/KB_CrumblingPlatform.png" Tiled="false">
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>

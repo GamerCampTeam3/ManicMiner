@@ -270,6 +270,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CRegularPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Player\CPlayer.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Scenes\Controls\CControlsScene.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\SolarLight\SolarLight.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Sunlight\CSunlight.cpp" />
@@ -418,6 +419,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CTriggerPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Player\CPlayer.h" />
     <ClInclude Include="..\Classes\ManicMiner\ResolutionHelper\ResolutionHelper.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Scenes\Controls\CControlsScene.h" />
     <ClInclude Include="..\Classes\ManicMiner\Scenes\GameOver\CGameOverScene.h" />
     <ClInclude Include="..\Classes\ManicMiner\SolarLight\SolarLight.h" />
     <ClInclude Include="..\Classes\ManicMiner\Structs\SCollectibles.h" />

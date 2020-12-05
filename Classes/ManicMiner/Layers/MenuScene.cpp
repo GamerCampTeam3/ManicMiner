@@ -86,13 +86,25 @@ bool CMenuLayer::init()
                                         "Loose/play_pressed.png",
                                         CC_CALLBACK_1( CMenuLayer::CB_OnGameStartButton, this ) );
         
-    pItemStartGame->setPosition( Vec2(	origin.x + (visibleSize.width * 0.61f ),
+    pItemStartGame->setPosition( Vec2(	origin.x + (visibleSize.width * 0.605f ),
 										origin.y + (visibleSize.height * 0.52f ) ) );
 
     // create menu, it's an autorelease object
     m_pMenu = Menu::create(pItemStartGame, nullptr);
     m_pMenu->setPosition( Vec2::ZERO );
     this->addChild( m_pMenu, 1);
+    ///////////////////////////////////////////////////////////////////////////
+    /// Create the HELP button that will lead to controls/help scene
+    /// If not wanted, simply set the boolean to false
+    if ( true )
+    {
+        MenuItemImage* pItemHelpScene = MenuItemImage::create("Loose/help_button_normal.png","Loose/help_button_pressed.png",CC_CALLBACK_1( CMenuLayer::CB_GoToHelp, this ) );
+        pItemHelpScene->setPosition( Vec2( origin.x + (visibleSize.width * 0.61f), origin.y + (visibleSize.height * 0.38f) ) );
+        m_pMenu = Menu::create( pItemHelpScene, nullptr );
+        m_pMenu->setPosition( Vec2::ZERO );
+        this->addChild( m_pMenu, 1 );
+    }
+	
     ///////////////////////////////////////////////////////////////////////////
 	/// - Umeer Rama
 
@@ -107,7 +119,7 @@ bool CMenuLayer::init()
     m_pMenu->setPosition(Vec2::ZERO);
     this->addChild( m_pMenu, 1);
 
-    CreateFullScreenButton();
+    //CreateFullScreenButton();
 
     // add "HelloWorld" splash screen"
     Sprite* pSprite = Sprite::create("Loose/main_menu.png");
@@ -120,49 +132,6 @@ bool CMenuLayer::init()
 
     return true;
 }
-
-void CMenuLayer::CB_OnFullScreenButton(Ref *pSender)
-{
-
-    if ( !m_bFullScreenSwitch )
-    {
-       static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
-       // Set resolution
-       Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
-       Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
-       m_bFullScreenSwitch = true;
-       this->removeChild( this->getChildByName( "FSButton" ) );
-       m_strPath = "Loose/to_windowed.png";
-       CreateFullScreenButton();
-    }
-
-    else
-    {
-        // Set resolution
-        dynamic_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setWindowed( 1920, 1080 );
-        Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
-        Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
-        m_bFullScreenSwitch = false;
-        this->removeChild( this->getChildByName( "FSButton" ) );
-        m_strPath = "Loose/to_fullscreen.png";
-        CreateFullScreenButton();
-    }
-}
-
-void CMenuLayer::CreateFullScreenButton()
-{
-    MenuItemImage* pItemFullScreen = MenuItemImage::create(
-        m_strPath,
-        m_strPath,
-        CC_CALLBACK_1( CMenuLayer::CB_OnFullScreenButton, this ) );
-
-    pItemFullScreen->setPosition( Vec2( 1820.f, 1060.f ) );
-    m_pMenu = Menu::create( pItemFullScreen, nullptr );
-    m_pMenu->setName( "FSButton" );
-    m_pMenu->setPosition( Vec2::ZERO );
-    this->addChild( m_pMenu, 1 );
-}
-
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -183,6 +152,13 @@ void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 
 	// ----------------------------------------------- //
 }
+
+void CMenuLayer::CB_GoToHelp(Ref* pSender)
+{
+    m_pcLevelManager->GoToControlsScene();
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////
 //	CB_OnGameExitButton

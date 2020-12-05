@@ -256,6 +256,9 @@
     <Filter Include="Classes\ManicMiner\Scenes\Menu">
       <UniqueIdentifier>{611a6732-b832-4222-9630-dd6dc466f321}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Scenes\Controls">
+      <UniqueIdentifier>{ecaca7ae-cc6d-451a-8510-5dc9c58d16f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -563,6 +566,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Layers\MenuScene.cpp">
       <Filter>Classes\ManicMiner\Scenes\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Scenes\Controls\CControlsScene.cpp">
+      <Filter>Classes\ManicMiner\Scenes\Controls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -934,6 +940,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Layers\MenuScene.h">
       <Filter>Classes\ManicMiner\Scenes\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Scenes\Controls\CControlsScene.h">
+      <Filter>Classes\ManicMiner\Scenes\Controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
