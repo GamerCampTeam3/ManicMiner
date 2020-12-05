@@ -248,11 +248,11 @@
     </EntityDefinition>
     <EntityDefinition Name="GroundPlatform_1200x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
-        <Width>1200</Width>
+        <Width>1260</Width>
         <Height>60</Height>
       </Size>
       <Origin>
-        <X>600</X>
+        <X>630</X>
         <Y>30</Y>
       </Origin>
       <ImageDefinition DrawMode="Image" ImagePath="..\TexturePacker\Sprites\Platform\TheMenagerie\Ground\spg_platform_ground_1200x60.png" Tiled="false">
