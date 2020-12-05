@@ -81,8 +81,8 @@ bool CControlsScene::init()
         "Loose/back_button_pressed.png",
         CC_CALLBACK_1( CControlsScene::CB_OnReturnToMenu, this ) );
 
-    pItemBackToMenu->setPosition( Vec2( origin.x + (visibleSize.width * 0.21f),
-        origin.y + (visibleSize.height * 0.22f) ) );
+    pItemBackToMenu->setPosition( Vec2( origin.x + (visibleSize.width * 0.11f),
+        origin.y + (visibleSize.height * 0.12f) ) );
 
     // create menu, it's an autorelease object
     m_pMenu = Menu::create( pItemBackToMenu, nullptr );
