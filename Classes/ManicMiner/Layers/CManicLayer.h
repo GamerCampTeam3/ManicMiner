@@ -281,10 +281,19 @@ private:
 	virtual void VInitializeBackground();
 	CHUD* m_pcHUD;
 	CAirManager* m_pcAirManager;
+	bool m_bUseHelpMenuIngame;
+	bool m_bIsPressing;
+	void CB_OnHelpButton( Ref* pSender );
+	void CB_OnResumeButton( Ref* pSender );
+	void CB_OnBackButton( Ref* pSender, CGCObjSprite* pcSprite );
 
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
 	void CB_OnGameExitButton( Ref* pSender );
+	void CreateHelpButton();
+	void CreateResumeButton();
+	void CreateExitButton();
+        
 
 public:
 	virtual void Init();

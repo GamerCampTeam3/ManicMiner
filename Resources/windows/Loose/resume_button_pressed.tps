@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>cocos2d-x</string>
         <key>textureFileName</key>
-        <filename>empty_heart.png</filename>
+        <filename></filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -56,7 +56,7 @@
         <key>jxrCompressionLevel</key>
         <uint>0</uint>
         <key>ditherType</key>
-        <enum type="SettingsBase::DitherType">PngQuantLow</enum>
+        <enum type="SettingsBase::DitherType">NearestNeighbour</enum>
         <key>backgroundColor</key>
         <uint>0</uint>
         <key>libGdx</key>
@@ -82,7 +82,7 @@
         <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
-        <enum type="SettingsBase::TextureFormat">png8</enum>
+        <enum type="SettingsBase::TextureFormat">png</enum>
         <key>borderPadding</key>
         <uint>0</uint>
         <key>maxTextureSize</key>
@@ -130,10 +130,6 @@
         <key>dataFileNames</key>
         <map type="GFileNameMap">
             <key>data</key>
-            <struct type="DataFile">
-                <key>name</key>
-                <filename>empty_heart.plist</filename>
-            </struct>
             <key>header</key>
             <key>source</key>
             <struct type="DataFile">
@@ -169,13 +165,13 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>0</uint>
+            <uint>1</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">None</enum>
+            <enum type="SpriteSettings::TrimMode">Trim</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -187,7 +183,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">empty_heart.png</key>
+            <key type="filename">resume_button_pressed.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -196,16 +192,16 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>15,15,30,30</rect>
+                <rect>63,12,125,23</rect>
                 <key>scale9Paddings</key>
-                <rect>15,15,30,30</rect>
+                <rect>63,12,125,23</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>empty_heart.png</filename>
+            <filename>resume_button_pressed.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

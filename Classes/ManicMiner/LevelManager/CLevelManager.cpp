@@ -88,7 +88,7 @@ void CLevelManager::GoToMainMenu()
 
 	// Create and run CMenuLayer
 	Scene* pScene = CMenuLayer::scene( *this );
-	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );
+	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 0.2f, pScene ) );
 }
 
 void CLevelManager::GoToControlsScene()
@@ -98,7 +98,7 @@ void CLevelManager::GoToControlsScene()
 
 	// Create and run CMenuLayer
 	Scene* pScene = CControlsScene::scene( *this );
-	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );
+	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 0.2f, pScene ) );
 }
 
 
@@ -108,7 +108,7 @@ void CLevelManager::GoToGameOverScene()
 	m_iCurrentLevelIndex = 0;
 	
 	Scene* pScene = CGameOverScene::scene( *this );
-	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 1.0f, pScene ) );	
+	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 0.2f, pScene ) );	
 }
 
 
@@ -127,6 +127,8 @@ void CLevelManager::GoToNextLevel()
 		m_iCurrentLevelIndex = 0;
 	}
 
+	
+
 	// Prepare Scene to be created
 	cocos2d::Scene* pScene = nullptr;
 
@@ -136,7 +138,7 @@ void CLevelManager::GoToNextLevel()
 	{
 	case 0:
 		// CENTRAL CAVERN 
-		pScene = TGCGameLayerSceneCreator< CMLTheFinalBarrier >::CreateScene();
+		pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
 		break;
 	case 1:
 		// THE COLD ROOM

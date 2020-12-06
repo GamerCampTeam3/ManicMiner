@@ -68,6 +68,7 @@ CManicLayer::CManicLayer()
 	, m_bWasNextLevelRequested		( false )
 	, m_pcParallax					( nullptr )
 	, m_pcPlayer					( nullptr )
+	, m_bUseHelpMenuIngame			( false   )
 {
 }
 
@@ -99,23 +100,13 @@ void CManicLayer::VOnCreate()
 	IGCGameLayer::VOnCreate();
 
 	///////////////////////////////////////////////////////////////////////////
-	/// Exit Button
-
-	MenuItemImage* pItemExitGame = MenuItemImage::create(
-		"Buttons/Exit/ExitButton_01.png",
-		"Buttons/Exit/ExitButton_01.png",
-		CC_CALLBACK_1( CManicLayer::CB_OnGameExitButton, this ) );
-
-	pItemExitGame->setPosition( Vec2( 1900.f, 1060.f ) );
-
-	Menu* pMenu = Menu::create( pItemExitGame, nullptr );
-	pMenu->setPosition( Vec2::ZERO );
-	this->addChild( pMenu, 4 );
-	///
+	/// Exit / Help Button
+	// Set to false to return the button so it's original implementation:
+	// Goes to next level
+	// If True, a pause menu will appear.
+	m_bUseHelpMenuIngame = true;
+	CreateExitButton();
 	///////////////////////////////////////////////////////////////////////////
-
-
-
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -1110,8 +1101,117 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 
 void CManicLayer::CB_OnGameExitButton( Ref* pSender )
 {
-	RequestNextLevel();
+	static CGCObjSprite* pcSprite = nullptr;
+	
+	
+	if (m_bUseHelpMenuIngame)
+	{
+		// If it's not paused, pause
+		if (!cocos2d::Director::getInstance()->isPaused())
+		{
+
+			cocos2d::Director::getInstance()->pause();			
+			pcSprite = EasySprite::Create( "Loose/pause_menu.plist", 4.0f, 1.0f, 1.0f, CC_V2( (m_sizeVisible.width / 2 + m_pointOrigin.x), (m_sizeVisible.height / 2 + m_pointOrigin.y) ), this );
+			pcSprite->SetSpriteOpacity( 1 );
+			CreateHelpButton();
+			CreateResumeButton();
+			this->removeChild( this->getChildByName( "ExitButton" ) );
+		}
+		// Otherwise, unpause
+		else
+		{
+			pcSprite->RemoveFromParent();
+			this->removeChild( this->getChildByName( "HelpButton"	) );
+			this->removeChild( this->getChildByName( "ResumeButton" ) );
+			this->removeChild( this->getChildByName( "BackButton" ) );
+			cocos2d::Director::getInstance()->resume();			
+		}
+	}
+
+	else
+	{
+		// If the help menu bool is false, it will resume it's original iteration of going to next level
+		RequestNextLevel();
+	}
 }
+
+void CManicLayer::CB_OnHelpButton( Ref* pSender )
+{
+	CGCObjSprite* p_cgc_obj_sprite = EasySprite::Create( "Loose/help_ingame_menu.plist", 4.0f, 1.0f, 1.0f, CC_V2( (m_sizeVisible.width / 2 + m_pointOrigin.x), (m_sizeVisible.height / 2 + m_pointOrigin.y) ), this , "HelpScreen");
+	cocos2d::Menu* pMenu;
+	MenuItemImage* pItemBack = MenuItemImage::create( "Loose/back_button_normal.png", "back/help_button_pressed.png", CC_CALLBACK_1( CManicLayer::CB_OnBackButton, this, p_cgc_obj_sprite ) );
+	pItemBack->setPosition( Vec2( m_pointOrigin.x + (m_sizeVisible.width * 0.11f), m_pointOrigin.y + (m_sizeVisible.height * 0.12f) ) );
+	pMenu = Menu::create( pItemBack, nullptr );
+	pMenu->setPosition( Vec2::ZERO );
+	pMenu->setName( "BackButton" );
+	this->removeChild( this->getChildByName( "HelpButton" ) );
+	this->removeChild( this->getChildByName( "ResumeButton" ) );
+
+	this->addChild( pMenu, 4 );
+}
+
+void CManicLayer::CB_OnResumeButton( Ref* pSender )
+{
+	this->removeChild( this->getChildByName( "HelpButton" ) );
+	this->removeChild( this->getChildByName( "ResumeButton" ) );
+	CreateExitButton();
+	cocos2d::Director::getInstance()->resume();
+}
+
+void CManicLayer::CB_OnBackButton(Ref* pSender, CGCObjSprite* pcSprite)
+{
+	this->removeChild( this->getChildByName( "BackButton" ) );
+	CreateHelpButton();
+	CreateResumeButton();
+	pcSprite->RemoveFromParent();	  
+}
+
+void CManicLayer::CreateExitButton()
+{
+	const char* pszButtonPath;
+
+	if (m_bUseHelpMenuIngame)
+	{
+		pszButtonPath = "Loose/help_ingame_button.png";
+	}
+	else
+	{
+		pszButtonPath = "Buttons/Exit/ExitButton_01.png";
+	}
+
+	MenuItemImage* pItemExitGame = MenuItemImage::create(pszButtonPath,pszButtonPath,CC_CALLBACK_1( CManicLayer::CB_OnGameExitButton, this ) );
+	pItemExitGame->setPosition( Vec2( 1900.f, 1060.f ) );
+
+	Menu* pMenu = Menu::create( pItemExitGame, nullptr );
+	pMenu->setName( "ExitButton" );
+	pMenu->setPosition( Vec2::ZERO );
+	this->addChild( pMenu, 5 );
+}
+
+void CManicLayer::CreateHelpButton()
+{
+	cocos2d::Menu* m_pMenu;
+	MenuItemImage* pItemHelpScene = MenuItemImage::create( "Loose/help_button_normal.png", "Loose/help_button_pressed.png", CC_CALLBACK_1( CManicLayer::CB_OnHelpButton, this ) );
+	pItemHelpScene->setPosition( Vec2( m_pointOrigin.x + (m_sizeVisible.width * 0.5f), m_pointOrigin.y + (m_sizeVisible.height * 0.58f) ) );
+	m_pMenu = Menu::create( pItemHelpScene, nullptr );
+	m_pMenu->setPosition( Vec2::ZERO );
+	m_pMenu->setName( "HelpButton" );
+	this->addChild( m_pMenu, 7 );
+}
+
+void CManicLayer::CreateResumeButton()
+{
+	cocos2d::Menu* m_pMenu;
+	MenuItemImage* pItemResume = MenuItemImage::create( "Loose/resume_button_normal.png", "Loose/resume_button_pressed.png", CC_CALLBACK_1( CManicLayer::CB_OnResumeButton, this ) );
+	pItemResume->setPosition( Vec2( m_pointOrigin.x + (m_sizeVisible.width * 0.5f), m_pointOrigin.y + (m_sizeVisible.height * 0.48f) ) );
+	m_pMenu = Menu::create( pItemResume, nullptr );
+	m_pMenu->setPosition( Vec2::ZERO );
+	m_pMenu->setName( "ResumeButton" );
+	this->addChild( m_pMenu, 7 );
+}
+
+
+
 
 void CManicLayer::Init()
 {

@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>full_heart.png</key>
+            <key>help_ingame_menu.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{-31,99}</string>
                 <key>spriteSize</key>
-                <string>{60,60}</string>
+                <string>{928,586}</string>
                 <key>spriteSourceSize</key>
-                <string>{60,60}</string>
+                <string>{1920,1080}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{60,60}}</string>
+                <string>{{0,0},{928,586}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -29,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>full_heart.png</string>
+            <string>help_ingame_menu.png</string>
             <key>size</key>
-            <string>{60,60}</string>
+            <string>{928,586}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e9635b71328406f98ba2bd0fe5e50894:e5302ca0d21b37e6005ae16f6d4de0ac:01dd4a4b3be40c68aeb08711a21bdb14$</string>
+            <string>$TexturePacker:SmartUpdate:6124538ad2f8fbd3527b2c0e3aa01bd4:3623f1d2ea132a1a326a42242b96d990:cc7d167521da75ec69b3a1475674f7d9$</string>
             <key>textureFileName</key>
-            <string>full_heart.png</string>
+            <string>help_ingame_menu.png</string>
         </dict>
     </dict>
 </plist>

@@ -78,7 +78,7 @@ private:
 	CGCObjSprite*		m_apcLives [m_kiMaximumLives ] ;	// Array of Sprites to represent lives
 	float				m_fXPlacement;						// The X position of the first Sprite
 	const float			m_kfYPlacement		= 1050.f;		// The Y position of the sprites
-	const float			m_kfOffsetIncrement = 45.0f;		// The X offset between sprites
+	const float			m_kfOffsetIncrement = 63.0f;		// The X offset between sprites
 	cocos2d::Vec2		m_av2SpritePlacements[m_kiMaximumLives];
 
 	//--------------------- FUNCTIONS----------------------------------------------------------//

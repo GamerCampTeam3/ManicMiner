@@ -259,6 +259,9 @@
     <Filter Include="Classes\ManicMiner\Scenes\Controls">
       <UniqueIdentifier>{ecaca7ae-cc6d-451a-8510-5dc9c58d16f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Scenes\Pause">
+      <UniqueIdentifier>{61adb2d3-3ce2-4913-8a05-43831fcd5b0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -569,6 +572,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Scenes\Controls\CControlsScene.cpp">
       <Filter>Classes\ManicMiner\Scenes\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Scenes\Pause\CPauseScene.cpp">
+      <Filter>Classes\ManicMiner\Scenes\Pause</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -943,6 +949,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Scenes\Controls\CControlsScene.h">
       <Filter>Classes\ManicMiner\Scenes\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Scenes\Pause\CPauseScene.h">
+      <Filter>Classes\ManicMiner\Scenes\Pause</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
