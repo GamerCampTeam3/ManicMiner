@@ -11,13 +11,13 @@
                 <key>anchor</key>
                 <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{-3,-56}</string>
                 <key>spriteSize</key>
-                <string>{1920,1080}</string>
+                <string>{1858,942}</string>
                 <key>spriteSourceSize</key>
                 <string>{1920,1080}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{1920,1080}}</string>
+                <string>{{0,0},{1858,942}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -33,9 +33,9 @@
             <key>realTextureFileName</key>
             <string>ShipwreckPlatforms.png</string>
             <key>size</key>
-            <string>{1920,1080}</string>
+            <string>{1858,942}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:8f14628e80efe179290c88720b4b2452:7d2c696de09e2b0d50e6cdcf2c62f70f:c8c010f4ecac7a462562e428c7f16dcb$</string>
+            <string>$TexturePacker:SmartUpdate:5343020b93dbaf1b6bd3917c318d6daa:516a9e6edc5123f4cb365d491e4d5164:c8c010f4ecac7a462562e428c7f16dcb$</string>
             <key>textureFileName</key>
             <string>ShipwreckPlatforms.png</string>
         </dict>

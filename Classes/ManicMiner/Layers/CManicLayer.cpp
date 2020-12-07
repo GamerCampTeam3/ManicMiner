@@ -239,13 +239,15 @@ void CManicLayer::VInitializeBackground()
 
 			const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Cavern/Background_0.plist", -3 );
 			const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -5 );
-			const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/Background_2.plist", -6 );
-			const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -4 );
+			const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/CavernForeground.plist", 1 );
 
 			m_pcParallax->AddScrollingLayer( sData1, 5.0f );
+			m_pcParallax->AddScrollingLayer( sData2, 0.025f );
+			m_pcParallax->AddScrollingLayer( sData3, 6.5f );
+			
+			
+			const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -4 );
 			m_pcParallax->AddAnimatedLayer(sData4);
-			m_pcParallax->AddScrollingLayer( sData2, 1.5f );
-			m_pcParallax->AddScrollingLayer( sData3, 0.5f );
 		}
 		break;
 		case EParallaxTheme::Toxic:
@@ -256,26 +258,30 @@ void CManicLayer::VInitializeBackground()
 
 			const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Toxic/Background.plist", -10 );
 			const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Toxic/Outline.plist", -2 );
-			const SParallaxLayerData sData4( "TexturePacker/Backgrounds/Toxic/Fog.plist", -7 );
+			const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Toxic/Fog.plist", -7 );
 
 			m_pcParallax->AddScrollingLayer( sData1, 0.0f );
 			m_pcParallax->AddScrollingLayer( sData2, 0.0f );
-			m_pcParallax->AddScrollingLayer( sData4, 5.0f );
+			m_pcParallax->AddScrollingLayer( sData3, 5.0f );
 		}
 		break;
 		case EParallaxTheme::Shipwreck:
 		{
-			int kiNumScrollingLayers = 3;
+			int kiNumScrollingLayers = 5;
 			const int kiNumAnimatedLayers = 0;
 			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
 
-			const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Shipwreck/ShipwreckBackground.plist", -4 );
-			const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Shipwreck/ShipwreckGodray.plist", -3 );
-			const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Shipwreck/ShipwreckPlatforms.plist", -2 );
+			const SParallaxLayerData sData1( "TexturePacker/Backgrounds/Shipwreck/ShipwreckBackground.plist", -10 );
+			const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Shipwreck/ShipwreckChains.plist", -9 );
+			const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Shipwreck/ShipwreckTop.plist", -8 );
+			const SParallaxLayerData sData4( "TexturePacker/Backgrounds/Shipwreck/ShipwreckBoundaries.plist", -7 );
+			const SParallaxLayerData sData5( "TexturePacker/Backgrounds/Shipwreck/ForegroundShipwreck.plist", 1 );
 
-			m_pcParallax->AddScrollingLayer( sData1, 0.0f );
-			m_pcParallax->AddScrollingLayer( sData2, 4.0f );
+			m_pcParallax->AddScrollingLayer( sData1, 0.2f );
+			m_pcParallax->AddScrollingLayer( sData2, 0.0f );
 			m_pcParallax->AddScrollingLayer( sData3, 0.0f );
+			m_pcParallax->AddScrollingLayer( sData4, 0.0f );
+			m_pcParallax->AddScrollingLayer( sData5, 4.0f );
 		}
 		break;
 		case EParallaxTheme::Magma:

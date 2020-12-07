@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>cocos2d-x</string>
         <key>textureFileName</key>
-        <filename>../../../../Resources/windows/TexturePacker/Backgrounds/Cavern/Background_2.png</filename>
+        <filename>../../../../Resources/windows/TexturePacker/Backgrounds/Shipwreck/ShipwreckBoundaries.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../../Resources/windows/TexturePacker/Backgrounds/Cavern/Background_2.plist</filename>
+                <filename>../../../../Resources/windows/TexturePacker/Backgrounds/Shipwreck/ShipwreckBoundaries.plist</filename>
             </struct>
             <key>header</key>
             <key>source</key>
@@ -187,7 +187,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Background_2.png</key>
+            <key type="filename">ShipwreckBoundaries.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -205,7 +205,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>Background_2.png</filename>
+            <filename>ShipwreckBoundaries.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

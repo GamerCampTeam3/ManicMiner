@@ -35,7 +35,7 @@
             <key>size</key>
             <string>{1920,1080}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a10bcf6385606d5e050e48ce0d3d6740:dc58f4c77050d68cf6531153ea255e3c:0f05f96ca6f6cf8c4d4e6e3ba9454d4b$</string>
+            <string>$TexturePacker:SmartUpdate:af2dcab4e4d0ea220ccf3e64228d98d6:c37df7250d98699cc0b7e998ad53857b:0f05f96ca6f6cf8c4d4e6e3ba9454d4b$</string>
             <key>textureFileName</key>
             <string>ShipwreckBackground.png</string>
         </dict>

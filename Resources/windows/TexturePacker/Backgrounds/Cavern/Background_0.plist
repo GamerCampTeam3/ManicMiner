@@ -11,13 +11,13 @@
                 <key>anchor</key>
                 <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
-                <string>{-72,-310}</string>
+                <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{1776,358}</string>
+                <string>{1920,1080}</string>
                 <key>spriteSourceSize</key>
                 <string>{1920,1080}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{1776,358}}</string>
+                <string>{{0,0},{1920,1080}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -33,9 +33,9 @@
             <key>realTextureFileName</key>
             <string>Background_0.png</string>
             <key>size</key>
-            <string>{1776,358}</string>
+            <string>{1920,1080}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:d4c6e3ea4eec42f260152b54e0b7030a:aa1c270df45a3ccb361954f2fe2e1269:7292316e40ba22a47241c5ef87336223$</string>
+            <string>$TexturePacker:SmartUpdate:1e301d77875b48f95195789d4345b9cc:a38025d88255f210e200118868bfa6cb:7292316e40ba22a47241c5ef87336223$</string>
             <key>textureFileName</key>
             <string>Background_0.png</string>
         </dict>

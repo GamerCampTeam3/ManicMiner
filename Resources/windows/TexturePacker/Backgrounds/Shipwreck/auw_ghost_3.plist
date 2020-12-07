@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>auw_ghost_3.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{0.5,0.5}</string>
+                <key>spriteOffset</key>
+                <string>{2,-1}</string>
+                <key>spriteSize</key>
+                <string>{166,68}</string>
+                <key>spriteSourceSize</key>
+                <string>{180,120}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{166,68}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>auw_ghost_3.png</string>
+            <key>size</key>
+            <string>{166,68}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:cee47d7f01d25ff273e9c155c45db71e:3708c05fdff4caab0f4211f561fabcdc:f35f1476bfa85354c1d23b957ade6049$</string>
+            <key>textureFileName</key>
+            <string>auw_ghost_3.png</string>
+        </dict>
+    </dict>
+</plist>

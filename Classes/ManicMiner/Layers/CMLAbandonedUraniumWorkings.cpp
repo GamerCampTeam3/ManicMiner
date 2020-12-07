@@ -23,8 +23,8 @@ void CMLAbandonedUraniumWorkings::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
-	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Toxic;
-	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::DeepSeaOilRig;
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Shipwreck;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::Shipwreck1;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/3_AbandonedUraniumWorkings.oel";
 	m_sLevelCreationParameters.szLevelName			= "Abandoned Uranium Workings";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2 ( 1920.0f - 90.0f, 120.0f );

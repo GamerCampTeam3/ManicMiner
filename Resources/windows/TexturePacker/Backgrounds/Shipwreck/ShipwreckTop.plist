@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>ShipwreckTop.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{0.5,0.5}</string>
+                <key>spriteOffset</key>
+                <string>{2,-8}</string>
+                <key>spriteSize</key>
+                <string>{1916,1064}</string>
+                <key>spriteSourceSize</key>
+                <string>{1920,1080}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{1916,1064}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>ShipwreckTop.png</string>
+            <key>size</key>
+            <string>{1916,1064}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:eb30394ac564a61bd357884a4995d8e2:93b153eedc5655905a3d60c657f831d3:ac463d155d9729904af40bb68ec0e2f1$</string>
+            <key>textureFileName</key>
+            <string>ShipwreckTop.png</string>
+        </dict>
+    </dict>
+</plist>
