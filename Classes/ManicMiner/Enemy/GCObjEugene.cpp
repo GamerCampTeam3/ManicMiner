@@ -22,15 +22,7 @@ GCFACTORY_IMPLEMENT_CREATEABLECLASS( CGCObjEugene );
 
 class  CMLEugenesLair;
 
-
-CGCObjEugene::CGCObjEugene(GCTypeID idDerivedType)
-{
-}
-
-
-
 CGCObjEugene::CGCObjEugene()
-	: CGCObjEnemy(GetGCTypeIDOf(CGCObjEugene)) 
 {
 }
 
@@ -67,17 +59,17 @@ void CGCObjEugene::VOnReset()
 	CGCObjEnemy::VOnReset();
 
 	// Fetch the factory creation params and extract the plist for this object.
-	//const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
-	//std::string m_pszPlist = pcCreateParams->strPlistFile;
-	//cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
+	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+	std::string m_pszPlist = pcCreateParams->strPlistFile;
+	cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
 
 	// Specifiy alternate animation name.
 
-	//m_pszAnimation = "Normal";
+	m_pszAnimation = "Normal";
 
-	//pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
-	//pAnimation->retain();
-	//RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
+	pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
+	pAnimation->retain();
+	RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 
 }
 

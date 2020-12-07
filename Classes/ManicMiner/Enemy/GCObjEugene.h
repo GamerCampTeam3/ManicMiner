@@ -31,7 +31,7 @@ public:
 
 	CGCObjEugene();
 
-	CGCObjEugene(GCTypeID idDerivedType);
+	//CGCObjEugene(GCTypeID idDerivedType);
 		
 	GCFACTORY_DECLARE_CREATABLECLASS(CGCObjEugene);
 	
