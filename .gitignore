@@ -32,3 +32,23 @@ cocos2d/external/recast/proj.win32/Release.win32/
 
 cocos2d/cocos/editor-support/spine/proj.win32/Debug.win32/
 Classes/MenuScene.cpp
+Resources/windows/Loose/help_ingame_menu.plist
+Resources/windows/Loose/help_ingame_menu.png
+Resources/windows/Loose/help_ingame_menu.tps
+Resources/windows/Loose/pause_menu.plist
+Resources/windows/Loose/pause_menu.png
+Resources/windows/Loose/pause_menu.tps
+Resources/windows/Loose/resume_button_normal.png
+Resources/windows/Loose/resume_button_normal.tps
+Resources/windows/Loose/resume_button_pressed.png
+Resources/windows/Loose/resume_button_pressed.tps
+Resources/windows/Loose/help_ingame_menu.plist
+Resources/windows/Loose/help_ingame_menu.png
+Resources/windows/Loose/help_ingame_menu.tps
+Resources/windows/Loose/pause_menu.plist
+Resources/windows/Loose/pause_menu.png
+Resources/windows/Loose/pause_menu.tps
+Resources/windows/Loose/resume_button_normal.png
+Resources/windows/Loose/resume_button_normal.tps
+Resources/windows/Loose/resume_button_pressed.png
+Resources/windows/Loose/resume_button_pressed.tps

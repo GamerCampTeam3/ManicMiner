@@ -217,7 +217,6 @@
             <key type="filename">Frames/Normal/final-0017.png</key>
             <key type="filename">Frames/Normal/final-0018.png</key>
             <key type="filename">Frames/Normal/final-0019.png</key>
-            <key type="filename">Frames/Normal/final-0020.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

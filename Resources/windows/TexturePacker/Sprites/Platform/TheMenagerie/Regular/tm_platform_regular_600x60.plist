@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>pause_menu.png</key>
+            <key>tv_platform_regular_600x60.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{1920,1080}</string>
+                <string>{600,60}</string>
                 <key>spriteSourceSize</key>
-                <string>{1920,1080}</string>
+                <string>{600,60}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{1920,1080}}</string>
+                <string>{{1,1},{600,60}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -29,13 +29,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>pause_menu.png</string>
+            <string>tm_platform_regular_600x60.png</string>
             <key>size</key>
-            <string>{1920,1080}</string>
+            <string>{602,62}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a990cdc1b6c016bd3ef6e951adc9c7d0:1a0c3aacdd27c4c5cee9cf564cb4fed6:e683b5d0b261917630732165f44ec6df$</string>
+            <string>$TexturePacker:SmartUpdate:0d52edb829a1cfaff123e1ed566a8d53:1f503f462dd19f4e324b01d7cc91a2b6:54428fa18abd33daf0c50e56b3d6010f$</string>
             <key>textureFileName</key>
-            <string>pause_menu.png</string>
+            <string>tm_platform_regular_600x60.png</string>
         </dict>
     </dict>
 </plist>

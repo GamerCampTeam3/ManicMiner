@@ -17,19 +17,19 @@ USING_NS_CC;
 
 CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	: m_pScoreValueLabel		( nullptr		)
-	, m_pScoreTextLabel		( nullptr		)
+	, m_pScoreTextLabel			( nullptr		)
 	, m_pHighScoreValueLabel	( nullptr		)
 	, m_pHighscoreTextLabel		( nullptr		)
-	, m_pLevelName			( nullptr		)
+	, m_pLevelName				( nullptr		)
 	, m_pglOwnerGameLayer		( &cLayer		)
-	, m_pointOrigin			( pOrigin		)
-	, m_sizeVisible			( visibleSize		)
+	, m_pointOrigin				( pOrigin		)
+	, m_sizeVisible				( visibleSize	)
 	, m_v2ScoreTextPosition		(0,0		)
 	, m_v2HighscoreTextPosition	(0,0		)
 	, m_v2ScoreValuePosition	(0,0		)
-	, m_v2HighscoreValuePosition	(0,0		)
+	, m_v2HighscoreValuePosition(0,0		)
 	, m_v2LevelNamePosition		(0,0		)
-	, m_fXPlacement			( 700.f			)
+	, m_fXPlacement				( 220.0f		)
 {
 
 	// We initialized them to 0 to keep the list clean, so we set them up here
@@ -50,7 +50,8 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	m_pLevelName			= new cocos2d::Label();
 
 	// The color of the text, that will be used to set the initial label values.
-	cocos2d::Color4B textColor = cocos2d::Color4B( 165, 227, 251, 255 );
+	// White
+	 cocos2d::Color4B const c4bTextColor = cocos2d::Color4B::WHITE;
 
 	// Then we initialize with the following params:
 	// Label:	The current label we are editing.
@@ -58,11 +59,11 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	// Font Size:	The size of the font.
 	// Vector 2:	The position of the text on the screen.
 	// Alignment:	How is the text aligned.
-	InitLabel( m_pScoreTextLabel,		textColor, 20.0f, m_v2ScoreTextPosition,			TextHAlignment::LEFT	);
-	InitLabel( m_pScoreValueLabel,		textColor, 20.0f, m_v2ScoreValuePosition,		TextHAlignment::CENTER	);
-	InitLabel( m_pHighscoreTextLabel,	textColor, 20.0f, m_v2HighscoreTextPosition,		TextHAlignment::LEFT	);
-	InitLabel( m_pHighScoreValueLabel,	textColor, 20.0f, m_v2HighscoreValuePosition,	TextHAlignment::CENTER	);
-	InitLabel( m_pLevelName,			textColor, 20.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
+	InitLabel( m_pScoreTextLabel,		c4bTextColor, 20.0f, m_v2ScoreTextPosition,			TextHAlignment::LEFT	);
+	InitLabel( m_pScoreValueLabel,		c4bTextColor, 20.0f, m_v2ScoreValuePosition,		TextHAlignment::CENTER	);
+	InitLabel( m_pHighscoreTextLabel,	c4bTextColor, 20.0f, m_v2HighscoreTextPosition,		TextHAlignment::LEFT	);
+	InitLabel( m_pHighScoreValueLabel,	c4bTextColor, 20.0f, m_v2HighscoreValuePosition,	TextHAlignment::CENTER	);
+	InitLabel( m_pLevelName,			c4bTextColor, 20.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
 }
 
 CHUD::~CHUD()
@@ -161,7 +162,10 @@ void CHUD::UpdateLives( ELifeUpdateType eLifeUpdateType, int iCurrentLife )
 			break;
 
 		case ELifeUpdateType::Minus:
-			m_apcLives[i]->RemoveFromParent();
+			if (m_apcLives[i] != nullptr)
+			{
+				m_apcLives[i]->RemoveFromParent();
+			}
 			break;
 	}
 }
