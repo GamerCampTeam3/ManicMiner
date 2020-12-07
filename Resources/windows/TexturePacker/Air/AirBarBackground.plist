@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>ui_bar.png</key>
+            <key>ui_bar_empty.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{950,78}</string>
+                <string>{180,176}</string>
                 <key>spriteSourceSize</key>
-                <string>{950,78}</string>
+                <string>{180,180}</string>
                 <key>textureRect</key>
-                <string>{{1,1},{950,78}}</string>
+                <string>{{0,0},{180,176}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -31,9 +31,9 @@
             <key>realTextureFileName</key>
             <string>AirBarBackground.png</string>
             <key>size</key>
-            <string>{952,80}</string>
+            <string>{180,176}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:ba2430ffc910c963f8356929ca5e156c:656e0070a42f0a55a946af263026c3da:5cf9e2ea433f21962fb366c48ad52054$</string>
+            <string>$TexturePacker:SmartUpdate:85acc1f2f5bd219acf481c836e84921d:4b08b0793ae2f0effe9aeaa5bf708205:5cf9e2ea433f21962fb366c48ad52054$</string>
             <key>textureFileName</key>
             <string>AirBarBackground.png</string>
         </dict>

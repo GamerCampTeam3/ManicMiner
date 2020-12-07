@@ -189,25 +189,11 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 				m_pcGCSprAirVignette->SetSpriteOpacity( 0 );
 			}
 		}
-
-		if (nullptr == m_pcAirBar)
-		{
-			m_pcAirBar = new ui::LoadingBar();
-		}
-
-		if (nullptr != m_pcAirBar)
-		{
-			m_pcAirBar = ui::LoadingBar::create("ui/AirBar/ui_airbar.png");
-			m_pcAirBar->setDirection(ui::LoadingBar::Direction::LEFT);
-			m_pcAirBar->setPercent(100.f);
-			m_pcAirBar->setPosition(Vec2((m_pOrigin).x + 620.f, ((m_pOrigin).y + (m_visibleSize).height) - 78));
-			rglOwnerGameLayer.addChild(m_pcAirBar, 2);
-		}
 		
 		// initialize and add Air Bar Sprite to the screen
 		const char* pszPlist_Air = "TexturePacker/Air/AirBarBackground.plist";
 		const char* pszSpr_AirBar = "AirBar";
-		{
+		
 			// create new Sprite Object for Air Bar
 			if( m_pcGCSprAirBar == nullptr )
 			{
@@ -221,27 +207,30 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 					m_pcGCSprAirBar->CreateSprite( pszPlist_Air );
 				}
 
-				m_pcGCSprAirBar->SetSpriteGlobalZOrder( 3.f );
-				m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 620.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 60 ) );
+				m_pcGCSprAirBar->SetSpriteGlobalZOrder( 2.f );
+				m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 100.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 60 ) );
 				m_pcGCSprAirBar->GetSprite()->setPosition( m_pcGCSprAirBar->GetResetPosition() );
 				m_pcGCSprAirBar->SetParent( &rglOwnerGameLayer );
 				m_pcGCSprAirBar->SetSpriteScale( 1.f, 1.f );
 			}
-		}
+		
 
-		/*
-		// create and initialize label for air and the percentage
-		if( m_plAirLabel == nullptr )
+		if (nullptr == m_pcAirBar)
 		{
-			m_plAirLabel = Label::createWithTTF( "AIR " + std::to_string( m_iRemainingAirPercentage ) + "%", "fonts/arial.ttf", 24 );
-			m_plAirLabel->setGlobalZOrder( 3.f );
+			m_pcAirBar = new ui::LoadingBar();
 		}
 
-		m_v2AirLabelPos = Vec2( ( m_pOrigin ).x + 60.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 24 );
-		// position pAirLabel in the top left corner
-		m_plAirLabel->setPosition( m_v2AirLabelPos );
-		// add the pAirLabel as a child to this layer
-		rglOwnerGameLayer.addChild( m_plAirLabel, 2 );*/
+		if (nullptr != m_pcAirBar)
+		{
+			m_pcAirBar = ui::LoadingBar::create("ui/AirBar/ui_bar_full.png");
+			m_pcAirBar->setDirection(ui::LoadingBar::Direction::LEFT);
+			m_pcAirBar->setRotation(-90.f);
+			m_pcAirBar->setPercent(100.f);
+			m_pcAirBar->setPosition(Vec2((m_pOrigin).x + 100.f, ((m_pOrigin).y + (m_visibleSize).height) - 60));
+			rglOwnerGameLayer.addChild(m_pcAirBar, 3);
+			m_pcAirBar->setGlobalZOrder(3.f);
+		}
+
 	}
 	m_bInitialized = true;
 }
@@ -323,18 +312,6 @@ void CAirManager::UpdateAirUIElements()
 {
 	if( nullptr != m_pglOwnerGameLayer && nullptr != m_pcGCSprAirBar->GetSprite() && m_pcGCSprAirVignette->GetSprite()  !=nullptr )
 	{
-		/*
-		// remove already existing label
-		m_pglOwnerGameLayer->removeChild( m_plAirLabel );
-		// add a label displaying Air
-		// create and initialize label for air
-		m_plAirLabel = Label::createWithTTF( "AIR " + std::to_string( m_iRemainingAirPercentage ) + "%", "fonts/arial.ttf", 24 );
-		// position pAirLabel in the top left corner
-		m_plAirLabel->setPosition( m_v2AirLabelPos );
-		m_plAirLabel->setGlobalZOrder( 3.f );
-		// add the pAirLabel as a child to this layer
-		m_pglOwnerGameLayer->addChild( m_plAirLabel, 2 );*/
-
 		if(0.0f <= m_pcAirBar->getPercent())
 		{
 			m_pcAirBar->setPercent(m_fRemainingAirPercentage);
