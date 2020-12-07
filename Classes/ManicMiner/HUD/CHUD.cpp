@@ -31,15 +31,15 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	, m_v2LevelNamePosition		(0,0		)
 	, m_fXPlacement				( 220.0f		)
 {
-
+	const int m_iYPlacement = 70;
 	// We initialized them to 0 to keep the list clean, so we set them up here
-	m_v2ScoreTextPosition		= cocos2d::Vec2( (m_pointOrigin).x + 1300.0f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Score text
-	m_v2HighscoreTextPosition	= cocos2d::Vec2( (m_pointOrigin).x + 1640.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Highscore text
+	m_v2ScoreTextPosition		= cocos2d::Vec2( (m_pointOrigin).x + 1200.0f,		((m_pointOrigin).y + (m_sizeVisible).height) - m_iYPlacement ); //	Score text
+	m_v2HighscoreTextPosition	= cocos2d::Vec2( (m_pointOrigin).x + 1540.f,		((m_pointOrigin).y + (m_sizeVisible).height) - m_iYPlacement ); //	Highscore text
+																																   
+	m_v2ScoreValuePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1290.0f,		((m_pointOrigin).y + (m_sizeVisible).height) - m_iYPlacement ); //	Score value
+	m_v2HighscoreValuePosition	= cocos2d::Vec2( (m_pointOrigin).x + 1685.f,		((m_pointOrigin).y + (m_sizeVisible).height) - m_iYPlacement ); //	Highscore value
 	
-	m_v2ScoreValuePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1390.0f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Score value
-	m_v2HighscoreValuePosition	= cocos2d::Vec2( (m_pointOrigin).x + 1785.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 92 ); //	Highscore value
-	
-	m_v2LevelNamePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1510.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 40 );	//	Level name
+	m_v2LevelNamePosition		= cocos2d::Vec2( (m_pointOrigin).x + 1410.f,		((m_pointOrigin).y + (m_sizeVisible).height) - 35 );	//	Level name
 
 
 	// We new the labels now, and set the content on Init()
@@ -63,7 +63,7 @@ CHUD::CHUD( CManicLayer& cLayer, cocos2d::Point pOrigin, cocos2d::Size visibleSi
 	InitLabel( m_pScoreValueLabel,		c4bTextColor, 20.0f, m_v2ScoreValuePosition,		TextHAlignment::CENTER	);
 	InitLabel( m_pHighscoreTextLabel,	c4bTextColor, 20.0f, m_v2HighscoreTextPosition,		TextHAlignment::LEFT	);
 	InitLabel( m_pHighScoreValueLabel,	c4bTextColor, 20.0f, m_v2HighscoreValuePosition,	TextHAlignment::CENTER	);
-	InitLabel( m_pLevelName,			c4bTextColor, 20.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
+	InitLabel( m_pLevelName,			c4bTextColor, 26.0f, m_v2LevelNamePosition,			TextHAlignment::CENTER  );
 }
 
 CHUD::~CHUD()
