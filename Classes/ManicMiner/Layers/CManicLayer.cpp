@@ -17,6 +17,7 @@
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Enemy/GCObjEugene.h"
 #include "ManicMiner/Enums/ELifeUpdateType.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Hazards/GCObjHazard.h"
@@ -202,6 +203,11 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
 		} );
 
+	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjEugene& rcEugene, const b2Contact& rcContact) -> void
+		{
+			PlayerCollidedEnemy(rcPlayer, rcEugene, rcContact);
+		});
+	   	 
 	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedHazard(rcPlayer, rcHazard, rcContact);
