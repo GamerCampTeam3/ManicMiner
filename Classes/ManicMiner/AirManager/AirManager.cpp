@@ -290,7 +290,7 @@ bool CAirManager::UpdateAirTimer()
 
 	m_iRemainingAirPercentage = m_fRemainingAirPercentage;
 
-
+	//--------------------------------------------------------------------------------------------------------------
 	// Bibs Implementation
 	// Not really a great way of doing this, since AirManager doesn't necessarily need to know about the CGameManager
 	// But it does work, ideally I will replicate later the per frame thing Umeer has done.
@@ -298,6 +298,7 @@ bool CAirManager::UpdateAirTimer()
 	{
 		m_pcGameManager->DrainToScore();
 	}
+	//--------------------------------------------------------------------------------------------------------------
 	
 	return bHasAirLeft;
 }

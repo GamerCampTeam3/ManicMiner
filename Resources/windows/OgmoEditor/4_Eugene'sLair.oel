@@ -1,4 +1,4 @@
-<level width="1920" height="960">
+ <level width="1920" height="960">
   <Platforms>
     <Hazard id="6" x="330" y="870" class="CGCObjHazard" shape="bush" PlistFile="TexturePacker/Sprites/Hazards/bush/bush.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="TexturePacker/Sprites/Hazards/bush/bush.plist" AnimationName="Move" CustomShape="bush" />
     <Key id="7" x="450" y="750" class="CCollectible" shape="Key" PlistFile="TexturePacker/Sprites/Key/cc_collectible_key.plist" B2DBodyType="b2_staticBody" HasFixedRotation="True" CustomPlist="" />
