@@ -183,7 +183,6 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">Frames/Angry/cc_enemy_eugene1.png</key>
             <key type="filename">Frames/Angry/cc_enemy_eugene2.png</key>
-            <key type="filename">Frames/Normal/cc_enemy_eugene.png</key>
             <key type="filename">cc_enemy_eugene.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -196,6 +195,40 @@
                 <rect>29,28,58,55</rect>
                 <key>scale9Paddings</key>
                 <rect>29,28,58,55</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Frames/Normal/final-0001.png</key>
+            <key type="filename">Frames/Normal/final-0002.png</key>
+            <key type="filename">Frames/Normal/final-0003.png</key>
+            <key type="filename">Frames/Normal/final-0004.png</key>
+            <key type="filename">Frames/Normal/final-0005.png</key>
+            <key type="filename">Frames/Normal/final-0006.png</key>
+            <key type="filename">Frames/Normal/final-0007.png</key>
+            <key type="filename">Frames/Normal/final-0008.png</key>
+            <key type="filename">Frames/Normal/final-0009.png</key>
+            <key type="filename">Frames/Normal/final-0010.png</key>
+            <key type="filename">Frames/Normal/final-0011.png</key>
+            <key type="filename">Frames/Normal/final-0012.png</key>
+            <key type="filename">Frames/Normal/final-0013.png</key>
+            <key type="filename">Frames/Normal/final-0014.png</key>
+            <key type="filename">Frames/Normal/final-0015.png</key>
+            <key type="filename">Frames/Normal/final-0016.png</key>
+            <key type="filename">Frames/Normal/final-0017.png</key>
+            <key type="filename">Frames/Normal/final-0018.png</key>
+            <key type="filename">Frames/Normal/final-0019.png</key>
+            <key type="filename">Frames/Normal/final-0020.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,30,60,60</rect>
+                <key>scale9Paddings</key>
+                <rect>30,30,60,60</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

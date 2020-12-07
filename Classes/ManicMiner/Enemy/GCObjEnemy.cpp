@@ -70,28 +70,34 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 		const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
 		std::string m_pszPlist = pcCreateParams->strPlistFile;
 
-		// Note m_pszAnimation is sourced from the data file so set in VHandleFactoyParams.
+		// Note m_pszAnimation is sourced from the data file so is set in VHandleFactoyParams.
 		cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist(m_pszPlist);
 		pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
 		pAnimation->retain();
+
+
+		// Note below can be used to set animation speed if required so code left in but commented out (and driven from OGMO data value...)
+		//pAnimation->setDelayPerUnit(1.0f / 16.0f);
 		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 
-		// Note below can be used to set animation speed if required? (and driven from OGMO data value...)
-		//pAnimation->setDelayPerUnit(m_kfZerof);
+		
+		
 	}
-	
+
+	// Anchor point initialised to postion read from OGMO.
 	m_cAnchorPoint = GetResetPosition();
 
+	// Initailse the facing direction for the first traverse.
 	SetFacingOrientation();
 
-	// Special consideration required if this value > 0 which means the first walk window path is shorter than the others,
+	// Special consideration required if this value > 0 which means the first traverse is shorter than the others,
 	if (m_fInitialDistanceFromAnchor > 0)
 	{
 
-		// This flag will be checked at the end of the walk window and used to restore normal walk window values.
+		// This flag will be checked at the end of the first traverse and used to restore normal walk window values.
 		m_bTemporaryAnchorPositionActive = true;
 
-		// Calculate the required arbitrary point along the movement window as a Vector2 position.
+		// Calculate the required arbitrary point along the movement window line as a Vector2 position.
 		cocos2d::Vec2 cArbitraryPoint = m_cDest - m_cAnchorPoint;
 		cArbitraryPoint.normalize();
 		cArbitraryPoint = m_cAnchorPoint + (cArbitraryPoint * m_fInitialDistanceFromAnchor);
@@ -102,7 +108,7 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 
 		// Need to store either the anchor point or the destination point in a temporary variable before overwriting with the 
 		// just calculated arbitrary point position.  The original anchor/destination point will be re-instated at the end of the 
-		// first walk window pass.
+		// first traverse.
 		if (m_bMovingAwayFromAnchorPoint)
 		{
 			m_cTemporaryAnchorPosition = m_cAnchorPoint;
@@ -132,11 +138,13 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 	}
 	else
 	{
-		// Normal walk window size so nothing special to do here.
+		// Normal patrol window size so nothing special to do here.
 		m_cCurrentPos = m_cAnchorPoint;
 		SetResetPosition(m_cAnchorPoint);
 
 	}
+
+	// Initialise the previous X position 
 	m_fPreviousXPos = m_cCurrentPos.x;
 }
 
