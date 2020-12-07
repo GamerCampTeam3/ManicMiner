@@ -226,7 +226,7 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 			m_pcAirBar->setDirection(ui::LoadingBar::Direction::LEFT);
 			m_pcAirBar->setRotation(-90.f);
 			m_pcAirBar->setPercent(100.f);
-			m_pcAirBar->setPosition(Vec2((m_pOrigin).x + 100.f, ((m_pOrigin).y + (m_visibleSize).height) - 60));
+			m_pcAirBar->setPosition(Vec2((m_pOrigin).x + 100.f, ((m_pOrigin).y + (m_visibleSize).height) - 60 ));
 			rglOwnerGameLayer.addChild(m_pcAirBar, 3);
 			m_pcAirBar->setGlobalZOrder(3.f);
 		}

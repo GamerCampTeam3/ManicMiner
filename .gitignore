@@ -52,3 +52,4 @@ Resources/windows/Loose/resume_button_normal.png
 Resources/windows/Loose/resume_button_normal.tps
 Resources/windows/Loose/resume_button_pressed.png
 Resources/windows/Loose/resume_button_pressed.tps
+Classes/ManicMiner/LevelManager/CLevelManager.cpp
