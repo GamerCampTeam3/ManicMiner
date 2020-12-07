@@ -1429,7 +1429,7 @@
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom/Regular/tcr_platform_regular_300x60.plist" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="CN_Platform_Regular_5x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="spg_platform_regular_300x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
@@ -1458,7 +1458,7 @@
         </ValueDefinition>
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom/Regular/tcr_platform_regular_360x60.plist" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="CN_Platform_Regular_6x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="spg_platform_regular_360x60" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
