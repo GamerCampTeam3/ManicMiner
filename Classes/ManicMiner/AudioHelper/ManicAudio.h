@@ -55,7 +55,7 @@ const static std::map < const ESoundEffectName, const std::string > k_mapSoundEf
 	{ ESoundEffectName::KeyCollected,		"audio/SFX/item_pickup.wav"		},
 	{ ESoundEffectName::SwitchFlipped,		"audio/SFX/switch_1.wav"		},
 	{ ESoundEffectName::RunningFootsteps,	"audio/SFX/wilfred_run_1.wav"	},
-	{ ESoundEffectName::Jump,				"audio/SFX/jump_up.wav"			},
+	{ ESoundEffectName::Jump,				"audio/SFX/jump_full.wav"		},
 	{ ESoundEffectName::Falling,			"audio/SFX/jump_down.wav"		},
 	{ ESoundEffectName::Crumbling_Stage,	"audio/Crumbling_Stage.wav"		},
 	{ ESoundEffectName::Crumbling_Full,		"audio/Crumbling_Full.wav"		}
