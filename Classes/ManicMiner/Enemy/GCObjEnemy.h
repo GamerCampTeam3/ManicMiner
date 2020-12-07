@@ -30,27 +30,25 @@ class CGCObjEnemy
 {
 private:
 	
-	float						m_fSpeed;
-	float						m_fInitialDistanceFromAnchor;    
-	float						m_fMovementWindowLength;
-	float						m_fPreviousXPos;
-	float						m_fMoveDelta;
-	float						m_kfOne = 1.0f;
-	float						m_kfZero = 0.0f;
-	bool						m_bMovingAwayFromAnchorPoint;
-	bool						m_bSpriteIsFlippable;
-	bool						m_bHasBeenCollided;
-	bool						m_bTemporaryAnchorPositionActive;
-	bool						m_bInitialiseToOne;
-	bool						m_bEnemyJustReceivedANewDestination;
-	std::string                 m_pszPlist;
-	std::string                 m_psName;
-	cocos2d::Vec2				m_cAnchorPoint;
-	cocos2d::Vec2				m_cDest;
-	cocos2d::Vec2				m_cCurrentPos;
-	cocos2d::Vec2				m_cNewDestination;
-	cocos2d::Vec2				m_cTemporaryAnchorPosition;
-	cocos2d::Vec2				m_cOriginalDestination;
+	float						m_fSpeed;								// enemy speed read (from OGMO file).
+	float						m_fInitialDistanceFromAnchor;			// initial distance along the enemy traverse line (from OGMO file).
+	float						m_fPreviousXPos;						// used to determine the X axis direction of travel to determine if the sprite needs to be flipped so enemy pointing correct way.
+	float						m_fMoveDelta;							// the LERP input which describes the enemies postion between the Anchor and Destination points, range is normally between 0 and 1,
+																		//	 exceeding this range is used to trigger either end of the traverse window.
+	float						m_kfOne = 1.0f;							// Used to avoid magic numbers in the code.
+	float						m_kfZero = 0.0f;						// Used to avoid magic numbers in the code.
+	bool						m_bMovingAwayFromAnchorPoint;			// if enemy to be initially moving towards or away from the anchor point (from OGMO file).
+	bool						m_bSpriteIsFlippable;                   // if the enemy spirte should be flipped (x axis only) when it reaches either end of the traverse window. 
+	bool						m_bTemporaryAnchorPositionActive;		// indicates that on the current traverse, the movement window is not its 'normal' size.
+	bool						m_bInitialiseToOne;						// indicate s that m_fMoveDelta is initialised/reset to 1.  (Required when moving towards anchor from mid point).
+	bool						m_bEnemyJustReceivedANewDestination;	// indicates that a game mechanic has triggered this cycle to priovide enemy with a new destination value.
+	std::string                 m_psName;								// Animation name (from OGMO file).
+	cocos2d::Vec2				m_cAnchorPoint;							// starting point of the enemies traverse window.
+	cocos2d::Vec2				m_cDest;								// destination point of the enemies traverse window.
+	cocos2d::Vec2				m_cCurrentPos;							// current position along the enemies traverse window.
+	cocos2d::Vec2				m_cNewDestination;						// new destination position (see m_bEnemyJustReceivedANewDestination above).
+	cocos2d::Vec2				m_cTemporaryAnchorPosition;				// holds the calculated arbitrary point position when m_fInitialDistanceFromAnchor is > 0.
+	cocos2d::Vec2				m_cOriginalDestination;					// stores the original destination position of the enemy read from OGMO for cases when the destination is modified mid game.
 
 	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
 
