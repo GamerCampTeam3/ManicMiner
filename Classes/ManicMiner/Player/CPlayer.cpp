@@ -591,7 +591,7 @@ void CPlayer::JumpEvent()
 		m_bCanBeControlled = true;
 
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
-		m_uiJumpSoundID = PlaySoundEffect( ESoundName::Jump );
+		m_uiJumpSoundID = PlaySoundEffect( ESoundEffectName::Jump );
 
 		InitiateAnimationStateChange(EAnimationState::Jump);
 	}
@@ -760,7 +760,7 @@ void CPlayer::LeftGround()
 		m_eJumpDirection = EPlayerDirection::Static;
 		CCLOG( "Dropping straight down" );
 		m_bCanJump = false;
-		m_uiFallingSoundID = PlaySoundEffect( ESoundName::Falling );
+		m_uiFallingSoundID = PlaySoundEffect( ESoundEffectName::Falling );
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 	}
 

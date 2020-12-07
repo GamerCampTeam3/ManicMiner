@@ -4,10 +4,11 @@
 
 #include "CMLWillyMeetsKong.h"
 
-#include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/AudioHelper/EBackgroundMusicNames.h"
 #include "ManicMiner/Doors/CMovingDoor.h"
-#include "ManicMiner/Enemy/GCObjKong.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Enemy/GCObjKong.h"
+#include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Platforms/CTriggerPlatform.h"
 
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EKong", "TexturePacker/Sprites/Kong/Kong.plist", "cc_enemy_duck", b2_dynamicBody, true);
@@ -34,6 +35,7 @@ void CMLWillyMeetsKong::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible_And_Switches, 2, 4 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Magma;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/7_MinerWillyMeetsTheKongBeast.oel";
 	m_sLevelCreationParameters.szLevelName			= " Miner Willy meets the Kong Beast";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );

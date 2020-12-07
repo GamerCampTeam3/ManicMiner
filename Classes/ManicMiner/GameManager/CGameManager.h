@@ -4,7 +4,7 @@
 #ifndef _CGAMEMANAGER_H_
 #define _CGAMEMANAGER_H_
 
-
+enum class EBackgroundMusicName;
 
 #include "ManicMiner/Structs/SLevelValues.h"
 
@@ -44,7 +44,7 @@ class CGameManager
 																	 public:
 																		 
 	//------------------------------------------------------------  CTOR/DTOR ------------------------------------------------------------------------------------------			
-	CGameManager(CLevelManager& rcLevelManager );																																	
+	CGameManager( CLevelManager& rcLevelManager );																																	
 	~CGameManager();																																								
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------			
 	//																																												
@@ -62,6 +62,7 @@ class CGameManager
 	void	DrainToScore();													// Called by the air manager, drains air to score. 														
 	void	ResetEvent();													// Resets all logic related integers to 0/Default.
 	void	ResetHUD();														// Called by the CManicLayer when the level ends.														
+	void	CheckShouldUpdateMusic( EBackgroundMusicName eBackgroundMusic );// Called when level transition starts, checks if a new music theme should be played
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------			
 	//																																												
 	//-----------------------------------------------------------  Player Related  -------------------------------------------------------------------------------------												
@@ -118,8 +119,9 @@ class CGameManager
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//																																									
 	//---------------------------------------------------------  STRUCTS/ENUMS -----------------------------------------------------------------------------------------
-	SLevelValues		m_sLevelValues;										// The Struct that will be set by levels, has the data needed to finish levels.
-	ESpecialInteraction m_ESpecialInteractionType;							// A struct to dictate which part of the special interaction to do.
+	SLevelValues		 m_sLevelValues;									// The Struct that will be set by levels, has the data needed to finish levels.
+	ESpecialInteraction  m_ESpecialInteractionType;							// A struct to dictate which part of the special interaction to do.
+	EBackgroundMusicName m_eCurrentBackgroundMusic;							// Saves current music playing, so that we only change it if necessary during level transitions.
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//																																									
 	//------------------------------------------------------------  FUNCTIONS ------------------------------------------------------------------------------------------
@@ -134,6 +136,5 @@ class CGameManager
 	void			 UpdateHighScore() const;								// Tells the CHUD to update the high score with the current high score.									
 	void			 UpdateScore()	  const;								// Tells the CHUD to update the score.																	
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------/
-
 };
 #endif // #ifndef _CGAMEMANAGER_H_

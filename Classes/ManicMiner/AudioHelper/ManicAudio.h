@@ -3,8 +3,8 @@
 // -------------------------------------------------------------------------------------------------------------------- //
 // Purpose	:		ManicAudio.h acts as a helper header file to play audio through										//
 //					Cocos2d's SimpleAudioEngine:																		//
-//					This page contains the ESoundName enums and their respective										//
-//					audio file directory pair, configured with an std::map < ESoundName, std::string >					//
+//					This page contains the ESoundEffectName enums and their respective									//
+//					audio file directory pair, configured with an std::map < ESoundEffectName, std::string >			//
 //					Just pass the right sound name to PlaySoundEffect() or PreloadSoundEffect()							//
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -13,6 +13,8 @@
 #ifndef __MANIC_AUDIO_HELPER__
 #define __MANIC_AUDIO_HELPER__
 
+#include "EBackgroundMusicNames.h"
+
 #include "SimpleAudioEngine.h"
 using namespace CocosDenshion;
 
@@ -20,19 +22,18 @@ using namespace CocosDenshion;
 #include < map >
 
 // -------------------------------------------------------------------------------------------------------------------- //
-// Enum Class	:	ESoundName																							//
+// Enum Class	:	ESoundEffectName																					//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Purpose		:	Defines a name for every sound effect in the game													//
 //																														//
 // See Also		:	k_mapSoundFiles	& PlaySoundEffect()																	//
 // -------------------------------------------------------------------------------------------------------------------- //
-enum class ESoundName
+enum class ESoundEffectName
 {
 	Death,
-	MusicTheme,
 	KeyCollected,
 	SwitchFlipped,
-	BabyShark,
+	RunningFootsteps,
 	Jump,
 	Falling,
 	Crumbling_Stage,
@@ -42,55 +43,55 @@ enum class ESoundName
 // -------------------------------------------------------------------------------------------------------------------- //
 // Std::map		:	k_mapSoundFiles																						//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Types		:	ESoundName, std::string																				//
+// Types		:	ESoundEffectName, std::string																		//
 //																														//
-// Purpose		:	Maps every sound < ESoundName > to a specific file directory < std::string >						//
+// Purpose		:	Maps every sound < ESoundEffectName > to a specific file directory < std::string >					//
 //																														//
-// See Also		:	ESoundName & PlaySoundEffect()																		//
+// See Also		:	ESoundEffectName & PlaySoundEffect()																//
 // -------------------------------------------------------------------------------------------------------------------- //
-const static std::map < const ESoundName, const std::string > k_mapSoundFiles =
+const static std::map < const ESoundEffectName, const std::string > k_mapSoundEffectFiles =
 {
-	{ ESoundName::Death,				"audio/Transition.wav"					},
-	{ ESoundName::MusicTheme,			"audio/YouWouldNotBelieveYourEyes.wav"	},
-	{ ESoundName::KeyCollected,			"audio/Collectible.wav"					},
-	{ ESoundName::SwitchFlipped,		"audio/Switch_flip.wav"					},
-	{ ESoundName::BabyShark,			"audio/BabyShark.mp3"					},
-	{ ESoundName::Jump,					"audio/JumpSound.wav"					},
-	{ ESoundName::Falling,				"audio/FallingSound.wav"				},
-	{ ESoundName::Crumbling_Stage,		"audio/Crumbling_Stage.wav"				},
-	{ ESoundName::Crumbling_Full,		"audio/Crumbling_Full.wav"				}
+	{ ESoundEffectName::Death,				"audio/SFX/death_transition.wav"},
+	{ ESoundEffectName::KeyCollected,		"audio/SFX/item_pickup.wav"		},
+	{ ESoundEffectName::SwitchFlipped,		"audio/SFX/switch_1.wav"		},
+	{ ESoundEffectName::RunningFootsteps,	"audio/SFX/wilfred_run_1.wav"	},
+	{ ESoundEffectName::Jump,				"audio/SFX/jump_up.wav"			},
+	{ ESoundEffectName::Falling,			"audio/SFX/jump_down.wav"		},
+	{ ESoundEffectName::Crumbling_Stage,	"audio/Crumbling_Stage.wav"		},
+	{ ESoundEffectName::Crumbling_Full,		"audio/Crumbling_Full.wav"		}
 };
+
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	PlaySoundEffect																						//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Purpose		:	This function acts as a substitute to CocosDenshion::SimpleAudioEngine::playEffect()				//
 //					Because the above function takes in a const char* for the sound file directory, we use this			//
-//					one that takes in an ESoundName, making it much easier and cleaner to play our desired sound		//
+//					one that takes in an ESoundEffectName, making it much easier and cleaner to play our desired sound	//
 //																														//
-// Parameters	:	const ESoundName eSoundName																			//
+// Parameters	:	const ESoundEffectName eSoundName																	//
 //					enum value that represents the sound we want to play												//
 //																														//
-// See also		:	ESoundName & k_mapSoundFiles																		//
+// See also		:	ESoundEffectName & k_mapSoundFiles																	//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Example		:	#include "ManicMiner/AudioHelper/ManicAudio.h"														//	
 //																														//	
 //					void CCoin::OnPickedUp()																			//
 //					{																									//
 //						// Play CoinCollected sound effect	[ would need to be added to k_mapSoundFiles ] 				//
-//						PlaySoundEffect( ESoundName::CoinCollected );													//
+//						PlaySoundEffect( ESoundEffectName::CoinCollected );												//
 //																														//
 //						// Delete coin object																			//
 //						DeleteSelf();																					//
 //					}																									//
 // -------------------------------------------------------------------------------------------------------------------- //
-inline unsigned int PlaySoundEffect( const ESoundName eSoundName )
+inline unsigned int PlaySoundEffect( const ESoundEffectName eSoundName )
 {
 	// Get SimpleAudioEngine singleton
 	auto pAudioEngine = SimpleAudioEngine::getInstance();
 	
 	// Obtain correct directory from the k_mapSoundFiles, converting from string to const char*
-	const char* sAudioDirectory = k_mapSoundFiles.at( eSoundName ).c_str();
+	const char* sAudioDirectory = k_mapSoundEffectFiles.at( eSoundName ).c_str();
 
 	// Play desired sound effect
 	return pAudioEngine->playEffect( sAudioDirectory, false, 1.0f, 1.0f, 1.0f );
@@ -110,23 +111,53 @@ inline void StopSoundEffect( const unsigned int uiSoundID )
 // -------------------------------------------------------------------------------------------------------------------- //
 // Purpose		:	This function acts as a substitute to CocosDenshion::SimpleAudioEngine::preloadEffect()				//
 //					Because the above function takes in a const char* for the sound file directory, we use this			//
-//					one that takes in an ESoundName, making it much easier and cleaner to preload our desired sound		//
+//					one that takes in an ESoundEffectName, making it much easier and cleaner to preload our desired sound//
 //																														//
-// Parameters	:	const ESoundName eSoundName																			//
+// Parameters	:	const ESoundEffectName eSoundName																	//
 //					enum value that represents the sound we want to play												//
 //																														//
-// See also		:	ESoundName & k_mapSoundFiles & PlaySoundEffect														//
+// See also		:	ESoundEffectName & k_mapSoundFiles & PlaySoundEffect												//
 // -------------------------------------------------------------------------------------------------------------------- //
-inline void PreloadSoundEffect( const ESoundName eSoundName )
+inline void PreloadSoundEffect( const ESoundEffectName eSoundName )
 {
 	// Get SimpleAudioEngine singleton
 	auto pAudioEngine = SimpleAudioEngine::getInstance();
 
 	// Obtain correct directory from the k_mapSoundFiles, converting from string to const char*
-	const char* sAudioDirectory = k_mapSoundFiles.at( eSoundName ).c_str();
+	const char* sAudioDirectory = k_mapSoundEffectFiles.at( eSoundName ).c_str();
 
 	// Play desired sound effect
 	pAudioEngine->preloadEffect( sAudioDirectory );
+}
+
+
+inline void PlayBackgroundMusic( const EBackgroundMusicName eMusicName )
+{
+	// Get SimpleAudioEngine singleton
+	auto pAudioEngine = SimpleAudioEngine::getInstance();
+
+	// Obtain correct directory from the k_mapSoundFiles, converting from string to const char*
+	const char* sAudioDirectory = k_mapBackgroundMusicFiles.at( eMusicName ).c_str();
+
+	// Play desired background music
+	pAudioEngine->playBackgroundMusic( sAudioDirectory, true );
+}
+
+inline void StopBackgroundMusic()
+{
+	// Get SimpleAudioEngine singleton
+	auto pAudioEngine = SimpleAudioEngine::getInstance();
+
+	pAudioEngine->stopBackgroundMusic( true );
+}
+
+inline void StopAllSound()
+{
+	// Get SimpleAudioEngine singleton
+	auto pAudioEngine = SimpleAudioEngine::getInstance();
+
+	pAudioEngine->stopAllEffects();
+	pAudioEngine->stopBackgroundMusic( true );
 }
 
 #endif // #ifndef __MANIC_AUDIO_HELPER__

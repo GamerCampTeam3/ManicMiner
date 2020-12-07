@@ -142,7 +142,7 @@ void CMenuLayer::CB_OnGameStartButton( Ref* pSender)
 	// ---------------- Henrique edit ---------------- //
 
 	// Preload the collectible sound
-	PreloadSoundEffect( ESoundName::KeyCollected );
+	PreloadSoundEffect( ESoundEffectName::KeyCollected );
 
 	// Play intense music theme
 	//PlaySoundEffect( ESoundName::BabyShark );

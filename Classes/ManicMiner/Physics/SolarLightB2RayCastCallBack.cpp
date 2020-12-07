@@ -42,11 +42,8 @@ float32 CSolarLightB2RayCastCallBack::ReportFixture( b2Fixture* fixture, const b
 			return 1.0f;
 		}
 	}
-	else
-	{
-		// Return with failed info
-		return -1.0f;
-	}
+	// Return with failed info
+	return -1.0f;
 }
 
 void CSolarLightB2RayCastCallBack::ResetFlag()

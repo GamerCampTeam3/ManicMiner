@@ -77,7 +77,7 @@ void CSwitch::InteractEvent()
 	if (!m_bHasBeenCollected)
 	{
 		SetFlippedX( true );
-		PlaySoundEffect( ESoundName::SwitchFlipped );
+		PlaySoundEffect( ESoundEffectName::SwitchFlipped );
 		
 		// Stops collisions from happening again.
 		m_bHasBeenCollected = true;

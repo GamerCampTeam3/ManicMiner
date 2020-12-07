@@ -114,7 +114,7 @@ void CCollectible::InteractEvent()
 {
 	if (!m_bHasBeenCollected)
 	{
-		PlaySoundEffect( ESoundName::KeyCollected );
+		PlaySoundEffect( ESoundEffectName::KeyCollected );
 
 		CGCObjectManager::ObjectKill( this );
 

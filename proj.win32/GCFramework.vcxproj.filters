@@ -953,6 +953,9 @@
     <ClInclude Include="..\Classes\ManicMiner\Scenes\Pause\CPauseScene.h">
       <Filter>Classes\ManicMiner\Scenes\Pause</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\AudioHelper\EBackgroundMusicNames.h">
+      <Filter>Classes\ManicMiner\AudioHelper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

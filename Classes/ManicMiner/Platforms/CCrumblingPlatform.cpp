@@ -38,7 +38,7 @@ void CCrumblingPlatform::VOnResourceAcquire()
 	m_pcDirector = cocos2d::Director::getInstance();
 
 	LoadAnimations();
-	PreloadSoundEffect(ESoundName::Crumbling_Stage);
+	//PreloadSoundEffect( ESoundEffectName::Crumbling_Stage);
 }
 
 void CCrumblingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams,
@@ -198,26 +198,26 @@ void CCrumblingPlatform::UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState)
 		case ECrumbleState::Stage_0:
 			m_eCrumbleState = ECrumbleState::Stage_0;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[1]));
-			PlaySoundEffect(ESoundName::Crumbling_Stage);
+			//PlaySoundEffect(ESoundEffectName::Crumbling_Stage);
 		case ECrumbleState::Stage_1:
 			m_eCrumbleState = ECrumbleState::Stage_1;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[2]));
-			PlaySoundEffect(ESoundName::Crumbling_Stage);
+			//PlaySoundEffect(ESoundEffectName::Crumbling_Stage);
 			break;
 		case ECrumbleState::Stage_2:
 			m_eCrumbleState = ECrumbleState::Stage_2;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[3]));
-			PlaySoundEffect(ESoundName::Crumbling_Stage);
+			//PlaySoundEffect( ESoundEffectName::Crumbling_Stage);
 			break;
 		case ECrumbleState::Stage_3:
 			m_eCrumbleState = ECrumbleState::Stage_3;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[4]));
-			PlaySoundEffect(ESoundName::Crumbling_Stage);
+			//PlaySoundEffect( ESoundEffectName::Crumbling_Stage);
 			break;
 		case ECrumbleState::Stage_Destroy:
 			m_eCrumbleState = ECrumbleState::Stage_Destroy;
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[5]));
-			PlaySoundEffect(ESoundName::Crumbling_Stage);
+			//PlaySoundEffect( ESoundEffectName::Crumbling_Stage);
 			// Disable Physics body to allow the player to fall through the platform
 			GetPhysicsBody()->SetActive(false);
 			break;

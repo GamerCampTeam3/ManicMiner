@@ -337,6 +337,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\GamerCamp\GCObject\GCObjGroupDefault.h" />
     <ClInclude Include="..\Classes\GamerCamp\Win32Input\CInputKeyboard.h" />
     <ClInclude Include="..\Classes\GamerCamp\Win32Input\GCKeyboardManager.h" />
+    <ClInclude Include="..\Classes\ManicMiner\AudioHelper\EBackgroundMusicNames.h" />
     <ClInclude Include="..\Classes\ManicMiner\AudioHelper\ManicAudio.h" />
     <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CCollectiblesGroup.h" />
     <ClInclude Include="..\Classes\ManicMiner\CollectiblesGroup\CentralCavern\CCGCentralCavern.h" />

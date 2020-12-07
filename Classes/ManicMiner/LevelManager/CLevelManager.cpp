@@ -7,6 +7,8 @@
 // Include general cocos2d framework
 #include "cocos2d/cocos/base/CCDirector.h"
 
+#include "ManicMiner/AudioHelper/ManicAudio.h"
+
 // Include Helpers ( safe delete )
 #include "ManicMiner/Helpers/Helpers.h"
 
@@ -89,6 +91,8 @@ void CLevelManager::GoToMainMenu()
 	// Create and run CMenuLayer
 	Scene* pScene = CMenuLayer::scene( *this );
 	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 0.2f, pScene ) );
+
+	StopAllSound();
 }
 
 void CLevelManager::GoToControlsScene()
@@ -121,6 +125,7 @@ void CLevelManager::GoToGameOverScene()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CLevelManager::GoToNextLevel()
 {
+
 	// If beat last level, go to first level
 	if( m_iCurrentLevelIndex == 20 )
 	{
@@ -267,6 +272,7 @@ void CLevelManager::EnterCavern()
 		// If so, proceed to next level ( which will be level 1  / Central Cavern )
 		GoToNextLevel();
 	}
+	PlayBackgroundMusic( EBackgroundMusicName::CrystalCoralReef );
 }
 
 // -------------------------------------------------------------------------------------------------------------------- //

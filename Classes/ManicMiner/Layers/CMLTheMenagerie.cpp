@@ -1,6 +1,6 @@
 #include "CMLTheMenagerie.h"
 
-#include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/AudioHelper/EBackgroundMusicNames.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLTheMenagerie::CMLTheMenagerie()
@@ -24,6 +24,7 @@ void CMLTheMenagerie::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Toxic;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::DeepSeaOilRig;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/2_TheMenagerie.oel";
 	m_sLevelCreationParameters.szLevelName			= "The Menagerie";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );

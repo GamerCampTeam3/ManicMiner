@@ -1,4 +1,5 @@
 #include "ManicMiner/AirManager/AirManager.h"
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "ManicMiner/Enums/ELifeUpdateType.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
@@ -26,6 +27,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_pcMovingDoor			( nullptr )
 	, m_sLevelValues			( ECollectibleRequirements::Collectible, 0, 0 )
 	, m_ESpecialInteractionType ( ESpecialInteraction::Default )
+	, m_eCurrentBackgroundMusic ( EBackgroundMusicName::CrystalCoralReef )
 {
 	ReadHighScore();
 }
@@ -205,6 +207,16 @@ void CGameManager::UpdateLives(ELifeUpdateType eLifeUpdateType)
 void CGameManager::ResetHUD()
 {
 	m_pcCHUD->FlushText();
+}
+
+void CGameManager::CheckShouldUpdateMusic( EBackgroundMusicName eBackgroundMusic )
+{
+	if ( m_eCurrentBackgroundMusic != eBackgroundMusic )
+	{
+		StopBackgroundMusic();
+		m_eCurrentBackgroundMusic = eBackgroundMusic;
+		PlayBackgroundMusic( m_eCurrentBackgroundMusic );
+	}
 }
 
 #pragma endregion CHUD_Update_Calls

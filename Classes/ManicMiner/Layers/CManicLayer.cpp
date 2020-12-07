@@ -14,6 +14,7 @@
 #include "GamerCamp/Win32Input/GCKeyboardManager.h"
 
 #include "ManicMiner/AirManager/AirManager.h"
+#include "ManicMiner/AudioHelper/ManicAudio.h"
 #include "ManicMiner/Collectible/CCollectible.h"
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
@@ -319,7 +320,6 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 	// Go to next level if requested
 	if( GetWasNextLevelRequested() )
 	{
-		
 		m_bWasNextLevelRequested = false;
 		m_pcLevelManager->GoToNextLevel();
 	}
@@ -361,7 +361,6 @@ void CManicLayer::VOnReset( void )
 	IGCGameLayer::VOnReset();
 	m_pcGameManager->ResetEvent();
 }
-
 // --- b2ContactListener Interface ------------------------------------------------------------------------------------ //
 																														//
 // BeginContact happens for the first frame of a unique collision														//
@@ -870,6 +869,9 @@ void CManicLayer::onEnter()
 
 	// call base class function	to init the keyboard manager
 	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
+
+	m_pcGameManager->CheckShouldUpdateMusic( m_sLevelCreationParameters.eBackgroundMusic );
+
 }
 
 
@@ -1224,7 +1226,7 @@ void CManicLayer::Init()
 	m_pcGameManager->SetCAirManager( m_pcAirManager );
 	m_pcAirManager ->SetGameManager( m_pcGameManager );
 	
-	if (m_pcGameManager->GetDoOnce() )
+	if ( m_pcGameManager->GetDoOnce() )
 	{
 		m_pcGameManager->ResetValues();		
 		m_pcGameManager->SetDoOnce( false );

@@ -4,7 +4,7 @@
 
 #include "CMLWackyAmoebatrons.h"
 
-#include "ManicMiner/GameManager/CGameManager.h"
+#include "ManicMiner/AudioHelper/EBackgroundMusicNames.h"
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLWackyAmoebatrons::CMLWackyAmoebatrons()
@@ -27,7 +27,8 @@ void CMLWackyAmoebatrons::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 1 );
-	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Magma;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/8_WackyAmoebatrons.oel";
 	m_sLevelCreationParameters.szLevelName			= "Wacky Amoebatrons";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 90.0f, 120.0f );
