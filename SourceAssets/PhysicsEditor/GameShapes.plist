@@ -2831,7 +2831,7 @@
                     </dict>
 				</array>
 			</dict>
-			<key>CN_Platform_Regular_9x1</key>
+			<key>auw_platform_ground_540x60</key>
 			<dict>
 				<key>anchorpoint</key>
                 <string>{ 0.5000,0.5000 }</string>
