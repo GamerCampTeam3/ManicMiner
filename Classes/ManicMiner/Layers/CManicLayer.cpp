@@ -19,6 +19,7 @@
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "ManicMiner/Enemy/GCObjEugene.h"
+#include "ManicMiner/Enemy/GCObjKong.h"
 #include "ManicMiner/Enums/ELifeUpdateType.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Hazards/GCObjHazard.h"
@@ -219,7 +220,10 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
 		});
 
-	
+	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CGCObjKong& rcKong, const b2Contact& rcContact ) -> void
+	{
+		PlayerCollidedEnemy( rcPlayer, rcKong, rcContact );
+	} );
 
 }
 
@@ -784,7 +788,15 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 	{																													//
 		OnDeath();
 	}																													//
-}																														//
+}
+
+void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjKong& rcKong, const b2Contact& rcContact )			//
+{																														//
+	if (rcContact.IsTouching())																						//
+	{																													//
+		OnDeath();
+	}																													//
+}			//
 																														//
 																														//
 void CManicLayer::PlayerCollidedHazard( CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact )			//

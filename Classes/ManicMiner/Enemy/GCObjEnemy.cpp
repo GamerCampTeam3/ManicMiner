@@ -31,18 +31,6 @@ CGCObjEnemy::CGCObjEnemy()
 	m_cOriginalDestination					= cocos2d::Vec2::ZERO;
 }
 
-CGCObjEnemy::CGCObjEnemy(GCTypeID idDerivedType)
-	: m_pCustomCreationParams(nullptr)
-{
-	m_fMoveDelta							= m_kfZero;
-	m_bTemporaryAnchorPositionActive		= false;
-	m_bInitialiseToOne						= false;
-	m_fPreviousXPos							= m_kfZero;
-	m_bEnemyJustReceivedANewDestination		= false;
-	m_cNewDestination						= cocos2d::Vec2::ZERO;
-	m_cOriginalDestination					= cocos2d::Vec2::ZERO;
-}
-
 //////////////////////////////////////////////////////////////////////////
 // Destructor
 //////////////////////////////////////////////////////////////////////////
@@ -75,13 +63,7 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 		pAnimation = GCCocosHelpers::CreateAnimation(rdictPList, m_pszAnimation);
 		pAnimation->retain();
 
-
-		// Note below can be used to set animation speed if required so code left in but commented out (and driven from OGMO data value...)
-		//pAnimation->setDelayPerUnit(1.0f / 16.0f);
 		RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
-
-		
-		
 	}
 
 	// Anchor point initialised to postion read from OGMO.
@@ -259,7 +241,7 @@ void CGCObjEnemy::VOnResurrected( void )
 //Function to provide the frame update of this object
 //////////////////////////////////////////////////////////////////////////
 //virtual function
-void CGCObjEnemy::VOnUpdate(float fTimeStep)
+void CGCObjEnemy::VOnUpdate( float fTimeStep ) 
 {
 	// Call base class version first.
 	CGCObject::VOnUpdate(fTimeStep);
@@ -376,7 +358,7 @@ void CGCObjEnemy::VOnResourceRelease()
 	}
 }
 
-void CGCObjEnemy::ModifyEnemyDestinationPoint(cocos2d::Vec2& rcNewDestination)
+void CGCObjEnemy::ModifyEnemyDestinationPoint( cocos2d::Vec2& rcNewDestination )
 {
 	m_bEnemyJustReceivedANewDestination = true;
 	m_cNewDestination = rcNewDestination;

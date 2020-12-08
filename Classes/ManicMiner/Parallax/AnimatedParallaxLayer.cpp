@@ -28,31 +28,6 @@ void CAnimatedParallaxLayer::Init(cocos2d::Scene& pcScene, const SParallaxLayerD
 	auto updateParallaxAction = cocos2d::MoveTo::create(0.0f, v2CentreScreen);
 	GetSprite()->runAction(updateParallaxAction);
 
-	/*
-	for (float i = 0; i < 1; i += 0.01f)
-	{
-		int x1 = 0;
-		int x2 = 200;
-		int x3 = 400;
-
-		int y1 = 0;
-		int y2 = 200;
-		int y3 = 0;
-
-		// The Green Line
-		int xa = getPt(x1, x2, i);
-		int ya = getPt(y1, y2, i);
-		int xb = getPt(x2, x3, i);
-		int yb = getPt(y2, y3, i);
-
-		// The Black Dot
-		m_v2Right.x = getPt(xa, xb, i);
-		m_v2Right.y = getPt(ya, yb, i);
-
-		auto updateParallaxAction2 = cocos2d::MoveTo::create(0.0f, m_v2Right);
-		GetSprite()->runAction(updateParallaxAction2);
-
-	}*/
 	
 	//auto updateParallaxAction2 = cocos2d::MoveTo::create(10.0f, m_v2Right);
 	//GetSprite()->runAction(updateParallaxAction2);
@@ -62,37 +37,6 @@ void CAnimatedParallaxLayer::Init(cocos2d::Scene& pcScene, const SParallaxLayerD
 
 void CAnimatedParallaxLayer::VUpdate()
 {
-
-	/*
-	if(!m_bShouldStopMoving)
-	{
-
-		for (float i = 0; i < 1; i += 0.01f)
-		{
-			int x1 = m_v2Right.x;
-			int x2 = 1160;
-			int x3 = 1260;
-
-			int y1 = m_v2Right.y;
-			int y2 = 640;
-			int y3 = 540;
-			
-			// The Green Line
-			int xa = getPt(x1, x2, i);
-			int ya = getPt(y1, y2, i);
-			int xb = getPt(x2, x3, i);
-			int yb = getPt(y2, y3, i);
-
-			// The Black Dot
-			m_v2Right.x = getPt(xa, xb, i);
-			m_v2Right.y = getPt(ya, yb, i);
-
-			auto updateParallaxAction = cocos2d::MoveTo::create(0.0f, m_v2Right);
-			GetSprite()->runAction(updateParallaxAction);
-		}
-
-		m_bShouldStopMoving = true;
-	}*/
 	
 	//CCLOG("Fish Position X: %d", GetSprite()->getPosition().x);
 	//CCLOG("Fish Position Y: %d", GetSprite()->getPosition().y);
@@ -186,7 +130,8 @@ float CAnimatedParallaxLayer::GetDistanceToCurrentMoveToPosition(bool bInitialDi
 {
 	float fDistanceToReturn = 0.f;
 	const cocos2d::Vec2 currentPosition = GetSprite()->getPosition();
-	
+
+	// when the fish found a new point
 	if (bInitialDistance)
 	{
 		m_v2CurrentMoveToPosition = m_v2NextMoveToPosition;

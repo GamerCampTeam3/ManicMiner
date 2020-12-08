@@ -10,7 +10,7 @@ class CBlock;
 class CMovingDoor : public CGCObjectGroup
 {
 public:
-	CMovingDoor( CGameManager& rcGameManager );
+	CMovingDoor( CGameManager& rcGameManager, const CGCFactoryCreationParams& rcFactoryCreationParams );
 	CMovingDoor();
 	
 	~CMovingDoor();
