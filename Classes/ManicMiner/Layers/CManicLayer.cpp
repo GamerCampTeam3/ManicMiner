@@ -241,9 +241,9 @@ void CManicLayer::VInitializeBackground()
 			const SParallaxLayerData sData2( "TexturePacker/Backgrounds/Cavern/Background_1.plist", -5 );
 			const SParallaxLayerData sData3( "TexturePacker/Backgrounds/Cavern/CavernForeground.plist", 1 );
 
-			m_pcParallax->AddScrollingLayer( sData1, 5.0f );
+			m_pcParallax->AddScrollingLayer( sData1, 1.0f );
 			m_pcParallax->AddScrollingLayer( sData2, 0.025f );
-			m_pcParallax->AddScrollingLayer( sData3, 6.5f );
+			m_pcParallax->AddScrollingLayer( sData3, 40.5f );
 			
 			
 			const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -4 );
@@ -297,8 +297,7 @@ void CManicLayer::VInitializeBackground()
 		break;
 		}
 
-
-		m_pcParallax->Reset();
+	m_pcParallax->Reset();
 	}
 
 
