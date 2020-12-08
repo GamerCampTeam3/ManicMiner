@@ -96,7 +96,7 @@ public:
 	virtual	void VOnDestroy		( void )			override;															//
 	virtual void VOnReset		( void )			override;															//
 // -------------------------------------------------------------------------------------------------------------------- //
-
+	virtual void onExitTransitionDidStart() override;
 // ---------------------------------- b2ContactListener Interface ----------------------------------------------------- //
 	virtual void BeginContact	( b2Contact* pB2Contact );																//
 	virtual void EndContact		( b2Contact* pB2Contact );																//

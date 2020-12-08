@@ -360,8 +360,8 @@ public:
 
 	void StopVerticalMovementSound();
 
-	void StopHorizontalMovementSound();
-
+	void StopRunningSound();
+	void PlayRunningSound();
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//

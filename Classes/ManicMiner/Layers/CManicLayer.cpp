@@ -376,6 +376,15 @@ void CManicLayer::VOnReset( void )
 	IGCGameLayer::VOnReset();
 	m_pcGameManager->ResetEvent();
 }
+
+void CManicLayer::onExitTransitionDidStart()
+{
+	m_pcPlayer->StopRunningSound();
+	m_pcPlayer->StopVerticalMovementSound();
+
+	IGCGameLayer::onExitTransitionDidStart();
+}
+
 // --- b2ContactListener Interface ------------------------------------------------------------------------------------ //
 																														//
 // BeginContact happens for the first frame of a unique collision														//

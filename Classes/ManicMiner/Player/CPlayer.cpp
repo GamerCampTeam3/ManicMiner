@@ -192,6 +192,7 @@ void CPlayer::VOnResourceRelease()																												//
 	LoadAnimations(false);																														//
 	// Stop Jump/Fall sound effect
 	StopVerticalMovementSound();
+	StopRunningSound();
 																																				//
 }																																				//
 																																				//
@@ -401,10 +402,6 @@ void CPlayer::CheckKeyboardInput()
 
 					AlternateIdleAnimation(m_bSelectedStandardIdle); // z check
 					m_bSelectedStandardIdle = !m_bSelectedStandardIdle; // z check
-					
-
-
-					
 				}
 			}
 		}
@@ -460,6 +457,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 #endif
 				// Static -> no speed
 				fHorizontalSpeed = 0.0f;
+				StopRunningSound();
 				if (m_bIsAlive && GetIsGrounded())
 				{
 					InitiateAnimationStateChange( EAnimationState::Idle );
@@ -482,6 +480,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 				if ( m_bIsAlive && GetIsGrounded() )
 				{
 					InitiateAnimationStateChange( EAnimationState::Run );
+					PlayRunningSound();
 				}
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -498,9 +497,10 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 			// Adjust sprite orientation
 				SetFlippedX( false );
-				if (m_bIsAlive && GetIsGrounded() )
+				if( m_bIsAlive && GetIsGrounded() )
 				{
 					InitiateAnimationStateChange( EAnimationState::Run );
+					PlayRunningSound();
 				}
 				break;
 			}
@@ -593,6 +593,9 @@ void CPlayer::JumpEvent()
 		m_bCanBeControlled = true;
 
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
+		
+		StopRunningSound();
+
 		m_uiJumpSoundID = PlaySoundEffect( ESoundEffectName::Jump );
 
 		InitiateAnimationStateChange(EAnimationState::Jump);
@@ -602,6 +605,8 @@ void CPlayer::JumpEvent()
 
 void CPlayer::OnEscape()
 {
+	StopRunningSound();
+	StopVerticalMovementSound();
 	m_bIsAlive = false;
 	m_bCanBeControlled = false;
 	m_bCanJump = false;
@@ -696,16 +701,19 @@ void CPlayer::OnLanded()
 		else 
 		{
 			// Go back to Idle/Moving
-			switch(m_ePlayerDirection)
+			switch( m_ePlayerDirection )
 			{
 			case EPlayerDirection::Static:
-				InitiateAnimationStateChange(EAnimationState::Idle);
+				InitiateAnimationStateChange( EAnimationState::Idle );
+				StopRunningSound();
 				break;
 			case EPlayerDirection::Right:
-				InitiateAnimationStateChange(EAnimationState::Run);
+				InitiateAnimationStateChange( EAnimationState::Run );
+				PlayRunningSound();
 				break;
 			case EPlayerDirection::Left:
-				InitiateAnimationStateChange(EAnimationState::Run);
+				InitiateAnimationStateChange( EAnimationState::Run );
+				PlayRunningSound();
 				break;
 			}
 
@@ -736,12 +744,20 @@ void CPlayer::StopVerticalMovementSound()
 	}
 }
 
-void CPlayer::StopHorizontalMovementSound()
+void CPlayer::StopRunningSound()
 {
 	if( m_uiRunningSoundID != 0 )
 	{
 		StopSoundEffect( m_uiRunningSoundID );
 		m_uiRunningSoundID = 0;
+	}
+}
+
+void CPlayer::PlayRunningSound()
+{
+	if( !m_uiRunningSoundID )
+	{
+		m_uiRunningSoundID = PlaySoundEffect( ESoundEffectName::RunningFootsteps );
 	}
 }
 
