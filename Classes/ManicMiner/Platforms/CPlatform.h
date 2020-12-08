@@ -48,6 +48,11 @@ public:
 
 	bool GetIsSensorOverlapped() const;
 	void SetIsSensorOverlapped( bool bIsSensorOverlapped );
+
+	bool GetIsTriggeringHardContact() const;
+	void SetIsTriggeringHardContact( bool bIsTriggeringHardContact );
+
+
 	
 protected:
 	
@@ -63,6 +68,7 @@ protected:
 	bool m_bTriggersHardContactEvent;
 	bool m_bIsInContact;
 	bool m_bIsSensorOverlapped;
+	bool m_bIsTriggeringHardContact;
 
 	cocos2d::Vec2	m_cAnchorPoint;
 	cocos2d::Director* m_pcDirector;

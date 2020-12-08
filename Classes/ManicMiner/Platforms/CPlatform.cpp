@@ -75,6 +75,9 @@ void CPlatform::VOnReset()
 	m_v2ResetPosition = cocos2d::Vec2(0.f, 0.f);
 	m_bCollisionEnabled = false;
 	m_bTriggersHardContactEvent = false;
+	m_bIsInContact = false;
+	m_bIsSensorOverlapped = false;
+	m_bIsTriggeringHardContact = false;
 }
 
 bool CPlatform::GetCollisionEnabled() const
@@ -115,4 +118,14 @@ bool CPlatform::GetIsSensorOverlapped() const
 void CPlatform::SetIsSensorOverlapped( bool bIsSensorOverlapped )
 {
 	m_bIsSensorOverlapped = bIsSensorOverlapped;
+}
+
+bool CPlatform::GetIsTriggeringHardContact() const
+{
+	return m_bIsTriggeringHardContact;
+}
+
+void CPlatform::SetIsTriggeringHardContact( bool bIsTriggeringHardContact )
+{
+	m_bIsTriggeringHardContact = bIsTriggeringHardContact;
 }

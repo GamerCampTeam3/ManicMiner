@@ -4,7 +4,7 @@
 	
 
 //#define PLAYER_DEBUG_DIRECTION
-#define PLAYER_DEBUG_CONTACTS
+//#define PLAYER_DEBUG_CONTACTS
 //#define PLAYER_DEBUG_CONTACTS_REALTIME
 //#define PLAYER_DEBUG_LANDING
 
@@ -220,6 +220,9 @@ void CPlayer::VOnResurrected()																													//
 	m_fVerticalSpeedAdjust = 0.0f;
 	m_fLastHighestY = 0.0f;
 	m_fLastGroundedY = 0.0f;
+	m_iHardContactCount = 0;
+	m_iSensorContactCount = 0;
+
 																																				//
 																																				//
 // Reset physics body related components																										//
@@ -767,7 +770,9 @@ void CPlayer::LeftGround()
 	// Drop straight down
 		ApplyDirectionChange( EPlayerDirection::Static );
 		m_eJumpDirection = EPlayerDirection::Static;
+#ifdef PLAYER_DEBUG_DIRECTION
 		CCLOG( "Dropping straight down" );
+#endif
 		m_bCanJump = false;
 		m_uiFallingSoundID = PlaySoundEffect( ESoundEffectName::Falling );
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
