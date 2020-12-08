@@ -698,24 +698,33 @@ void CPlayer::OnLanded()
 				break;
 			}
 
-		// Stop Jump/Fall sound effect
-			if( m_uiJumpSoundID != 0 )
-			{
-				StopSoundEffect( m_uiJumpSoundID );
-				m_uiJumpSoundID = 0;
-			}
-			if( m_uiFallingSoundID != 0 )
-			{
-				StopSoundEffect( m_uiFallingSoundID );
-				m_uiFallingSoundID = 0;
-			}
+
 #ifdef PLAYER_DEBUG_LANDING
 		CCLOG( "Landed" );
 #endif
 		}
 	}
+
+	StopMovementSound();
 }
 
+
+void CPlayer::StopMovementSound()
+{
+	{
+		// Stop Jump/Fall sound effect
+		if( m_uiJumpSoundID != 0 )
+		{
+			StopSoundEffect( m_uiJumpSoundID );
+			m_uiJumpSoundID = 0;
+		}
+		if( m_uiFallingSoundID != 0 )
+		{
+			StopSoundEffect( m_uiFallingSoundID );
+			m_uiFallingSoundID = 0;
+		}
+	}
+}
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//
