@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>tm_ladder_middle_120x60.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{1,0}</string>
+                <key>spriteSize</key>
+                <string>{110,60}</string>
+                <key>spriteSourceSize</key>
+                <string>{120,60}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{110,60}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>tm_ladder_middle_120x60.png</string>
+            <key>size</key>
+            <string>{110,60}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:1a4f0573952f5ca34e61136eca0d8fff:1aeae12f19dbb86d2b71e821424b8b1d:b0385c7ccf9789554edcdf579407ad75$</string>
+            <key>textureFileName</key>
+            <string>tm_ladder_middle_120x60.png</string>
+        </dict>
+    </dict>
+</plist>
