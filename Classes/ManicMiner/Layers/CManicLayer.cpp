@@ -19,6 +19,7 @@
 #include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "ManicMiner/Enemy/GCObjEugene.h"
+#include "ManicMiner/Enemy/GCObjKong.h"
 #include "ManicMiner/Enums/ELifeUpdateType.h"
 #include "ManicMiner/GameManager/CGameManager.h"
 #include "ManicMiner/Hazards/GCObjHazard.h"
@@ -219,7 +220,10 @@ void CManicLayer::VOnCreate()
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
 		});
 
-	
+	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CGCObjKong& rcKong, const b2Contact& rcContact ) -> void
+	{
+		PlayerCollidedEnemy( rcPlayer, rcKong, rcContact );
+	} );
 
 }
 
@@ -445,7 +449,9 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
 
 					// Check if this platform was already overlapping in terms of hard contact
-					bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) && m_pcPlayer->GetHardContactCount();
+					// && if if collision is not yet enabled
+					// && if player has no hard contacts yet
+					bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) /*&& m_pcPlayer->GetHardContactCount()*/;
 
 					// Activate this platform's collision																	//
 					pcPlatform->SetCollisionEnabled( true );																	//
@@ -458,7 +464,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 				
 					if( bShouldStartHardContact )
 					{
-						//CCLOG( "Forcing a ghosted hard contact start, due to sensor contact now but hard fixtures were already overlapping." );
+						CCLOG( "Forcing a ghosted hard contact start, due to sensor contact now but hard fixtures were already overlapping." );
 						PlayerBeganContactWithPlatform( *pcPlatform );
 					}
 				}
@@ -581,8 +587,8 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					// Deactivate this platform's collision																//
 					pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
 
-					// Decrement sensor contact count																		//
-					m_pcPlayer->SensorContactEvent( false );																//
+					// Decrement sensor contact count																	//
+					m_pcPlayer->SensorContactEvent( false );															//
 
 					pcPlatform->SetIsSensorOverlapped( false );
 				}																										//
@@ -648,7 +654,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 						break;																							//
 					}																									//
 					// If leaving this contact, and sensors aren't overlapping anymore as well
-					if ( !pcPlatform->GetIsSensorOverlapped() && pcPlatform->GetPlatformType() != EPlatformType::Brick )
+					if ( /*!pcPlatform->GetIsSensorOverlapped() &&*/ pcPlatform->GetPlatformType() != EPlatformType::Brick )
 					{
 						// Disable platform collision
 						pcPlatform->SetCollisionEnabled( false );
@@ -656,8 +662,8 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				}																										//
 				else
 				{
-#ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS
 					CCLOG( "ENDED SOLID CONTACT WITH A PLATFORM THAT HAS COLLISION OFF" );
+#ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS
 #endif
 				}
 				pcPlatform->SetIsInContact( false );
@@ -782,7 +788,15 @@ void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, 
 	{																													//
 		OnDeath();
 	}																													//
-}																														//
+}
+
+void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjKong& rcKong, const b2Contact& rcContact )			//
+{																														//
+	if (rcContact.IsTouching())																						//
+	{																													//
+		OnDeath();
+	}																													//
+}			//
 																														//
 																														//
 void CManicLayer::PlayerCollidedHazard( CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact )			//

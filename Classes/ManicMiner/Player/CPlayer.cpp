@@ -50,6 +50,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_kfGravitionalPull				( 1.6f )
 	, m_kfMaxFallDistance				( 4.8f )
 	, m_fVerticalSpeedAdjust			( 0.0f )
+	, m_uiRunningSoundID				( 0 )
 	, m_uiJumpSoundID					( 0 )
 	, m_uiFallingSoundID				( 0 )
 	, m_iMaxLives						( 3 )
@@ -189,16 +190,7 @@ void CPlayer::VOnResourceRelease()																												//
 
 	LoadAnimations(false);																														//
 	// Stop Jump/Fall sound effect
-	if( m_uiJumpSoundID != 0 )
-	{
-		StopSoundEffect( m_uiJumpSoundID );
-		m_uiJumpSoundID = 0;
-	}
-	if( m_uiFallingSoundID != 0 )
-	{
-		StopSoundEffect( m_uiFallingSoundID );
-		m_uiFallingSoundID = 0;
-	}
+	StopVerticalMovementSound();
 																																				//
 }																																				//
 																																				//
@@ -463,9 +455,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 #endif
 				// Static -> no speed
 				fHorizontalSpeed = 0.0f;
-				if (m_bIsAlive)
+				if (m_bIsAlive && GetIsGrounded())
 				{
-					InitiateAnimationStateChange(EAnimationState::Idle);
+					InitiateAnimationStateChange( EAnimationState::Idle );
 				}
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -482,9 +474,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 				// Adjust sprite orientation
 				SetFlippedX( true );
-				if (m_bIsAlive)
+				if ( m_bIsAlive && GetIsGrounded() )
 				{
-					InitiateAnimationStateChange(EAnimationState::Run);
+					InitiateAnimationStateChange( EAnimationState::Run );
 				}
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -501,9 +493,9 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 			// Adjust sprite orientation
 				SetFlippedX( false );
-				if (m_bIsAlive)
+				if (m_bIsAlive && GetIsGrounded() )
 				{
-					InitiateAnimationStateChange(EAnimationState::Run);
+					InitiateAnimationStateChange( EAnimationState::Run );
 				}
 				break;
 			}
@@ -669,7 +661,7 @@ void CPlayer::OnLanded()
 	m_bIsGrounded = true;
 
 // If first contact with ground -> landing
-	if( m_iHardContactCount == 1 )
+	if( m_iHardContactCount == 1 || ( m_iHardContactCount == 2 && m_iSensorContactCount == 1 ) )
 	{
 	// Check fall damage / death
 	// Store last grounded Y coordinate
@@ -698,18 +690,17 @@ void CPlayer::OnLanded()
 				break;
 			}
 
-
 #ifdef PLAYER_DEBUG_LANDING
 		CCLOG( "Landed" );
 #endif
 		}
 	}
 
-	StopMovementSound();
+	StopVerticalMovementSound();
 }
 
 
-void CPlayer::StopMovementSound()
+void CPlayer::StopVerticalMovementSound()
 {
 	{
 		// Stop Jump/Fall sound effect
@@ -723,6 +714,15 @@ void CPlayer::StopMovementSound()
 			StopSoundEffect( m_uiFallingSoundID );
 			m_uiFallingSoundID = 0;
 		}
+	}
+}
+
+void CPlayer::StopHorizontalMovementSound()
+{
+	if( m_uiRunningSoundID != 0 )
+	{
+		StopSoundEffect( m_uiRunningSoundID );
+		m_uiRunningSoundID = 0;
 	}
 }
 
@@ -771,6 +771,8 @@ void CPlayer::LeftGround()
 		m_bCanJump = false;
 		m_uiFallingSoundID = PlaySoundEffect( ESoundEffectName::Falling );
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
+
+		InitiateAnimationStateChange( EAnimationState::Jump );
 	}
 
 	// Store last grounded Y coordinate

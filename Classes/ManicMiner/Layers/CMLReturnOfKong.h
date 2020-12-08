@@ -13,6 +13,7 @@
 
 #include "ManicMiner/Layers/CManicLayer.h"
 
+class CMovingDoor;
 class CGCObjKong;
 
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
@@ -36,6 +37,7 @@ public:
 	void VLevelSpecificInteraction() override;
 // -------------------------------------------------------------------------------------------------------------------- //
 private:
+	CMovingDoor* m_pcMovingDoor;
 	CGCObjKong* m_pcKong;
 };
 #endif //#ifndef _CMLRETURNOFKONG_H_
