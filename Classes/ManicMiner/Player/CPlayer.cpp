@@ -777,22 +777,6 @@ void CPlayer::ClimbUpBrickLedge()
 	// Only climb if going upwards
 	if( kfVerticalSpeed > 0.0f )
 	{
-		float fHorizontalSpeed = 0.0f;
-		switch( m_eJumpDirection )
-		{
-		case EPlayerDirection::Right:
-		{
-			fHorizontalSpeed = m_kfWalkSpeed;
-		}
-		break;
-		case EPlayerDirection::Left:
-		{
-			fHorizontalSpeed = -m_kfWalkSpeed;
-		}
-		break;
-		}
-		const Vec2 kv2NewVelocity( fHorizontalSpeed, kfVerticalSpeed );
-		//SetVelocity( kv2NewVelocity );
 		ApplyDirectionChange( m_eJumpDirection );
 	}
 }
