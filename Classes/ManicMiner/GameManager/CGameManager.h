@@ -93,7 +93,7 @@ class CGameManager
 	
 																	 private:
 	//------------------------------------------------------------  CONST VARS -----------------------------------------------------------------------------------------			
-	static const int m_kiStartingLives		= 3;							// The lives the player start with.																		
+	static const int m_kiStartingLives		= 8;							// The lives the player start with.																		
 	static const int m_kIScoreIncrement		= 100;							// The score that collectibles, 100 like original manic miner.											
 	static const int m_kiExtraLifeThreshold = 10000;						// The threshold to reach before an extra life is given.												
 	static const int m_kiScorePerTimeLeft	= 11;							// How much score each tick will give. (almost like the original manic miner							
