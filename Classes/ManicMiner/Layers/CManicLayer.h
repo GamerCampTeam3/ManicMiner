@@ -31,6 +31,7 @@
 // param0 = X, param1 = Y
 #define CC_V2(param0, param1)  cocos2d::Vec2(param0, param1) 
 
+class CGCObjKong;
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
 class CCollectible;																										//
 class CDoor;																											//
@@ -109,6 +110,7 @@ public:
 	void PlayerCollidedDoor		( CPlayer&		rcPlayer,		CDoor&			rcDoor,		const b2Contact& rcContact	);
 	void ItemCollected			( CCollectible& rcCollectible,	CPlayer&		rcPlayer,	const b2Contact& rcContact	);
 	void SwitchInteracted		( CSwitch&		rcSwitch,		CPlayer& rcPlayer,			const b2Contact& rcContact	);
+	void PlayerCollidedEnemy	( CPlayer& rcPlayer,			CGCObjKong& rcEnemy,		const b2Contact& rcContact );
 // -------------------------------------------------------------------------------------------------------------------- //
 
 // ---------------------------------- Getters ------------------------------------------------------------------------- //

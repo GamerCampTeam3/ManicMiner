@@ -138,6 +138,9 @@ private:
 	float	m_fLastHighestY;																							//
 // -------------------------------------------------------------------------------------------------------------------- //
 
+// Running Sound ID
+	unsigned int m_uiRunningSoundID;
+
 // Jump Sound ID
 	unsigned int m_uiJumpSoundID;
 // Falling Sound ID
@@ -351,10 +354,10 @@ public:
 
 	void OnLanded();
 
-	void StopMovementSound();
+	void StopVerticalMovementSound();
 
+	void StopHorizontalMovementSound();
 
-	//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//

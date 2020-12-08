@@ -13,6 +13,7 @@
 
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EKong", "TexturePacker/Sprites/Kong/Kong.plist", "cc_enemy_duck", b2_dynamicBody, true);
 
+
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLWillyMeetsKong::CMLWillyMeetsKong()
 	: CManicLayer()
@@ -45,7 +46,9 @@ void CMLWillyMeetsKong::VOnCreate( void )
 	CManicLayer::VOnCreate();
 
 	m_pcKong = new CGCObjKong(cocos2d::Vec2(960.0, 900.0), cocos2d::Vec2(100.0, 360.0), 2.0f, s_cCreationParams_CGCObj_EKong);
-	m_pcMovingDoor = new CMovingDoor(*m_pcGameManager);
+
+	static const CGCFactoryCreationParams skcCMovingDoorParams( "CPlatform_Regular_1x1", "TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x60.plist", "CN_Platform_Regular_1x1", b2_staticBody, true );	
+	m_pcMovingDoor = new CMovingDoor(*m_pcGameManager, skcCMovingDoorParams );
 
 }
 
