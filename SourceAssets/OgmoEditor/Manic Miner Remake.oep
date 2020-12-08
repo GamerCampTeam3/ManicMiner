@@ -1092,7 +1092,7 @@
         <Height>60</Height>
       </Size>
       <Origin>
-        <X>770</X>
+        <X>720</X>
         <Y>30</Y>
       </Origin>
       <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Moving/tb_platform_moving_1440x60.png" Tiled="false">
