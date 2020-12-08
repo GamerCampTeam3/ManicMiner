@@ -20,8 +20,6 @@
 //  - Initial facing direction.
 //  - Initial movement direction.
 //  - Ability to extend the destination anchor point (note correctly resets with the level).
-//  - 
-
 //
 //////////////////////////////////////////////////////////////////////////
 
@@ -65,8 +63,6 @@ protected:
 public:
 
 	CGCObjEnemy();
-
-	CGCObjEnemy(GCTypeID idDerivedType);
 
 	GCFACTORY_DECLARE_CREATABLECLASS(CGCObjEnemy);
 	
