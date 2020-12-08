@@ -350,7 +350,11 @@ public:
 	void SensorContactEvent( const bool bBeganContact );																//
 
 	void OnLanded();
-																														//
+
+	void StopMovementSound();
+
+
+	//
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//
