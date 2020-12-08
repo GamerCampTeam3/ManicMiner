@@ -219,7 +219,9 @@ void CCrumblingPlatform::UpdateCrumblingPlatform(ECrumbleState eNewCrumbleState)
 			RunAction(GCCocosHelpers::CreateAnimationActionOnce(m_pcAnimations[5]));
 			//PlaySoundEffect( ESoundEffectName::Crumbling_Stage);
 			// Disable Physics body to allow the player to fall through the platform
-			GetPhysicsBody()->SetActive(false);
+			SetCollisionEnabled( false );
+			SetTriggersHardContactEvent( true );
+			GetPhysicsBody()->SetActive( false );
 			break;
 		}
 	}
