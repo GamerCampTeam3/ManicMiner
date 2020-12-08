@@ -7,12 +7,11 @@
 
 
 
-CMovingDoor::CMovingDoor( CGameManager& rcGameManager )
+CMovingDoor::CMovingDoor( CGameManager& rcGameManager, const CGCFactoryCreationParams& rcFactoryCreationParams )
 	: m_pcGameManager	( &rcGameManager )
 	, m_pcUpperBlock	( nullptr )
 	, m_pcLowerBlock	( nullptr )
-	, m_cCreationParams( "CPlatform_Regular_1x1", "TexturePacker/Sprites/Platform/CentralCavern/CentralCavern/Regular/CN_Platform_Regular_Middle_01.plist", "CN_Platform_Regular_1x1", b2_staticBody, true )
-	//, m_cCreationParams( "CPlatform_Regular_1x1", "TexturePacker/Sprites/Door/DissolvingBlock/Dissolving_Block.plist", "CN_Platform_Regular_1x1", b2_staticBody, true )
+	, m_cCreationParams	( rcFactoryCreationParams )
 {
 	Init();
 }
