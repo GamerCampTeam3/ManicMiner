@@ -462,7 +462,29 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 						PlayerBeganContactWithPlatform( *pcPlatform );
 					}
 				}
+				// Brick Platform sensor overlap
+				else
+				{
+					auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
 
+					
+					// We have more than 1 sensor for the bricks, so we need to know which one we're overlapping with
+					// We have the surface sensor, used to determine whether this brick is below the player or not
+					// And we have 2 side sensors that allow the player to climb up this ledge
+					// GET ID NAME
+					const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
+					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
+					if( ( *pszSensorIdB == "surface" && *pszSensorIdA == "brickFeet" ) ||
+						( *pszSensorIdB == "brickFeet" && *pszSensorIdA == "surface" ) )
+					{
+						pBrickPlatform->SetIsUnderPlayer( true );
+					}
+
+					// Increment sensor count for the player																//
+					m_pcPlayer->SensorContactEvent( true );																	//
+
+					pBrickPlatform->SetIsSensorOverlapped( true );
+				}
 			}																											//
 																														//
 			// If not 2 sensors																							//
@@ -470,31 +492,31 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )											//
 			{																											//
 				PlayerBeganContactWithPlatform( *pcPlatform );
-			}																											//
+			}
 
 			// Exclusive Or
 			// BeginContact triggered with hard fixture + sensor fixture
 			// This is an edge case we need to check for in order to prevent a bug with the bricks platform
 			// This type of platform by default has collision on so the player might land on the top without
 			// having overlapped sensors first.
-			else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
-			{
-				if( pcPlatform->GetPlatformType() == EPlatformType::Brick )
-				{
-					// GET ID NAME
-					auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
-					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
-					if( (		*pszSensorIdA == "surface"	&& *pszSensorIdB == "body" ) 
-						|| (	*pszSensorIdA == "body"		&& *pszSensorIdB == "surface" ) )
-					{
-						auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
-						if ( pBrickPlatform != nullptr )
-						{
-							pBrickPlatform->SetIsUnderPlayer( true );
-						}
-					}
-				}
-			}
+			//else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
+			//{
+			//	if( pcPlatform->GetPlatformType() == EPlatformType::Brick )
+			//	{
+			//		// GET ID NAME
+			//		auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
+			//		auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
+			//		if( (		*pszSensorIdA == "surface"	&& *pszSensorIdB == "body" ) 
+			//			|| (	*pszSensorIdA == "body"		&& *pszSensorIdB == "surface" ) )
+			//		{
+			//			auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
+			//			if ( pBrickPlatform != nullptr )
+			//			{
+			//				pBrickPlatform->SetIsUnderPlayer( true );
+			//			}
+			//		}
+			//	}
+			//}
 		}																												//
 	}																													//
 }																														//
@@ -559,11 +581,38 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					// Deactivate this platform's collision																//
 					pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
 
-				// Decrement sensor contact count																		//
-				m_pcPlayer->SensorContactEvent( false );																//
+					// Decrement sensor contact count																		//
+					m_pcPlayer->SensorContactEvent( false );																//
 
-				pcPlatform->SetIsSensorOverlapped( false );
+					pcPlatform->SetIsSensorOverlapped( false );
 				}																										//
+				// Brick Platform sensor overlap end
+				else
+				{
+					auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
+
+
+					// We have more than 1 sensor for the bricks, so we need to know which one we're overlapping with
+					// We have the surface sensor, used to determine whether this brick is below the player or not
+					// And we have 2 side sensors that allow the player to climb up this ledge
+					// GET ID NAME
+					const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
+					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
+					if( ( *pszSensorIdB == "surface"   && *pszSensorIdA == "brickFeet" ) ||
+						( *pszSensorIdB == "brickFeet" && *pszSensorIdA == "surface" ) )
+					{
+						pBrickPlatform->SetIsUnderPlayer( false );
+						// Increment sensor count for the player
+						m_pcPlayer->SensorContactEvent( false );
+
+						pBrickPlatform->SetIsSensorOverlapped( false );
+					}
+					else if( ( *pszSensorIdA == "ClimbUpLedge"	&& *pszSensorIdB == "feet" )
+						  || ( *pszSensorIdA == "feet"			&& *pszSensorIdB == "ClimbUpLedge" ) )
+					{
+						m_pcPlayer->ClimbUpBrickLedge();
+					}
+				}
 			}																											//
 																														//
 			// If not 2 sensors																							//
@@ -614,43 +663,37 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				pcPlatform->SetIsInContact( false );
 			}																											//
 
-			// Exclusive Or
-			// EndContact triggered with hard fixture + sensor fixture
-			// This is an edge case we need to check for in order to prevent a bug with the bricks platform
-			// This type of platform by default has collision on so the player might land on the top without
-			// having overlapped sensors first.
-			else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
-			{
-				if( pcPlatform->GetPlatformType() == EPlatformType::Brick )
-				{
-					// GET ID NAME
-					auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
-					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
-					if( ( *pszSensorIdA == "surface" && *pszSensorIdB == "body" )
-						|| ( *pszSensorIdA == "body" && *pszSensorIdB == "surface" ) )
-					{
-						auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
-						if( pBrickPlatform != nullptr )
-						{
-							pBrickPlatform->SetIsUnderPlayer( false );
-						}
-					}
-					else 
-					if( ( *pszSensorIdA == "ClimbUpLedge" && *pszSensorIdB == "body" )
-					|| ( *pszSensorIdA == "body" && *pszSensorIdB == "ClimbUpLedge" ) )
-					{
-						if( m_pcPlayer->GetVelocity().y > 0.0f )
-						{
-							m_pcPlayer->ClimbUpBrickLedge();
-						}
-					}
-					else
-						if( *pszSensorIdA == "ClimbUpLedge" || *pszSensorIdB == "ClimbUpLedge" )
-						{
-							CCLOG( "aaaaaa %s or %s", *pszSensorIdA, *pszSensorIdB );
-						}
-				}
-			}
+			//// Exclusive Or
+			//// EndContact triggered with hard fixture + sensor fixture
+			//// This is an edge case we need to check for in order to prevent a bug with the bricks platform
+			//// This type of platform by default has collision on so the player might land on the top without
+			//// having overlapped sensors first.
+			//else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
+			//{
+			//	if( pcPlatform->GetPlatformType() == EPlatformType::Brick )
+			//	{
+			//		// GET ID NAME
+			//		auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
+			//		auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
+			//		if( ( *pszSensorIdA == "surface" && *pszSensorIdB == "body" )
+			//			|| ( *pszSensorIdA == "body" && *pszSensorIdB == "surface" ) )
+			//		{
+			//			auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
+			//			if( pBrickPlatform != nullptr )
+			//			{
+			//				pBrickPlatform->SetIsUnderPlayer( false );
+			//			}
+			//		}
+			//		else 
+			//		
+			//		
+			//		{
+			//			if( m_pcPlayer->GetVelocity().y > 0.0f )
+			//			{
+			//			}
+			//		}
+			//	}
+			//}
 		}																												//
 	}																													//
 }																														//
