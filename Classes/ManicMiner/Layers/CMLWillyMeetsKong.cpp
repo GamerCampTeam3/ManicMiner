@@ -35,8 +35,8 @@ void CMLWillyMeetsKong::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible_And_Switches, 2, 4 );
-	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Magma;
-	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano;
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Shipwreck;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::Shipwreck2;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/7_MinerWillyMeetsTheKongBeast.oel";
 	m_sLevelCreationParameters.szLevelName			= " Miner Willy meets the Kong Beast";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );
