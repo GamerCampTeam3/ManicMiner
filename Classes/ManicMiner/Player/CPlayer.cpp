@@ -600,6 +600,15 @@ void CPlayer::JumpEvent()
 }
 
 
+void CPlayer::OnEscape()
+{
+	m_bIsAlive = false;
+	m_bCanBeControlled = false;
+	m_bCanJump = false;
+	GetPhysicsBody()->SetGravityScale( 0.0f );
+	SetVelocity( cocos2d::Vec2::ZERO );
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	HardContactEvent																					//
 // -------------------------------------------------------------------------------------------------------------------- //
