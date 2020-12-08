@@ -452,7 +452,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 					// && if collision is not yet enabled
 					// && if platform is not triggering a hard contact yet
 					// && if the player is not moving upwards ( otherwise it would trigger when player jumps through a platform, landing on that platform for just a frame and then moving upwards anyways )
-					bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) && !pcPlatform->GetIsTriggeringHardContact() && m_pcPlayer->GetVelocity().y <= 0.0f;
+					bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) && !pcPlatform->GetIsTriggeringHardContact() && m_pcPlayer->GetVelocity().y <= 0.0001f;
 
 					// Activate this platform's collision																	//
 					pcPlatform->SetCollisionEnabled( true );																//
@@ -656,6 +656,11 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 							}																							//
 						}
 						break;																							//
+						case EPlatformType::Moving:
+						{
+							m_pcPlayer->LeftConveyorBelt();
+						}
+						break;
 					}																									//
 					// If leaving this contact, and sensors aren't overlapping anymore as well
 					if ( !pcPlatform->GetIsSensorOverlapped() && pcPlatform->GetPlatformType() != EPlatformType::Brick )
@@ -1095,7 +1100,7 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 		case EPlatformType::Moving:																			//
 		{																									//
 			// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 			//
-			auto pMovingPlatform = static_cast< CMovingPlatform* > ( &rcPlatform );							//
+ 			auto pMovingPlatform = static_cast< CMovingPlatform* > ( &rcPlatform );							//
 																											//
 			if( pMovingPlatform != nullptr )																//
 			{																								//

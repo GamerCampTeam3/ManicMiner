@@ -39,6 +39,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_bCanJump						( true )
 	, m_bCanBeControlled				( true )
 	, m_bIsPendingDirection				( false )
+	, m_bIsOnConveyorBelt				( false )
 	, m_bIsGrounded						( false )
 	, m_bIsAlive						( true )
 	, m_iSensorContactCount				( 0 )
@@ -100,7 +101,7 @@ bool CPlayer::GetIsGrounded() const																						//
 																														//
 bool CPlayer::GetIsOnConveyorBelt() const																				//
 {																														//
-	return ( !m_bCanBeControlled || m_bIsPendingDirection );															//
+	return m_bIsOnConveyorBelt;																							//
 }																														//
 																														//
 int CPlayer::GetMaxLives() const																						//
@@ -217,6 +218,7 @@ void CPlayer::VOnResurrected()																													//
 	m_bCanBeControlled = true;																													//
 	m_bIsGrounded = true;																														//
 	m_bIsPendingDirection = false;																												//
+	m_bIsOnConveyorBelt = false;
 	m_fVerticalSpeedAdjust = 0.0f;
 	m_fLastHighestY = 0.0f;
 	m_fLastGroundedY = 0.0f;
@@ -509,6 +511,11 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 		// Set new player direction enum
 			m_ePlayerDirection = eNewDirection;
 
+		// Update the pre jump variable for conveyor belt
+			if( m_bIsGrounded )
+			{
+				m_eJumpDirection = m_ePlayerDirection;
+			}
 		// Change current velocity
 			const Vec2 v2NewVelocity( fHorizontalSpeed, fVerticalSpeed );
 			SetVelocity( v2NewVelocity );
@@ -740,11 +747,14 @@ void CPlayer::LandedOnWalkablePlatform()
 {
 	OnLanded();
 
-	m_bCanBeControlled = true;
-	m_bIsPendingDirection = false;
+	if( !m_bIsOnConveyorBelt )
+	{
+		m_bCanBeControlled = true;
+		m_bIsPendingDirection = false;
 
-// Run another check for player input
-	CheckKeyboardInput();
+	// Run another check for player input
+		CheckKeyboardInput();
+	}
 }
 
 
@@ -824,6 +834,7 @@ void CPlayer::BumpedWithBricks()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 {
+	m_bIsOnConveyorBelt = true;
 	OnLanded();
 
 // Debug print out
@@ -910,6 +921,16 @@ void CPlayer::ForceConveyorBeltMovement( )
 	ApplyDirectionChange( m_ePendingDirection, true );
 }
 
+
+void CPlayer::LeftConveyorBelt()
+{
+	m_bIsOnConveyorBelt = false;
+
+	if( m_iHardContactCount == 1 )
+	{
+		LandedOnWalkablePlatform();
+	}
+}
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	Die																									//

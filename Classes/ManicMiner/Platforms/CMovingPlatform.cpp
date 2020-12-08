@@ -49,7 +49,7 @@ void CMovingPlatform::VOnResourceAcquire()
 	//m_pcMovingAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Move);
 	//RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcMovingAnim));
 
-	InitDirectionalLock(EPlayerDirection::Left);
+	InitDirectionalLock( EPlayerDirection::Left );
 }
 
 void CMovingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams,
