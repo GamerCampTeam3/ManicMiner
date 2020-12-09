@@ -82,11 +82,11 @@ bool CMenuLayer::init()
 
     // add a "close" icon to exit the progress. it's an autorelease object
     MenuItemImage* pItemStartGame = MenuItemImage::create(
-                                        "Loose/play_normal.png",
-                                        "Loose/play_pressed.png",
+                                        "Menu/Buttons/Play/normal.png",
+                                        "Menu/Buttons/Play/pressed.png",
                                         CC_CALLBACK_1( CMenuLayer::CB_OnGameStartButton, this ) );
         
-    pItemStartGame->setPosition( Vec2(	origin.x + (visibleSize.width * 0.605f ),
+    pItemStartGame->setPosition( Vec2(	origin.x + (visibleSize.width * 0.638f ),
 										origin.y + (visibleSize.height * 0.52f ) ) );
 
     // create menu, it's an autorelease object
@@ -98,8 +98,8 @@ bool CMenuLayer::init()
     /// If not wanted, simply set the boolean to false
     if ( true )
     {
-        MenuItemImage* pItemHelpScene = MenuItemImage::create("Loose/help_button_normal.png","Loose/help_button_pressed.png",CC_CALLBACK_1( CMenuLayer::CB_GoToHelp, this ) );
-        pItemHelpScene->setPosition( Vec2( origin.x + (visibleSize.width * 0.61f), origin.y + (visibleSize.height * 0.38f) ) );
+        MenuItemImage* pItemHelpScene = MenuItemImage::create("Menu/Buttons/Help/normal.png","Menu/Buttons/Help/pressed.png",CC_CALLBACK_1( CMenuLayer::CB_GoToHelp, this ) );
+        pItemHelpScene->setPosition( Vec2( origin.x + (visibleSize.width * 0.638f), origin.y + (visibleSize.height * 0.38f) ) );
         m_pMenu = Menu::create( pItemHelpScene, nullptr );
         m_pMenu->setPosition( Vec2::ZERO );
         this->addChild( m_pMenu, 1 );
@@ -109,11 +109,11 @@ bool CMenuLayer::init()
 	/// - Umeer Rama
 
     MenuItemImage* pItemExitGame = MenuItemImage::create(
-        "Buttons/Exit/ExitButton_01.png",
-        "Buttons/Exit/ExitButton_01.png",
+        "Menu/Buttons/Exit/normal.png",
+        "Menu/Buttons/Exit/pressed.png",
         CC_CALLBACK_1(CMenuLayer::CB_OnGameExitButton, this));
 
-    pItemExitGame->setPosition(Vec2(1900.f, 1060.f));
+    pItemExitGame->setPosition( Vec2( origin.x + (visibleSize.width * 0.638f), origin.y + (visibleSize.height * 0.24f) ) );
 
     m_pMenu = Menu::create(pItemExitGame, nullptr);
     m_pMenu->setPosition(Vec2::ZERO);
@@ -122,7 +122,7 @@ bool CMenuLayer::init()
     //CreateFullScreenButton();
 
     // add "HelloWorld" splash screen"
-    Sprite* pSprite = Sprite::create("Loose/main_menu.png");
+    Sprite* pSprite = Sprite::create("Menu/Backgrounds/main_menu.png");
 
     // position the sprite on the center of the screen
     pSprite->setPosition( Vec2( visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y ) );

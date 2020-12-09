@@ -60,14 +60,14 @@ bool CControlsScene::init()
         // Set resolution
         Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
-        m_strPath = "Loose/to_windowed.png";
+        m_strPath = "Menu/Buttons/Windowed/normal.png";
     }
     else
     {
         // Set resolution
         Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
-        m_strPath = "Loose/to_fullscreen.png";
+        m_strPath = "Menu/Buttons/Fullscreen/normal.png";
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -95,7 +95,7 @@ bool CControlsScene::init()
 
 
     // add "HelloWorld" splash screen"
-    Sprite* pSprite = Sprite::create( "Loose/help_menu.png" );
+    Sprite* pSprite = Sprite::create( "Menu/Backgrounds/help_menu.png" );
 
     // position the sprite on the center of the screen
     pSprite->setPosition( Vec2( visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y ) );
@@ -117,7 +117,7 @@ void CControlsScene::CB_OnFullScreenButton( Ref* pSender )
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
         m_bFullScreenSwitch = true;
         this->removeChild( this->getChildByName( "FSButton" ) );
-        m_strPath = "Loose/to_windowed.png";
+        m_strPath = "Menu/Buttons/Windowed/normal.png";
         CreateFullScreenButton();
     }
 
@@ -129,7 +129,7 @@ void CControlsScene::CB_OnFullScreenButton( Ref* pSender )
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
         m_bFullScreenSwitch = false;
         this->removeChild( this->getChildByName( "FSButton" ) );
-        m_strPath = "Loose/to_fullscreen.png";
+        m_strPath = "Menu/Buttons/Fullscreen/normal.png";
         CreateFullScreenButton();
     }
 }
@@ -142,7 +142,7 @@ void CControlsScene::CreateFullScreenButton()
         m_strPath,
         CC_CALLBACK_1( CControlsScene::CB_OnFullScreenButton, this ) );
 
-    pItemFullScreen->setPosition( Vec2( 1820.f, 1060.f ) );
+    pItemFullScreen->setPosition( Vec2( 940.f, 200.f ) );
     m_pMenu = Menu::create( pItemFullScreen, nullptr );
     m_pMenu->setName( "FSButton" );
     m_pMenu->setPosition( Vec2::ZERO );
