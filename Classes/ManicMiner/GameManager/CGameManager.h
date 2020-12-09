@@ -134,7 +134,8 @@ class CGameManager
 	void			 CheckHighScoreForUpdate();								// Checks if Highscore should be updated.																
 	void			 IncreaseScore();										// Increases the score by a flat amount which is 100 (just like the original Manic Miner)				
 	void			 UpdateHighScore() const;								// Tells the CHUD to update the high score with the current high score.									
-	void			 UpdateScore()	  const;								// Tells the CHUD to update the score.																	
+	void			 UpdateScore()	  const;								// Tells the CHUD to update the score.
+	void			 OpenDoor();
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------/
 };
 #endif // #ifndef _CGAMEMANAGER_H_

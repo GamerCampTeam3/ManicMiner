@@ -1,5 +1,8 @@
 #include "ManicMiner/Doors/CDoor.h"
 
+#include "GamerCamp/GCCocosInterface/IGCGameLayer.h"
+#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
+
 
 #ifndef TINYXML2_INCLUDED
 	#include "external\tinyxml2\tinyxml2.h"
@@ -51,11 +54,32 @@ void CDoor::VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParam
 				rCreationParams.bB2dBody_FixedRotation );
 
 			pParamsToPassToBaseClass = m_pCustomCreationParams.get();
+			SetName( "Door" );
 		}
 	}
 
 	// Call base class version 	
 	CGCObjSpritePhysics::VHandleFactoryParams( (*pParamsToPassToBaseClass), v2InitialPosition );
+}
+
+void CDoor::DoorOpen()
+{
+	cocos2d::Animation* pAnimation;
+	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
+	std::string m_pszPlist = pcCreateParams->strPlistFile;
+	cocos2d::ValueMap& rdictPList = GCCocosHelpers::CreateDictionaryFromPlist( m_pszPlist );
+
+	// Use this animation
+	const char* m_pszAnimation = "Open";
+
+	// Load it in and play
+	pAnimation = GCCocosHelpers::CreateAnimation( rdictPList, m_pszAnimation );
+	pAnimation->retain();
+
+	pAnimation->setDelayPerUnit( 1.f/ 30.f );
+	RunAction( GCCocosHelpers::CreateAnimationActionLoop( pAnimation ) );
+	
+	CCLOG( "Door opened" );
 }
 
 

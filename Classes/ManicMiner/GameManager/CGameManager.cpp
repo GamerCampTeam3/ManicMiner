@@ -1,5 +1,6 @@
 #include "ManicMiner/AirManager/AirManager.h"
 #include "ManicMiner/AudioHelper/ManicAudio.h"
+#include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enums/ELifeUpdateType.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
@@ -85,18 +86,29 @@ bool CGameManager::CheckIfLevelRequirementsAreMet()
 		case ECollectibleRequirements::Collectible:
 			enoughReached = (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles);
 			m_ESpecialInteractionType = ESpecialInteraction::Boss;
+			OpenDoor();
 			break;
 
 		case ECollectibleRequirements::Collectible_And_Switches:
 			enoughReached = 
 					(m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles	) 
 				&&	(m_iCurrentSwitches		>= m_sLevelValues.iNumberOfSwitches		) ;
+			OpenDoor();
 			break;
 	}
-
+	
 	return enoughReached;
 }
 #pragma endregion Score_And_Life
+
+void CGameManager::OpenDoor()
+{
+	CDoor* pcDoor;
+	CGCObject* pcBaseObject;
+	pcBaseObject = CGCObjectManager::FindObject( "Door", GetGCTypeIDOf( CDoor ) );
+	pcDoor = static_cast<CDoor*>(pcBaseObject);
+	pcDoor->DoorOpen();
+}
 
 #pragma region W/R_Highscore_Value
 

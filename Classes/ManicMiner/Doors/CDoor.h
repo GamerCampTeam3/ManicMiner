@@ -23,6 +23,7 @@ public:
 	
 	CDoor();	
 	GCFACTORY_DECLARE_CREATABLECLASS( CDoor );
+	void DoorOpen();
 };
 
 #endif // #ifndef _CDOOR_H_
