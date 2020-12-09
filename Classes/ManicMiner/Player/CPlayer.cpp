@@ -439,7 +439,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 				fVerticalSpeed = 0.0f;
 			}
 		// Set new horizontal speed according to the ``eNewDirection`` argument
-			float fHorizontalSpeed;
+			float fHorizontalSpeed = 0.0f;
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		// Switch on eNewDirection																		//
