@@ -4,7 +4,7 @@
 	
 
 //#define PLAYER_DEBUG_DIRECTION
-#define PLAYER_DEBUG_CONTACTS
+//#define PLAYER_DEBUG_CONTACTS
 //#define PLAYER_DEBUG_CONTACTS_REALTIME
 //#define PLAYER_DEBUG_LANDING
 
@@ -39,6 +39,7 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_bCanJump						( true )
 	, m_bCanBeControlled				( true )
 	, m_bIsPendingDirection				( false )
+	, m_bIsOnConveyorBelt				( false )
 	, m_bIsGrounded						( false )
 	, m_bIsAlive						( true )
 	, m_iSensorContactCount				( 0 )
@@ -100,7 +101,7 @@ bool CPlayer::GetIsGrounded() const																						//
 																														//
 bool CPlayer::GetIsOnConveyorBelt() const																				//
 {																														//
-	return ( !m_bCanBeControlled || m_bIsPendingDirection );															//
+	return m_bIsOnConveyorBelt;																							//
 }																														//
 																														//
 int CPlayer::GetMaxLives() const																						//
@@ -191,6 +192,7 @@ void CPlayer::VOnResourceRelease()																												//
 	LoadAnimations(false);																														//
 	// Stop Jump/Fall sound effect
 	StopVerticalMovementSound();
+	StopRunningSound();
 																																				//
 }																																				//
 																																				//
@@ -217,9 +219,13 @@ void CPlayer::VOnResurrected()																													//
 	m_bCanBeControlled = true;																													//
 	m_bIsGrounded = true;																														//
 	m_bIsPendingDirection = false;																												//
+	m_bIsOnConveyorBelt = false;
 	m_fVerticalSpeedAdjust = 0.0f;
 	m_fLastHighestY = 0.0f;
 	m_fLastGroundedY = 0.0f;
+	m_iHardContactCount = 0;
+	m_iSensorContactCount = 0;
+
 																																				//
 																																				//
 // Reset physics body related components																										//
@@ -396,10 +402,6 @@ void CPlayer::CheckKeyboardInput()
 
 					AlternateIdleAnimation(m_bSelectedStandardIdle); // z check
 					m_bSelectedStandardIdle = !m_bSelectedStandardIdle; // z check
-					
-
-
-					
 				}
 			}
 		}
@@ -455,6 +457,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 #endif
 				// Static -> no speed
 				fHorizontalSpeed = 0.0f;
+				StopRunningSound();
 				if (m_bIsAlive && GetIsGrounded())
 				{
 					InitiateAnimationStateChange( EAnimationState::Idle );
@@ -477,6 +480,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 				if ( m_bIsAlive && GetIsGrounded() )
 				{
 					InitiateAnimationStateChange( EAnimationState::Run );
+					PlayRunningSound();
 				}
 				break;
 		//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -493,9 +497,10 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 
 			// Adjust sprite orientation
 				SetFlippedX( false );
-				if (m_bIsAlive && GetIsGrounded() )
+				if( m_bIsAlive && GetIsGrounded() )
 				{
 					InitiateAnimationStateChange( EAnimationState::Run );
+					PlayRunningSound();
 				}
 				break;
 			}
@@ -506,6 +511,11 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 		// Set new player direction enum
 			m_ePlayerDirection = eNewDirection;
 
+		// Update the pre jump variable for conveyor belt
+			if( m_bIsGrounded )
+			{
+				m_eJumpDirection = m_ePlayerDirection;
+			}
 		// Change current velocity
 			const Vec2 v2NewVelocity( fHorizontalSpeed, fVerticalSpeed );
 			SetVelocity( v2NewVelocity );
@@ -583,12 +593,26 @@ void CPlayer::JumpEvent()
 		m_bCanBeControlled = true;
 
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
+		
+		StopRunningSound();
+
 		m_uiJumpSoundID = PlaySoundEffect( ESoundEffectName::Jump );
 
 		InitiateAnimationStateChange(EAnimationState::Jump);
 	}
 }
 
+
+void CPlayer::OnEscape()
+{
+	StopRunningSound();
+	StopVerticalMovementSound();
+	m_bIsAlive = false;
+	m_bCanBeControlled = false;
+	m_bCanJump = false;
+	GetPhysicsBody()->SetGravityScale( 0.0f );
+	SetVelocity( cocos2d::Vec2::ZERO );
+}
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	HardContactEvent																					//
@@ -677,16 +701,19 @@ void CPlayer::OnLanded()
 		else 
 		{
 			// Go back to Idle/Moving
-			switch(m_ePlayerDirection)
+			switch( m_ePlayerDirection )
 			{
 			case EPlayerDirection::Static:
-				InitiateAnimationStateChange(EAnimationState::Idle);
+				InitiateAnimationStateChange( EAnimationState::Idle );
+				StopRunningSound();
 				break;
 			case EPlayerDirection::Right:
-				InitiateAnimationStateChange(EAnimationState::Run);
+				InitiateAnimationStateChange( EAnimationState::Run );
+				PlayRunningSound();
 				break;
 			case EPlayerDirection::Left:
-				InitiateAnimationStateChange(EAnimationState::Run);
+				InitiateAnimationStateChange( EAnimationState::Run );
+				PlayRunningSound();
 				break;
 			}
 
@@ -717,12 +744,20 @@ void CPlayer::StopVerticalMovementSound()
 	}
 }
 
-void CPlayer::StopHorizontalMovementSound()
+void CPlayer::StopRunningSound()
 {
 	if( m_uiRunningSoundID != 0 )
 	{
 		StopSoundEffect( m_uiRunningSoundID );
 		m_uiRunningSoundID = 0;
+	}
+}
+
+void CPlayer::PlayRunningSound()
+{
+	if( !m_uiRunningSoundID )
+	{
+		m_uiRunningSoundID = PlaySoundEffect( ESoundEffectName::RunningFootsteps );
 	}
 }
 
@@ -737,11 +772,14 @@ void CPlayer::LandedOnWalkablePlatform()
 {
 	OnLanded();
 
-	m_bCanBeControlled = true;
-	m_bIsPendingDirection = false;
+	if( !m_bIsOnConveyorBelt )
+	{
+		m_bCanBeControlled = true;
+		m_bIsPendingDirection = false;
 
-// Run another check for player input
-	CheckKeyboardInput();
+	// Run another check for player input
+		CheckKeyboardInput();
+	}
 }
 
 
@@ -767,7 +805,9 @@ void CPlayer::LeftGround()
 	// Drop straight down
 		ApplyDirectionChange( EPlayerDirection::Static );
 		m_eJumpDirection = EPlayerDirection::Static;
+#ifdef PLAYER_DEBUG_DIRECTION
 		CCLOG( "Dropping straight down" );
+#endif
 		m_bCanJump = false;
 		m_uiFallingSoundID = PlaySoundEffect( ESoundEffectName::Falling );
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
@@ -819,6 +859,7 @@ void CPlayer::BumpedWithBricks()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 {
+	m_bIsOnConveyorBelt = true;
 	OnLanded();
 
 // Debug print out
@@ -905,6 +946,16 @@ void CPlayer::ForceConveyorBeltMovement( )
 	ApplyDirectionChange( m_ePendingDirection, true );
 }
 
+
+void CPlayer::LeftConveyorBelt()
+{
+	m_bIsOnConveyorBelt = false;
+
+	if( m_iHardContactCount == 1 )
+	{
+		LandedOnWalkablePlatform();
+	}
+}
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	Die																									//

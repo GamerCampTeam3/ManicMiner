@@ -338,9 +338,10 @@ void CGameManager::ResetLives()
 
 void CGameManager::EndLevel() 
 {
-	if (m_pcLevelManager->GetCurrentManicLayer().GetGameState() == EGameState::Escaping)
+	if ( m_pcLevelManager->GetCurrentManicLayer().GetGameState() == EGameState::Escaping )
 	{
 		DrainAirForScore();
+		m_pcLevelManager->GetCurrentManicLayer().GetPlayer().OnEscape();
 	}
 }
 

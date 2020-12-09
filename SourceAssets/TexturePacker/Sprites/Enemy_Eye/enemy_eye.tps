@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>cocos2d-v2</string>
         <key>textureFileName</key>
-        <filename>../../../../../Resources/windows/TexturePacker/Sprites/Hazards/downwardSpike/downwardSpike.png</filename>
+        <filename></filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -70,11 +70,11 @@
             </struct>
         </struct>
         <key>shapePadding</key>
-        <uint>2</uint>
+        <uint>0</uint>
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>0</uint>
+        <uint>1</uint>
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
@@ -84,7 +84,7 @@
         <key>textureFormat</key>
         <enum type="SettingsBase::TextureFormat">png</enum>
         <key>borderPadding</key>
-        <uint>2</uint>
+        <uint>0</uint>
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
@@ -106,7 +106,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../../../Resources/windows/TexturePacker/Sprites/Hazards/downwardSpike/downwardSpike.plist</filename>
+                <filename>../../../../Resources/windows/TexturePacker/Sprites/Enemy_Eye/Enemy_Eye.plist</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -163,7 +163,7 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>0</uint>
+            <uint>1</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
@@ -181,7 +181,31 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">downwardSpike.png</key>
+            <key type="filename">Frames/Blink/final-0001.png</key>
+            <key type="filename">Frames/Blink/final-0002.png</key>
+            <key type="filename">Frames/Blink/final-0003.png</key>
+            <key type="filename">Frames/Blink/final-0004.png</key>
+            <key type="filename">Frames/Blink/final-0005.png</key>
+            <key type="filename">Frames/Blink/final-0006.png</key>
+            <key type="filename">Frames/Blink/final-0007.png</key>
+            <key type="filename">Frames/Blink/final-0008.png</key>
+            <key type="filename">Frames/Blink/final-0009.png</key>
+            <key type="filename">Frames/Blink/final-0010.png</key>
+            <key type="filename">Frames/Blink/final-0011.png</key>
+            <key type="filename">Frames/Blink/final-0012.png</key>
+            <key type="filename">Frames/Blink/final-0013.png</key>
+            <key type="filename">Frames/Blink/final-0014.png</key>
+            <key type="filename">Frames/Blink/final-0015.png</key>
+            <key type="filename">Frames/Blink/final-0016.png</key>
+            <key type="filename">Frames/Blink/final-0017.png</key>
+            <key type="filename">Frames/Blink/final-0018.png</key>
+            <key type="filename">Frames/Blink/final-0019.png</key>
+            <key type="filename">Frames/Blink/final-0020.png</key>
+            <key type="filename">Frames/Blink/final-0021.png</key>
+            <key type="filename">Frames/Blink/final-0022.png</key>
+            <key type="filename">Frames/Blink/final-0023.png</key>
+            <key type="filename">Frames/Blink/final-0024.png</key>
+            <key type="filename">enemy_eye.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -190,16 +214,17 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>20,10,40,20</rect>
+                <rect>30,15,60,30</rect>
                 <key>scale9Paddings</key>
-                <rect>20,10,40,20</rect>
+                <rect>30,15,60,30</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>downwardSpike.png</filename>
+            <filename>enemy_eye.png</filename>
+            <filename>Frames</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

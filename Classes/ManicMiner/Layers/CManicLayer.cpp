@@ -376,6 +376,15 @@ void CManicLayer::VOnReset( void )
 	IGCGameLayer::VOnReset();
 	m_pcGameManager->ResetEvent();
 }
+
+void CManicLayer::onExitTransitionDidStart()
+{
+	m_pcPlayer->StopRunningSound();
+	m_pcPlayer->StopVerticalMovementSound();
+
+	IGCGameLayer::onExitTransitionDidStart();
+}
+
 // --- b2ContactListener Interface ------------------------------------------------------------------------------------ //
 																														//
 // BeginContact happens for the first frame of a unique collision														//
@@ -424,7 +433,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 		{																												//
 																														//
 			// Get pointer to platform																					//
-			CPlatform* pcPlatform = nullptr;																				//
+			CPlatform* pcPlatform = nullptr;																			//
 																														//
 			// If BodyA is player, BodyB must be platform																//
 			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )												//
@@ -449,12 +458,13 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
 
 					// Check if this platform was already overlapping in terms of hard contact
-					// && if if collision is not yet enabled
-					// && if player has no hard contacts yet
-					bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) /*&& m_pcPlayer->GetHardContactCount()*/;
+					// && if collision is not yet enabled
+					// && if platform is not triggering a hard contact yet
+					// && if the player is not moving upwards ( otherwise it would trigger when player jumps through a platform, landing on that platform for just a frame and then moving upwards anyways )
+					bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) && !pcPlatform->GetIsTriggeringHardContact() && m_pcPlayer->GetVelocity().y <= 0.0001f;
 
 					// Activate this platform's collision																	//
-					pcPlatform->SetCollisionEnabled( true );																	//
+					pcPlatform->SetCollisionEnabled( true );																//
 																															//
 																															//
 					// Increment sensor count for the player																//
@@ -484,12 +494,13 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 						( *pszSensorIdB == "brickFeet" && *pszSensorIdA == "surface" ) )
 					{
 						pBrickPlatform->SetIsUnderPlayer( true );
+
+						// Increment sensor count for the player																//
+						m_pcPlayer->SensorContactEvent( true );																	//
+
+						pBrickPlatform->SetIsSensorOverlapped( true );
 					}
 
-					// Increment sensor count for the player																//
-					m_pcPlayer->SensorContactEvent( true );																	//
-
-					pBrickPlatform->SetIsSensorOverlapped( true );
 				}
 			}																											//
 																														//
@@ -632,6 +643,8 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 																														//
 					// Decrement hard contact count																		//
 					m_pcPlayer->HardContactEvent( false );																//
+
+					pcPlatform->SetIsTriggeringHardContact( false );
 																														//
 
 					// If feet are no longer touching any ground surface												//
@@ -652,9 +665,14 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 							}																							//
 						}
 						break;																							//
+						case EPlatformType::Moving:
+						{
+							m_pcPlayer->LeftConveyorBelt();
+						}
+						break;
 					}																									//
 					// If leaving this contact, and sensors aren't overlapping anymore as well
-					if ( /*!pcPlatform->GetIsSensorOverlapped() &&*/ pcPlatform->GetPlatformType() != EPlatformType::Brick )
+					if ( !pcPlatform->GetIsSensorOverlapped() && pcPlatform->GetPlatformType() != EPlatformType::Brick )
 					{
 						// Disable platform collision
 						pcPlatform->SetCollisionEnabled( false );
@@ -662,8 +680,8 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				}																										//
 				else
 				{
-					CCLOG( "ENDED SOLID CONTACT WITH A PLATFORM THAT HAS COLLISION OFF" );
 #ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS
+					CCLOG( "ENDED SOLID CONTACT WITH A PLATFORM THAT HAS COLLISION OFF" );
 #endif
 				}
 				pcPlatform->SetIsInContact( false );
@@ -1080,6 +1098,7 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 																											//
 		// Increment hard contact count for the player														//
 		m_pcPlayer->HardContactEvent( true );																//
+		rcPlatform.SetIsTriggeringHardContact( true );
 																											//																														//
 		// Check Platform Type																				//
 		switch( rcPlatform.GetPlatformType() )																//
@@ -1090,7 +1109,7 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 		case EPlatformType::Moving:																			//
 		{																									//
 			// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 			//
-			auto pMovingPlatform = static_cast< CMovingPlatform* > ( &rcPlatform );							//
+ 			auto pMovingPlatform = static_cast< CMovingPlatform* > ( &rcPlatform );							//
 																											//
 			if( pMovingPlatform != nullptr )																//
 			{																								//
@@ -1131,6 +1150,14 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 				}
 				else
 				{
+					// Set the platform as not a trigger for hard contact events										//
+					rcPlatform.SetTriggersHardContactEvent( false );													//
+																														//
+					// Decrement hard contact count for the player, because by default the platforms increment			//
+					// We dont consider a side bump a "hard contact" as it's not relevant for feet and player movement mostly
+					m_pcPlayer->HardContactEvent( false );																//
+					rcPlatform.SetIsTriggeringHardContact( false );
+
 					m_pcPlayer->BumpedWithBricks();															//
 				}
 			}

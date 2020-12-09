@@ -87,6 +87,10 @@ private:
 // Until he tries to change direction. This will force the Player to go in the direction								//
 // Of the conveyor belt, and will set m_bCanBeControlled to true, effectively locking horizontal movement				//
 	bool		m_bIsPendingDirection;																					//
+
+
+	bool		m_bIsOnConveyorBelt;
+
 // -------------------------------------------------------------------------------------------------------------------- //
 																														//
 // Tells us if the Player is standing on a surface																		//
@@ -306,7 +310,7 @@ public:
 
 
 
-
+	void OnEscape();
 
 
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -356,8 +360,8 @@ public:
 
 	void StopVerticalMovementSound();
 
-	void StopHorizontalMovementSound();
-
+	void StopRunningSound();
+	void PlayRunningSound();
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//
@@ -448,6 +452,9 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 	void ForceConveyorBeltMovement();																					//
 																														//
+
+
+	void LeftConveyorBelt();
 																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	Die																									//
