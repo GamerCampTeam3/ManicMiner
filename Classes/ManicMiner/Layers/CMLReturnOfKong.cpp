@@ -35,7 +35,7 @@ void CMLReturnOfKong::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible_And_Switches, 2, 3 );
-	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Shipwreck;
 	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano1;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/11_ReturnOfTheAlienKongBeast.oel";
 	m_sLevelCreationParameters.szLevelName			= "Return of the Alien Kong Beast";

@@ -248,7 +248,7 @@ void CManicLayer::VInitializeBackground()
 
 			m_pcParallax->AddScrollingLayer( sData1, 1.0f );
 			m_pcParallax->AddScrollingLayer( sData2, 0.025f );
-			m_pcParallax->AddScrollingLayer( sData3, 40.5f );
+			m_pcParallax->AddScrollingLayer( sData3, 10.5f );
 			
 			
 			const SParallaxLayerData sData4( "TexturePacker/Sprites/Fish/Fish.plist", -4 );
