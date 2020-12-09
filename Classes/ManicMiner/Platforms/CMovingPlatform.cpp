@@ -49,7 +49,7 @@ void CMovingPlatform::VOnResourceAcquire()
 	//m_pcMovingAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Move);
 	//RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcMovingAnim));
 
-	InitDirectionalLock( EPlayerDirection::Left );
+	//InitDirectionalLock( EPlayerDirection::Left );
 }
 
 void CMovingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams,
@@ -63,6 +63,25 @@ void CMovingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCrea
 	if (nullptr != pCurrentObjectXmlData)
 	{
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
+		
+		const tinyxml2::XMLAttribute* pPlayerDirectionLockPath = pCurrentObjectXmlData->FindAttribute("PlayerDirectionLock");
+		CCLOG((nullptr == pPlayerDirectionLockPath) ? "PlayerDirectionLock not found for Moving Platform!" : pPlayerDirectionLockPath->Value());
+		if ((nullptr != pPlayerDirectionLockPath)
+			&& (0 != strlen(pPlayerDirectionLockPath->Value())))
+		{
+			switch (pPlayerDirectionLockPath->IntValue())
+			{
+			case 0:
+				m_eDirectionLock = EPlayerDirection::Static;
+				break;
+			case 1:
+				m_eDirectionLock = EPlayerDirection::Right;
+				break;
+			case 2:
+				m_eDirectionLock = EPlayerDirection::Left;
+				break;
+			}
+		}
 
 		if ((nullptr != pCustomPlistPath)
 			&& (0 != strlen(pCustomPlistPath->Value())))
@@ -75,6 +94,7 @@ void CMovingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCrea
 
 			pParamsToPasstoBaseClass = m_pcCustomCreationParams.get();
 		}
+
 	}
 
 	CPlatform::VHandleFactoryParams(*pParamsToPasstoBaseClass, v2InitialPosition);
