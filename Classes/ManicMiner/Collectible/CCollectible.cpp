@@ -7,6 +7,9 @@
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "ManicMiner/AudioHelper/ManicAudio.h"
 
+#include <random>
+#include <chrono>
+
 #ifndef TINYXML2_INCLUDED
 #include "external\tinyxml2\tinyxml2.h"
 #endif
@@ -19,13 +22,38 @@ USING_NS_CC;
 
 GCFACTORY_IMPLEMENT_CREATEABLECLASS( CCollectible );
 
+
 CCollectible::CCollectible()
 	: CGCObjSpritePhysics( GetGCTypeIDOf( CCollectible ) )
-	, m_pCustomCreationParams( nullptr )
-	, m_bHasBeenCollected( false )
+	, m_pCustomCreationParams	( nullptr )
+	, m_bHasBeenCollected		( false )
+	, m_fSpinDirection			( 0		) 
+	, m_fSpinSpeed				( 0		)
 {
+	// Seed with time for pseudo randomness
+	std::srand( timeGetTime() );
+	// Then we get a random value between to act as speed
+	m_fSpinSpeed = random( 0.f, m_kfMaxSpinSpeed );
+	
+	// Finally we get a random float between -1 and 1
+	// If it's above 0, it we set it to 1, otherwise -1
+	// We will use that to multiply the rotation value.
+	SetDirection();
 }
 
+void CCollectible::SetDirection()
+{
+	m_fSpinDirection = rand_minus1_1();
+	
+	if (m_fSpinDirection > 0)
+	{
+		m_fSpinDirection = 1.0f;
+	}
+	else
+	{
+		m_fSpinDirection = -1.0f;
+	}
+}
 
 void CCollectible::VOnResourceAcquire( void )
 {
@@ -57,6 +85,13 @@ void CCollectible::VOnResourceRelease()
 		pAnimation->release();
 		pAnimation = nullptr;
 	}
+}
+
+void CCollectible::VOnUpdate(float fTimeStep)
+{
+	// Original Rotation + flat speed * delta time * speed multiplier * direction (1 = nothing, -1 = opposite);
+	const float fNewRotation = GetSpriteRotation() + m_fSpinSpeed * fTimeStep * m_kfSpinMultiplier * m_fSpinDirection;
+	SetSpriteRotation( fNewRotation );
 }
 
 
