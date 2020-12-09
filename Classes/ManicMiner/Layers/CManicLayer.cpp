@@ -1007,7 +1007,8 @@ void CManicLayer::OnDeath()
 	m_pcPlayer->Die();
 	m_pcGameManager->UpdateLives( ELifeUpdateType::Minus );
 	m_pcGameManager->ResetInteractionCounter();
-
+	m_pcGameManager->ResetEvent();
+		
 	if( m_pcPlayer->GetLives() > 0 )
 	{
 		RequestReset();
