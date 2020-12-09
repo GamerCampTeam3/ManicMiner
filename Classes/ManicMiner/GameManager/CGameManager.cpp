@@ -126,7 +126,7 @@ void  CGameManager::WriteHighScore() const
 	{
 		std::ofstream highScoreFile;
 		highScoreFile.open( "Highscore.bin" );
-		ASSERT_CHECK( highScoreFile.is_open() );
+		//ASSERT_CHECK( highScoreFile.is_open() );
 		
 		unsigned int tempScore = m_iHighScore;				// Sec the temporary int to be the current high score
 		unsigned int comparisonScore = tempScore;			// We then also store it in another variable
@@ -158,7 +158,7 @@ void  CGameManager::ReadHighScore()
 	{
 		std::ifstream highScoreFile;
 		highScoreFile.open( "Highscore.bin" );
-		ASSERT_CHECK( highScoreFile.is_open());
+		//ASSERT_CHECK( highScoreFile.is_open());
 		
 		unsigned int tempScore = 0;
 		unsigned int comparisonScore = 0;
