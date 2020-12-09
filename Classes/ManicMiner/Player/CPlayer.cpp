@@ -4,11 +4,12 @@
 	
 
 //#define PLAYER_DEBUG_DIRECTION
-//#define PLAYER_DEBUG_CONTACTS
+#define PLAYER_DEBUG_CONTACTS
 //#define PLAYER_DEBUG_CONTACTS_REALTIME
 //#define PLAYER_DEBUG_LANDING
 
 
+#include <corecrt_math.h>
 
 
 #include "Classes/ManicMiner/Player/CPlayer.h"
@@ -167,6 +168,10 @@ void CPlayer::VOnResourceAcquire()																												//
 	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CPlayer );																				//
 																																				//
 	CGCObjSpritePhysics::VOnResourceAcquire();																									//
+
+
+
+
 																																				//
 	// because we're just storing a vanilla pointer we must call delete on it in VOnResourceRelease or leak memory 								//
 	// 																																			//
@@ -206,6 +211,63 @@ void CPlayer::VOnResourceRelease()																												//
 void CPlayer::VOnResurrected()																													//
 {																																				//
 	CGCObjSpritePhysics::VOnResurrected();																										//
+
+	//	SOLUTION FOR THE COLLISION WITH TOP CORNERS OF THE FLOOR PLATFORMS
+	// Very very sadly, only now - the day before our final review - I came across an explanation of why the player was getting stuck ( and only sometimes ) when walking on a flat surface
+	// made up of multiple collision segments. Throughout these 2 modules I formulated my own theory as to why this happened, and it's pretty much the same as what is explained
+	// on the following link:
+	// http://www.iforce2d.net/b2dtut/ghost-vertices
+	// Conveniently, the link also gives 3 solutions. The first one is making the edges of our player's feet rounded.
+	// The second solution is turning our feet collision into an edge shape and not a polygon.
+	// The third solution is the same as the second one, but it's even better as the second one doesn't fix the problem 100% of the time, it just minimizes the chances of the bug to happen.
+	// Besides making our collision an edge shape, we also need to add what is called "ghost vertices", which is like an imaginary extension of the edge shape.
+	// When a contact is handled with the physics engine, the ghost vertices are taken into account when it comes to redirecting the shape, and so instead of getting stuck
+	// Because the shape is colliding and getting pushed to the other side, it will instead push the shape upwards, effectively never getting our player stuck, but also remaining on the floor.
+
+	// I really tried my best to implement this functionality, although my time was extremely limited.
+	// Turns out the PhysicsEditor software does not support Edge Shapes at all, only polygons (shapes with 3+ vertices).
+	// This being said, I tried to manually create an edge shape in code, and attach it to the player body
+	// However, this made it impossible to adjust properties such as the ID string which I do try to access in other parts of the code when handling collisions.
+	// I tried to, again, set these manually here, but because of the way this framework is set up it's impossible to do it without messing with a lot of source code.
+
+
+	// The following link has source code in which they create an edge shape, although the source code there is quite broken
+	// But I used it and corrected it in hopes of including the edge shape for the player feet
+	// https://rotatingcanvas.com/edge-shape-in-box2d/
+
+
+	// In an ideal world I would make a BodyDef because this has a list of fixtures, fixtures that can read more info than standard b2fixtures
+	// specifically ID string and magic number
+	// But a lot of the classes needed to make up this class are hidden inside GB2ShapeCache-x.cpp
+	// cocos2d::BodyDef playerBodyDef;
+	// then it goes something like playerBodyDef.fixtures->sUserData.IDString = "my id string for this fixture"
+	// It's not exactly like that but something along those lines, I never got to finish the line of code above because of the hidden classes issues I stated
+
+	// Now we create the box2d things that would reside inside the higher level classes that are hidden in GB2ShapeCache-x.cpp
+	// ( The code below actually works, it's got some magic numbers because I was going to end up changing them anyways, the numbers were exaggerated for testing purposes )
+
+
+	const cocos2d::Vec2 v2BottomLeft(-5.0f, -60.0f);
+	const cocos2d::Vec2 v2BottomRight(65.0f, -60.0f);
+	const cocos2d::Vec2 v2TopLeft(-5.0f,  56.0f);
+	const cocos2d::Vec2 v2TopRight(65.0f, 56.0f);
+	// Bottom
+	CreateEdgeShape( v2BottomLeft, v2BottomRight, false, true );
+	
+	// Left
+	CreateEdgeShape( v2BottomLeft, v2TopLeft, true, false );
+	
+	// Top
+	CreateEdgeShape( v2TopLeft, v2TopRight, true, true );
+	
+	// Right
+	CreateEdgeShape( v2TopRight, v2BottomRight, true, false );
+
+	// So the code above actually attached a line segment, not on the player's feet but on the centre of the body
+	// It is visible when toggling on the debug collision ( line 326 of IGCGameLayer.cpp )
+	// However it was already causing multiple bugs and it wasn't properly set up
+
+
 																																				//
 // Reset sprite orientation																														//
 	SetFlippedX( m_bSpriteXFlip );																												//
@@ -602,6 +664,86 @@ void CPlayer::JumpEvent()
 	}
 }
 
+
+void CPlayer::CreateEdgeShape( const cocos2d::Vec2& v2StartPoint, const cocos2d::Vec2& v2EndPoint, bool bBrickCollisionOnly, bool bIsHorizontalEdge )
+{
+
+	const b2Vec2 b2v2Start ( IGCGameLayer::B2dPixelsToWorld( v2StartPoint.x ), IGCGameLayer::B2dPixelsToWorld( v2StartPoint.y ) );
+	const b2Vec2 b2v2End ( IGCGameLayer::B2dPixelsToWorld( v2EndPoint.x ), IGCGameLayer::B2dPixelsToWorld( v2EndPoint.y ) );
+
+
+
+	//CALCULATE CENTER OF LINE SEGMENT																									//
+	float fPixelsPosX = ( v2StartPoint.x + v2EndPoint.x ) * 0.5f;																								//
+	float fPixelsPosY = ( v2StartPoint.y + v2EndPoint.y ) * 0.5f;																		//
+
+	//CALCULATE LENGTH OF LINE SEGMENT																									//
+	float fPixelsLength = sqrt( ( v2StartPoint.x - v2EndPoint.x ) * ( v2StartPoint.x - v2EndPoint.x ) + ( v2StartPoint.y - v2EndPoint.y ) * ( v2StartPoint.y - v2EndPoint.y ) );
+
+	//CONVERT CENTER TO BOX COORDINATES																									//
+	float fB2PosX = IGCGameLayer::B2dPixelsToWorld( fPixelsPosX );																	   //
+	float fB2PosY = IGCGameLayer::B2dPixelsToWorld( fPixelsPosY );																											   //
+
+	//ADD EDGE FIXTURE TO BODY																									   //
+	b2EdgeShape b2PlayerEdge;																										   //
+	//SET LENGTH IN BOX COORDINATES																								   //
+
+	float fB2Length = IGCGameLayer::B2dPixelsToWorld( fPixelsLength );																		   //
+
+	//SETTING THE POINTS AS OFFSET DISTANCE FROM CENTER																			   //
+	if( bIsHorizontalEdge )
+	{
+		//const b2Vec2 b2v0( fB2Length * 0.5f, fB2PosY );
+		//const b2Vec2 b2v1( -fB2Length * 0.5f, fB2PosY );
+
+		const b2Vec2 b2v0( -fB2Length * 0.5f, fB2PosY );
+		const b2Vec2 b2v1( fB2Length * 0.5f, fB2PosY );
+
+
+		b2PlayerEdge.Set( b2v0, b2v1 );			
+	}
+	else 
+	{
+
+		const b2Vec2 b2v0( fB2PosX - 0.5f, b2v2Start.y );
+		const b2Vec2 b2v1( fB2PosX - 0.5f, b2v2End.y );
+		b2PlayerEdge.Set( b2v0, b2v1 );
+
+	}
+	b2FixtureDef fixtureDef;																										   //
+	fixtureDef.shape = &b2PlayerEdge;																								   //
+
+	const float fDensity = 2.0f;																									   //
+	const float fRestitution = 0.0f;																								   //
+	const float fFriction = 0.0f;																									   //
+
+	// Set most of the properties for this fixture																						//
+	fixtureDef.density = fDensity;																										//
+	fixtureDef.restitution = fRestitution;																								//
+	fixtureDef.friction = fFriction;																									//
+	fixtureDef.isSensor = false;																										//
+
+	// Collision matrix data																											//
+	// I got these values from debugging the shark's "Body" fixture construction														//
+	// So categoryBits = 1 means this fixture's category is only marked as part of "player" layer										//
+	// Groups aren't set in any of our game shapes																						//
+	// And it only collides with the layer "platform", which is the 3rd layer so the value for that mask is 4							//
+	if( bBrickCollisionOnly )
+	{
+		fixtureDef.filter.maskBits = 32;																								//
+		fixtureDef.filter.categoryBits = 1;																								//
+		fixtureDef.density = 0.0f;																										//
+	}
+	else
+	{
+		fixtureDef.filter.maskBits = 36;																								//
+		fixtureDef.filter.categoryBits = 1;																							   //
+	}
+	fixtureDef.filter.groupIndex = 0;																								   //
+
+	// This attaches our new fixture to the existing player body																	   //
+	GetPhysicsBody()->CreateFixture( &fixtureDef );																						//
+}
 
 void CPlayer::OnEscape()
 {

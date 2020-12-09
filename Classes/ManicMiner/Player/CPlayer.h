@@ -307,7 +307,7 @@ public:
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
-
+	void CreateEdgeShape( const cocos2d::Vec2& v2StartPoint, const cocos2d::Vec2& v2EndPoint, bool bBrickCollisionOnly, bool bIsHorizontalEdge );
 
 
 	void OnEscape();

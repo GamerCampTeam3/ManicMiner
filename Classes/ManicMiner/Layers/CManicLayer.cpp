@@ -636,7 +636,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 			// Check if this EndContact is for character + platform ( no sensors included )								//
 			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )											//
 			{																											//
-				if( pcPlatform->GetTriggersHardContactEvent() )															//
+				if( pcPlatform->GetTriggersHardContactEvent() && pcPlatform->GetIsTriggeringHardContact() && pFixtureB->GetDensity() == pFixtureA->GetDensity() )	//
 				{																										//
 					// Set the platform as no trigger for hard contact events											//
 					pcPlatform->SetTriggersHardContactEvent( false );													//
@@ -1091,7 +1091,7 @@ void CManicLayer::RequestNextLevel()
 
 void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 {
-	if( rcPlatform.GetCollisionEnabled() )																	//
+	if( rcPlatform.GetCollisionEnabled() && !rcPlatform.GetIsTriggeringHardContact() )						//
 	{																										//
 		// Set the platform as a trigger for hard contact events											//
 		rcPlatform.SetTriggersHardContactEvent( true );														//
