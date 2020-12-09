@@ -38,6 +38,8 @@ void CGCObjEugene::TriggerEugenesAlternativeAnimation(void)
 {
 	// When triggered, Eugene needs to provide an alternative animation.
 
+	GetSprite ()->stopAllActions ();
+
 	// Fetch the factory creation params and extract the plist for this object.
 	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
 	std::string m_pszPlist = pcCreateParams->strPlistFile;
@@ -57,6 +59,9 @@ void CGCObjEugene::VOnReset()
 {
 	// Call base class version first.
 	CGCObjEnemy::VOnReset();
+
+
+	GetSprite ()->stopAllActions ();
 
 	// Fetch the factory creation params and extract the plist for this object.
 	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
