@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>cc_enemy_eugene.plist</filename>
+                <filename>../../../../Resources/TexturePacker/Sprites/Eugene/cc_enemy_eugene.plist</filename>
             </struct>
         </map>
         <key>multiPack</key>

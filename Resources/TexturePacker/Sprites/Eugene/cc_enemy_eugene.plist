@@ -7,7 +7,7 @@
             <key>Angry/cc_enemy_eugene1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{855,487},{118,118}}</string>
+                <string>{{855,725},{118,118}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -20,7 +20,7 @@
             <key>Angry/cc_enemy_eugene2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{975,487},{118,118}}</string>
+                <string>{{975,725},{118,118}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -33,7 +33,7 @@
             <key>Normal/final-0001.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{975,487},{118,118}}</string>
+                <string>{{975,725},{118,118}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -46,7 +46,7 @@
             <key>Normal/final-0002.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1095,487},{118,118}}</string>
+                <string>{{1095,725},{118,118}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>Normal/final-0003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1215,487},{118,118}}</string>
+                <string>{{1215,725},{118,118}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>Normal/final-0004.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{245,487},{118,120}}</string>
+                <string>{{245,725},{118,120}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>Normal/final-0005.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{367,487},{118,120}}</string>
+                <string>{{367,725},{118,120}}</string>
                 <key>offset</key>
                 <string>{1,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>Normal/final-0006.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{489,487},{118,120}}</string>
+                <string>{{489,725},{118,120}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>Normal/final-0007.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{611,487},{118,120}}</string>
+                <string>{{611,725},{118,120}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -124,7 +124,7 @@
             <key>Normal/final-0008.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1,487},{120,120}}</string>
+                <string>{{1,725},{120,120}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -137,7 +137,7 @@
             <key>Normal/final-0009.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{123,487},{120,120}}</string>
+                <string>{{123,725},{120,120}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -150,7 +150,7 @@
             <key>Normal/final-0010.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1335,487},{118,118}}</string>
+                <string>{{1335,725},{118,118}}</string>
                 <key>offset</key>
                 <string>{0,-1}</string>
                 <key>rotated</key>
@@ -163,7 +163,7 @@
             <key>Normal/final-0011.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{733,605},{118,116}}</string>
+                <string>{{733,843},{118,116}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
@@ -176,7 +176,7 @@
             <key>Normal/final-0012.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1575,487},{118,116}}</string>
+                <string>{{1575,725},{118,116}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
@@ -189,7 +189,7 @@
             <key>Normal/final-0013.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1695,487},{118,116}}</string>
+                <string>{{1695,725},{118,116}}</string>
                 <key>offset</key>
                 <string>{0,-1}</string>
                 <key>rotated</key>
@@ -202,7 +202,7 @@
             <key>Normal/final-0014.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{733,487},{120,116}}</string>
+                <string>{{733,725},{120,116}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -215,7 +215,7 @@
             <key>Normal/final-0015.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{245,607},{118,114}}</string>
+                <string>{{245,845},{118,114}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -228,7 +228,7 @@
             <key>Normal/final-0016.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1815,487},{118,116}}</string>
+                <string>{{1815,725},{118,116}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -241,7 +241,7 @@
             <key>Normal/final-0017.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1575,605},{118,116}}</string>
+                <string>{{1575,843},{118,116}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -254,7 +254,7 @@
             <key>Normal/final-0018.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1695,605},{118,116}}</string>
+                <string>{{1695,843},{118,116}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -267,7 +267,7 @@
             <key>Normal/final-0019.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1455,487},{118,118}}</string>
+                <string>{{1455,725},{118,118}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -280,15 +280,15 @@
             <key>cc_enemy_eugene.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1,1},{2002,484}}</string>
+                <string>{{1,1},{2004,722}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{1,0},{2002,484}}</string>
+                <string>{{0,0},{2004,722}}</string>
                 <key>sourceSize</key>
-                <string>{2004,484}</string>
+                <string>{2004,722}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -302,9 +302,9 @@
             <key>realTextureFileName</key>
             <string>cc_enemy_eugene.png</string>
             <key>size</key>
-            <string>{2004,722}</string>
+            <string>{2006,960}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:9421bd9599f438b36f61c49a5c190c2e:859fbeb1b3ffc278c39ca9a4f11e2d9e:1877978a8d2b48373bfd07d14afcba99$</string>
+            <string>$TexturePacker:SmartUpdate:1145e419290156fb8b6ed4e4bc192f9b:1062609578816722977920dcdef18e71:1877978a8d2b48373bfd07d14afcba99$</string>
             <key>textureFileName</key>
             <string>cc_enemy_eugene.png</string>
         </dict>
