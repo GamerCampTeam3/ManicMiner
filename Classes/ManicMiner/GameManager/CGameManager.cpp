@@ -304,6 +304,7 @@ void CGameManager::CSwitchInteractEvent()
 	
 	if (CheckIfLevelRequirementsAreMet() )
 	{
+		OpenDoor();
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
 
