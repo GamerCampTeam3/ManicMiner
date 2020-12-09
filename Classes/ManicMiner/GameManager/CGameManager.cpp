@@ -79,25 +79,23 @@ bool  CGameManager::IsScoreGreaterThanHighscore() const
 // Upon interacting, checks if enough has been reached.
 bool CGameManager::CheckIfLevelRequirementsAreMet()
 {
-	bool enoughReached = false;
+	bool bEnoughReached = false;
 
 	switch ( m_sLevelValues.eCollectibleRequirements )
 	{
 		case ECollectibleRequirements::Collectible:
-			enoughReached = (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles);
+			bEnoughReached = (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles);
 			m_ESpecialInteractionType = ESpecialInteraction::Boss;
-			OpenDoor();
 			break;
 
 		case ECollectibleRequirements::Collectible_And_Switches:
-			enoughReached = 
+			bEnoughReached =
 					(m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles	) 
 				&&	(m_iCurrentSwitches		>= m_sLevelValues.iNumberOfSwitches		) ;
-			OpenDoor();
 			break;
 	}
 	
-	return enoughReached;
+	return bEnoughReached;
 }
 #pragma endregion Score_And_Life
 
@@ -105,9 +103,14 @@ void CGameManager::OpenDoor()
 {
 	CDoor* pcDoor;
 	CGCObject* pcBaseObject;
+	
 	pcBaseObject = CGCObjectManager::FindObject( "Door", GetGCTypeIDOf( CDoor ) );
 	pcDoor = static_cast<CDoor*>(pcBaseObject);
-	pcDoor->DoorOpen();
+
+	if (pcDoor != nullptr)
+	{
+		pcDoor->DoorOpen();
+	}
 }
 
 #pragma region W/R_Highscore_Value
@@ -287,6 +290,7 @@ void CGameManager::CCollectibleInteractEvent()
 	
 	if (CheckIfLevelRequirementsAreMet() )
 	{
+		OpenDoor();
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
 
