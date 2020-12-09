@@ -29,7 +29,7 @@ void CMLTheVat::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Toxic;
-	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::DeepSeaOilRig;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::DeepSeaOilRig3;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/6_TheVat.oel";
 	m_sLevelCreationParameters.szLevelName			= "The Vat";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 120.0f );

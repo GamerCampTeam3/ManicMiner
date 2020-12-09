@@ -31,7 +31,7 @@ void CMLSolarPowerGenerator::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 3 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Magma;
-	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano2;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/18_SolarPowerGenerator.oel";
 	m_sLevelCreationParameters.szLevelName			= "Solar Power Generator";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 840.0f + 30.0f, 300.0f );

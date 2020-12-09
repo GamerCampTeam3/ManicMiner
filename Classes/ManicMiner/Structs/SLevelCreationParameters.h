@@ -43,7 +43,7 @@ struct SLevelCreationParameters
 	SLevelCreationParameters()
 		: sLevelValues					( SLevelValues() )
 		, eParallaxTheme				( EParallaxTheme::Cavern )
-		, eBackgroundMusic				( EBackgroundMusicName::CrystalCoralReef )
+		, eBackgroundMusic				( EBackgroundMusicName::CrystalCoralReef1 )
 		, szLevelPath					( ""		 )
 		, szLevelName					( ""		 )
 		, v2PlayerStartPos				( cocos2d::Vec2( 120.0f + 30.0f, 120.0f ) )
