@@ -20,14 +20,20 @@ private:
 	std::string									m_pszAnimation;
 	std::string									m_pszPlist;
 	cocos2d::Animation*							pAnimation;
+	float m_fSpinDirection;
+	float m_fSpinSpeed;
+	const float m_kfMaxSpinSpeed = 0.2f;
+	const float m_kfSpinMultiplier = 20.0f;
 
 	// Overrides from CGCObjSpritePhysics
 	virtual void VOnResourceAcquire( void ) override;
 	virtual void VOnReset() override;
 	virtual void VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition ) override;
 	virtual void VOnResourceRelease( void ) override;
+	virtual void VOnUpdate(float fTimeStep) override;
 	
 public:
+	void SetDirection();
 	// Constructor, takes in the following params:
 	CCollectible();
 	GCFACTORY_DECLARE_CREATABLECLASS( CCollectible );
