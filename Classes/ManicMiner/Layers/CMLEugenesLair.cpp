@@ -32,7 +32,7 @@ void CMLEugenesLair::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Shipwreck;
-	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::Shipwreck1;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::DeepSeaOilRig1;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/4_Eugene'sLair.oel";
 	m_sLevelCreationParameters.szLevelName			= "Eugene's Lair";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 60.0f + 30.0f, 720.0f );

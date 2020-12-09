@@ -67,11 +67,12 @@ CManicLayer::CManicLayer()
 	, m_sLevelCreationParameters	( SLevelCreationParameters() )
 	, m_pcLevelManager				( nullptr )
 	, m_eGameState					( EGameState::Looting )
-	, m_bWasResetRequested			( false )
-	, m_bWasNextLevelRequested		( false )
+	, m_bWasResetRequested				( false )
+	, m_bWasNextLevelRequested			( false )
 	, m_pcParallax					( nullptr )
 	, m_pcPlayer					( nullptr )
-	, m_bUseHelpMenuIngame			( false   )
+	, m_bUseHelpMenuIngame				( false   )
+        , m_bIsFullscreen				( false )
 {
 }
 
@@ -1246,6 +1247,11 @@ void CManicLayer::CB_OnHelpButton( Ref* pSender )
 	this->removeChild( this->getChildByName( "ResumeButton" ) );
 	this->removeChild( this->getChildByName( "QuitButton" ) );
 
+	if ( !m_bIsFullscreen )
+	{
+		CreateScreenButton();
+	}
+
 	this->addChild( pMenu, 4 );
 }
 
@@ -1254,6 +1260,7 @@ void CManicLayer::CB_OnResumeButton( Ref* pSender )
 	this->removeChild( this->getChildByName( "HelpButton" ) );
 	this->removeChild( this->getChildByName( "ResumeButton" ) );
 	this->removeChild( this->getChildByName( "QuitButton" ) );
+	this->removeChild( this->getChildByName( "FSButton" ) );
 	CreateExitButton();
 	cocos2d::Director::getInstance()->resume();
 }
@@ -1264,7 +1271,40 @@ void CManicLayer::CB_OnBackButton(Ref* pSender, CGCObjSprite* pcSprite)
 	CreateHelpButton();
 	CreateResumeButton();
 	CreateQuitButton();
+
+	if (!m_bIsFullscreen)
+	{
+		this->removeChild( this->getChildByName( "FSButton" ) );
+	}
 	pcSprite->RemoveFromParent();	  
+}
+
+void CManicLayer::CreateScreenButton()
+{
+	MenuItemImage* pItemFullScreen = MenuItemImage::create(
+		"Menu/Buttons/Fullscreen/normal.png",
+		"Menu/Buttons/Fullscreen/pressed.png",
+		CC_CALLBACK_1( CManicLayer::CB_OnScreenButton, this ) );
+
+	pItemFullScreen->setPosition( Vec2( 940.f, 200.f ) );
+	Menu* m_pMenu = Menu::create( pItemFullScreen, nullptr );
+	m_pMenu->setName( "FSButton" );
+	m_pMenu->setPosition( Vec2::ZERO );
+	this->addChild( m_pMenu, 1 );
+
+	
+}
+
+
+void CManicLayer::CB_OnScreenButton(Ref *pSender)
+{
+	static_cast<GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView())->setFullscreen();
+	// Set resolution
+	Director::getInstance()->getOpenGLView()->setFrameSize( 1920, 1080 );
+	Director::getInstance()->getOpenGLView()->setDesignResolutionSize( 1920, 1080, ResolutionPolicy::EXACT_FIT );
+
+	this->removeChild( this->getChildByName( "FSButton" ) );
+	m_bIsFullscreen = true;
 }
 
 void CManicLayer::CreateExitButton()

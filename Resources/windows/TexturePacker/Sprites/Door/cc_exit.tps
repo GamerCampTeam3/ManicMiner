@@ -187,6 +187,28 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Frames/Open/portal0000.png</key>
+            <key type="filename">Frames/Open/portal0001.png</key>
+            <key type="filename">Frames/Open/portal0002.png</key>
+            <key type="filename">Frames/Open/portal0003.png</key>
+            <key type="filename">Frames/Open/portal0004.png</key>
+            <key type="filename">Frames/Open/portal0005.png</key>
+            <key type="filename">Frames/Open/portal0006.png</key>
+            <key type="filename">Frames/Open/portal0007.png</key>
+            <key type="filename">Frames/Open/portal0008.png</key>
+            <key type="filename">Frames/Open/portal0009.png</key>
+            <key type="filename">Frames/Open/portal0010.png</key>
+            <key type="filename">Frames/Open/portal0011.png</key>
+            <key type="filename">Frames/Open/portal0012.png</key>
+            <key type="filename">Frames/Open/portal0013.png</key>
+            <key type="filename">Frames/Open/portal0014.png</key>
+            <key type="filename">Frames/Open/portal0015.png</key>
+            <key type="filename">Frames/Open/portal0016.png</key>
+            <key type="filename">Frames/Open/portal0017.png</key>
+            <key type="filename">Frames/Open/portal0018.png</key>
+            <key type="filename">Frames/Open/portal0019.png</key>
+            <key type="filename">Frames/Open/portal0020.png</key>
+            <key type="filename">Frames/Open/portal0021.png</key>
             <key type="filename">cc_exit.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -206,6 +228,7 @@
         <key>fileList</key>
         <array>
             <filename>cc_exit.png</filename>
+            <filename>Frames</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

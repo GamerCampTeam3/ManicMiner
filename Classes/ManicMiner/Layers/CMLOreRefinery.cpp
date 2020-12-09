@@ -30,6 +30,7 @@ void CMLOreRefinery::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano2;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/12_OreRefinery.oel";
 	m_sLevelCreationParameters.szLevelName			= "Ore Refinery";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 1820.0f, 120.0f );

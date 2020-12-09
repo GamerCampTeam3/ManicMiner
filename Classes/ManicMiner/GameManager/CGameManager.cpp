@@ -1,5 +1,6 @@
 #include "ManicMiner/AirManager/AirManager.h"
 #include "ManicMiner/AudioHelper/ManicAudio.h"
+#include "ManicMiner/Doors/CDoor.h"
 #include "ManicMiner/Enums/ELifeUpdateType.h"
 #include "ManicMiner/Helpers/Helpers.h"
 #include "ManicMiner/HUD/CHUD.h"
@@ -27,7 +28,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_pcMovingDoor			( nullptr )
 	, m_sLevelValues			( ECollectibleRequirements::Collectible, 0, 0 )
 	, m_ESpecialInteractionType ( ESpecialInteraction::Default )
-	, m_eCurrentBackgroundMusic ( EBackgroundMusicName::CrystalCoralReef )
+	, m_eCurrentBackgroundMusic ( EBackgroundMusicName::CrystalCoralReef1 )
 {
 	ReadHighScore();
 }
@@ -78,25 +79,39 @@ bool  CGameManager::IsScoreGreaterThanHighscore() const
 // Upon interacting, checks if enough has been reached.
 bool CGameManager::CheckIfLevelRequirementsAreMet()
 {
-	bool enoughReached = false;
+	bool bEnoughReached = false;
 
 	switch ( m_sLevelValues.eCollectibleRequirements )
 	{
 		case ECollectibleRequirements::Collectible:
-			enoughReached = (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles);
+			bEnoughReached = (m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles);
 			m_ESpecialInteractionType = ESpecialInteraction::Boss;
 			break;
 
 		case ECollectibleRequirements::Collectible_And_Switches:
-			enoughReached = 
+			bEnoughReached =
 					(m_iCurrentCollectibles >= m_sLevelValues.iNumberofCollectibles	) 
 				&&	(m_iCurrentSwitches		>= m_sLevelValues.iNumberOfSwitches		) ;
 			break;
 	}
-
-	return enoughReached;
+	
+	return bEnoughReached;
 }
 #pragma endregion Score_And_Life
+
+void CGameManager::OpenDoor()
+{
+	CDoor* pcDoor;
+	CGCObject* pcBaseObject;
+	
+	pcBaseObject = CGCObjectManager::FindObject( "Door", GetGCTypeIDOf( CDoor ) );
+	pcDoor = static_cast<CDoor*>(pcBaseObject);
+
+	if (pcDoor != nullptr)
+	{
+		pcDoor->DoorOpen();
+	}
+}
 
 #pragma region W/R_Highscore_Value
 
@@ -111,7 +126,7 @@ void  CGameManager::WriteHighScore() const
 	{
 		std::ofstream highScoreFile;
 		highScoreFile.open( "Highscore.bin" );
-		ASSERT_CHECK( highScoreFile.is_open() );
+		//ASSERT_CHECK( highScoreFile.is_open() );
 		
 		unsigned int tempScore = m_iHighScore;				// Sec the temporary int to be the current high score
 		unsigned int comparisonScore = tempScore;			// We then also store it in another variable
@@ -143,7 +158,7 @@ void  CGameManager::ReadHighScore()
 	{
 		std::ifstream highScoreFile;
 		highScoreFile.open( "Highscore.bin" );
-		ASSERT_CHECK( highScoreFile.is_open());
+		//ASSERT_CHECK( highScoreFile.is_open());
 		
 		unsigned int tempScore = 0;
 		unsigned int comparisonScore = 0;
@@ -275,6 +290,7 @@ void CGameManager::CCollectibleInteractEvent()
 	
 	if (CheckIfLevelRequirementsAreMet() )
 	{
+		OpenDoor();
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
 

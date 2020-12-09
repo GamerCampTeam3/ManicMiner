@@ -272,7 +272,7 @@ void CLevelManager::EnterCavern()
 		// If so, proceed to next level ( which will be level 1  / Central Cavern )
 		GoToNextLevel();
 	}
-	PlayBackgroundMusic( EBackgroundMusicName::CrystalCoralReef );
+	PlayBackgroundMusic( EBackgroundMusicName::CrystalCoralReef1 );
 }
 
 // -------------------------------------------------------------------------------------------------------------------- //

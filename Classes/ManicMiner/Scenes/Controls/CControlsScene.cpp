@@ -118,7 +118,7 @@ void CControlsScene::CB_OnFullScreenButton( Ref* pSender )
         m_bFullScreenSwitch = true;
         this->removeChild( this->getChildByName( "FSButton" ) );
         m_strPath = "Menu/Buttons/Windowed/normal.png";
-        CreateFullScreenButton();
+        //CreateFullScreenButton();
     }
 
     else
@@ -130,7 +130,7 @@ void CControlsScene::CB_OnFullScreenButton( Ref* pSender )
         m_bFullScreenSwitch = false;
         this->removeChild( this->getChildByName( "FSButton" ) );
         m_strPath = "Menu/Buttons/Fullscreen/normal.png";
-        CreateFullScreenButton();
+        //CreateFullScreenButton();
     }
 }
 

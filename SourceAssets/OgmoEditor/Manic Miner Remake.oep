@@ -536,6 +536,35 @@
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
+    <EntityDefinition Name="BrickPlatform_60x660" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>60</Width>
+        <Height>660</Height>
+      </Size>
+      <Origin>
+        <X>30</X>
+        <Y>330</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x660.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CBrickPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="CN_Platform_Brick_3x1" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x660.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x660.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="auw_platform_brick_60x660" MaxChars="-1" MultiLine="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
     <EntityDefinition Name="BrickPlatform_60x780" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
         <Width>60</Width>
@@ -1003,6 +1032,36 @@
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
+    <EntityDefinition Name="MovingPlatform_300x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>300</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>150</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Moving/cc_platform_moving_300x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CMovingPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="cc_platform_moving_300x60" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/Moving/cc_platform_moving_300x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/CentralCavern/Moving/cc_platform_moving_300x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="cc_platform_moving_300x60" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="IntValueDefinition" Name="PlayerDirectionLock" Default="0" Min="0" Max="2" ShowSlider="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
     <EntityDefinition Name="MovingPlatform_360x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
         <Width>360</Width>
@@ -1029,6 +1088,36 @@
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheColdRoom/Moving/tcr_platform_moving_360x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tcr_platform_moving_360x60" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="IntValueDefinition" Name="PlayerDirectionLock" Default="0" Min="0" Max="2" ShowSlider="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="MovingPlatform_480x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>480</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>240</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheColdRoom/Moving/tcr_platform_moving_360x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CMovingPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="cc_platform_moving_480x60" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/Moving/cc_platform_moving_480x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/CentralCavern/Moving/cc_platform_moving_480x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="cc_platform_moving_480x60" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="IntValueDefinition" Name="PlayerDirectionLock" Default="0" Min="0" Max="2" ShowSlider="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
@@ -1093,6 +1182,36 @@
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
+    <EntityDefinition Name="MovingPlatform_960x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>960</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>480</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/TheMenagerie/Moving/tm_platform_moving_960x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CMovingPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="tm_platform_moving_960x60" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/TheMenagerie/Moving/tm_platform_moving_960x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheMenagerie/Moving/tm_platform_moving_960x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="tm_platform_moving_960x60" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="IntValueDefinition" Name="PlayerDirectionLock" Default="0" Min="0" Max="2" ShowSlider="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
     <EntityDefinition Name="MovingPlatform_1320x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
         <Width>1320</Width>
@@ -1149,6 +1268,36 @@
         <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/TheMenagerie/Moving/tm_platform_moving_1440x60.plist" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="amt_platform_moving_1440x60" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="IntValueDefinition" Name="PlayerDirectionLock" Default="0" Min="0" Max="2" ShowSlider="false" />
+      </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="MovingPlatform_1560x60" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>1560</Width>
+        <Height>60</Height>
+      </Size>
+      <Origin>
+        <X>780</X>
+        <Y>30</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Image" ImagePath="../TexturePacker/Sprites/Platform/CentralCavern/Moving/cc_platform_moving_1560x60.png" Tiled="false">
+        <RectColor A="255" R="255" G="0" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions>
+        <ValueDefinition xsi:type="StringValueDefinition" Name="class" Default="CMovingPlatform" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="shape" Default="cc_platform_moving_1560" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="PlistFile" Default="TexturePacker/Sprites/Platform/CentralCavern/Moving/cc_platform_moving_1560x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="EnumValueDefinition" Name="B2DBodyType">
+          <Elements>
+            <string>b2_staticBody</string>
+            <string>b2_kinematicBody</string>
+            <string>b2_dynamicBody</string>
+          </Elements>
+        </ValueDefinition>
+        <ValueDefinition xsi:type="BoolValueDefinition" Name="HasFixedRotation" Default="true" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomPlist" Default="TexturePacker/Sprites/Platform/CentralCavern/Moving/cc_platform_moving_1560x60.plist" MaxChars="-1" MultiLine="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="CustomShape" Default="cc_platform_moving_1560" MaxChars="-1" MultiLine="false" />
         <ValueDefinition xsi:type="IntValueDefinition" Name="PlayerDirectionLock" Default="0" Min="0" Max="2" ShowSlider="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
