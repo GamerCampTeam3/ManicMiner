@@ -30,7 +30,7 @@ void CMLProcessingPlant::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Magma;
-	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::DeepSeaOilRig2;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/5_ProcessingPlant.oel";
 	m_sLevelCreationParameters.szLevelName			= "Processing Plant";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 990.0f, 720.f);

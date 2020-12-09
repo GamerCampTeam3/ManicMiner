@@ -33,7 +33,7 @@ void CMLSkyLabLandingBay::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 4 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Magma;
-	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano; 
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano3; 
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/13_SkyLabLandingBay.oel";
 	m_sLevelCreationParameters.szLevelName			= "Sky Lab Landing Bay";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 1820.0f, 120.0f );

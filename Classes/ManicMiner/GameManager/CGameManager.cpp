@@ -28,7 +28,7 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_pcMovingDoor			( nullptr )
 	, m_sLevelValues			( ECollectibleRequirements::Collectible, 0, 0 )
 	, m_ESpecialInteractionType ( ESpecialInteraction::Default )
-	, m_eCurrentBackgroundMusic ( EBackgroundMusicName::CrystalCoralReef )
+	, m_eCurrentBackgroundMusic ( EBackgroundMusicName::CrystalCoralReef1 )
 {
 	ReadHighScore();
 }

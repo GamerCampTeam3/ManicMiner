@@ -91,7 +91,7 @@ void CCollectible::VOnUpdate(float fTimeStep)
 {
 	// Original Rotation + flat speed * delta time * speed multiplier * direction (1 = nothing, -1 = opposite);
 	const float fNewRotation = GetSpriteRotation() + m_fSpinSpeed * fTimeStep * m_kfSpinMultiplier * m_fSpinDirection;
-	SetSpriteRotation( fNewRotation );
+	SetSpriteRotation( fNewRotation );	
 }
 
 

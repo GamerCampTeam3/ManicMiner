@@ -29,6 +29,7 @@ void CMLTheWarehouse::VOnCreate( void )
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
 	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
+	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano1;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/16_TheWarehouse.oel";
 	m_sLevelCreationParameters.szLevelName			= "The Warehouse";
 	m_sLevelCreationParameters.v2PlayerStartPos		= CC_V2( 120.0f + 30.0f, 720.f );
