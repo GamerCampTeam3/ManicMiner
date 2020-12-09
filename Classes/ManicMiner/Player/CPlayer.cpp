@@ -825,7 +825,6 @@ void CPlayer::OnLanded()
 // The player is grounded, can jump
 	m_bCanJump = true;
 	m_bIsGrounded = true;
-	SetHighestGroundedY();
 
 // If first contact with ground -> landing
 	if( m_iHardContactCount == 1 || ( m_iHardContactCount == 2 && m_iSensorContactCount == 1 ) )
@@ -866,6 +865,7 @@ void CPlayer::OnLanded()
 		}
 	}
 
+	SetHighestGroundedY();
 	StopVerticalMovementSound();
 }
 
