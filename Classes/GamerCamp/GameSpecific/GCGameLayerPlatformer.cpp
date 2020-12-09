@@ -9,7 +9,7 @@
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 
-#include "MenuScene.h"
+#include "ManicMiner/Layers/MenuScene.h"
 #include "GamerCamp/GCObject/GCObjectManager.h"
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "GamerCamp/GameSpecific/Player/GCObjPlayer.h"
@@ -344,7 +344,7 @@ void CGCGameLayerPlatformer::VOnUpdate( f32 fTimeStep )
 	if( QuitWasRequested() )
 	{
 		QuitRequestWasHandled();
-		ReplaceScene( TransitionRotoZoom::create( 1.0f, CMenuLayer::scene() ) );
+		//ReplaceScene( TransitionRotoZoom::create( 1.0f, CMenuLayer::scene() ) );
 	}
 }
 

@@ -285,10 +285,12 @@ private:
 	CAirManager* m_pcAirManager;
 	bool m_bUseHelpMenuIngame;
 	bool m_bIsPressing;
+	bool m_bIsFullscreen;
 	void CB_OnHelpButton( Ref* pSender );
 	void CB_OnResumeButton( Ref* pSender );
 	void CB_OnBackButton( Ref* pSender, CGCObjSprite* pcSprite );
 	void CB_OnExitButton( Ref* pSender );
+	void CB_OnScreenButton( Ref* pSender );
 
 // Umeer placed this nice button on the top right corner of the screen ------------------------------------------------ //
 // On click, request next level to be loaded
@@ -297,6 +299,7 @@ private:
 	void CreateResumeButton();
 	void CreateExitButton();
 	void CreateQuitButton();
+	void CreateScreenButton();
         
 
 public:
