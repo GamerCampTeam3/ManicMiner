@@ -65,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	
 	if( !glview ) 
 	{
-		glview = GLViewImpl::create("Manic Miner Remake");
+		glview = GLViewImpl::create("Sharks vs Robots");
 		pDirector->setOpenGLView(glview);
 	}
 
