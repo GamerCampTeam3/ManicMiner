@@ -28,7 +28,7 @@ void CMLTheWarehouse::VOnCreate( void )
 	// It is important you initialize the values BEFORE CManicLayer::VOnCreate() is called -
 	// Otherwise, it will use a bunch of default data (I have added checks for that) and nothing will load.	
 	m_sLevelCreationParameters.sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 5 );
-	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Cavern;
+	m_sLevelCreationParameters.eParallaxTheme		= EParallaxTheme::Toxic;
 	m_sLevelCreationParameters.eBackgroundMusic		= EBackgroundMusicName::UnderwaterVolcano1;
 	m_sLevelCreationParameters.szLevelPath			= "OgmoEditor/16_TheWarehouse.oel";
 	m_sLevelCreationParameters.szLevelName			= "The Warehouse";
