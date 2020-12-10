@@ -507,6 +507,11 @@ public:
 
 	void ResetIdle();
 	
+	private:
+
+		void SetHighestMidAirY();
+		void SetHighestGroundedY();
+
 // -------------------------------------------------------------------------------------------------------------------- //
 };
 #endif // #ifndef _CPLAYER_H_
