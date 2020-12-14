@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// (C) Gamer Camp / Dave O'Dwyer October 2020
+// (C) Gamer Camp / Dave O'Dwyer December 2020 - Module 2
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef _GCOBJHAZARD_H_
 #define _GCOBJHAZARD_H_
@@ -9,29 +9,28 @@
 #endif
 
 #include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
-#include "ManicMiner/Enums/EHazardTypes.h"
 
 //////////////////////////////////////////////////////////////////////////
 //
 //  This class defines an invidual instance of a Hazard.
-//  Its purpose is to provide the functionality a Hazard would require with regards to
-//  screen position and an identifier for the Hazard (EHazardID)
-//
+//  The following features are provided:
+//  - initialise via OGMO parameters (VOnResourceAcquire).
+//  - Once colided, disable collision detection to avoid multiple player deaths.
+//	- 
+// Known limitations:
+// - None
 //////////////////////////////////////////////////////////////////////////
 
 class CGCObjHazard
 : public CGCObjSpritePhysics
 {
-public:
-	bool GetCanCollide() { return m_bCanCollide; }
-	void SetCanCollide( bool bCanCollide ) { m_bCanCollide = bCanCollide; }
-	
 private:
-	cocos2d::Vec2				m_cAnchorPoint;
-	std::string					m_pszAnimation;
-	std::string                 m_pszPlist;
-	cocos2d::Animation*			pAnimation;
-	bool						m_bCanCollide;
+
+	cocos2d::Vec2				m_cAnchorPoint;		// starting point of the enemies traverse window.
+	std::string					m_pszAnimation;		// Pointer to the animation control structure.
+	cocos2d::Animation*			pAnimation;			// Animation name (from OGMO file).
+	bool						m_bCanCollide;		// Latching mechanism to avoid multiple triggers occuring when the player collides with a Hazard.
+													// ie. set to false by the framework immediately following a collision, then set to true by VOnResurrected here when level resets.
 
 	std::unique_ptr< CGCFactoryCreationParams > m_pCustomCreationParams;
 
@@ -41,19 +40,19 @@ public:
 
 	GCFACTORY_DECLARE_CREATABLECLASS(CGCObjHazard);
 
-	//////////////////////////////////////////////////////////////////////////
-	// we need a virtual destructor since delete will be called on pointers of 
-	// this class to delete derived types.
 	virtual ~CGCObjHazard()
 	{}
 
 	//////////////////////////////////////////////////////////////////////////
-	// overridden virtuals from the game object interface
+	// overridden virtuals from the gamer camp interface
 	virtual void VOnResourceAcquire		( void ) override;
 	virtual void VOnResurrected			( void ) override;
-	virtual void VOnUpdate				(float fTimeStep) override;
 	virtual void VOnResourceRelease		(void) override;
 	virtual void VHandleFactoryParams	(const CGCFactoryCreationParams& rCreationParams, cocos2d::Vec2 v2InitialPosition) override;
-	
+
+	// Accessor functions for m_bCanCollide.
+	bool GetCanCollide () { return m_bCanCollide; }
+	void SetCanCollide ( bool bCanCollide ) { m_bCanCollide = bCanCollide; }
+
 };
 #endif // #ifndef _GCOBJHAZARD_H_
