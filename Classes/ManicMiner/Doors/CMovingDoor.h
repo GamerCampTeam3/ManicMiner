@@ -10,14 +10,13 @@ class CBlock;
 class CMovingDoor : public CGCObjectGroup
 {
 public:
-	CMovingDoor( CGameManager& rcGameManager, const CGCFactoryCreationParams& rcFactoryCreationParams );
+	CMovingDoor( const CGCFactoryCreationParams& rcFactoryCreationParams );
 	CMovingDoor();
 	
 	~CMovingDoor();
 
 	void MoveBlocksAside() const;
 private:
-	CGameManager*				m_pcGameManager;
 	CBlock*						m_pcUpperBlock;
 	CBlock*						m_pcLowerBlock;
 	CGCFactoryCreationParams	m_cCreationParams;

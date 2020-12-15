@@ -25,7 +25,6 @@ CGameManager::CGameManager( CLevelManager& rcLevelManager )
 	, m_pcCHUD					( nullptr )
 	, m_pcLevelManager			( &rcLevelManager )
 	, m_pcCPlayer				( nullptr )
-	, m_pcMovingDoor			( nullptr )
 	, m_sLevelValues			( ECollectibleRequirements::Collectible, 0, 0 )
 	, m_ESpecialInteractionType ( ESpecialInteraction::Default )
 	, m_eCurrentBackgroundMusic ( EBackgroundMusicName::CrystalCoralReef1 )
@@ -101,16 +100,7 @@ bool CGameManager::CheckIfLevelRequirementsAreMet()
 
 void CGameManager::OpenDoor()
 {
-	CDoor* pcDoor;
-	CGCObject* pcBaseObject;
-	
-	pcBaseObject = CGCObjectManager::FindObject( "Door", GetGCTypeIDOf( CDoor ) );
-	pcDoor = static_cast<CDoor*>(pcBaseObject);
-
-	if (pcDoor != nullptr)
-	{
-		pcDoor->DoorOpen();
-	}
+	FindObject::Door()->DoorOpen();
 }
 
 #pragma region W/R_Highscore_Value
@@ -188,18 +178,20 @@ void  CGameManager::ReadHighScore()
 #pragma endregion W/R_Highscore_Value
 
 #pragma region CHUD_Update_Calls
+// Tells the CHUD to update the score
 void CGameManager::UpdateScore() const
 {
 	m_pcCHUD->UpdateScore( m_iCurrentScore );
 }
 
-
+// Tells the CHUD to update the highscore
 void CGameManager::UpdateHighScore() const
 {
 	m_pcCHUD->UpdateHighScore( m_iHighScore );
 }
 
-
+// Tells the CHUD to update lives
+// This is used for both when you die AND gain a life
 void CGameManager::UpdateLives(ELifeUpdateType eLifeUpdateType)
 {
 		switch (eLifeUpdateType)
@@ -218,12 +210,13 @@ void CGameManager::UpdateLives(ELifeUpdateType eLifeUpdateType)
 		}
 }
 
-
+// Tells the CHUD to flush it's text/values
 void CGameManager::ResetHUD()
 {
 	m_pcCHUD->FlushText();
 }
 
+// H.T Edit
 void CGameManager::CheckShouldUpdateMusic( EBackgroundMusicName eBackgroundMusic )
 {
 	if ( m_eCurrentBackgroundMusic != eBackgroundMusic )
@@ -272,17 +265,10 @@ void CGameManager::SetCAirManager(CAirManager* pcAirManager)
 	}
 }
 
-// Sets the moving door
-void CGameManager::SetMovingDoors( CMovingDoor* rcMovingDoor )
-{
-	m_pcMovingDoor = rcMovingDoor;
-}
-
 #pragma endregion Pointers_Setters
 
 #pragma region Collectible/Switch Events
 // Increases the score if a collectible, increments counter and checks if enough have been reached.
-
 void CGameManager::CCollectibleInteractEvent()
 {
 	IncreaseScore();
@@ -308,6 +294,8 @@ void CGameManager::CSwitchInteractEvent()
 		m_pcLevelManager->GetCurrentManicLayer().SetGameState( EGameState::Escaping );
 	}
 
+	// Used to determine at which stage the player is at.
+	// @TODO: This can really use the m_iCurrentSwitches instead of a different int.
 	if (m_iInteractionIndex == 1)
 	{
 		m_ESpecialInteractionType = ESpecialInteraction::Door;
@@ -318,7 +306,8 @@ void CGameManager::CSwitchInteractEvent()
 		m_ESpecialInteractionType = ESpecialInteraction::Boss;
 		m_iInteractionIndex = 0;
 	}
-	
+
+	// Calls the specific interaction (if valid)
 	m_pcLevelManager->GetCurrentManicLayer().VLevelSpecificInteraction();
 }
 

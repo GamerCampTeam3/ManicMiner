@@ -10,9 +10,9 @@
 #include "ManicMiner/Enemy/GCObjEnemy.h"
 #include "GamerCamp/GCObject/GCObject.h"
 #include "ManicMiner/Platforms/CTriggerPlatform.h"
+#include "ManicMiner/Helpers/Helpers.h"
 
 static CGCFactoryCreationParams s_cCreationParams_CGCObj_EKong("CGCObjEnemy_EKong", "TexturePacker/Sprites/Kong/Kong.plist", "cc_enemy_duck", b2_dynamicBody, true);
-static CGCFactoryCreationParams s_cCreationParams_CMovingDoors( "CPlatform_Regular_1x1", "TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x60.plist", "CN_Platform_Regular_1x1", b2_staticBody, true );
 
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CMLReturnOfKong::CMLReturnOfKong()
@@ -48,7 +48,7 @@ void CMLReturnOfKong::VOnCreate( void )
 	m_pcKong = new CGCObjKong( cocos2d::Vec2( 960.0, 900.0 ), cocos2d::Vec2( 100.0, 360.0 ), 2.0f, s_cCreationParams_CGCObj_EKong );
 	
 	static const CGCFactoryCreationParams skcCMovingDoorParams( "CPlatform_Regular_1x1", "TexturePacker/Sprites/Platform/AbandonedUraniumWorkings/Brick/auw_platform_brick_60x60.plist", "CN_Platform_Regular_1x1", b2_staticBody, true );
-	m_pcMovingDoor = new CMovingDoor( *m_pcGameManager, skcCMovingDoorParams );
+	m_pcMovingDoor = new CMovingDoor( skcCMovingDoorParams );
 }
 
 void CMLReturnOfKong::VLevelSpecificInteraction()
@@ -59,21 +59,12 @@ void CMLReturnOfKong::VLevelSpecificInteraction()
 			break;
 
 		case ESpecialInteraction::Door:
-			CGCObjEnemy* pcEnemy;
-			CGCObject* pcBaseObject;
-			pcBaseObject = CGCObjectManager::FindObject( "KongExtend", GetGCTypeIDOf( CGCObjEnemy ) );
-			pcEnemy = static_cast<CGCObjEnemy*>(pcBaseObject);
-			pcEnemy->ModifyEnemyDestinationPoint( cocos2d::Vec2( 1370.0f, 240.0f ) );
+			FindObject::Enemy()->ModifyEnemyDestinationPoint( cocos2d::Vec2( 1370.0f, 240.0f ) );
 			m_pcMovingDoor->MoveBlocksAside();
 			break;
 
 		case ESpecialInteraction::Boss:
-			CTriggerPlatform* pcTriggerPlatform;
-			CGCObject* pcBasePlatform;
-			pcBasePlatform = CGCObjectManager::FindObject( "TriggerPlatform", GetGCTypeIDOf( CTriggerPlatform ) );
-			pcTriggerPlatform = static_cast<CTriggerPlatform*>(pcBasePlatform);
-			pcTriggerPlatform->TriggerCrumble();
-
+			FindObject::Platform()->TriggerCrumble();
 			m_pcKong->TriggerKongToFall();
 			break;
 	}

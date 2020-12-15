@@ -24,7 +24,6 @@ enum class EBackgroundMusicName;
 	class		CPlayer;																																						
 	class		CHUD;																																							
 	class		CLevelManager;
-	class		CMovingDoor;
 	enum class	ELifeUpdateType;//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -76,7 +75,6 @@ class CGameManager
 	void	SetCAirManager		( CAirManager* pcAirManager );				// Sets the pointer to the current AirManager.															
 	void	InitCHUD			( std::string szLevelName );				// Sets the name of the level.
 	void	SetDoOnce			( const bool bDoOnce );						// Sets bDoOnce.
-	void	SetMovingDoors		( CMovingDoor* rcMovingDoor );				// Sets the reference to the CMovingDoor
 	void	SetInteractionStage	( ESpecialInteraction eSpecialInteraction );// Sets the interaction enum.
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------			
 	//																																												
@@ -114,8 +112,7 @@ class CGameManager
 	CAirManager*	 m_pcAirManager;										// The air manager, used for the drain.																
 	CHUD*			 m_pcCHUD;												// The CHUD, *this will tell it when to update.														
 	CLevelManager*	 m_pcLevelManager;										// What instantiate this classes, through this, we get access to the current manic layer.			
-	CPlayer*		 m_pcCPlayer;											// The player, needed to let it know how much lives it has on a new map.							
-	CMovingDoor*	 m_pcMovingDoor;																																	
+	CPlayer*		 m_pcCPlayer;											// The player, needed to let it know how much lives it has on a new map.																																							
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//																																									
 	//---------------------------------------------------------  STRUCTS/ENUMS -----------------------------------------------------------------------------------------

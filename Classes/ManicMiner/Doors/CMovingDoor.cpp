@@ -7,9 +7,8 @@
 
 
 
-CMovingDoor::CMovingDoor( CGameManager& rcGameManager, const CGCFactoryCreationParams& rcFactoryCreationParams )
-	: m_pcGameManager	( &rcGameManager )
-	, m_pcUpperBlock	( nullptr )
+CMovingDoor::CMovingDoor( const CGCFactoryCreationParams& rcFactoryCreationParams )
+	: m_pcUpperBlock	( nullptr )
 	, m_pcLowerBlock	( nullptr )
 	, m_cCreationParams	( rcFactoryCreationParams )
 {
@@ -30,11 +29,6 @@ void CMovingDoor::Init()
 	m_pcUpperBlock = new CBlock(  m_cCreationParams, cocos2d::Vec2( xPos, yPos0 ) );
 	m_pcLowerBlock = new CBlock(  m_cCreationParams, cocos2d::Vec2( xPos, yPos1 ) );
 
-	// And we set this on the GameManager
-	if (m_pcGameManager != nullptr )
-	{
-		m_pcGameManager->SetMovingDoors( this );
-	}
 }
 
 CMovingDoor::~CMovingDoor()

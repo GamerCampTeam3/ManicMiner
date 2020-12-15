@@ -7,6 +7,9 @@
 
 #include "GamerCamp/GCCocosInterface/GCObjSprite.h"
 #include "ManicMiner/Layers/CManicLayer.h"
+#include "ManicMiner/Platforms/CTriggerPlatform.h"
+#include "ManicMiner/Enemy/GCObjEnemy.h"
+#include "ManicMiner/Doors/CDoor.h"
 
 // A template to allow for ease of deletion of pointers and array of pointers
 template <typename T> void safeDelete( T*& a )
@@ -47,10 +50,35 @@ namespace EasySprite
 		pcSprite->SetName( pszName );
 
 		return pcSprite;
+	}	
+}
+
+// Finds and returns an object from the pool.
+namespace FindObject
+{
+	inline CGCObjEnemy* Enemy()
+	{
+		CGCObjEnemy* pcEnemy;
+		CGCObject* pcBaseObject;
+		pcBaseObject = CGCObjectManager::FindObject( "KongExtend", GetGCTypeIDOf( CGCObjEnemy ) );
+		return pcEnemy = static_cast<CGCObjEnemy*>(pcBaseObject);
 	}
 
+	inline CTriggerPlatform* Platform()
+	{
+		CTriggerPlatform* pcTriggerPlatform;
+		CGCObject* pcBasePlatform;
+		pcBasePlatform = CGCObjectManager::FindObject( "TriggerPlatform", GetGCTypeIDOf( CTriggerPlatform ) );
+		return pcTriggerPlatform = static_cast<CTriggerPlatform*>(pcBasePlatform);
+	}
 
-	
+	inline CDoor* Door()
+	{
+		CDoor* pcDoor;
+		CGCObject* pcBaseObject;
+		pcBaseObject = CGCObjectManager::FindObject( "Door", GetGCTypeIDOf( CDoor ) );
+		return pcDoor = static_cast<CDoor*>(pcBaseObject);	
+	}
 }
 
 #ifdef _DEBUG
