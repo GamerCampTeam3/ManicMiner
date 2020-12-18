@@ -56,7 +56,10 @@ void CGameManager::CheckHighScoreForUpdate()
 }
 
 // Keeps tracks if the player has accrued enough score to get a new life
-// If it has, the player will be given an extra life and then the counter will be reset.
+// If it has, the player will be given an extra life and then the counter will be reset with the left over points
+// For example: Score in would be 100, with the threshold 10000 and the counter currently at 9951
+// Counter is now 10051, which means it is above the threshold and thus gives a life.
+// Then it subtracts itself from the threshold, leaving 51 inside the counter.
 void CGameManager::ExtraLifeCheck(int iScore)
 {
 	static int counter;
@@ -76,6 +79,7 @@ bool  CGameManager::IsScoreGreaterThanHighscore() const
 }
 
 // Upon interacting, checks if enough has been reached.
+// Returns a bool depending on the current if the requirements are met.
 bool CGameManager::CheckIfLevelRequirementsAreMet()
 {
 	bool bEnoughReached = false;
@@ -100,7 +104,7 @@ bool CGameManager::CheckIfLevelRequirementsAreMet()
 
 void CGameManager::OpenDoor()
 {
-	FindObject::Door()->DoorOpen();
+	FindObject::Door()->Open();
 }
 
 #pragma region W/R_Highscore_Value
@@ -216,16 +220,6 @@ void CGameManager::ResetHUD()
 	m_pcCHUD->FlushText();
 }
 
-// H.T Edit
-void CGameManager::CheckShouldUpdateMusic( EBackgroundMusicName eBackgroundMusic )
-{
-	if ( m_eCurrentBackgroundMusic != eBackgroundMusic )
-	{
-		StopBackgroundMusic();
-		m_eCurrentBackgroundMusic = eBackgroundMusic;
-		PlayBackgroundMusic( m_eCurrentBackgroundMusic );
-	}
-}
 
 #pragma endregion CHUD_Update_Calls
 
@@ -283,6 +277,7 @@ void CGameManager::CCollectibleInteractEvent()
 	m_pcLevelManager->GetCurrentManicLayer().VLevelSpecificInteraction();
 }
 
+// The interact event called when the switch is activated
 void CGameManager::CSwitchInteractEvent()
 {
 	m_iInteractionIndex++;	
@@ -314,11 +309,14 @@ void CGameManager::CSwitchInteractEvent()
 #pragma endregion Collectible/Switch Events
 
 #pragma region Level_Related_Calls
+
+// Sets the current SLevelValues that will feed into the other values
 void CGameManager::SetLevelRequirements( const SLevelValues& rsLevelValues )
 {
 	m_sLevelValues = rsLevelValues;
 }
 
+// Called when the player dies, resets the current logic variables.
 void CGameManager::ResetEvent()
 {
 	m_iCurrentSwitches = 0;
@@ -327,6 +325,7 @@ void CGameManager::ResetEvent()
 	m_iInteractionIndex = 0;
 }
 
+// Called prior to setting the values, it resets them to make sure nothing is left over as we instantiate CGameManager once.
 void CGameManager::ResetValues()
 {
 	m_iCurrentCollectibles	= 0;
@@ -336,12 +335,14 @@ void CGameManager::ResetValues()
 	m_sLevelValues			= SLevelValues( ECollectibleRequirements::Collectible, 0 );
 }
 
+// Resets the lives
 void CGameManager::ResetLives()
 {
 	m_iCurrentLives = m_kiStartingLives;
 	m_iCurrentScore = 0;
 }
 
+// End of level event
 void CGameManager::EndLevel() 
 {
 	if ( m_pcLevelManager->GetCurrentManicLayer().GetGameState() == EGameState::Escaping )
@@ -351,6 +352,7 @@ void CGameManager::EndLevel()
 	}
 }
 
+// Waiting for the air to drain into score
 void CGameManager::DrainAirForScore() 
 {
 	m_pcAirManager->DrainAir();
@@ -376,9 +378,22 @@ void CGameManager::DrainToScore()
 	ExtraLifeCheck( m_kiScorePerTimeLeft );
 }
 
+// H.T Edit --------------------------------------------------------------------------//
+// Comments here
+void CGameManager::CheckShouldUpdateMusic( EBackgroundMusicName eBackgroundMusic )
+{
+	if (m_eCurrentBackgroundMusic != eBackgroundMusic)
+	{
+		StopBackgroundMusic();
+		m_eCurrentBackgroundMusic = eBackgroundMusic;
+		PlayBackgroundMusic( m_eCurrentBackgroundMusic );
+	}
+}
+// End of H.T Edit --------------------------------------------------------------------//
 #pragma endregion Level_Related_Calls
 
 #pragma region Setters
+// Used the first time the level is created.
 void CGameManager::SetDoOnce(const bool bDoOnce)
 {
 	m_bDoOnce = bDoOnce;
@@ -400,7 +415,7 @@ ESpecialInteraction CGameManager::GetInteractionStage() const
 	return m_ESpecialInteractionType;
 }
 
-
+// Gets if the level requirements are met
 bool CGameManager::CanLevelEnd()
 {
 	return CheckIfLevelRequirementsAreMet();

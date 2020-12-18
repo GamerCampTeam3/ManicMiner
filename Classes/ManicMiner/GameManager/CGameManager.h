@@ -51,7 +51,7 @@ class CGameManager
 	//-----------------------------------------------------------  On Interact  ----------------------------------------------------------------------------------------			
 	void	CCollectibleInteractEvent();									// Updates the elements upon collecting with a collectible.												
 	void	CSwitchInteractEvent();											// Updates the elements upon interacting with a cswitch.
-	void	ResetInteractionCounter() { m_iInteractionIndex = 0; }		// Resets the interaction counter
+	void	ResetInteractionCounter() { m_iInteractionIndex = 0; }			// Resets the interaction counter
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------			
 	//																																												
 	//-----------------------------------------------------------  Level Related  --------------------------------------------------------------------------------------			
@@ -82,9 +82,9 @@ class CGameManager
 	bool	GetCanDrainToScore() const	{ return m_bDrainToScore;	}		// Returns bDrainsToScore
 	bool	GetDoOnce() const			{ return m_bDoOnce;			}		// Returns bDoOnce
 	ESpecialInteraction GetInteractionStage() const;						// Returns the ESpecialInteraction
-	bool	CanLevelEnd();
-	int		GetScore() const { return m_iCurrentScore; }
-	int		GetHighscore() const { return m_iHighScore; }
+	bool	CanLevelEnd();													// Returns if the level requirements are met.
+	int		GetScore() const			{ return m_iCurrentScore;	}		// Returns the score
+	int		GetHighscore() const		{ return m_iHighScore;		}		// Returns the highscore
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------			
 
 
@@ -132,7 +132,7 @@ class CGameManager
 	void			 IncreaseScore();										// Increases the score by a flat amount which is 100 (just like the original Manic Miner)				
 	void			 UpdateHighScore() const;								// Tells the CHUD to update the high score with the current high score.									
 	void			 UpdateScore()	  const;								// Tells the CHUD to update the score.
-	void			 OpenDoor();
+	void			 OpenDoor();											// Tells the CDoor to open.
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------/
 };
 #endif // #ifndef _CGAMEMANAGER_H_

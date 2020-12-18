@@ -62,7 +62,7 @@ void CDoor::VHandleFactoryParams( const CGCFactoryCreationParams& rCreationParam
 	CGCObjSpritePhysics::VHandleFactoryParams( (*pParamsToPassToBaseClass), v2InitialPosition );
 }
 
-void CDoor::DoorOpen()
+void CDoor::Open()
 {
 	cocos2d::Animation* pAnimation;
 	const CGCFactoryCreationParams* const pcCreateParams = GetFactoryCreationParams();
