@@ -14,7 +14,7 @@
 //  This class defines an invidual instance of an enemy character.
 //
 //  The following features are provided:
-//  - Movement between two arbitrary anchor points (ie. not restricted to the Manic Miner required of horizontal/vertical onlu).
+//  - Movement between two arbitrary anchor points (ie. not restricted to the Manic Miner required of horizontal/vertical only).
 //  - Parameter driven speed.
 //  - Arbitrary start position within the movement window.
 //  - Initial movement direction.
