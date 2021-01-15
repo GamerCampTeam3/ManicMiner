@@ -114,7 +114,8 @@ void CGCObjEnemy::VOnResourceAcquire( void )
 			//   0  (LERP)   1
 			//   Anc        Dest
 
-			// For this case need to initialise the LERP input to m_kfOne(1.0f) as we are starting from the Destination and moving to the Anchor point.
+			// For this case need to initialise the LERP input to m_kfOne(1.0f) as we are starting from the 
+			//Destination and moving to the Anchor point.
 			m_fMoveDelta = m_kfOne;
 			m_bInitialiseToOne = true;
 		}
@@ -222,8 +223,8 @@ void  CGCObjEnemy::VHandleFactoryParams(const CGCFactoryCreationParams& rCreatio
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
 		const tinyxml2::XMLAttribute* pCustomShapePath = pCurrentObjectXmlData->FindAttribute("CustomShape");
 				
-		if ((nullptr != pCustomPlistPath)
-			&& (0 != strlen(pCustomPlistPath->Value())))
+		if 	((nullptr != pCustomPlistPath) && (0 != strlen(pCustomPlistPath->Value())) &&		
+			(nullptr != pCustomShapePath) && (0 != strlen(pCustomShapePath->Value())))
 		{
 			m_pCustomCreationParams = std::make_unique< CGCFactoryCreationParams >(rCreationParams.strClassName.c_str(),
 				pCustomPlistPath->Value(),
@@ -269,17 +270,17 @@ void CGCObjEnemy::VOnUpdate( float fTimeStep )
 	cocos2d::Vec2 fVectorWindow = m_cAnchorPoint - m_cDest;
 	
 	// Calculate movement % increment amount as a function of the movment window length and the frame rate * speed modifier.
-	// This value is the input into the LERP function to calculate m_cCurrentPos.
-	float fLerpInput = ((fTimeStep * m_fSpeed) / fVectorWindow.length()) * 100.0f;
+	float fLerpStepAmount = ((fTimeStep * m_fSpeed) / fVectorWindow.length()) * 100.0f;
 
 	// Add or subtract from movement amount depending on direction from anchor point
+    
 	if (m_bMovingAwayFromAnchorPoint)
 	{
-		m_fMoveDelta += fLerpInput;
+		m_fMoveDelta += fLerpStepAmount;
 	}
 	else
 	{
-		m_fMoveDelta -= fLerpInput;
+		m_fMoveDelta -= fLerpStepAmount;
 	}
 
 	// Finally update the actual current position of the sprite by calling LERP.
@@ -385,7 +386,7 @@ void CGCObjEnemy::VOnResourceRelease()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
-// Public function to allow game code to set the facing orientation of the enemy sprite.
+// Public function to allow game code to change the enemy movement window width.
 ///////////////////////////////////////////////////////////////////////////////////////
 void CGCObjEnemy::ModifyEnemyDestinationPoint( cocos2d::Vec2& rcNewDestination )
 {
