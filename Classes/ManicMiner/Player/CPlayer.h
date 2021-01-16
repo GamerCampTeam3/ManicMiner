@@ -482,6 +482,7 @@ public:
 	// true - Loads Animations || false - Releases Animations															//
 	void LoadAnimations(bool bShouldLoadAnimations);																	//
 																														//
+	// reflects which animation to play																					//
 	EAnimationState m_eAnimationState;																					//
 																														//
 	// Serves as a checkpoint to disable functionality of the current state, the animation state machine is in,			//
@@ -490,22 +491,23 @@ public:
 	void InitiateAnimationStateChange(EAnimationState eNewAnimationState);												//
 																														//
 	// Can be thought of as the starting point of the new state															//
+	// Switches the current State m_eAnimationState is in, to the given eNewAnimationState								//
 	void AnimationStateChange(EAnimationState* eNewAnimationState);														//
 																														//
-	// contains all animations for the player character																	//
-	// ma stands for Map Array																							//
+	// contains all animations for the player character																	//																						//
 	std::map<char*, cocos2d::Animation*> m_pcPlayerAnimationList;														//
 																														//
+	//
 	int m_iStartAlternatingTime;																						//
 																														//
 	int m_iAlternateIdleTimer;																							//
 																														//
 	bool m_bSelectedStandardIdle;																						//
 																														//
-	// Alternates between different Idle Animations																		//
+	// Alternates between different Idle Animations, which is triggered after "m_iStartAlternatingTime" Seconds			//
 	void AlternateIdleAnimation(bool bPlayStandardIdle);																//
-
-	void ResetIdle();
+																														//
+	void ResetIdle();																									//
 	
 	private:
 

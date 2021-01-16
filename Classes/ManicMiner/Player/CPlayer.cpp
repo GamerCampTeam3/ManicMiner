@@ -457,13 +457,17 @@ void CPlayer::CheckKeyboardInput()
 
 				// Alternate between Idle Animations
 				m_iAlternateIdleTimer++;
-				//m_iAlternateIdleTimer = m_iAlternateIdleTimer % m_iStartAlternatingTime;
+				
+				// switch Idle Animation and invert m_bSelectStandardIdle Boolean,
+				// if the Timer Count is Higher than or equals the Int specified
+				// in m_iStartAlternatingTime 
 				if(m_iAlternateIdleTimer >= m_iStartAlternatingTime)
 				{
+					// reset Alternate Idle Timer Count
 					m_iAlternateIdleTimer = 0;
 
-					AlternateIdleAnimation(m_bSelectedStandardIdle); // z check
-					m_bSelectedStandardIdle = !m_bSelectedStandardIdle; // z check
+					AlternateIdleAnimation(m_bSelectedStandardIdle); 
+					m_bSelectedStandardIdle = !m_bSelectedStandardIdle; 
 				}
 			}
 		}
@@ -522,6 +526,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 				StopRunningSound();
 				if (m_bIsAlive && GetIsGrounded())
 				{
+					// Set Animation State to Idle and play respective Animation
 					InitiateAnimationStateChange( EAnimationState::Idle );
 				}
 				break;
@@ -541,6 +546,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 				SetFlippedX( true );
 				if ( m_bIsAlive && GetIsGrounded() )
 				{
+					// Set Animation State to Run and play respective Animation
 					InitiateAnimationStateChange( EAnimationState::Run );
 					PlayRunningSound();
 				}
@@ -561,6 +567,7 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 				SetFlippedX( false );
 				if( m_bIsAlive && GetIsGrounded() )
 				{
+					// Set Animation State to Run and play respective Animation
 					InitiateAnimationStateChange( EAnimationState::Run );
 					PlayRunningSound();
 				}
@@ -660,6 +667,7 @@ void CPlayer::JumpEvent()
 
 		m_uiJumpSoundID = PlaySoundEffect( ESoundEffectName::Jump );
 
+		// Set Animation State to Jump and play respective Animation
 		InitiateAnimationStateChange(EAnimationState::Jump);
 	}
 }
@@ -846,14 +854,17 @@ void CPlayer::OnLanded()
 			switch( m_ePlayerDirection )
 			{
 			case EPlayerDirection::Static:
+				// Set Animation State to Idle and play respective Animation
 				InitiateAnimationStateChange( EAnimationState::Idle );
 				StopRunningSound();
 				break;
 			case EPlayerDirection::Right:
+				// Set Animation State to Run and play respective Animation
 				InitiateAnimationStateChange( EAnimationState::Run );
 				PlayRunningSound();
 				break;
 			case EPlayerDirection::Left:
+				// Set Animation State to Run and play respective Animation
 				InitiateAnimationStateChange( EAnimationState::Run );
 				PlayRunningSound();
 				break;
@@ -1113,6 +1124,8 @@ void CPlayer::Die()
 	}
 }
 
+
+// Is in charge of loading/unloading all the animations required for the Player Class
 void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 {
 	int iCounter;
@@ -1147,10 +1160,13 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 
 void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 {
+	// This is called to stop all currently running animations, if RunAction is called a second time to play a different animation, while an animation is already playing,
+	// then it will not stop the previous animation, but start playing the new animation as well. So we have to stop the currently playing animations, then play/run the new one.
 	GetSprite()->stopAllActions();
 	switch(m_eAnimationState)
 	{
 	case EAnimationState::Idle :
+		// Reset Alternating Idle Animations when the current state is idle and we're switching to a different state
 		ResetIdle();
 		break;
 	case EAnimationState::Run :
@@ -1168,31 +1184,34 @@ void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 {
 	char* pszAnim = nullptr;
 	bool bHasAnimation = false;
-	switch(*eNewAnimationState)
+	if (nullptr != eNewAnimationState)
 	{
-	case EAnimationState::None:
-		m_eAnimationState = EAnimationState::None;
-		bHasAnimation = false;
-		break;
-	case EAnimationState::Idle:
-		m_eAnimationState = EAnimationState::Idle;
-		pszAnim = "Idle";
-		bHasAnimation = true;
-		break;
-	case EAnimationState::Run:
-		m_eAnimationState = EAnimationState::Run;
-		pszAnim = "Run";
-		bHasAnimation = true;
-		break;
-	case EAnimationState::Jump:
-		m_eAnimationState = EAnimationState::Jump;
-		pszAnim = "Jump";
-		bHasAnimation = true;
-		break;
-	default:
-		GetSprite()->stopAllActions();
-		bHasAnimation = false;
-		break;
+		switch (*eNewAnimationState)
+		{
+		case EAnimationState::None:
+			m_eAnimationState = EAnimationState::None;
+			bHasAnimation = false;
+			break;
+		case EAnimationState::Idle:
+			m_eAnimationState = EAnimationState::Idle;
+			pszAnim = "Idle";
+			bHasAnimation = true;
+			break;
+		case EAnimationState::Run:
+			m_eAnimationState = EAnimationState::Run;
+			pszAnim = "Run";
+			bHasAnimation = true;
+			break;
+		case EAnimationState::Jump:
+			m_eAnimationState = EAnimationState::Jump;
+			pszAnim = "Jump";
+			bHasAnimation = true;
+			break;
+		default:
+			GetSprite()->stopAllActions();
+			bHasAnimation = false;
+			break;
+		}
 	}
 
 	if (bHasAnimation)
@@ -1200,6 +1219,7 @@ void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 		auto pAnimation = m_pcPlayerAnimationList[pszAnim];
 		if (nullptr != pAnimation)
 		{
+			// Play given Animation based on the Animation State
 			RunAction(GCCocosHelpers::CreateAnimationActionLoop(pAnimation));
 		}
 	}

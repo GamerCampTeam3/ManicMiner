@@ -32,6 +32,7 @@ public:
 	// DirectionLock Getter
 	const EPlayerDirection GetDirectionLock();
 private:
+	// the animation is not being used currently
 	cocos2d::Animation* m_pcMovingAnim;
 	EPlayerDirection m_eDirectionLock;
 };

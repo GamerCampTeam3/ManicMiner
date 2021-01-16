@@ -41,7 +41,8 @@ void CAnimatedParallaxLayer::VUpdate()
 	//CCLOG("Fish Position X: %d", GetSprite()->getPosition().x);
 	//CCLOG("Fish Position Y: %d", GetSprite()->getPosition().y);
 	//m_v2InitialPosition.x++;
-	
+
+	// if the fish is moving in the "right" direction
 	if(m_bMovingRight)
 	{
 		m_v2InitialPosition.x += 1;
@@ -52,7 +53,7 @@ void CAnimatedParallaxLayer::VUpdate()
 			GetSprite()->setFlippedX(true);
 		}
 	}
-	else
+	else // if the fish is moving in the left direction
 	{
 		m_v2InitialPosition.x -= 1;
 		m_v2InitialPosition.y += cocos2d::random(-1.f, 1.f);
