@@ -1229,14 +1229,9 @@ void CPlayer::AlternateIdleAnimation(bool bPlayStandardIdle)
 {
 	GetSprite()->stopAllActions();
 	char* pszAnim = nullptr;
-	if(bPlayStandardIdle)
-	{
-		pszAnim = "Idle";
-	}
-	else
-	{
-		pszAnim = "AlternativeIdle";
-	}
+
+	pszAnim = (bPlayStandardIdle) ? "Idle" : "AlternativeIdle";
+	
 	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
 }
 

@@ -505,6 +505,7 @@ public:
 	bool m_bSelectedStandardIdle;																						//
 																														//
 	// Alternates between different Idle Animations, which is triggered after "m_iStartAlternatingTime" Seconds			//
+	// while the character is standing still																			//
 	void AlternateIdleAnimation(bool bPlayStandardIdle);																//
 																														//
 	void ResetIdle();																									//
