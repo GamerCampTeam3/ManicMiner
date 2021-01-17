@@ -150,17 +150,20 @@ void CCrumblingPlatform::VOnResourceRelease()
 
 void CCrumblingPlatform::InitiateCrumbling()
 {
-	if (m_bInitiatedCrumbling == false)
+	if (false == m_bInitiatedCrumbling)
 	{
+		// Activates Timer in VOnUpdate that plays the correct crumble animation,
+		// based on the time remaining and the current state (m_eCrumbleState)
 		m_bInitiatedCrumbling = true;
 
+		// Initial Crumble
 		UpdateCrumblingPlatform(m_eCrumbleState);
 	}
 }
 
 void CCrumblingPlatform::StopCrumbling()
 {
-	if(m_bInitiatedCrumbling == true)
+	if(true == m_bInitiatedCrumbling)
 	{
 		m_bInitiatedCrumbling = false;
 	}
@@ -176,12 +179,17 @@ void CCrumblingPlatform::LoadAnimations()
 	m_pszAnimations[4] = "Crumble_Stage_03";
 	m_pszAnimations[5] = "Crumble_Stage_Destroy";
 
+	// loads in animations based on animations specified in the m_pszAnimations Array
+	// and calls retain on each of them so as the reference count is 0 by default
 	int iCounter = 0;
 	for(const char* pszAnim : m_pszAnimations)
 	{
 		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
 		m_pcAnimations[iCounter] = GCCocosHelpers::CreateAnimation(rdictPlist, m_pszAnimations[iCounter]);
-		m_pcAnimations[iCounter]->retain(); // check for nullptr
+		if (nullptr != m_pcAnimations[iCounter])
+		{
+			m_pcAnimations[iCounter]->retain(); // check for nullptr
+		}
 		iCounter++;
 	}
 }

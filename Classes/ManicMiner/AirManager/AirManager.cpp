@@ -20,14 +20,14 @@ USING_NS_CC;
 // constructor 
 CAirManager::CAirManager(cocos2d::Point pOrigin, cocos2d::Size visibleSize )
 	: CGCObject(GetGCTypeIDOf(CAirManager))
-	, m_eAirState( EAirState::EAS_HasAirLeft )
+	, m_eAirState( EAirState::HasAirLeft )
 	, m_eAirDrainedState(EAirDrainedState::AirDrained)
 	, m_pglOwnerGameLayer			( nullptr )
 	, m_pdDirector					( nullptr )
 	, m_pcGCSprAirBar				( nullptr )
 	, m_plAirLabel					( nullptr )
 	, m_pcGCSprAirVignette			( nullptr )
-	, m_pcAirBar					( nullptr )
+	, m_pcLBAirBar					( nullptr )
 	, m_fMaxAir						( 108.0f )
 	, m_fRemainingAirAmount			( m_fMaxAir )
 	, m_fConsumedAirAmount			( 0.0f )
@@ -85,11 +85,11 @@ CAirManager::~CAirManager()
 		m_pcGCSprAirVignette = nullptr;
 	}
 
-	if( m_pcAirBar )
+	if( m_pcLBAirBar )
 	{
-		m_pcAirBar->release();
-		delete m_pcAirBar;
-		m_pcAirBar = nullptr;
+		m_pcLBAirBar->release();
+		delete m_pcLBAirBar;
+		m_pcLBAirBar = nullptr;
 	}
 
 	if( nullptr != m_pcGameManager )
@@ -130,7 +130,8 @@ void CAirManager::LeavingLevel( CManicLayer& rNewManicLayer )
 void CAirManager::VOnUpdate( float fTimeStep )
 {
 	CGCObject::VOnUpdate(fTimeStep);
-	
+
+	// Timer Calculations (Drain every frame) and UI Elements need to be updated every tick 
 	UpdateAirTimer();
 	UpdateAirUIElements();
 }
@@ -166,7 +167,7 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 		const char* pszPlist_AirVignette = "TexturePacker/Air/AirVignette.plist";
 		const char* pszSpr_AirVignette = "AirVignette";
 		{
-			// create new Sprite Object for Air Bar
+			// create new Sprite Object for Air Bar, if one doesn't already exist
 			if( m_pcGCSprAirVignette == nullptr )
 			{
 				m_pcGCSprAirVignette = new CGCObjSprite();
@@ -177,9 +178,13 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 			{
 				if( m_pcGCSprAirVignette->GetSprite() == nullptr )
 				{
+					// load in and create sprite based on the image inside the plist 
 					m_pcGCSprAirVignette->CreateSprite( pszPlist_AirVignette );
 				}
 
+				// Initialize AirVignette Sprite and set it's opacity to 0,
+				// as it's opacity will go from 0 to 1, based on the remaining
+				// amount of air left
 				m_pcGCSprAirVignette->SetSpriteScale( 1.f, 1.f );
 				m_pcGCSprAirVignette->SetSpriteGlobalZOrder( 2.f );
 				m_pcGCSprAirVignette->SetSpriteScale(2.f, 2.f);
@@ -194,7 +199,7 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 		const char* pszPlist_Air = "TexturePacker/Air/AirBarBackground.plist";
 		const char* pszSpr_AirBar = "AirBar";
 		
-			// create new Sprite Object for Air Bar
+			// create new Sprite Object for Background Element for Air Bar, if one doesn't already exist
 			if( m_pcGCSprAirBar == nullptr )
 			{
 				m_pcGCSprAirBar = new CGCObjSprite();
@@ -204,31 +209,46 @@ void CAirManager::Init(  CManicLayer& rglOwnerGameLayer)
 			{
 				if( m_pcGCSprAirBar->GetSprite() == nullptr )
 				{
+					// load in and create sprite based on the image inside the plist 
 					m_pcGCSprAirBar->CreateSprite( pszPlist_Air );
 				}
 
+				// Initial Parameters 
 				m_pcGCSprAirBar->SetSpriteGlobalZOrder( 2.f );
+				// same Position as the AirBar, because it's supposed to
+				// serve as the background element for the actual "Loading Bar"
 				m_pcGCSprAirBar->SetResetPosition( Vec2( ( m_pOrigin ).x + 100.f, ( ( m_pOrigin ).y + ( m_visibleSize ).height ) - 60 ) );
 				m_pcGCSprAirBar->GetSprite()->setPosition( m_pcGCSprAirBar->GetResetPosition() );
 				m_pcGCSprAirBar->SetParent( &rglOwnerGameLayer );
 				m_pcGCSprAirBar->SetSpriteScale( 1.f, 1.f );
 			}
 		
-
-		if (nullptr == m_pcAirBar)
+		// create new loading bar object, if one doesn't already exist
+		if (nullptr == m_pcLBAirBar)
 		{
-			m_pcAirBar = new ui::LoadingBar();
+			m_pcLBAirBar = new ui::LoadingBar();
 		}
 
-		if (nullptr != m_pcAirBar)
+		if (nullptr != m_pcLBAirBar)
 		{
-			m_pcAirBar = ui::LoadingBar::create("ui/AirBar/ui_bar_full.png");
-			m_pcAirBar->setDirection(ui::LoadingBar::Direction::LEFT);
-			m_pcAirBar->setRotation(-90.f);
-			m_pcAirBar->setPercent(100.f);
-			m_pcAirBar->setPosition(Vec2((m_pOrigin).x + 100.f, ((m_pOrigin).y + (m_visibleSize).height) - 60 ));
-			rglOwnerGameLayer.addChild(m_pcAirBar, 3);
-			m_pcAirBar->setGlobalZOrder(3.f);
+			// initialize the loading bar parameters and create a texture for it
+			// based on the image in the specified path 
+			m_pcLBAirBar = ui::LoadingBar::create("ui/AirBar/ui_bar_full.png");
+
+			// Since the LoadingBar only has two directions, Left and Right,
+			// we need to chose one of them, Left in my case, and then
+			// rotate it so that the direction is bottom
+			m_pcLBAirBar->setDirection(ui::LoadingBar::Direction::LEFT);
+			
+			// since the Air Bar is supposed to drain from top to bottom,
+			// it needs to be rotated by 90 Degrees (Counterclockwise)
+			m_pcLBAirBar->setRotation(-90.f);
+			
+			// will start at 100% and slowly go down to 0%
+			m_pcLBAirBar->setPercent(100.f);
+			m_pcLBAirBar->setPosition(Vec2((m_pOrigin).x + 100.f, ((m_pOrigin).y + (m_visibleSize).height) - 60 ));
+			rglOwnerGameLayer.addChild(m_pcLBAirBar, 3);
+			m_pcLBAirBar->setGlobalZOrder(3.f);
 		}
 
 	}
@@ -276,18 +296,22 @@ bool CAirManager::UpdateAirTimer()
 		bHasAirLeft = false;
 		m_bDrainComplete = true;
 	}
-	
-	m_fReduceAirByAmountPerFrame = (1.f / m_pdDirector->getFrameRate()) * m_fDrainAirMultiplier;	// using framerate for division allows 
 
-	m_fRemainingAirAmount -= m_fReduceAirByAmountPerFrame;								// reduce air by 1 second / framerate every frame - example: for 60 frames the equation would
-																						// like this: 1 / 60 and the result would be 0.0166666666666667f
+	// using framerate for division allows 
+	m_fReduceAirByAmountPerFrame = (1.f / m_pdDirector->getFrameRate()) * m_fDrainAirMultiplier;
 
-	m_fConsumedAirAmount += m_fReduceAirByAmountPerFrame;	     						//
+	// reduce air by 1 second / framerate every frame - example: for 60 frames the equation would
+	// like this: 1 / 60 and the result would be 0.0166666666666667f
+	m_fRemainingAirAmount -= m_fReduceAirByAmountPerFrame;
+
+	m_fConsumedAirAmount += m_fReduceAirByAmountPerFrame;	     						
 	m_iConsumedAirPercentage = ( m_fConsumedAirAmount * 100.f ) / m_fMaxAir ;
 
-	m_fRemainingAirPercentage = ( m_fRemainingAirAmount * 100.f) / m_fMaxAir;			// Air Remaining / Max Air returns a value from 0-1 therefore it has to be multiplied by 100 to
-																						// get a range from 0-100 for the percentage
+	// Air Remaining / Max Air returns a value from 0-1 therefore it has to be multiplied by 100 to
+	// get a range from 0-100 for the percentage
+	m_fRemainingAirPercentage = ( m_fRemainingAirAmount * 100.f) / m_fMaxAir;
 
+	// floors the float and stores it as an integer
 	m_iRemainingAirPercentage = m_fRemainingAirPercentage;
 
 	//--------------------------------------------------------------------------------------------------------------
@@ -313,9 +337,11 @@ void CAirManager::UpdateAirUIElements()
 {
 	if( nullptr != m_pglOwnerGameLayer && nullptr != m_pcGCSprAirBar->GetSprite() && m_pcGCSprAirVignette->GetSprite()  !=nullptr )
 	{
-		if(0.0f <= m_pcAirBar->getPercent())
+		if(0.0f <= m_pcLBAirBar->getPercent())
 		{
-			m_pcAirBar->setPercent(m_fRemainingAirPercentage);
+			// Update Percentage of the LoadingBar to
+			// visually represent how much air is left
+			m_pcLBAirBar->setPercent(m_fRemainingAirPercentage);
 		}
 
 		// Bib Edit: Disable vignette fade if leaving the level
@@ -323,6 +349,9 @@ void CAirManager::UpdateAirUIElements()
 		{
 			if (0 <= m_pcGCSprAirVignette->GetSpriteOpacity() && nullptr != m_pcGCSprAirVignette)
 			{
+				// Update the Opacity of the Vignette effect based on how much air has been consumed
+				// Opacity ranges from 0-250, therefore the value, in range of 0 to 1, we get from
+				// m_fConsumedAirAmount / m_fMaxAir needs to be multiplied by 250 to map it to 0-250.
 				int iNewOpacity = (m_fConsumedAirAmount * 250 / m_fMaxAir);
 				m_pcGCSprAirVignette->SetSpriteOpacity( iNewOpacity );
 			}

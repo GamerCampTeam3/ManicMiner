@@ -18,20 +18,6 @@ CPlatform::CPlatform()
 	
 }
 
-/*
-CPlatform::CPlatform( CGCFactoryCreationParams& CreationParams, cocos2d::Vec2 ResetPosition )
-	: CGCObjSpritePhysics( GetGCTypeIDOf( CPlatform ) )
-	, m_FactoryCreationParams( CreationParams )
-	, m_v2ResetPosition( ResetPosition )
-	, m_ePlatformType( EPlatformType::Regular )
-	, m_bCollisionEnabled( false )
-	, m_bTriggersHardContactEvent( false )
-	, m_bIsInContact( false )
-	, m_bIsSensorOverlapped( false )
-
-{
-}*/
-
 CPlatform::~CPlatform()
 {
 	if (nullptr != m_pcDirector)
@@ -41,12 +27,8 @@ CPlatform::~CPlatform()
 }
 
 void CPlatform::VOnResourceAcquire()
-{
-	//VHandleFactoryParams(m_FactoryCreationParams, GetResetPosition());
-	
+{	
 	CGCObjSpritePhysics::VOnResourceAcquire();
-
-	//SetResetPosition(m_v2ResetPosition);
 
 	m_pcDirector = cocos2d::Director::getInstance();
 

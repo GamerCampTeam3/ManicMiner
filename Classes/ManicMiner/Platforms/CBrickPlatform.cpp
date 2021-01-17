@@ -28,6 +28,7 @@ CBrickPlatform::CBrickPlatform()
 	: CPlatform()
 	, m_bIsUnderPlayer( false )
 {
+	// Set PlatformType to Brick
 	m_ePlatformType = EPlatformType::Brick;
 }
 

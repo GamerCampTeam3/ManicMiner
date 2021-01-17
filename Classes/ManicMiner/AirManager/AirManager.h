@@ -8,15 +8,16 @@
 
 class CGameManager;
 class CManicLayer;
+class CGCObjSprite;
 
 namespace cocos2d {
 	class Label;
 }
 
-enum EAirState
+enum class EAirState
 {
-	EAS_OutOfAir,
-	EAS_HasAirLeft
+	OutOfAir,
+	HasAirLeft
 };
 
 enum class EAirDrainedState
@@ -43,8 +44,12 @@ public:
 	
 	bool GetHasInitialized();
 
+	// Drain Functionality to drain out the remaining amount of air quicker to
+	// calculate the amount of extra points the player will get based on the
+	// amount of air left, when the player completes the level.
 	void DrainAir();
 
+	// Henri's Implementation of DrainAir for the Sunlight - needs to be reset back to default once the player doesn't touch the Sunlight
 	void SunlightDrainAir(bool bShouldDrainAir);
 	
 private:
@@ -60,19 +65,18 @@ private:
 	///////////////////////////////////////////
 	/// Visual Elements
 
-	// Visual Representation of the Progress Bar for Air
-	class CGCObjSprite* m_pcGCSprAirBar;
-
 	// Text Based Visual Representation of the Amount of Air left (in Percent)
 	cocos2d::Label* m_plAirLabel;
 	
 	// Vignette On Screen Effect
 	CGCObjSprite* m_pcGCSprAirVignette;
 
-	// AirBar
-	cocos2d::ui::LoadingBar* m_pcAirBar;
+	// Visual Representation of the Progress Bar for Air
+	cocos2d::ui::LoadingBar* m_pcLBAirBar;
 
-	cocos2d::Texture2D* m_pcAirBarTexture;
+	// Visual Representation of the Background Element for the Progress Bar for Air
+	CGCObjSprite* m_pcGCSprAirBar;
+
 	
 	///////////////////////////////////////////
 	/// Calculation variables

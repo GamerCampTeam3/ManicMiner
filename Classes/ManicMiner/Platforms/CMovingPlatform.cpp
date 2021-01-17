@@ -44,12 +44,11 @@ void CMovingPlatform::VOnResourceAcquire()
 
 	const char* pszAnim_Move = "MoveLeft";
 
-	// Used to be able to have animation - no animation provided by the artist therefore feature was removed
+	// Used to be able to have animation - Got rid of it because of the way we received the animations didn't work well with my implementation
+	// as we received the top animated part as a separate object to the actual body.
 	//cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
 	//m_pcMovingAnim = GCCocosHelpers::CreateAnimation(rdictPlist, pszAnim_Move);
 	//RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcMovingAnim));
-
-	//InitDirectionalLock( EPlayerDirection::Left );
 }
 
 void CMovingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCreationParams,
@@ -63,7 +62,10 @@ void CMovingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCrea
 	if (nullptr != pCurrentObjectXmlData)
 	{
 		const tinyxml2::XMLAttribute* pCustomPlistPath = pCurrentObjectXmlData->FindAttribute("CustomPlist");
-		
+
+		// Determining the direction that the platform will move the player in, when they land on it, had to be done in ogmo for each instance of Moving Platform
+		// therefore I went with the Integer approach, since Ints and Enums are essentially the same and can be used in the same fashion.
+		// 0 = Static, 1 = Right, 2 = Left
 		const tinyxml2::XMLAttribute* pPlayerDirectionLockPath = pCurrentObjectXmlData->FindAttribute("PlayerDirectionLock");
 		CCLOG((nullptr == pPlayerDirectionLockPath) ? "PlayerDirectionLock not found for Moving Platform!" : pPlayerDirectionLockPath->Value());
 		if ((nullptr != pPlayerDirectionLockPath)
@@ -83,6 +85,8 @@ void CMovingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCrea
 			}
 		}
 
+		// Get custom plist and override initial plist components with the components from the custom plist to allow each instance to have different Textures,
+		// PhysicsShape, etc...
 		if ((nullptr != pCustomPlistPath)
 			&& (0 != strlen(pCustomPlistPath->Value())))
 		{
