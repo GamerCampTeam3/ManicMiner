@@ -2,11 +2,14 @@
 // Gamer Camp 2020 / Henrique & Bib													//
 //////////////////////////////////////////////////////////////////////////////////////
 	
+#pragma region DebugLogs
 
 //#define PLAYER_DEBUG_DIRECTION
 //#define PLAYER_DEBUG_CONTACTS
 //#define PLAYER_DEBUG_CONTACTS_REALTIME
 //#define PLAYER_DEBUG_LANDING
+
+#pragma endregion DebugLogs
 
 
 #include <corecrt_math.h>
@@ -217,56 +220,42 @@ void CPlayer::VOnResurrected()																													//
 	// made up of multiple collision segments. Throughout these 2 modules I formulated my own theory as to why this happened, and it's pretty much the same as what is explained
 	// on the following link:
 	// http://www.iforce2d.net/b2dtut/ghost-vertices
-	// Conveniently, the link also gives 3 solutions. The first one is making the edges of our player's feet rounded.
-	// The second solution is turning our feet collision into an edge shape and not a polygon.
-	// The third solution is the same as the second one, but it's even better as the second one doesn't fix the problem 100% of the time, it just minimizes the chances of the bug to happen.
+	// Conveniently, the link also gives 3 solutions. The first one is making the edges of our player's feet rounded. I had tried it before: "Sounds good, doesn't work."
+	// The second solution is turning our feet collision into an edge shape and not a polygon. This fixes the issue 99% of the time.
+	// The third solution is the same as the second one, but on steroids, and will fix the issue 100% of the time.
 	// Besides making our collision an edge shape, we also need to add what is called "ghost vertices", which is like an imaginary extension of the edge shape.
 	// When a contact is handled with the physics engine, the ghost vertices are taken into account when it comes to redirecting the shape, and so instead of getting stuck
 	// Because the shape is colliding and getting pushed to the other side, it will instead push the shape upwards, effectively never getting our player stuck, but also remaining on the floor.
 
-	// I really tried my best to implement this functionality, although my time was extremely limited.
-	// Turns out the PhysicsEditor software does not support Edge Shapes at all, only polygons (shapes with 3+ vertices).
-	// This being said, I tried to manually create an edge shape in code, and attach it to the player body
-	// However, this made it impossible to adjust properties such as the ID string which I do try to access in other parts of the code when handling collisions.
+	// I really tried my best to implement this functionality, although my time was extremely limited. 
+	// I was aiming for implementing the 3rd solution, but once I had the 2nd solution working, I figured it was enough. I did not have the time to continue onto the ghost vertices.
+	// Turns out the PhysicsEditor software does not support Edge Shapes at all, only polygons (convex shapes with 3+ vertices).
+	// This being said, I had to manually create an edge shape in code, and attach it to the player body
+	// However, this made it impossible to adjust some properties, specifically the ID string, which I use in other parts of the code when handling collisions.
 	// I tried to, again, set these manually here, but because of the way this framework is set up it's impossible to do it without messing with a lot of source code.
+	// Not enough is exposed.
 
 
-	// The following link has source code in which they create an edge shape, although the source code there is quite broken
-	// But I used it and corrected it in hopes of including the edge shape for the player feet
-	// https://rotatingcanvas.com/edge-shape-in-box2d/
 
 
-	// In an ideal world I would make a BodyDef because this has a list of fixtures, fixtures that can read more info than standard b2fixtures
-	// specifically ID string and magic number
-	// But a lot of the classes needed to make up this class are hidden inside GB2ShapeCache-x.cpp
-	// cocos2d::BodyDef playerBodyDef;
-	// then it goes something like playerBodyDef.fixtures->sUserData.IDString = "my id string for this fixture"
-	// It's not exactly like that but something along those lines, I never got to finish the line of code above because of the hidden classes issues I stated
-
-	// Now we create the box2d things that would reside inside the higher level classes that are hidden in GB2ShapeCache-x.cpp
-	// ( The code below actually works, it's got some magic numbers because I was going to end up changing them anyways, the numbers were exaggerated for testing purposes )
-
-
+	// Set our 4 Vec2 Points that will define our player collision box
+	// Remember this "box" will in fact be empty inside, only the 4 edges will be used in collisions
 	const cocos2d::Vec2 v2BottomLeft(-5.0f, -60.0f);
 	const cocos2d::Vec2 v2BottomRight(65.0f, -60.0f);
 	const cocos2d::Vec2 v2TopLeft(-5.0f,  56.0f);
 	const cocos2d::Vec2 v2TopRight(65.0f, 56.0f);
-	// Bottom
+
+	// Bottom Edge
 	CreateEdgeShape( v2BottomLeft, v2BottomRight, false, true );
 	
-	// Left
+	// Left Edge
 	CreateEdgeShape( v2BottomLeft, v2TopLeft, true, false );
 	
-	// Top
+	// Top Edge
 	CreateEdgeShape( v2TopLeft, v2TopRight, true, true );
 	
-	// Right
+	// Right Edge
 	CreateEdgeShape( v2TopRight, v2BottomRight, true, false );
-
-	// So the code above actually attached a line segment, not on the player's feet but on the centre of the body
-	// It is visible when toggling on the debug collision ( line 326 of IGCGameLayer.cpp )
-	// However it was already causing multiple bugs and it wasn't properly set up
-
 
 																																				//
 // Reset sprite orientation																														//
@@ -299,11 +288,6 @@ void CPlayer::VOnResurrected()																													//
 		GetPhysicsBody()->SetFixedRotation( true );																								//
 		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );																				//
 	}																																			//
-
-// Reset Keyboard State
-	//CGCKeyboardManager* pKeyManager = AppDelegate::GetKeyboardManager();
-	//pKeyManager->Update();
-	//pKeyManager->Reset();
 }																																				//
 																																				//
 // -------------------------------------------------------------------------------------------------------------------- //						//
@@ -596,6 +580,14 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 void CPlayer::JumpEvent()
 {
 // Raycast to check if can jump
+
+// This Raycast was necessary to fix a bug that was present by the end of Module 1 / Pre-Production
+// If the player were to stand directly below a brick platform and jump, the player would get permanently stuck
+// So this implementation fixes that bug, by not allowing the player to jump in the first place
+// Later on it was discovered that this was no longer needed as the bug was no longer happening,
+// But I have left this active because there's no harm done anyways.
+
+
 // Start from centre of player body
 	b2Vec2 v2RayStart ( GetPhysicsTransform().p );
 // We just want to check the immediate block above player head
@@ -613,7 +605,7 @@ void CPlayer::JumpEvent()
 // We could check a whole rectangle area above the player's head
 // But because everything is axis aligned, we're fine with just 2 vertical lines
 // For more info check	http://www.iforce2d.net/b2dtut/raycasting
-//					and http://www.iforce2d.net/b2dtut/world-querying
+//				   and	http://www.iforce2d.net/b2dtut/world-querying
 
 // Perform RayCasts -> a flag will be set in case any hits occur
 
@@ -625,11 +617,15 @@ void CPlayer::JumpEvent()
 	// Left Side
 	m_rcB2World.RayCast( &m_cRayCastCallBack, ( v2RayStart - v2HorizontalOffset ), ( v2RayEnd - v2HorizontalOffset ) );
 
+	// If any of the RayCasts hit, cancel jump
 	if( m_cRayCastCallBack.GetDidRayHit() )
 	{
-		//CCLOG( "Head Bumped, Jump Cancelled" );
+#ifdef PLAYER_DEBUG_DIRECTION
+		CCLOG( "Head Bumped, Jump Cancelled" );
+#endif
 		ApplyDirectionChange( EPlayerDirection::Static );
 	}
+	// If no hit detected, proceed to jump
 	else
 	{
 		const float fVerticalSpeed = m_fJumpSpeed + m_fVerticalSpeedAdjust;
@@ -648,13 +644,12 @@ void CPlayer::JumpEvent()
 
 		m_bCanJump = false;
 
-		// Set Jump Direction
+	// Set Jump Direction
 		m_eJumpDirection = m_ePlayerDirection;
 
 	// Unlock from conveyor belt always
 		m_bCanBeControlled = true;
 
-		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 		
 		StopRunningSound();
 
@@ -667,24 +662,27 @@ void CPlayer::JumpEvent()
 
 void CPlayer::CreateEdgeShape( const cocos2d::Vec2& v2StartPoint, const cocos2d::Vec2& v2EndPoint, bool bBrickCollisionOnly, bool bIsHorizontalEdge )
 {
+// The following link has source code in which they create an edge shape, although the source code there is quite broken
+// https://rotatingcanvas.com/edge-shape-in-box2d/
+// I have fixed it, and modified it so it's applicable in this scenario
 
+// Turn v2StartPoint and v2EndPoint into their Box2D Vec2 values
 	const b2Vec2 b2v2Start ( IGCGameLayer::B2dPixelsToWorld( v2StartPoint.x ), IGCGameLayer::B2dPixelsToWorld( v2StartPoint.y ) );
 	const b2Vec2 b2v2End ( IGCGameLayer::B2dPixelsToWorld( v2EndPoint.x ), IGCGameLayer::B2dPixelsToWorld( v2EndPoint.y ) );
 
 
-
-	//CALCULATE CENTER OF LINE SEGMENT																									//
+//CALCULATE CENTER OF LINE SEGMENT																									//
 	float fPixelsPosX = ( v2StartPoint.x + v2EndPoint.x ) * 0.5f;																								//
 	float fPixelsPosY = ( v2StartPoint.y + v2EndPoint.y ) * 0.5f;																		//
 
-	//CALCULATE LENGTH OF LINE SEGMENT																									//
+//CALCULATE LENGTH OF LINE SEGMENT																									//
 	float fPixelsLength = sqrt( ( v2StartPoint.x - v2EndPoint.x ) * ( v2StartPoint.x - v2EndPoint.x ) + ( v2StartPoint.y - v2EndPoint.y ) * ( v2StartPoint.y - v2EndPoint.y ) );
 
-	//CONVERT CENTER TO BOX COORDINATES																									//
+//CONVERT CENTER TO BOX2D COORDINATES																									//
 	float fB2PosX = IGCGameLayer::B2dPixelsToWorld( fPixelsPosX );																	   //
 	float fB2PosY = IGCGameLayer::B2dPixelsToWorld( fPixelsPosY );																											   //
 
-	//ADD EDGE FIXTURE TO BODY																									   //
+//ADD EDGE FIXTURE TO BODY																									   //
 	b2EdgeShape b2PlayerEdge;																										   //
 	//SET LENGTH IN BOX COORDINATES																								   //
 
@@ -693,22 +691,15 @@ void CPlayer::CreateEdgeShape( const cocos2d::Vec2& v2StartPoint, const cocos2d:
 	//SETTING THE POINTS AS OFFSET DISTANCE FROM CENTER																			   //
 	if( bIsHorizontalEdge )
 	{
-		//const b2Vec2 b2v0( fB2Length * 0.5f, fB2PosY );
-		//const b2Vec2 b2v1( -fB2Length * 0.5f, fB2PosY );
-
 		const b2Vec2 b2v0( -fB2Length * 0.5f, fB2PosY );
 		const b2Vec2 b2v1( fB2Length * 0.5f, fB2PosY );
-
-
 		b2PlayerEdge.Set( b2v0, b2v1 );			
 	}
 	else 
 	{
-
 		const b2Vec2 b2v0( fB2PosX - 0.5f, b2v2Start.y );
 		const b2Vec2 b2v1( fB2PosX - 0.5f, b2v2End.y );
 		b2PlayerEdge.Set( b2v0, b2v1 );
-
 	}
 	b2FixtureDef fixtureDef;																										   //
 	fixtureDef.shape = &b2PlayerEdge;																								   //
@@ -728,6 +719,7 @@ void CPlayer::CreateEdgeShape( const cocos2d::Vec2& v2StartPoint, const cocos2d:
 	// So categoryBits = 1 means this fixture's category is only marked as part of "player" layer										//
 	// Groups aren't set in any of our game shapes																						//
 	// And it only collides with the layer "platform", which is the 3rd layer so the value for that mask is 4							//
+	// Extra Info: be weary of editing the maskBits manually on PhysicsEditor, because it takes in hexcode. I found out the hard way.	//
 	if( bBrickCollisionOnly )
 	{
 		fixtureDef.filter.maskBits = 32;																								//
@@ -953,7 +945,6 @@ void CPlayer::LeftGround()
 #endif
 		m_bCanJump = false;
 		m_uiFallingSoundID = PlaySoundEffect( ESoundEffectName::Falling );
-		GetPhysicsBody()->SetGravityScale( m_kfGravitionalPull );
 
 		InitiateAnimationStateChange( EAnimationState::Jump );
 	}
