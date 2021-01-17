@@ -62,6 +62,7 @@ protected:
 	// V2 position in the level
 	cocos2d::Vec2 m_v2ResetPosition;
 
+	// Specifies the Type of Platform this class is
 	EPlatformType m_ePlatformType;
 
 	bool m_bCollisionEnabled;
