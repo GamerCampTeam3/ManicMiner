@@ -85,7 +85,8 @@ void CMovingPlatform::VHandleFactoryParams(const CGCFactoryCreationParams& rCrea
 			}
 		}
 
-		// Get custom plist and override initial plist components with the components from the custom plist to allow each instance to have different Textures, PhysicsShape, etc...
+		// Get custom plist and override initial plist components with the components from the custom plist to allow each instance to have different Textures,
+		// PhysicsShape, etc...
 		if ((nullptr != pCustomPlistPath)
 			&& (0 != strlen(pCustomPlistPath->Value())))
 		{

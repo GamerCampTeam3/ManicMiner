@@ -1160,11 +1160,17 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 
 void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 {
-	// This is called to stop all currently running animations, if RunAction is called a second time to play a different animation, while an animation is already playing,
-	// then it will not stop the previous animation, but start playing the new animation as well. So we have to stop the currently playing animations, then play/run the new one.
+	// This is called to stop all currently running animations,
+	// if RunAction is called a second time to play a different animation,
+	// while an animation is already playing, then it will not stop the
+	// previous animation, but start playing the new animation as well.
+	// So we have to stop the currently playing animations, then play/run
+	// the new one.
 	GetSprite()->stopAllActions();
 	switch(m_eAnimationState)
 	{
+	case EAnimationState::None:
+		break;
 	case EAnimationState::Idle :
 		// Reset Alternating Idle Animations when the current state is idle and we're switching to a different state
 		ResetIdle();
@@ -1227,16 +1233,20 @@ void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 
 void CPlayer::AlternateIdleAnimation(bool bPlayStandardIdle)
 {
+	// stop previous actions/animations
 	GetSprite()->stopAllActions();
-	char* pszAnim = nullptr;
 
+	// choose string based on the input parameter of this function
+	char* pszAnim = nullptr;
 	pszAnim = (bPlayStandardIdle) ? "Idle" : "AlternativeIdle";
-	
+
+	// Play Animation based on the chosen string
 	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
 }
 
 void CPlayer::ResetIdle()
 {
+	// resets member variables that are needed for alternating between different idle animations
 	m_iAlternateIdleTimer = 0;
 	m_bSelectedStandardIdle = false;
 }

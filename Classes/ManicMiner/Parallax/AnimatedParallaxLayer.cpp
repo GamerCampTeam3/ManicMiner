@@ -9,7 +9,6 @@ CAnimatedParallaxLayer::CAnimatedParallaxLayer()
 	, m_bShouldStopMoving(false)
 	, m_bMovingRight(true)
 {
-	m_v2Right = cocos2d::Vec2(400.f, 0.f);
 }
 
 CAnimatedParallaxLayer::~CAnimatedParallaxLayer()
@@ -21,18 +20,14 @@ void CAnimatedParallaxLayer::Init(cocos2d::Scene& pcScene, const SParallaxLayerD
 {
 	CParallaxLayer::Init(pcScene, rsData);
 
+	// Place Fish/Parallax Layer in the middle of the screen
+	// should have used screen dimensions instead
 	const float kfScreenCentreX = 960.0f;
 	const float kfScreenCentreY = 540.0f;
 	cocos2d::Vec2 v2CentreScreen = cocos2d::Vec2(kfScreenCentreX, kfScreenCentreY);
 
 	auto updateParallaxAction = cocos2d::MoveTo::create(0.0f, v2CentreScreen);
 	GetSprite()->runAction(updateParallaxAction);
-
-	
-	//auto updateParallaxAction2 = cocos2d::MoveTo::create(10.0f, m_v2Right);
-	//GetSprite()->runAction(updateParallaxAction2);
-	
-	//cocos2d::RotateBy::create()
 }
 
 void CAnimatedParallaxLayer::VUpdate()
@@ -40,13 +35,16 @@ void CAnimatedParallaxLayer::VUpdate()
 	
 	//CCLOG("Fish Position X: %d", GetSprite()->getPosition().x);
 	//CCLOG("Fish Position Y: %d", GetSprite()->getPosition().y);
-	//m_v2InitialPosition.x++;
+
 
 	// if the fish is moving in the "right" direction
 	if(m_bMovingRight)
 	{
+		// move 1 unit in right direction on the x axis
 		m_v2InitialPosition.x += 1;
+		// get a random value between -1 and 1 and move n unit on the y axis
 		m_v2InitialPosition.y += cocos2d::random(-1.f, 1.f);
+		// if the fish has reached the max 
 		if (m_v2InitialPosition.x >= 1360.f)
 		{
 			m_bMovingRight = false;
@@ -63,33 +61,9 @@ void CAnimatedParallaxLayer::VUpdate()
 			GetSprite()->setFlippedX(false);
 		}
 	}
+	// actual move to functionality that moves this class in 2D Space to the point specified in m_v2InitialPosition
 	auto updateParallaxAction = cocos2d::MoveTo::create(0.0f, m_v2InitialPosition);
 	GetSprite()->runAction(updateParallaxAction);
-
-
-	
-	/*
-	
-	float Distance = GetDistanceToCurrentMoveToPosition(false);
-	
-	if(Distance <= m_fInterpolatingDistance)
-	{
-		// find new point
-		if(m_bHasNotFoundNewPoint)
-		{
-			// don't forget to reset bool when finish interpolating
-
-			GetSprite()->stopAllActions();
-			FindRandomMoveToPosition();
-			GetDistanceToCurrentMoveToPosition(true);
-			auto updateParallaxAction2 = cocos2d::MoveTo::create(2.0f, m_v2NextMoveToPosition);
-			GetSprite()->runAction(updateParallaxAction2);
-			
-			// has found new point
-			m_bHasNotFoundNewPoint = false;
-		}
-		
-	}*/
 }
 
 void CAnimatedParallaxLayer::VReset()
@@ -102,6 +76,9 @@ void CAnimatedParallaxLayer::VReset()
 	auto updateParallaxAction = cocos2d::MoveTo::create(0.0f, v2CentreScreen);
 	GetSprite()->runAction(updateParallaxAction);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// EXPERIMENTAL PATH FINDING - NOT BEING USED
 
 void CAnimatedParallaxLayer::FindRandomMoveToPosition()
 {
@@ -168,3 +145,6 @@ int CAnimatedParallaxLayer::getPt(int n1, int n2, float perc)
 	int diff = n2 - n1;
 	return n1 + (diff * perc);
 }
+
+	// EXPERIMENTAL PATH FINDING - NOT BEING USED
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
