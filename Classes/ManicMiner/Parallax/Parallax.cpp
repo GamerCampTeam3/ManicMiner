@@ -1,3 +1,7 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira & Umeer Rama																		//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 #include "Parallax.h"
 
 #include "2d/CCScene.h"
@@ -46,6 +50,9 @@ CParallax::~CParallax()
 
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	AddScrollingLayer																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CParallax::AddScrollingLayer( const SParallaxLayerData& rsLayerData, const float kfMovementScale )
 {
 	CCAssert( (m_iCurrentLayer < m_kiNumScrollingLayers ), "Trying to add more layers than allocated to CParallax" );
@@ -57,12 +64,18 @@ void CParallax::AddScrollingLayer( const SParallaxLayerData& rsLayerData, const 
 	m_iCurrentLayer++;
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	AddAnimatedLayer																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CParallax::AddAnimatedLayer(const SParallaxLayerData& rsLayerData)
 {
 	CAnimatedParallaxLayer& rcCurrentLayer = m_pacAnimatedLayers[0];
 	rcCurrentLayer.Init(m_rcScene, rsLayerData);
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	AddPlatformOutlines																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CParallax::AddPlatformOutlines( const char* kpszPlatformOutlinesPlist )
 {
 	CC_ASSERT( m_pcPlatformOutlineSprite == nullptr );
@@ -76,6 +89,9 @@ void CParallax::AddPlatformOutlines( const char* kpszPlatformOutlinesPlist )
 	m_rcScene.addChild( m_pcPlatformOutlineSprite->GetSprite(), -2 );
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	Update																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CParallax::Update()
 {
 	for( int iCurrentLayer = 0; iCurrentLayer < m_kiNumScrollingLayers; iCurrentLayer++ )
@@ -88,6 +104,9 @@ void CParallax::Update()
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	Reset																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CParallax::Reset()
 {
 	for( int iCurrentLayer = 0; iCurrentLayer < m_kiNumScrollingLayers; iCurrentLayer++ )
@@ -101,6 +120,9 @@ void CParallax::Reset()
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	GetScene																							//
+// -------------------------------------------------------------------------------------------------------------------- //
 cocos2d::Scene& CParallax::GetScene() const
 {
 	return m_rcScene;

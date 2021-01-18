@@ -31,20 +31,20 @@
 // param0 = X, param1 = Y
 #define CC_V2(param0, param1)  cocos2d::Vec2(param0, param1) 
 
-class CGCObjKong;
 // ----------------------------------------- Fwd declares ------------------------------------------------------------- //
+class CAirManager;																										//
 class CCollectible;																										//
 class CDoor;																											//
 class CGameManager;																									    //
 class CGCObjEnemy;																										//
 class CGCObjHazard;																										//
+class CGCObjKong;																										//
+class CHUD;																												//
 class CLevelManager;																									//
 class CParallax;																										//
 class CPlatform;																										//
 class CPlayer;																											//
-class CSwitch;
-class CHUD;
-class CAirManager;//
+class CSwitch;																											//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 class CManicLayer: public IGCGameLayer, public b2ContactListener
@@ -61,9 +61,8 @@ protected:																												//
 private:
 // Henrique Edit ------------------------------------------------------------------------------------------------------ //
 																														//
-// Reference to the LevelManager in order to proceed																	//
+// Reference to the LevelManager in order to proceed in level sequence													//
 	CLevelManager*		m_pcLevelManager;																				//
-																														//
 																														//
 // Level Loader Instance																								//	
 	CGCLevelLoader_Ogmo	m_cLevelLoader;																					//
@@ -213,7 +212,6 @@ public:																													//
 // -------------------------------------------------------------------------------------------------------------------- //
 	void OutOfLives();																									//
 																														//
-																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 // -------------------------------------------------------------------------------------------------------------------- //
 // --------------------------------- Level Reset Handling Logic ------------------------------------------------------- //
@@ -279,8 +277,31 @@ public:																													//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 private:
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	PlayerBeganContactWithPlatform																		//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Called when player lands on a walkable surface														//
+//					Handles lots of player collision logic and also custom platform interactions (ie crumbling)			//
+//																														//
+// Parameters	:	CPlatform& rcPlatform																				//
+//					Platform that player came in contact with															//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 	void PlayerBeganContactWithPlatform( CPlatform& rcPlatform );
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	VInitializeBackground																				//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	Called when level is initialising, this initialises the background Parallax Layers					//
+//					Using a switch to customize the background regarding the current level theme						//
+//																														//
+// Parameters	:	none																								//
+//																														//
+// Returns		:	void																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 	virtual void VInitializeBackground();
+
 	CHUD* m_pcHUD;
 	CAirManager* m_pcAirManager;
 	bool m_bUseHelpMenuIngame;

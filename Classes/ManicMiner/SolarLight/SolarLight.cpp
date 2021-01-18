@@ -1,3 +1,7 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 #include "ManicMiner/Layers/CMLSolarPowerGenerator.h"
 
 #include "Box2D/Collision/b2Collision.h"
@@ -6,6 +10,10 @@
 #include "ManicMiner/Physics/SolarLightB2AABBQueryCB.h"
 #include "SolarLight.h"
 #include "ThirdParty/TexturedSpline.h"
+
+#pragma region DebugLogDefines
+//#define DEBUG_SOLAR_LIGHT
+#pragma endregion DebugLogDefines
 
 static const float s_kfPTM = 60.0f;
 
@@ -21,17 +29,25 @@ CSolarLight::CSolarLight( CMLSolarPowerGenerator& rcSolarLevel )
 }
 
 CSolarLight::~CSolarLight()
-{
-}
+{}
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	Update																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CSolarLight::Update()
 {
+	// Find new light path
 	CheckCollisions();
+	// Generate new representation with new path
 	BuildNewSpline();
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	Init																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CSolarLight::Init( CMLSolarPowerGenerator& rcSolarLevel )
 {
+	// Create the initial light path, which just goes straight down
 	m_vPath =
 	{
 		{ ( m_kiStartX + 0.5f ) * s_kfPTM, m_kiStartY * s_kfPTM },
@@ -40,18 +56,26 @@ void CSolarLight::Init( CMLSolarPowerGenerator& rcSolarLevel )
 		{ ( m_kiStartX + 0.5f ) * s_kfPTM, s_kfPTM }
 	};
 
+	// Create the textured spline object
 	if( auto pTexturedSpline = TexturedSpline::create( m_vPath, m_kiLightRoundness, "TexturePacker/Light/SolarLight.png" ) )
 	{
 		m_pcTexturedSpline = pTexturedSpline;
+
+		// Set interpolation method
 		m_pcTexturedSpline->m_interpolationType = TexturedSpline::InterpolationType::B_CUBIC;
+
 		// Must be a power of 2 to wrap / repeat on the spline
-		const float fImageSize = 64.0f;
+		const float kfImageSize = 64.0f;
+
 		// But we actually want it to be 60x60, not 64x64
 		// So we set it to be scaled down to 60.0f / 64.0f
-		const float fSplineStrokeScale = s_kfPTM / fImageSize;
-		m_pcTexturedSpline->setStrokeScale( fSplineStrokeScale );
+		const float kfSplineStrokeScale = s_kfPTM / kfImageSize;
+		m_pcTexturedSpline->setStrokeScale( kfSplineStrokeScale );
+
+		// Add spline to scene
 		rcSolarLevel.addChild( m_pcTexturedSpline, -2 );
 		
+		// Reposition Spline
 		const cocos2d::Vec2 v2TexturedSplineSize = m_pcTexturedSpline->getContentSize();
 		m_pcTexturedSpline->setPosition( v2TexturedSplineSize * 0.5f );
 	}
@@ -61,6 +85,9 @@ void CSolarLight::Init( CMLSolarPowerGenerator& rcSolarLevel )
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	CheckCollisions																						//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CSolarLight::CheckCollisions()
 {
 	// -----------------------------------------------------------------------------------------------------------------------------------------
@@ -84,8 +111,10 @@ void CSolarLight::CheckCollisions()
 	const float kfInwardsMargin = 0.40f;
 	
 	// Prepare logic for while looping
+
 	// Light only truly stops once it hits a platform
 	bool bLightHitGround = false;
+
 	// Light goes either down or left, so a bool is enough to keep track of direction
 	bool bGoingDown = true;
 
@@ -105,11 +134,13 @@ void CSolarLight::CheckCollisions()
 	m_vPath.push_back( cocos2d::Vec2( 23.5f, 15.5f )* s_kfPTM );
 	m_vPath.push_back( cocos2d::Vec2( 23.5f, 15.0f )* s_kfPTM );
 
+	// Prepare physics components
 	CSolarLightB2AABBQueryCB aabbQueryCB;
 	b2AABB aabbQuery;
 	
 	int iNumOfReflections = 0;
 
+	// Loop towards the next block, if it hasn't hit the ground yet
 	while( !bLightHitGround )
 	{
 		// Readjust AABB Query area to be a small square inside our new current block
@@ -119,11 +150,10 @@ void CSolarLight::CheckCollisions()
 		// Reset existing flag on the callback
 		aabbQueryCB.Reset();
 
+		// Perform the AABB Query
 		m_rcB2World.QueryAABB( &aabbQueryCB, aabbQuery );
 
 		// Switch on Raycast Hit Result ( ENEMY / PLATFORM / PLAYER )
-		// TODO: turn this into an array of results, because player and something else might be on the same block
-		// this might freeze the game entirely if it never finds a platform so ye pretty huge
 		if( aabbQueryCB.GetQueryResult() != ESolarLightQueryResult::None )
 		{
 			switch( aabbQueryCB.GetQueryResult() )
@@ -133,16 +163,21 @@ void CSolarLight::CheckCollisions()
 			// -----------------------------------------------------------------------------------------------
 			case ESolarLightQueryResult::Enemy:
 			{
-				// We must add 3 points in case of a light bounce
-				// 3 points will ensure our light beam only curves inside this block
-				// Less points would make the light beam spline start shifting outside this cube
-				// which would make it visually inaccurate
+				// Everytime the light changes direction / bounces, we add 3 path points on the same block
+				// These 3 points will ensure our path will be curved only inside this specific block,
+				// it will look smooth because of our interpolation method. If we had less than 3 points,
+				// the curve would be much bigger, it would look very inaccurate.
+				// More than 3 points is unnecessary, the curve looks smooth enough, more points would only
+				// make it more expensive.
+				
+				// If going down
 				if( bGoingDown )
 				{
 					m_vPath.push_back( cocos2d::Vec2( iCurrentX + 0.5f, iCurrentY ) * s_kfPTM );
 					m_vPath.push_back( cocos2d::Vec2( iCurrentX + 0.5f, iCurrentY - 0.5f ) * s_kfPTM );
 					m_vPath.push_back( cocos2d::Vec2( iCurrentX, iCurrentY - 0.5f ) * s_kfPTM );
 				}
+				// If going left
 				else
 				{
 					m_vPath.push_back( cocos2d::Vec2( iCurrentX + 1.0f, iCurrentY - 0.5f ) * s_kfPTM );
@@ -152,7 +187,11 @@ void CSolarLight::CheckCollisions()
 
 				// Change light direction ( flip bool )
 				bGoingDown = !bGoingDown;
+
+#ifdef DEBUG_SOLAR_LIGHT
 				CCLOG( "Hit Enemy on ( %d, %d )" , iCurrentX , iCurrentY );
+#endif // DEBUG_SOLAR_LIGHT
+
 				iNumOfReflections++;
 			}
 			break;
@@ -161,19 +200,28 @@ void CSolarLight::CheckCollisions()
 			// -----------------------------------------------------------------------------------------------
 			case ESolarLightQueryResult::Platform:
 			{
-			// If Raycast hit Platform, we're done with RTX this frame 
+			// If Raycast hit Platform, we're done with the Nvidia RTX this frame 
 				bLightHitGround = true;
+
+#ifdef DEBUG_SOLAR_LIGHT
 				CCLOG( "Reached end of path on ( %d, %d )", iCurrentX, iCurrentY );
+#endif //  DEBUG_SOLAR_LIGHT
+
+				// If going down
 				if (bGoingDown)
 				{
 					m_vPath.push_back( cocos2d::Vec2( iCurrentX + 0.5f, iCurrentY ) * s_kfPTM );
 				}
+				// If going left
 				else
 				{
 					m_vPath.push_back( cocos2d::Vec2( iCurrentX, iCurrentY - 0.5f ) * s_kfPTM );
 				}
 			}
 			break;
+			// -----------------------------------------------------------------------------------------------
+			// PLAYER
+			// -----------------------------------------------------------------------------------------------
 			case ESolarLightQueryResult::Player:
 			{
 				bHitPlayer = true;
@@ -193,12 +241,18 @@ void CSolarLight::CheckCollisions()
 			iCurrentX--;
 		}
 	}
-
+#ifdef DEBUG_SOLAR_LIGHT
 	CCLOG( "%d Reflections", iNumOfReflections );
+#endif //  DEBUG_SOLAR_LIGHT
 
+	// Update the air manager with whether the light is or not overlapping with the player this frame
+	// Overlapping will make the air drain faster
 	m_rcAirManager.SunlightDrainAir( bHitPlayer );
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	BuildNewSpline																						//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CSolarLight::BuildNewSpline()
 {
 	// Clean up the spline's saved path to set the new path
@@ -206,8 +260,9 @@ void CSolarLight::BuildNewSpline()
 	m_pcTexturedSpline->path.clear();
 	m_pcTexturedSpline->path = m_vPath;
 
-	// Rebuild spline geometry
+	// Rebuild Spline Geometry
 	m_pcTexturedSpline->buildGeometry( m_vPath, 3 );
+	// Reposition Spline
 	const cocos2d::Vec2 v2TexturedSplineSize = m_pcTexturedSpline->getContentSize();
 	m_pcTexturedSpline->setPosition( v2TexturedSplineSize * 0.5f );
 }

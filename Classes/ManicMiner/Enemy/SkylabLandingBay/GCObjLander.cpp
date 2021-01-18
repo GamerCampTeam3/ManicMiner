@@ -28,6 +28,7 @@ CGCObjLander::CGCObjLander		( const int( &paiDeploySlots )[4], const int kiExplo
 	, m_fSpeed					( 0.0f							)
 	, m_fCurrentExplosionTime	( 0.0f							)
 {
+
 	// Get the pixel X coordinate of the first deploy position
 	const float fInitialX = s_fPTM * m_kaiDeployXSlots[0];
 	// Set reset position to be first deploy position
@@ -140,7 +141,6 @@ void CGCObjLander::VOnUpdate( float fTimeStep )
 
 		// Set a Vec2 for the position we want our lander to be in to deploy
 		const Vec2 kv2DeployPos( kfNextDeployX, s_fMaxVisibleY );
-
 
 		// How far off are we from Goal X
 		float fCurrentXOffset = ( GetSpritePosition() - kv2DeployPos ).x;

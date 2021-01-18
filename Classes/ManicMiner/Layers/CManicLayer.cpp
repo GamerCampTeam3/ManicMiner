@@ -38,9 +38,6 @@
 #include "ManicMiner/Structs/SLevelValues.h"
 #include "ManicMiner/Switch/CSwitch.h"
 
-
-
-
 USING_NS_CC;
 
 //////////////////////////////////////////////////////////////////////////
@@ -59,7 +56,6 @@ USING_NS_CC;
 
 #endif
 
-
 // Constructor -------------------------------------------------------------------------------------------------------- //
 CManicLayer::CManicLayer()
 	: IGCGameLayer( GetGCTypeIDOf( CManicLayer ) )
@@ -67,12 +63,12 @@ CManicLayer::CManicLayer()
 	, m_sLevelCreationParameters	( SLevelCreationParameters() )
 	, m_pcLevelManager				( nullptr )
 	, m_eGameState					( EGameState::Looting )
-	, m_bWasResetRequested				( false )
-	, m_bWasNextLevelRequested			( false )
+	, m_bWasResetRequested			( false )
+	, m_bWasNextLevelRequested		( false )
 	, m_pcParallax					( nullptr )
 	, m_pcPlayer					( nullptr )
-	, m_bUseHelpMenuIngame				( false   )
-        , m_bIsFullscreen				( false )
+	, m_bUseHelpMenuIngame			( false )
+    , m_bIsFullscreen				( false	)
 {
 }
 
@@ -99,7 +95,6 @@ void CManicLayer::VOnCreate()
 	m_sizeVisible = Director::getInstance()->getVisibleSize();
 	m_pointOrigin = Director::getInstance()->getVisibleOrigin();
 
-
 	// create the default object group
 	IGCGameLayer::VOnCreate();
 
@@ -111,7 +106,6 @@ void CManicLayer::VOnCreate()
 	m_bUseHelpMenuIngame = true;
 	CreateExitButton();
 	///////////////////////////////////////////////////////////////////////////
-
 
 	///////////////////////////////////////////////////////////////////////////
 	// set up physics 
@@ -127,7 +121,6 @@ void CManicLayer::VOnCreate()
 	f32 PTM_RATIO = IGCGAMELAYER_B2D_PIXELS_PER_METER;
 
 	b2Vec2	b2v2ScreenCentre_Pixels( (m_pointOrigin.x + (m_sizeVisible.width * 0.5f ) ), (m_pointOrigin.y + (m_sizeVisible.height * 0.5f ) ) );
-
 
 	// define the ground body
 	b2BodyDef groundBodyDef;
@@ -158,7 +151,6 @@ void CManicLayer::VOnCreate()
 	groundBox.SetAsBox( 0.5f, ( (m_sizeVisible.height * 0.5f ) / PTM_RATIO ), b2Vec2( ( (m_sizeVisible.width * 0.5f ) / PTM_RATIO ), 0.0f ), 0.0f );
 	groundBody->CreateFixture( &groundBox, 0 );
 
-
 	///////////////////////////////////////////////////////////////////////////
 	// N.B. this is where you would load a level file, using the factory to
 	// create the class instances specified by the level file by passing their
@@ -182,62 +174,76 @@ void CManicLayer::VOnCreate()
 		m_cLevelLoader.CreateObjects( CGCFactory_ObjSpritePhysics::GetFactory() );
 	}
 
-
 	///////////////////////////////////////////////////////////////////////////
-	// add player
+	// Add player
 	///////////////////////////////////////////////////////////////////////////
 	m_pcPlayer = new CPlayer( *this, m_sLevelCreationParameters.v2PlayerStartPos, m_sLevelCreationParameters.bShouldFaceRight );
 
-	// ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+// Add Collision Manager Handlers
 
+// Player + Collectible
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CCollectible& rcCollectible, const b2Contact& rcContact ) -> void
 		{
 			ItemCollected( rcCollectible, rcPlayer, rcContact );
 		} );
 
+// Player + Switch
 	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CSwitch& rcSwitch, const b2Contact& rcContact ) -> void
 	{
 		SwitchInteracted( rcSwitch, rcPlayer, rcContact );
 	} );
 
+// Player + Enemy
 	GetCollisionManager().AddCollisionHandler( [&] ( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact ) -> void
 		{
 			PlayerCollidedEnemy( rcPlayer, rcEnemy, rcContact );
 		} );
 
+// Player + Eugene
 	GetCollisionManager().AddCollisionHandler([&](CPlayer& rcPlayer, CGCObjEugene& rcEugene, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedEnemy(rcPlayer, rcEugene, rcContact);
 		});
-	   	 
+   	 
+// Player + Hazard
 	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedHazard(rcPlayer, rcHazard, rcContact);
 		});
 
+// Player + Door
 	GetCollisionManager().AddCollisionHandler( [&] (CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact) -> void
 		{
 			PlayerCollidedDoor( rcPlayer, rcDoor, rcContact );
 		});
 
+// Player + Kong
 	GetCollisionManager().AddCollisionHandler( [&]( CPlayer& rcPlayer, CGCObjKong& rcKong, const b2Contact& rcContact ) -> void
 	{
 		PlayerCollidedEnemy( rcPlayer, rcKong, rcContact );
 	} );
-
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	VInitializeBackground																				//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::VInitializeBackground()
 {
+	// Get current Scene
 	auto pcScene = static_cast< cocos2d::Scene* >( getParent() );
 	if ( pcScene && m_pcPlayer )
 	{
+		// Switch between the 4 different themes
 		switch( m_sLevelCreationParameters.eParallaxTheme )
 		{
-
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		// CAVERN
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		case EParallaxTheme::Cavern:
 		{
+			// 3 Layers, 1 Animated Layer (fish)
 			int kiNumScrollingLayers = 3;
 			const int kiNumAnimatedLayers = 1;
 			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
@@ -255,8 +261,12 @@ void CManicLayer::VInitializeBackground()
 			m_pcParallax->AddAnimatedLayer(sData4);
 		}
 		break;
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		// TOXIC
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		case EParallaxTheme::Toxic:
 		{
+			// 3 Layers, no Animated Layers
 			int kiNumScrollingLayers = 3;
 			const int kiNumAnimatedLayers = 0;
 			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
@@ -270,8 +280,12 @@ void CManicLayer::VInitializeBackground()
 			m_pcParallax->AddScrollingLayer( sData3, 5.0f );
 		}
 		break;
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		// SHIPWRECK
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		case EParallaxTheme::Shipwreck:
 		{
+			// 5 Layers, no Animated Layers
 			int kiNumScrollingLayers = 5;
 			const int kiNumAnimatedLayers = 0;
 			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
@@ -289,8 +303,12 @@ void CManicLayer::VInitializeBackground()
 			m_pcParallax->AddScrollingLayer( sData5, 4.0f );
 		}
 		break;
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		// MAGMA
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		case EParallaxTheme::Magma:
 		{
+			// 1 Layer, no Animated Layers
 			int kiNumScrollingLayers = 1;
 			const int kiNumAnimatedLayers = 0;
 			m_pcParallax = new CParallax( kiNumScrollingLayers, kiNumAnimatedLayers, *pcScene, *m_pcPlayer );
@@ -302,16 +320,17 @@ void CManicLayer::VInitializeBackground()
 		break;
 		}
 
-	m_pcParallax->Reset();
+		// Reset all individual components inside Parallax Layer
+		m_pcParallax->Reset();
 	}
 
-
+	// If the artists have created the black shadowy outlines on the platforms for this level, add them
+	// Chances are slim
 	if (m_sLevelCreationParameters.pszPlatformBackground != nullptr)
 	{
 		GetParallax().AddPlatformOutlines( m_sLevelCreationParameters.pszPlatformBackground );
 	}
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 // on update
@@ -326,7 +345,7 @@ void CManicLayer::VOnUpdate( f32 fTimeStep )
 		m_pcParallax->Update();
 	}
 
-	// Reset level request ( and not going to next level )
+	// Reset level request ( and only if not going to next level )
 	if( GetWasResetRequested() && !GetWasNextLevelRequested() )
 	{
 		ResetLevel();
@@ -355,22 +374,14 @@ void CManicLayer::VOnDestroy()
 	m_cLevelLoader.DestroyObjects();
 	
 	// Delete Parallax
-	//if ( m_pzsPlatformOutlinePlist )
-	//{
-	//	delete m_pzsPlatformOutlinePlist;
-	//	m_pzsPlatformOutlinePlist = nullptr;
-	//}
 	if ( m_pcParallax ) 
 	{
 		delete m_pcParallax;
 		m_pcParallax = nullptr;
 	}
 
-	
 	IGCGameLayer::VOnDestroy();
 }
-
-
 
 void CManicLayer::VOnReset( void )
 {
@@ -380,6 +391,7 @@ void CManicLayer::VOnReset( void )
 
 void CManicLayer::onExitTransitionDidStart()
 {
+	// When moving into a new level, make sure to stop player sound effects
 	m_pcPlayer->StopRunningSound();
 	m_pcPlayer->StopVerticalMovementSound();
 
@@ -447,35 +459,35 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 				pcPlatform = static_cast< CPlatform* >( pGcSprPhysA );													//
 			}																											//
 																														//
-																														//
-																														//
 			// Check if this BeginContact is for feet + platform surface ( sensors only )								//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
 			{																											//
-				if( pcPlatform->GetPlatformType() != EPlatformType::Brick )
-				{
-					// GET ID NAME
-					const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
-					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
-
-					// Check if this platform was already overlapping in terms of hard contact
-					// && if collision is not yet enabled
-					// && if platform is not triggering a hard contact yet
+				if( pcPlatform->GetPlatformType() != EPlatformType::Brick )												//
+				{																										//
+					// GET ID NAME																						//
+					const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );						//
+					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );									//
+																														//
+					// Check if this platform was already overlapping in terms of hard contact							//
+					// && if collision is not yet enabled																//
+					// && if platform is not triggering a hard contact yet												//
 					// && if the player is not moving upwards ( otherwise it would trigger when player jumps through a platform, landing on that platform for just a frame and then moving upwards anyways )
 					bool bShouldStartHardContact = ( pcPlatform->GetIsInContact() && !pcPlatform->GetCollisionEnabled() ) && !pcPlatform->GetIsTriggeringHardContact() && m_pcPlayer->GetVelocity().y <= 0.0001f;
 
-					// Activate this platform's collision																	//
-					pcPlatform->SetCollisionEnabled( true );																//
-																															//
-																															//
-					// Increment sensor count for the player																//
-					m_pcPlayer->SensorContactEvent( true );																	//
+					// Activate this platform's collision																//
+					pcPlatform->SetCollisionEnabled( true );															//
+																														//
+																														//
+					// Increment sensor count for the player															//
+					m_pcPlayer->SensorContactEvent( true );																//
 
 					pcPlatform->SetIsSensorOverlapped( true );
 				
 					if( bShouldStartHardContact )
 					{
+#ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS																					//
 						CCLOG( "Forcing a ghosted hard contact start, due to sensor contact now but hard fixtures were already overlapping." );
+#endif
 						PlayerBeganContactWithPlatform( *pcPlatform );
 					}
 				}
@@ -483,7 +495,6 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 				else
 				{
 					auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
-
 					
 					// We have more than 1 sensor for the bricks, so we need to know which one we're overlapping with
 					// We have the surface sensor, used to determine whether this brick is below the player or not
@@ -501,7 +512,6 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 
 						pBrickPlatform->SetIsSensorOverlapped( true );
 					}
-
 				}
 			}																											//
 																														//
@@ -512,7 +522,7 @@ void CManicLayer::BeginContact( b2Contact* pB2Contact )																	//
 				PlayerBeganContactWithPlatform( *pcPlatform );
 			}
 
-			// Exclusive Or
+			// Exclusive Or Operation no longer in use because this bug was fixed with the edge shape collision.
 			// BeginContact triggered with hard fixture + sensor fixture
 			// This is an edge case we need to check for in order to prevent a bug with the bricks platform
 			// This type of platform by default has collision on so the player might land on the top without
@@ -563,8 +573,6 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 		return;																											//
 	}																													//
 																														//
-																														//
-																														//
 	// Henrique Edit - Player Platforming Abilities																		//
 	// CHECK FOR PLATORM AND PLAYER COLLISION																			//
 	if( pGcSprPhysA->GetGCTypeID() != pGcSprPhysB->GetGCTypeID() )														//
@@ -575,7 +583,7 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				&& ( pGcSprPhysB->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) ) ) )										//
 		{																												//
 			// Get pointer to platform																					//
-			CPlatform* pcPlatform = nullptr;																				//
+			CPlatform* pcPlatform = nullptr;																			//
 																														//
 			// If BodyA is player, BodyB must be platform																//
 			if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )												//
@@ -587,9 +595,6 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 			{																											//
 				pcPlatform = static_cast< CPlatform* >( pGcSprPhysA );													//
 			}																											//
-																														//
-																														//
-																														//
 			// Check if this EndContact is for feet + platform surface sensors only										//
 			if( pFixtureA->IsSensor() && pFixtureB->IsSensor() )														//
 			{																											//
@@ -598,56 +603,55 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 				{																										//
 					// Deactivate this platform's collision																//
 					pcPlatform->SetCollisionEnabled( pcPlatform->GetTriggersHardContactEvent() );						//
-
+																														//
 					// Decrement sensor contact count																	//
 					m_pcPlayer->SensorContactEvent( false );															//
-
-					pcPlatform->SetIsSensorOverlapped( false );
+																														//
+					pcPlatform->SetIsSensorOverlapped( false );															//
 				}																										//
-				// Brick Platform sensor overlap end
-				else
-				{
-					auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
-
-
-					// We have more than 1 sensor for the bricks, so we need to know which one we're overlapping with
-					// We have the surface sensor, used to determine whether this brick is below the player or not
-					// And we have 2 side sensors that allow the player to climb up this ledge
-					// GET ID NAME
-					const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
-					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
-					if( ( *pszSensorIdB == "surface"   && *pszSensorIdA == "brickFeet" ) ||
-						( *pszSensorIdB == "brickFeet" && *pszSensorIdA == "surface" ) )
-					{
-						pBrickPlatform->SetIsUnderPlayer( false );
-						// Increment sensor count for the player
-						m_pcPlayer->SensorContactEvent( false );
-
-						pBrickPlatform->SetIsSensorOverlapped( false );
-					}
-					else if( ( *pszSensorIdA == "ClimbUpLedge"	&& *pszSensorIdB == "feet" )
-						  || ( *pszSensorIdA == "feet"			&& *pszSensorIdB == "ClimbUpLedge" ) )
-					{
-						m_pcPlayer->ClimbUpBrickLedge();
-					}
-				}
+				// Brick Platform sensor overlap end																	//
+				else																									//
+				{																										//
+					auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );								//
+																														//
+					// We have more than 1 sensor for the bricks, so we need to know which one we're overlapping with	//
+					// We have the surface sensor, used to determine whether this brick is below the player or not		//
+					// And we have 2 side sensors that allow the player to climb up this ledge							//
+					// Therefore we must check the FixtureID															//
+					const std::string* pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );						//
+					auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );									//
+					if( ( *pszSensorIdB == "surface"   && *pszSensorIdA == "brickFeet" ) ||								//
+						( *pszSensorIdB == "brickFeet" && *pszSensorIdA == "surface" ) )								//
+					{																									//
+						pBrickPlatform->SetIsUnderPlayer( false );														//
+						// Increment sensor count for the player														//
+						m_pcPlayer->SensorContactEvent( false );														//
+																														//
+						pBrickPlatform->SetIsSensorOverlapped( false );													//
+					}																									//
+					else if( ( *pszSensorIdA == "ClimbUpLedge"	&& *pszSensorIdB == "feet" )							//
+						  || ( *pszSensorIdA == "feet"			&& *pszSensorIdB == "ClimbUpLedge" ) )					//
+					{																									//
+						m_pcPlayer->ClimbUpBrickLedge();																//
+					}																									//
+				}																										//
 			}																											//
 																														//
 			// If not 2 sensors																							//
 			// Check if this EndContact is for character + platform ( no sensors included )								//
 			else if( !( pFixtureA->IsSensor() ) && !( pFixtureB->IsSensor() ) )											//
 			{																											//
-				if( pcPlatform->GetTriggersHardContactEvent() && pcPlatform->GetIsTriggeringHardContact() && pFixtureB->GetDensity() == pFixtureA->GetDensity() )	//
+				if( pcPlatform->GetTriggersHardContactEvent() && pcPlatform->GetIsTriggeringHardContact()				//
+					&& pFixtureB->GetDensity() == pFixtureA->GetDensity() )												//
 				{																										//
 					// Set the platform as no trigger for hard contact events											//
 					pcPlatform->SetTriggersHardContactEvent( false );													//
 																														//
 					// Decrement hard contact count																		//
 					m_pcPlayer->HardContactEvent( false );																//
-
-					pcPlatform->SetIsTriggeringHardContact( false );
+																													    //
+					pcPlatform->SetIsTriggeringHardContact( false );												    //
 																														//
-
 					// If feet are no longer touching any ground surface												//
 					if( !m_pcPlayer->GetHardContactCount() && m_pcPlayer->GetIsGrounded() )								//
 					{																									//
@@ -657,68 +661,68 @@ void CManicLayer::EndContact( b2Contact* pB2Contact )																	//
 					switch( pcPlatform->GetPlatformType() )																//
 					{																									//
 						case EPlatformType::Crumbling:																	//
-						{						
+						{																								//
 							auto pcCrumblingPlatform = static_cast< CCrumblingPlatform* > ( pcPlatform );				//
 																														//
 							if( pcCrumblingPlatform != nullptr )														//
 							{																							//
 								pcCrumblingPlatform->StopCrumbling();													//
 							}																							//
-						}
+						}																								//
 						break;																							//
-						case EPlatformType::Moving:
-						{
-							m_pcPlayer->LeftConveyorBelt();
-						}
-						break;
+						case EPlatformType::Moving:																		//
+						{																								//
+							m_pcPlayer->LeftConveyorBelt();																//
+						}																								//
+						break;																							//
 					}																									//
-					// If leaving this contact, and sensors aren't overlapping anymore as well
-					if ( !pcPlatform->GetIsSensorOverlapped() && pcPlatform->GetPlatformType() != EPlatformType::Brick )
-					{
-						// Disable platform collision
-						pcPlatform->SetCollisionEnabled( false );
-					}
+					// If leaving this contact, and sensors aren't overlapping anymore as well							//
+					if ( !pcPlatform->GetIsSensorOverlapped() && pcPlatform->GetPlatformType() != EPlatformType::Brick )//
+					{																									//
+						// Disable platform collision																	//
+						pcPlatform->SetCollisionEnabled( false );														//
+					}																									//
 				}																										//
-				else
-				{
-#ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS
-					CCLOG( "ENDED SOLID CONTACT WITH A PLATFORM THAT HAS COLLISION OFF" );
-#endif
-				}
-				pcPlatform->SetIsInContact( false );
+				else																									//
+				{																										//
+#ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS																					//
+					CCLOG( "ENDED SOLID CONTACT WITH A PLATFORM THAT HAS COLLISION OFF" );								//
+#endif																													//
+				}																										//
+				pcPlatform->SetIsInContact( false );																	//
 			}																											//
-
-			//// Exclusive Or
-			//// EndContact triggered with hard fixture + sensor fixture
-			//// This is an edge case we need to check for in order to prevent a bug with the bricks platform
-			//// This type of platform by default has collision on so the player might land on the top without
-			//// having overlapped sensors first.
-			//else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )
-			//{
-			//	if( pcPlatform->GetPlatformType() == EPlatformType::Brick )
-			//	{
-			//		// GET ID NAME
-			//		auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );
-			//		auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );
-			//		if( ( *pszSensorIdA == "surface" && *pszSensorIdB == "body" )
-			//			|| ( *pszSensorIdA == "body" && *pszSensorIdB == "surface" ) )
-			//		{
-			//			auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );
-			//			if( pBrickPlatform != nullptr )
-			//			{
-			//				pBrickPlatform->SetIsUnderPlayer( false );
-			//			}
-			//		}
-			//		else 
-			//		
-			//		
-			//		{
-			//			if( m_pcPlayer->GetVelocity().y > 0.0f )
-			//			{
-			//			}
-			//		}
-			//	}
-			//}
+																														//
+			//// Exclusive Or																							//
+			//// EndContact triggered with hard fixture + sensor fixture												//
+			//// This is an edge case we need to check for in order to prevent a bug with the bricks platform			//
+			//// This type of platform by default has collision on so the player might land on the top without			//
+			//// having overlapped sensors first.																		//
+			//else if( pFixtureA->IsSensor() ^ pFixtureB->IsSensor() )													//
+			//{																											//
+			//	if( pcPlatform->GetPlatformType() == EPlatformType::Brick )												//
+			//	{																										//
+			//		// GET ID NAME																						//
+			//		auto pszSensorIdA = GB2ShapeCache::getFixtureIdText( pFixtureA );									//
+			//		auto pszSensorIdB = GB2ShapeCache::getFixtureIdText( pFixtureB );									//
+			//		if( ( *pszSensorIdA == "surface" && *pszSensorIdB == "body" )										//
+			//			|| ( *pszSensorIdA == "body" && *pszSensorIdB == "surface" ) )									//
+			//		{																									//
+			//			auto pBrickPlatform = static_cast< CBrickPlatform* > ( pcPlatform );							//
+			//			if( pBrickPlatform != nullptr )																	//
+			//			{																								//
+			//				pBrickPlatform->SetIsUnderPlayer( false );													//
+			//			}																								//
+			//		}																									//
+			//		else 																								//
+			//																											//
+			//																											//
+			//		{																									//
+			//			if( m_pcPlayer->GetVelocity().y > 0.0f )														//
+			//			{																								//
+			//			}																								//
+			//		}																									//
+			//	}																										//
+			//}																											//
 		}																												//
 	}																													//
 }																														//
@@ -767,7 +771,7 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 				// We must check if this platform is supposed to have collision or not									//
 																														//
 				// Get pointer to platform																				//
-				CPlatform* pcPlatform = nullptr;																			//
+				CPlatform* pcPlatform = nullptr;																		//
 																														//
 				// If BodyA is player, BodyB must be platform															//
 				if( pGcSprPhysA->GetGCTypeID() == GetGCTypeIDOf( CPlayer ) )											//
@@ -781,9 +785,8 @@ void CManicLayer::PreSolve( b2Contact* pB2Contact, const b2Manifold* pOldManifol
 				}																										//
 																														//
 				// Set contact collision accordingly																	//
-				pB2Contact->SetEnabled( pcPlatform->GetCollisionEnabled() );												//
+				pB2Contact->SetEnabled( pcPlatform->GetCollisionEnabled() );											//
 			}																											//
-																														//
 		}																												//
 	}																													//
 }																														//
@@ -796,80 +799,76 @@ void CManicLayer::EnemyCollidedPlatform( CGCObjEnemy& rcEnemy, const b2Contact& 
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
-		//rcEnemy.BounceEnemyDirection();																					//
+		//rcEnemy.BounceEnemyDirection();																				//
 	}																													//
 }																														//
-																														//
 																														//
 void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjEnemy& rcEnemy, const b2Contact& rcContact )			//
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
-		OnDeath();
+		OnDeath();																										//
 	}																													//
-}
-
-void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjKong& rcKong, const b2Contact& rcContact )			//
-{																														//
-	if (rcContact.IsTouching())																						//
-	{																													//
-		OnDeath();
-	}																													//
-}			//
+}																														//
 																														//
+void CManicLayer::PlayerCollidedEnemy( CPlayer& rcPlayer, CGCObjKong& rcKong, const b2Contact& rcContact )				//
+{																														//
+	if (rcContact.IsTouching())																							//
+	{																													//
+		OnDeath();																										//
+	}																													//
+}																														//
 																														//
 void CManicLayer::PlayerCollidedHazard( CPlayer& rcPlayer, CGCObjHazard& rcHazard, const b2Contact& rcContact )			//
 {																														//
 	if( rcContact.IsTouching() )																						//
-	{
-		if (rcHazard.GetCanCollide() )
-		{
-
-			OnDeath();
-			rcHazard.SetCanCollide( false );
-		}
-
+	{																													//
+		if (rcHazard.GetCanCollide() )																					//
+		{																												//
+																														//
+			OnDeath();																									//
+			rcHazard.SetCanCollide( false );																			//
+		}																												//
+																														//
 	}																													//
 }																														//
-																														//
 																														//
 void CManicLayer::PlayerCollidedDoor( CPlayer& rcPlayer, CDoor& rcDoor, const b2Contact& rcContact )					//
 {																														//
 	if ( rcContact.IsTouching() )																						//
 	{																													//
-		m_pcGameManager->EndLevel();
+		m_pcGameManager->EndLevel();																					//
 	}																													//
 }																														//
-																														//
 																														//
 void CManicLayer::ItemCollected( CCollectible& rcCollectible, CPlayer& rcPlayer, const b2Contact& rcContact )			//
 {																														//
 	if( rcContact.IsTouching() )																						//
 	{																													//
 		rcCollectible.InteractEvent();																					//
-		m_pcGameManager->CCollectibleInteractEvent();
+		m_pcGameManager->CCollectibleInteractEvent();																	//
 	}																													//
 }																														//
 																														//
 void CManicLayer::SwitchInteracted(CSwitch& rcSwitch, CPlayer& rcPlayer, const b2Contact& rcContact)					//
 {																														//
 	if (rcContact.IsTouching())																							//
-	{
-		if (!rcSwitch.GetHasBeenCollected())
-		{
-			m_pcGameManager->CSwitchInteractEvent();
-		}
-		
-		rcSwitch.InteractEvent();
-
+	{																													//
+		if (!rcSwitch.GetHasBeenCollected())																			//
+		{																												//
+			m_pcGameManager->CSwitchInteractEvent();																	//
+		}																												//
+																														//
+		rcSwitch.InteractEvent();																						//
+																														//
 	}																													//
 }																														//
-
-CAirManager& CManicLayer::GetAirManager() const
-{
-	return *m_pcAirManager;
-}
-
+																														//
+CAirManager& CManicLayer::GetAirManager() const																			//
+{																														//
+	return *m_pcAirManager;																								//
+}																														//
+																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -904,17 +903,14 @@ bool CManicLayer::GetWasNextLevelRequested() const																		//
 {																														//
 	return m_bWasNextLevelRequested;																					//
 }																														//
-
-CParallax& CManicLayer::GetParallax() const
-{
-	CC_ASSERT( m_pcParallax != nullptr );
-	return *m_pcParallax;
-}
-
+																														//
+CParallax& CManicLayer::GetParallax() const																				//
+{																														//
+	CC_ASSERT( m_pcParallax != nullptr );																				//
+	return *m_pcParallax;																								//
+}																														//
+																														//
 // -------------------------------------------------------------------------------------------------------------------- //
-
-
-
 
 // ---------------------------------- Setters ------------------------------------------------------------------------- //
 void CManicLayer::SetLevelManager( CLevelManager& rcLevelManager )														//
@@ -934,7 +930,9 @@ void CManicLayer::SetGameManager(CGameManager& rcGameManager)															//
 }																														//
 // -------------------------------------------------------------------------------------------------------------------- //
 
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	onEnter																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::onEnter()
 {
 	IGCGameLayer::onEnter();
@@ -954,35 +952,25 @@ void CManicLayer::onEnter()
 
 	u32 uSizeOfActionArray = ( sizeof( aeKeyCodesForActions ) / sizeof( cocos2d::EventKeyboard::KeyCode ) );
 
-	// call base class function	to init the keyboard manager
+	// Call base class function	to init the keyboard manager
 	AppDelegate::InitialiseKeyboardManager( uSizeOfActionArray, aeKeyCodesForActions );
 
+	// Should the music change or keep playing same song?
+	// Depends on whether the previous level was the same visual theme and so the same track
 	m_pcGameManager->CheckShouldUpdateMusic( m_sLevelCreationParameters.eBackgroundMusic );
 
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	OnFinishedLooting																					//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::OnFinishedLooting()
 {
 	m_eGameState = EGameState::Escaping;
-	// For production phase
-	// Change enemy behaviours if needed
 }
-
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	OnEscaped																							//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::OnEscaped()
 {
@@ -991,16 +979,10 @@ void CManicLayer::OnEscaped()
 	// Run Time animation and points, etc
 	// when that ends, call this line:
 	RequestNextLevel();
-	
 }
-
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	OnDeath																								//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::OnDeath()
 {
@@ -1012,7 +994,6 @@ void CManicLayer::OnDeath()
 	if( m_pcPlayer->GetLives() > 0 )
 	{
 		RequestReset();
-		
 	}
 	else
 	{
@@ -1020,13 +1001,8 @@ void CManicLayer::OnDeath()
 	}
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	OutOfLives																							//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::OutOfLives()
 {
@@ -1035,53 +1011,34 @@ void CManicLayer::OutOfLives()
 	m_pcLevelManager->GoToGameOverScene();	
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	RequestReset																						//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::RequestReset()
 {
 	m_bWasResetRequested = true;
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	ResetRequestWasHandled																				//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::ResetRequestWasHandled()
 {
 	m_bWasResetRequested = false;
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	ResetLevel																							//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
-// -------------------------------------------------------------------------------------------------------------------- //
+
 void CManicLayer::ResetLevel()
 {
 	ResetRequestWasHandled();
 	VOnReset();
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	RequestNextLevel																					//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::RequestNextLevel()
 {
@@ -1090,103 +1047,94 @@ void CManicLayer::RequestNextLevel()
 	m_pcGameManager->ResetValues();
 }
 
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	PlayerBeganContactWithPlatform																		//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 {
-	if( rcPlatform.GetCollisionEnabled() && !rcPlatform.GetIsTriggeringHardContact() )						//
-	{																										//
-		// Set the platform as a trigger for hard contact events											//
-		rcPlatform.SetTriggersHardContactEvent( true );														//
-																											//
-		// Increment hard contact count for the player														//
-		m_pcPlayer->HardContactEvent( true );																//
-		rcPlatform.SetIsTriggeringHardContact( true );
-																											//																														//
-		// Check Platform Type																				//
-		switch( rcPlatform.GetPlatformType() )																//
-		{																									//
-		////////////////////////////////////////////////////////////////////////////////					//
-		// MOVING																	////					//
-		////////////////////////////////////////////////////////////////////////////////					//
-		case EPlatformType::Moving:																			//
-		{																									//
-			// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock 			//
- 			auto pMovingPlatform = static_cast< CMovingPlatform* > ( &rcPlatform );							//
-																											//
-			if( pMovingPlatform != nullptr )																//
-			{																								//
-				m_pcPlayer->LandedOnConveyorBelt( pMovingPlatform->GetDirectionLock() );					//
-			}																								//
-		}																									//
-		break;																								//
-		////////////////////////////////////////////////////////////////////////////////					//
-		// CRUMBLING																////					//
-		////////////////////////////////////////////////////////////////////////////////					//
-		case EPlatformType::Crumbling:																		//
-		{																									//
-				// Start Crumbling																			//
-			auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( &rcPlatform );					//
-																											//
-			if( pCrumblingPlatform != nullptr )																//
-			{																								//
-				pCrumblingPlatform->InitiateCrumbling();													//
-			}																								//
-																											//
-				// Set player as grounded																	//
-			m_pcPlayer->LandedOnWalkablePlatform();															//
-		}																									//
-		break;																								//
-		////////////////////////////////////////////////////////////////////////////////					//
-		// BRICK																	////					//
-		////////////////////////////////////////////////////////////////////////////////					//
-		case EPlatformType::Brick:																			//
-		{																									//
-			// If in mid air and sensor contacts == 0, or if on top of conveyor belt platform				//
+	if( rcPlatform.GetCollisionEnabled() && !rcPlatform.GetIsTriggeringHardContact() )
+	{
+		// Set the platform as a trigger for hard contact events
+		rcPlatform.SetTriggersHardContactEvent( true ); 
 
-			auto pBrickPlatform = static_cast< CBrickPlatform* > ( &rcPlatform );							//
+		// Increment hard contact count for the player
+		m_pcPlayer->HardContactEvent( true );
+		rcPlatform.SetIsTriggeringHardContact( true );
+
+		// Check Platform Type
+		switch( rcPlatform.GetPlatformType() )
+		{
+		////////////////////////////////////////////////////////////////////////////////
+		// MOVING																	////
+		////////////////////////////////////////////////////////////////////////////////
+		case EPlatformType::Moving:
+		{
+			// Downcast platform to CMovingPlatform, in order to get its respective DirectionLock
+			auto pMovingPlatform = static_cast< CMovingPlatform* > ( &rcPlatform );
+
+			if( pMovingPlatform != nullptr )
+			{
+				m_pcPlayer->LandedOnConveyorBelt( pMovingPlatform->GetDirectionLock() );
+			}
+		}
+		break; 
+		////////////////////////////////////////////////////////////////////////////////
+		// CRUMBLING																////
+		////////////////////////////////////////////////////////////////////////////////
+		case EPlatformType::Crumbling:
+		{
+			// Start Crumbling
+			auto pCrumblingPlatform = static_cast< CCrumblingPlatform* > ( &rcPlatform );
+
+			if( pCrumblingPlatform != nullptr )
+			{
+				pCrumblingPlatform->InitiateCrumbling();
+			}
+
+			// Set player as grounded
+			m_pcPlayer->LandedOnWalkablePlatform();
+		}
+		break;
+		////////////////////////////////////////////////////////////////////////////////
+		// BRICK																	////
+		////////////////////////////////////////////////////////////////////////////////
+		case EPlatformType::Brick:
+		{
+			// If in mid air and sensor contacts == 0, or if on top of conveyor belt platform
+
+			auto pBrickPlatform = static_cast< CBrickPlatform* > ( &rcPlatform );
 			if( pBrickPlatform != nullptr )
 			{
 				if( pBrickPlatform->GetIsUnderPlayer() )
 				{
-					m_pcPlayer->LandedOnWalkablePlatform();													//
+					m_pcPlayer->LandedOnWalkablePlatform();
 				}
 				else
 				{
-					// Set the platform as not a trigger for hard contact events										//
-					rcPlatform.SetTriggersHardContactEvent( false );													//
-																														//
-					// Decrement hard contact count for the player, because by default the platforms increment			//
+					// Set the platform as not a trigger for hard contact events
+					rcPlatform.SetTriggersHardContactEvent( false );
+
+					// Decrement hard contact count for the player, because by default the platforms increment
 					// We dont consider a side bump a "hard contact" as it's not relevant for feet and player movement mostly
-					m_pcPlayer->HardContactEvent( false );																//
+					m_pcPlayer->HardContactEvent( false );
 					rcPlatform.SetIsTriggeringHardContact( false );
 
-					m_pcPlayer->BumpedWithBricks();															//
+					m_pcPlayer->BumpedWithBricks();
 				}
 			}
-			//if( ( !m_pcPlayer->GetIsGrounded() ) && ( m_pcPlayer->GetSensorContactCount() == 0 )			//
-			//	|| ( m_pcPlayer->GetIsOnConveyorBelt() ) )													//
-			//{																								//
-			//	// Player Bumped onto brick																	//
-			//}																								//
-			//// Else, is in mid-air? If so, land on platform													//
-			//else if( !m_pcPlayer->GetIsGrounded() )															//
-			//{																								//
-			//	// Set player as grounded																	//
-			//	m_pcPlayer->LandedOnWalkablePlatform();														//
-			//}																								//
-		}																									//
-		break;																								//
-		////////////////////////////////////////////////////////////////////////////////					//
-		// DEFAULT																	////					//
-		////////////////////////////////////////////////////////////////////////////////					//
-		default:																							//
-		{																									//
-			// Set player as grounded																		//
-			m_pcPlayer->LandedOnWalkablePlatform();															//
-		}																									//
-		break;																								//
-		}																									//
-	}																										//
+		}
+		break;
+		////////////////////////////////////////////////////////////////////////////////
+		// DEFAULT																	////
+		////////////////////////////////////////////////////////////////////////////////
+		default:																		
+		{
+			// Set player as grounded
+			m_pcPlayer->LandedOnWalkablePlatform();
+		}
+		break;
+		}
+	}
 	else
 	{
 #ifdef PLAYER_DEBUG_VIRTUAL_CONTACTS
@@ -1195,8 +1143,6 @@ void CManicLayer::PlayerBeganContactWithPlatform( CPlatform& rcPlatform )
 	}
 	rcPlatform.SetIsInContact( true );
 }
-
-
 
 void CManicLayer::CB_OnGameExitButton( Ref* pSender )
 {
@@ -1255,7 +1201,7 @@ void CManicLayer::CB_OnHelpButton( Ref* pSender )
 
 	this->addChild( pMenu, 4 );
 }
-
+ 
 void CManicLayer::CB_OnResumeButton( Ref* pSender )
 {
 	this->removeChild( this->getChildByName( "HelpButton" ) );
@@ -1295,7 +1241,6 @@ void CManicLayer::CreateScreenButton()
 
 	
 }
-
 
 void CManicLayer::CB_OnScreenButton(Ref *pSender)
 {
@@ -1363,19 +1308,20 @@ void CManicLayer::CreateQuitButton()
 	this->addChild( m_pMenu, 7 );
 }
 
-
 void CManicLayer::CB_OnExitButton(Ref* pSender)
 {
 	exit( 0 );
 }
 
-
 void CManicLayer::Init()
 {
+	// Initialise HUD
 	m_pcHUD = new CHUD( *this, m_pointOrigin, m_sizeVisible );
+	// Initialise Air Manager
 	m_pcAirManager = new CAirManager( m_pointOrigin, m_sizeVisible );
 	m_pcAirManager->Init( *this );
 
+	// Update GameManager properties
 	m_pcGameManager->SetCHUD( m_pcHUD );
 	m_pcGameManager->SetCPlayer( &GetPlayer() );
 	m_pcGameManager->SetCAirManager( m_pcAirManager );

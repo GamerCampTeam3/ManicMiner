@@ -1,3 +1,10 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Bib & Henrique																						//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose	:	This header file contains the different music themes,													//
+//				an enum class and an std::map mapping those enums to their respective audio file directory				//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 #ifndef _E_BACKGROUND_MUSIC_NAMES_
 #define _E_BACKGROUND_MUSIC_NAMES_
 

@@ -1,9 +1,15 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 #include "PlayerB2RayCastCallBack.h"
 
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
-//#include "GamerCamp/GCCocosInterface/GCCocosHelpers.h"
 #include "ManicMiner/Platforms/CPlatform.h"
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ReportFixture																						//
+// -------------------------------------------------------------------------------------------------------------------- //
 float32 CPlayerB2RayCastCallBack::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction )
 {
 	const b2Body* pB2Body = fixture->GetBody();
@@ -33,7 +39,7 @@ float32 CPlayerB2RayCastCallBack::ReportFixture( b2Fixture* fixture, const b2Vec
 		m_bDidRayHit = true;
 
 	// Return with success info
-		return 1.0f;
+		return 0.0f;
 	}
 	else
 	{
@@ -42,11 +48,17 @@ float32 CPlayerB2RayCastCallBack::ReportFixture( b2Fixture* fixture, const b2Vec
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ResetFlag																							//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayerB2RayCastCallBack::ResetFlag()
 {
 	m_bDidRayHit = false;
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	GetDidRayHit																						//
+// -------------------------------------------------------------------------------------------------------------------- //
 bool CPlayerB2RayCastCallBack::GetDidRayHit() const
 {
 	return m_bDidRayHit;

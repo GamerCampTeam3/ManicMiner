@@ -260,7 +260,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ManicMiner\Parallax\ParallaxLayer.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Physics\SolarLightB2AABBQueryCB.cpp" />
-    <ClCompile Include="..\Classes\ManicMiner\Physics\SolarLightB2RayCastCallBack.cpp" />
+    <ClCompile Include="..\Classes\ManicMiner\Physics\SolarLightB2RayCastCallBack.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.cpp" />
     <ClCompile Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.cpp" />
@@ -410,7 +412,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ManicMiner\Parallax\ParallaxLayerData.h" />
     <ClInclude Include="..\Classes\ManicMiner\Physics\PlayerB2RayCastCallBack.h" />
     <ClInclude Include="..\Classes\ManicMiner\Physics\SolarLightB2AABBQueryCB.h" />
-    <ClInclude Include="..\Classes\ManicMiner\Physics\SolarLightB2RayCastCallBack.h" />
+    <ClInclude Include="..\Classes\ManicMiner\Physics\SolarLightB2RayCastCallBack.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CBrickPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CCrumblingPlatform.h" />
     <ClInclude Include="..\Classes\ManicMiner\Platforms\CentralCavern\CObjCCGroupPlatform.h" />

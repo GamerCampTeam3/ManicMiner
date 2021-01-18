@@ -8,7 +8,10 @@
 //					Just pass the right sound name to PlaySoundEffect() or PreloadSoundEffect()							//
 // -------------------------------------------------------------------------------------------------------------------- //
 
-
+// There is some source code in this header file but that is a necessity, caused by its design
+// The idea of this header file was to very simply be able to play audio from anywhere, without having to include
+// any classes or singleton ( that would defeat half the point of this header file )
+// All the functions here are inline, which need to be declared and defined in a header file, so they work anywhere
 
 #ifndef __MANIC_AUDIO_HELPER__
 #define __MANIC_AUDIO_HELPER__
@@ -97,6 +100,14 @@ inline unsigned int PlaySoundEffect( const ESoundEffectName eSoundName )
 	return pAudioEngine->playEffect( sAudioDirectory, false, 1.0f, 1.0f, 1.0f );
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	StopSoundEffect																						//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	This function acts as a substitute to CocosDenshion::SimpleAudioEngine::stopEffect()				//
+//																														//
+// Parameters	:	const unsigned int uiSoundID																		//
+//					the ID of the soundEffect one wants to stop															//
+// -------------------------------------------------------------------------------------------------------------------- //
 inline void StopSoundEffect( const unsigned int uiSoundID )
 {
 	// Get SimpleAudioEngine singleton
@@ -115,8 +126,6 @@ inline void StopSoundEffect( const unsigned int uiSoundID )
 //																														//
 // Parameters	:	const ESoundEffectName eSoundName																	//
 //					enum value that represents the sound we want to play												//
-//																														//
-// See also		:	ESoundEffectName & k_mapSoundFiles & PlaySoundEffect												//
 // -------------------------------------------------------------------------------------------------------------------- //
 inline void PreloadSoundEffect( const ESoundEffectName eSoundName )
 {
@@ -130,7 +139,16 @@ inline void PreloadSoundEffect( const ESoundEffectName eSoundName )
 	pAudioEngine->preloadEffect( sAudioDirectory );
 }
 
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	PlayBackgroundMusic																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	This function acts as a substitute to CocosDenshion::SimpleAudioEngine::playBackgroundMusic()		//
+//																														//
+// Parameters	:	const EBackgroundMusicName eMusicName																//
+//					enum of the Background Music we want to play														//
+//																														//
+// See Also		:	EBackgroundMusicName.h																				//
+// -------------------------------------------------------------------------------------------------------------------- //
 inline void PlayBackgroundMusic( const EBackgroundMusicName eMusicName )
 {
 	// Get SimpleAudioEngine singleton
@@ -143,6 +161,13 @@ inline void PlayBackgroundMusic( const EBackgroundMusicName eMusicName )
 	pAudioEngine->playBackgroundMusic( sAudioDirectory, true );
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	StopBackgroundMusic																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	This function acts as a substitute to CocosDenshion::SimpleAudioEngine::stopBackgroundMusic()		//
+//																														//
+// Parameters	:	none																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 inline void StopBackgroundMusic()
 {
 	// Get SimpleAudioEngine singleton
@@ -151,6 +176,14 @@ inline void StopBackgroundMusic()
 	pAudioEngine->stopBackgroundMusic( true );
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	StopAllSound																						//
+// -------------------------------------------------------------------------------------------------------------------- //
+// Purpose		:	This function acts as a substitute to CocosDenshion::SimpleAudioEngine::stopAllEffects()			//
+//					and CocosDenshion::SimpleAudioEngine::stopBackgroundMusic()											//
+//																														//
+// Parameters	:	none																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 inline void StopAllSound()
 {
 	// Get SimpleAudioEngine singleton
@@ -159,5 +192,4 @@ inline void StopAllSound()
 	pAudioEngine->stopAllEffects();
 	pAudioEngine->stopBackgroundMusic( true );
 }
-
 #endif // #ifndef __MANIC_AUDIO_HELPER__

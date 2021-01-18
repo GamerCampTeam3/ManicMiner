@@ -1,13 +1,19 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 #include "SolarLightB2AABBQueryCB.h"
 
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 #include "ManicMiner/Platforms/CPlatform.h"
+#include "ManicMiner/Player/CPlayer.h"
 #include "ManicMiner/Enemy/GCObjEnemy.h"
-#include "../Player/CPlayer.h"
 
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ReportFixture																						//
+// -------------------------------------------------------------------------------------------------------------------- //
 bool CSolarLightB2AABBQueryCB::ReportFixture( b2Fixture* fixture )
 {
+// Get Body from detected Fixture
 	const b2Body* pB2Body = fixture->GetBody();
 
 	CGCObjSpritePhysics* pGcSprPhys = ( CGCObjSpritePhysics* )pB2Body->GetUserData();
@@ -54,11 +60,17 @@ bool CSolarLightB2AABBQueryCB::ReportFixture( b2Fixture* fixture )
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	Reset																								//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CSolarLightB2AABBQueryCB::Reset()
 {
 	m_eQueryResult = ESolarLightQueryResult::None;
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	GetQueryResult																						//
+// -------------------------------------------------------------------------------------------------------------------- //
 ESolarLightQueryResult CSolarLightB2AABBQueryCB::GetQueryResult() const
 {
 	return m_eQueryResult;

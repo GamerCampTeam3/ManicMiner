@@ -1,6 +1,8 @@
 // -------------------------------------------------------------------------------------------------------------------- //
 // Gamer Camp 2020 / Henrique Teixeira																					//
 // -------------------------------------------------------------------------------------------------------------------- //
+//	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	//
+// -------------------------------------------------------------------------------------------------------------------- //
 // Purpose		:	ResolutionHelper.h defines the game's PTM Ratio														//
 //					It also includes a function that detects the resolution of the current screen display				//
 //					"GetDesktopResolution()"																			//
@@ -12,8 +14,8 @@
 //					were definitely a priority.	Unique spritesheets have to be created for each resolution				//
 //					( FHD, WQHD and UHD ), perhaps it will be done during Production phase.								//
 //																														//
-//					At the moment, this header file isn't doing anything, but in Production phase						//
-//					any SetPosition() calls should do something like the following:										//
+//					At the moment, this header file isn't doing anything, it has been like this since Module 1			//
+//					and the extra functionality wasn't even considered during Production.								//
 // -------------------------------------------------------------------------------------------------------------------- //
 // Implementation:	#include "ManicMiner/ResolutionHelper/ResolutionHelper.h"											//
 //																														//

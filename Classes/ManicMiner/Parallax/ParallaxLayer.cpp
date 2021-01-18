@@ -1,3 +1,7 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira & Umeer Rama																		//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 #include "ParallaxLayer.h"
 
 #include "2d/CCScene.h"
@@ -32,11 +36,14 @@ void CParallaxLayer::Init( cocos2d::Scene& rcScene, const SParallaxLayerData& rs
 	// Assign new data ( SParallaxLayerData )
 	m_psData = new SParallaxLayerData( rsData );
 
+	// Create new Sprite
 	m_pcSprite = new CGCObjSprite();
+
 	if( m_psData->kpszPlist_image )
 	{
 		m_pcSprite->CreateSprite( m_psData->kpszPlist_image );
 		m_pcSprite->SetResetPosition( cocos2d::Vec2::ZERO );
+		// Add to scene in correct Z-Order
 		rcScene.addChild( GetSprite(), m_psData->kiZOrder );
 	}
 }

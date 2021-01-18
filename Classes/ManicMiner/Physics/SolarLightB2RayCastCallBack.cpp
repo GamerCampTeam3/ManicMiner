@@ -1,3 +1,9 @@
+// -------------------------------------------------------------------------------------------------------------------- //
+// Gamer Camp 2020 / Henrique Teixeira																					//
+// -------------------------------------------------------------------------------------------------------------------- //
+//	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	DEPRECATED	!	//
+// -------------------------------------------------------------------------------------------------------------------- //
+
 #include "SolarLightB2RayCastCallBack.h"
 
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"

@@ -1,18 +1,15 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// (C) Gamer Camp / Dave O'Dwyer October & Henrique Teixeira 2020
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// (C) Gamer Camp / Dave O'Dwyer October & Henrique Teixeira 2020											//
+// This class defines the behaviour of the Enemy Lander, as seen in the original Manic Miner Level 14		//
+//																					"Skylab Landing Bay"	//
+//	https://youtu.be/BgUzteADsRI?t=890																		//
+// Initially Dave's task, then moved over to Henrique for completion										//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef _GCOBJLANDER_H_
 #define _GCOBJLANDER_H_
 
 #include "GamerCamp/GCCocosInterface/GCObjSpritePhysics.h"
 
-//////////////////////////////////////////////////////////////////////////
-//  This class defines an invidual instance of an enemy character.
-//  Its purpose is to provide the functionality an enemy would require with regards to
-//  velocity, direction flipping, horizontal/vertical axis alignment, bouncing on 
-//  platform collision etc.
-//
-//////////////////////////////////////////////////////////////////////////
 enum class ELanderState
 {
 	Deploying,
@@ -23,21 +20,22 @@ enum class ELanderState
 class CGCObjLander: public CGCObjSpritePhysics
 {
 private:
-
-
-
+	// Is the Lander Deploying, Exploding, or Resetting
 	ELanderState				m_eLanderState;
-
 
 	std::string					m_pszAnimation;
 	std::string                 m_pszPlist;
 	CGCFactoryCreationParams&	m_rFactoryCreationParams;
 
+	// X coordinates where this lander will appear
 	const int					m_kaiDeployXSlots[4];
+	// Y coordinate where this lander will always start Exploding
 	const int					m_kiExplosionYSlot;
+	// Current X position in the m_kaiDeployXSlots array
 	int							m_iCurrentSlotIndex;
+	// Speed at which the lander travels downwards
 	float						m_fSpeed;
-
+	// Time elapsed since start of explosion
 	float						m_fCurrentExplosionTime;
 
 
@@ -58,8 +56,6 @@ public:
 	virtual void VOnUpdate			(float fTimeStep) override;
 	virtual void VOnResourceRelease	() override;
 	virtual void VOnReset() override;
-
-	// TODO: ELanderState getter, will be used in the future so that these dont trigger contacts while moving back to next deploy position, invisible
 
 	ELanderState GetState() const;
 };
