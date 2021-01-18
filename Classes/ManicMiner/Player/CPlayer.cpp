@@ -2,14 +2,15 @@
 // Gamer Camp 2020 / Henrique & Bib													//
 //////////////////////////////////////////////////////////////////////////////////////
 	
-#pragma region DebugLogs
-
+#pragma region DebugLogDefines
+// Uncomment these #define's to get extra information during runtime through the Visual Studio Output Log
 //#define PLAYER_DEBUG_DIRECTION
+//#define PLAYER_DEBUG_DIRECTION_REALTIME
 //#define PLAYER_DEBUG_CONTACTS
 //#define PLAYER_DEBUG_CONTACTS_REALTIME
 //#define PLAYER_DEBUG_LANDING
-
-#pragma endregion DebugLogs
+//#define PLAYER_DEBUG_PHYSICS_REALTIME
+#pragma endregion DebugLogDefines
 
 
 #include <corecrt_math.h>
@@ -54,7 +55,6 @@ CPlayer::CPlayer( CManicLayer& rcManicLayer, const cocos2d::Vec2& startingPos, c
 	, m_fJumpSpeed						( 9.0f )
 	, m_kfGravitionalPull				( 1.6f )
 	, m_kfMaxFallDistance				( 4.8f )
-	, m_fVerticalSpeedAdjust			( 0.0f )
 	, m_uiRunningSoundID				( 0 )
 	, m_uiJumpSoundID					( 0 )
 	, m_uiFallingSoundID				( 0 )
@@ -76,105 +76,99 @@ CPlayer::~CPlayer()
 
 #pragma region Getters
 // Getters ------------------------------------------------------------------------------------------------------------ //
-																														//
-EPlayerDirection CPlayer::GetCurrentDirection() const																	//
-{																														//
-	return m_ePlayerDirection;																							//
-}																														//
+																														
+EPlayerDirection CPlayer::GetCurrentDirection() const
+{
+	return m_ePlayerDirection;
+}
 
 EPlayerDirection CPlayer::GetJumpDirection() const
 {
 	return m_eJumpDirection;
 }
 
-//
-bool CPlayer::GetCanJump() const																						//
-{																														//
-	return m_bCanJump;																									//
-}																														//
-																														//
-bool CPlayer::GetCanBeControlled() const																				//
-{																														//
-	return m_bCanBeControlled;																							//
-}																														//
-																														//
-bool CPlayer::GetIsGrounded() const																						//
-{																														//
-	return m_bIsGrounded;																								//
-}																														//
-																														//
-bool CPlayer::GetIsOnConveyorBelt() const																				//
-{																														//
-	return m_bIsOnConveyorBelt;																							//
-}																														//
-																														//
-int CPlayer::GetMaxLives() const																						//
-{																														//
-	return m_iMaxLives;																									//
-}																														//
-																														//
-int CPlayer::GetLives() const																							//
-{																														//
-	return m_iLives;																									//
-}																														//
-																														//
-bool CPlayer::GetIsAlive() const																						//
-{																														//
-	return m_bIsAlive;																									//
-}																														//
-																														//
-int CPlayer::GetHardContactCount() const																				//
-{																														//
-	return m_iHardContactCount;																							//
-}																														//
-																														//
-int CPlayer::GetSensorContactCount() const																				//
-{																														//
-	return m_iSensorContactCount;																						//
-}																														//
+bool CPlayer::GetCanJump() const
+{
+	return m_bCanJump;
+}
 
+bool CPlayer::GetCanBeControlled() const
+{
+	return m_bCanBeControlled;
+}
 
-//
+bool CPlayer::GetIsGrounded() const
+{
+	return m_bIsGrounded;
+}
+
+bool CPlayer::GetIsOnConveyorBelt() const
+{
+	return m_bIsOnConveyorBelt;
+}
+
+int CPlayer::GetMaxLives() const
+{
+	return m_iMaxLives;
+}
+
+int CPlayer::GetLives() const
+{
+	return m_iLives;
+}
+
+bool CPlayer::GetIsAlive() const
+{
+	return m_bIsAlive;
+}
+
+int CPlayer::GetHardContactCount() const
+{
+	return m_iHardContactCount;
+}
+
+int CPlayer::GetSensorContactCount() const
+{
+	return m_iSensorContactCount;
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 
 #pragma endregion Getters
 
 #pragma region Setters
 // Setters ------------------------------------------------------------------------------------------------------------ //
-																														//
-void CPlayer::SetCanJump( const bool bCanJump )																			//
-{																														//
-	m_bCanJump = bCanJump;																								//
-}																														//
-																														//
-void CPlayer::SetCanBeControlled( const bool bCanControl )																//
-{																														//
-	m_bCanBeControlled = bCanControl;																					//
-}																														//
-																														//
-void CPlayer::SetLives( const int iLives )																				//
-{																														//
-	m_iLives = iLives;																									//
-}																														//
-																														//
-																														//
+
+void CPlayer::SetCanJump( const bool bCanJump )
+{
+	m_bCanJump = bCanJump;
+}
+
+void CPlayer::SetCanBeControlled( const bool bCanControl )
+{
+	m_bCanBeControlled = bCanControl;
+}
+
+void CPlayer::SetLives( const int iLives )
+{
+	m_iLives = iLives;
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 #pragma endregion Setters
 
 
-
 // ---------- CGCObjSprite Interface ---------------------------------------------------------------------------------------------------------- //
 																																				//
-IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/mm_character_willy.plist", "TempCharacter", b2_dynamicBody, true );	//
+IN_CPP_CREATION_PARAMS_DECLARE( CPlayer, "TexturePacker/Sprites/TempCharacter/mm_character_willy.plist", "TempCharacter", b2_dynamicBody, true );//
+// -------------------------------------------------------------------------------------------------------------------- //						//
+// Function		:	VOnResourceAcquire																					//						//
+// -------------------------------------------------------------------------------------------------------------------- //						//
 void CPlayer::VOnResourceAcquire()																												//
 {																																				//
 	IN_CPP_CREATION_PARAMS_AT_TOP_OF_VONRESOURCEACQUIRE( CPlayer );																				//
 																																				//
 	CGCObjSpritePhysics::VOnResourceAcquire();																									//
-
-
-
-
 																																				//
 	// because we're just storing a vanilla pointer we must call delete on it in VOnResourceRelease or leak memory 								//
 	// 																																			//
@@ -184,85 +178,42 @@ void CPlayer::VOnResourceAcquire()																												//
 	// we'd need to use std::unique_ptr::reset in VOnResourceRelease if we wanted the memory allocate / free behaviour to be the same...		//
 	m_pcControllerActionToKeyMap = TCreateActionToKeyMap( s_aePlayerActions, s_aeKeys );														//
 																																				//
-																																				//
 	LoadAnimations(true);																														//
-																																				//																						//
 }																																				//
-																																				//
+// -------------------------------------------------------------------------------------------------------------------- //						//
+// Function		:	VOnResourceRelease																					//						//
+// -------------------------------------------------------------------------------------------------------------------- //						//
 void CPlayer::VOnResourceRelease()																												//
 {																																				//
-	safeDelete( m_pcControllerActionToKeyMap );																								//
+	safeDelete( m_pcControllerActionToKeyMap );																									//
 	m_pcPlayerAnimationList.clear();																											//
 																																				//
 	CGCObjSpritePhysics::VOnResourceRelease();																									//
 																																				//
-
 	LoadAnimations(false);																														//
-	// Stop Jump/Fall sound effect
-	StopVerticalMovementSound();
-	StopRunningSound();
+																																				//
+	// Stop Jump/Fall sound effects																												//
+	StopVerticalMovementSound();																												//
+	StopRunningSound();																															//
 																																				//
 }																																				//
 																																				//
 // -------------------------------------------------------------------------------------------------------------------- //						//
 // Function		:	VOnResurrected																						//						//
 // -------------------------------------------------------------------------------------------------------------------- //						//
-// Parameters	:	none																								//						//
-//																														//						//
-// Returns		:	void																								//						//
-// -------------------------------------------------------------------------------------------------------------------- //						//																													
 void CPlayer::VOnResurrected()																													//
 {																																				//
 	CGCObjSpritePhysics::VOnResurrected();																										//
-
-	//	SOLUTION FOR THE COLLISION WITH TOP CORNERS OF THE FLOOR PLATFORMS
-	// Very very sadly, only now - the day before our final review - I came across an explanation of why the player was getting stuck ( and only sometimes ) when walking on a flat surface
-	// made up of multiple collision segments. Throughout these 2 modules I formulated my own theory as to why this happened, and it's pretty much the same as what is explained
-	// on the following link:
-	// http://www.iforce2d.net/b2dtut/ghost-vertices
-	// Conveniently, the link also gives 3 solutions. The first one is making the edges of our player's feet rounded. I had tried it before: "Sounds good, doesn't work."
-	// The second solution is turning our feet collision into an edge shape and not a polygon. This fixes the issue 99% of the time.
-	// The third solution is the same as the second one, but on steroids, and will fix the issue 100% of the time.
-	// Besides making our collision an edge shape, we also need to add what is called "ghost vertices", which is like an imaginary extension of the edge shape.
-	// When a contact is handled with the physics engine, the ghost vertices are taken into account when it comes to redirecting the shape, and so instead of getting stuck
-	// Because the shape is colliding and getting pushed to the other side, it will instead push the shape upwards, effectively never getting our player stuck, but also remaining on the floor.
-
-	// I really tried my best to implement this functionality, although my time was extremely limited. 
-	// I was aiming for implementing the 3rd solution, but once I had the 2nd solution working, I figured it was enough. I did not have the time to continue onto the ghost vertices.
-	// Turns out the PhysicsEditor software does not support Edge Shapes at all, only polygons (convex shapes with 3+ vertices).
-	// This being said, I had to manually create an edge shape in code, and attach it to the player body
-	// However, this made it impossible to adjust some properties, specifically the ID string, which I use in other parts of the code when handling collisions.
-	// I tried to, again, set these manually here, but because of the way this framework is set up it's impossible to do it without messing with a lot of source code.
-	// Not enough is exposed.
-
-
-
-
-	// Set our 4 Vec2 Points that will define our player collision box
-	// Remember this "box" will in fact be empty inside, only the 4 edges will be used in collisions
-	const cocos2d::Vec2 v2BottomLeft(-5.0f, -60.0f);
-	const cocos2d::Vec2 v2BottomRight(65.0f, -60.0f);
-	const cocos2d::Vec2 v2TopLeft(-5.0f,  56.0f);
-	const cocos2d::Vec2 v2TopRight(65.0f, 56.0f);
-
-	// Bottom Edge
-	CreateEdgeShape( v2BottomLeft, v2BottomRight, false, true );
-	
-	// Left Edge
-	CreateEdgeShape( v2BottomLeft, v2TopLeft, true, false );
-	
-	// Top Edge
-	CreateEdgeShape( v2TopLeft, v2TopRight, true, true );
-	
-	// Right Edge
-	CreateEdgeShape( v2TopRight, v2BottomRight, true, false );
-
+																																				//
+// Create player body collision fixtures																										//
+	CreatePlayerBoxCollision();																													//
+																																				//
 																																				//
 // Reset sprite orientation																														//
 	SetFlippedX( m_bSpriteXFlip );																												//
 	SetFlippedY( false );																														//
 																																				//
-	InitiateAnimationStateChange(EAnimationState::Idle);
+	InitiateAnimationStateChange(EAnimationState::Idle);																						//
 																																				//
 // Reset all member variable flags																												//
 	m_bIsAlive = true;																															//
@@ -270,14 +221,11 @@ void CPlayer::VOnResurrected()																													//
 	m_bCanBeControlled = true;																													//
 	m_bIsGrounded = true;																														//
 	m_bIsPendingDirection = false;																												//
-	m_bIsOnConveyorBelt = false;
-	m_fVerticalSpeedAdjust = 0.0f;
-	m_fLastHighestY = 0.0f;
-	m_fLastGroundedY = 0.0f;
-	m_iHardContactCount = 0;
-	m_iSensorContactCount = 0;
-
-																																				//
+	m_bIsOnConveyorBelt = false;																												//
+	m_fLastHighestY = 0.0f;																														//
+	m_fLastGroundedY = 0.0f;																													//
+	m_iHardContactCount = 0;																													//
+	m_iSensorContactCount = 0;																													//
 																																				//
 // Reset physics body related components																										//
 	if( GetPhysicsBody() )																														//
@@ -293,82 +241,77 @@ void CPlayer::VOnResurrected()																													//
 // -------------------------------------------------------------------------------------------------------------------- //						//
 // Function		:	VOnUpdate																							//						//
 // -------------------------------------------------------------------------------------------------------------------- //						//
-// Parameters	:	f32 fTimeStep																						//						//
-//																														//						//
-// Returns		:	void																								//						//
-// -------------------------------------------------------------------------------------------------------------------- //						//
+																																				//
 void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 {																																				//
 // Get player input and change movement if needed																								//
 	CheckKeyboardInput();																														//
-
-	if( m_fVerticalSpeedAdjust != 0.0f )
-	{
-		Vec2 v2ExpectedVelocity = Vec2( GetVelocity().x, GetVelocity().y - m_fVerticalSpeedAdjust );
-		//CCLOG( "Fixing velocity to %f", v2ExpectedVelocity.y );
-		SetVelocity( v2ExpectedVelocity );
-		m_fVerticalSpeedAdjust = 0.0f;
-	}
-	
-	// If player is in mid-air movement
-	if( !GetIsGrounded() )
-	{
-		float fCurrentY = GetPhysicsTransform().p.y;
-
-		// Update m_fLastHighestY if needed
-		if( fCurrentY > m_fLastHighestY )
-		{
-			m_fLastHighestY = fCurrentY;
-		}
-
-		// If player is moving sideways
-		// && player is below the initial jumping position
-		if( m_ePlayerDirection != EPlayerDirection::Static && fCurrentY < m_fLastGroundedY - 0.15f )
-		{
-			// End arch-like movement  - >   just drop straight down from now on
-			ApplyDirectionChange( EPlayerDirection::Static );
-		}
-	}
-	
-	//CCLOG( "Current Vx: %f", GetVelocity().x );
-	//CCLOG( "Current y: %f", GetPhysicsTransform().p.y );
-	//switch( m_ePlayerDirection )
-	//{
-	//case EPlayerDirection::Static:
-	//	CCLOG( "Static" );
-	//	break;
-	//case EPlayerDirection::Right:
-	//	CCLOG( "Right" );
-	//	break;
-	//case EPlayerDirection::Left:
-	//	CCLOG( "Left" );
-	//	break;
-	//}
-
-
 																																				//
+	// If player is in mid-air movement																											//
+	if( !GetIsGrounded() )																														//
+	{																																			//
+		float fCurrentY = GetPhysicsTransform().p.y;																							//
+																																				//
+		// Update m_fLastHighestY if needed																										//
+		if( fCurrentY > m_fLastHighestY )																										//
+		{																																		//
+			m_fLastHighestY = fCurrentY;																										//
+		}																																		//
+																																				//
+		// If player is moving sideways																											//
+		// && player is below the initial jumping position																						//
+		if( m_ePlayerDirection != EPlayerDirection::Static && fCurrentY < m_fLastGroundedY - 0.15f )											//
+		{																																		//
+			// End arch-like movement  - >   just drop straight down from now on																//
+			ApplyDirectionChange( EPlayerDirection::Static );																					//
+		}																																		//
+	}																																			//
+																																				//
+#pragma region DebugLogging																														//
 	// DEBUG SECTION -------------------------------------------------------------- //															//
+																					//															//
+#ifdef PLAYER_DEBUG_DIRECTION_REALTIME												//															//
+	// -- Player Direction Realtime ----------------------------------- //			//															//
+	switch( m_ePlayerDirection )										//			//															//
+	{																	//			//															//
+	case EPlayerDirection::Static:										//			//															//
+	CCLOG( "Static" );													//			//															//
+	break;																//			//															//
+	case EPlayerDirection::Right:										//			//															//
+	CCLOG( "Right" );													//			//															//
+	break;																//			//															//
+	case EPlayerDirection::Left:										//			//															//
+	CCLOG( "Left" );													//			//															//
+	break;																//			//															//
+	}																	//			//															//
+	// ---------------------------------------------------------------- //			//															//
+#endif // PLAYER_DEBUG_DIRECTION_REALTIME											//															//
+																					//															//
+#ifdef PLAYER_DEBUG_PHYSICS_REALTIME												//															//
+	// -- Player Velocity Realtime ------------------------------------ //			//															//
+	CCLOG( "Current Vx: %f", GetVelocity().x );							//			//															//
+	// -- Player Y Coordinate Realtime -------------------------------- //			//															//
+	CCLOG( "Current y: %f", GetPhysicsTransform().p.y );				//			//															//
+	// ---------------------------------------------------------------- //			//															//
+#endif // PLAYER_DEBUG_PHYSICS_REALTIME												//															//
+																					//															//
+																					//															//
 #ifdef PLAYER_DEBUG_CONTACTS_REALTIME												//															//
 	// ---------- Number of Hard Contacts this frame ------------------ //			//															//
 	//																	//			//															//
-	std::string string1 = std::to_string( m_iHardContactCount );		//			//															//
-	char const* pchar1 = string1.c_str();								//			//															//
-	CCLOG( "Hard Count:" );												//			//															//
-	CCLOG( pchar1 );													//			//															//
+	CCLOG( "Hard Count: %d", m_iHardContactCount );						//			//															//
 	//																	//			//															//
 	// ---------------------------------------------------------------- //			//															//
 																					//															//
 	// ----------- Number of Soft Contacts this frame ----------------- //			//															//
 	//																	//			//															//
-	std::string string2 = std::to_string( m_iSensorContactCount );		//			//															//
-	char const* pchar2 = string2.c_str();								//			//															//
-	CCLOG( "Soft Count:" );												//			//															//
-	CCLOG( pchar2 );													//			//															//
+	CCLOG( "Soft Count: %d", m_iSensorContactCount );					//			//															//
 	//																	//			//															//
 	// ---------------------------------------------------------------- //			//															//
+#endif	// PLAYER_DEBUG_CONTACTS_REALTIME											//															//
 																					//															//
-#endif																				//															//
 	// END OF DEBUG SECTION ------------------------------------------------------- //															//
+#pragma endregion DebugLogging
 }																																				//
 																																				//
 // -------------------------------------------------------------------------------------------------------------------------------------------- //
@@ -376,10 +319,6 @@ void CPlayer::VOnUpdate( f32 fTimeStep )																										//
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	CheckKeyboardInput																					//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::CheckKeyboardInput()
 {
@@ -404,7 +343,6 @@ void CPlayer::CheckKeyboardInput()
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 		if( pKeyManager->ActionIsPressed( CManicLayer::EPA_Jump ) )
 		{
-			//CCLOG( "jump input received" );
 			JumpEvent();
 		}
 
@@ -461,12 +399,6 @@ void CPlayer::CheckKeyboardInput()
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	ApplyDirectionChange																				//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	const EPlayerDirection eNewDirection																//
-//																														//
-//					const bool bResetVerticalVelocity		->		defaults to false									//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const bool bResetVerticalVelocity )
 {
@@ -580,10 +512,6 @@ void CPlayer::ApplyDirectionChange( const EPlayerDirection eNewDirection, const 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	JumpEvent																							//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
-// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::JumpEvent()
 {
 // Raycast to check if can jump
@@ -635,17 +563,16 @@ void CPlayer::JumpEvent()
 	// If no hit detected, proceed to jump
 	else
 	{
-		const float fVerticalSpeed = m_fJumpSpeed + m_fVerticalSpeedAdjust;
 		switch( m_ePlayerDirection )
 		{
 		case EPlayerDirection::Right:
-			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, fVerticalSpeed ) );
+			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed, m_fJumpSpeed ) );
 			break;
 		case EPlayerDirection::Left:
-			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, fVerticalSpeed ) );
+			SetVelocity( cocos2d::Vec2( m_kfWalkSpeed * -1.0f, m_fJumpSpeed ) );
 			break;
 		case EPlayerDirection::Static:
-			SetVelocity( cocos2d::Vec2( 0.0f, fVerticalSpeed ) );
+			SetVelocity( cocos2d::Vec2( 0.0f, m_fJumpSpeed ) );
 			break;
 		}
 
@@ -656,7 +583,6 @@ void CPlayer::JumpEvent()
 
 	// Unlock from conveyor belt always
 		m_bCanBeControlled = true;
-
 		
 		StopRunningSound();
 
@@ -664,51 +590,132 @@ void CPlayer::JumpEvent()
 
 		// Set Animation State to Jump and play respective Animation
 		InitiateAnimationStateChange(EAnimationState::Jump);
+
+#ifdef PLAYER_DEBUG_DIRECTION
+		CCLOG( "Player Jumped!" );
+#endif
 	}
 }
 
-
-void CPlayer::CreateEdgeShape( const cocos2d::Vec2& v2StartPoint, const cocos2d::Vec2& v2EndPoint, bool bBrickCollisionOnly, bool bIsHorizontalEdge )
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	CreatePlayerBoxCollision																			//
+// -------------------------------------------------------------------------------------------------------------------- //
+void CPlayer::CreatePlayerBoxCollision()
 {
-// The following link has source code in which they create an edge shape, although the source code there is quite broken
+//	SOLUTION FOR THE COLLISION WITH TOP CORNERS OF THE FLOOR PLATFORMS
+
+// There's a tl;dr at the bottom
+
+// Very very sadly, only now - the day before our final review - I came across an explanation as to why the player
+// quite often gets stuck when walking on a flat surface made up of multiple collision segments.
+// Throughout these 2 modules I formulated my own theory as to why this happened, and it's pretty much the same as what is explained
+// on the following link: http://www.iforce2d.net/b2dtut/ghost-vertices
+// Conveniently, the link also gives 3 solutions to this problem.
+//
+// 1.
+//	First solution: making the edges of our player's feet rounded. I had tried this before; Sounds good, doesn't work.
+//  The player would just slide off the edges, completely breaking the gameplay and caused more issues than it solved.
+//
+// 2.
+//	The second solution is turning our feet collider into an edge shape instead of using a polygon.
+//  This is said to fix the issue 99% of the time.
+//
+// 3.
+//  The third solution is the same as the second one, but on steroids, and will fix the issue 100% of the time:
+//  Besides making our collision an edge shape, we also need to add what are called "ghost vertices", which are like imaginary extensions of the edge shape.
+//  These extra vertices will extend our edge shape, yet in reality won't collide with anything.
+//  However, when the box2d engine handles a collision with our edge shape, it will take these ghost vertices into account
+//  and will never allow the shape to get stuck, as it will always push the edge shape upwards,
+//  enough so none of the vertices are inside the blocks / platforms.
+
+// I really tried my best to implement this functionality, although my time was extremely limited - 1 day for the final review.
+// I was aiming to implementing the 3rd solution, because I appreciate robustness, but I ran out of time and was only able to implement the 2nd one.
+// Turns out the PhysicsEditor software does not support Edge Shapes at all, only Polygons (convex shapes with 3+ vertices).
+// This being said, I had to manually create an edge shape in code, and attach it to the player body
+// However, this made it impossible to adjust some special properties that are not inherently part of the Box2D engine,
+// specifically the ID string, which I use in other parts of the code when handling collisions.
+// I tried to, again, set these manually here, but because of the way this framework is set up it's impossible to do it without messing with a lot of the engine source code.
+// Not enough is exposed.
+// But I made it work though 8)
+// Since this implementation I have not witnessed the player getting stuck a single time
+
+// TL;DR
+//  I fixed the infamous walking-on-platforms collision bug by not using a PhysicsEditor collision shape and using these EdgeShape's instead
+
+// Set our 4 Vec2 Points that will define our player collision box
+// Remember this "box" will in fact be empty inside, only the 4 edges will be used in collisions
+
+	const float kfMaxY = 56.0f;
+	const float kfMinY = -60.0f;
+	const float kfMaxX = 65.0f;
+	const float kfMinX = -5.0f;
+
+	const cocos2d::Vec2 kV2BottomLeft( kfMinX, kfMinY );
+	const cocos2d::Vec2 kV2BottomRight( kfMaxX, kfMinY );
+	const cocos2d::Vec2 kV2TopLeft( kfMinX, kfMaxY );
+	const cocos2d::Vec2 kV2TopRight( kfMaxX, kfMaxY );
+
+	// Bottom Edge
+	CreateEdgeShape( kV2BottomLeft, kV2BottomRight, false, true );
+
+	// Left Edge
+	CreateEdgeShape( kV2BottomLeft, kV2TopLeft, true, false );
+
+	// Top Edge
+	CreateEdgeShape( kV2TopLeft, kV2TopRight, true, true );
+
+	// Right Edge
+	CreateEdgeShape( kV2TopRight, kV2BottomRight, true, false );
+}
+
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	CreateEdgeShape																						//
+// -------------------------------------------------------------------------------------------------------------------- //
+void CPlayer::CreateEdgeShape( const cocos2d::Vec2& kV2StartPoint, const cocos2d::Vec2& kV2EndPoint, const bool kbBrickCollisionOnly, const bool kbIsHorizontalEdge )
+{
+// The following link has source code in which they create an edge shape, although the source code there is very broken and unreadable
 // https://rotatingcanvas.com/edge-shape-in-box2d/
-// I have fixed it, and modified it so it's applicable in this scenario
+// I have fixed it, and modified it so it's applicable for this scenario
 
-// Turn v2StartPoint and v2EndPoint into their Box2D Vec2 values
-	const b2Vec2 b2v2Start ( IGCGameLayer::B2dPixelsToWorld( v2StartPoint.x ), IGCGameLayer::B2dPixelsToWorld( v2StartPoint.y ) );
-	const b2Vec2 b2v2End ( IGCGameLayer::B2dPixelsToWorld( v2EndPoint.x ), IGCGameLayer::B2dPixelsToWorld( v2EndPoint.y ) );
+// Turn v2StartPoint and v2EndPoint into their respective Box2D Vec2 Coordinates
+	const b2Vec2 b2v2Start ( IGCGameLayer::B2dPixelsToWorld( kV2StartPoint.x ), IGCGameLayer::B2dPixelsToWorld( kV2StartPoint.y ) );
+	const b2Vec2 b2v2End ( IGCGameLayer::B2dPixelsToWorld( kV2EndPoint.x ), IGCGameLayer::B2dPixelsToWorld( kV2EndPoint.y ) );
 
 
-//CALCULATE CENTER OF LINE SEGMENT																									//
-	float fPixelsPosX = ( v2StartPoint.x + v2EndPoint.x ) * 0.5f;																								//
-	float fPixelsPosY = ( v2StartPoint.y + v2EndPoint.y ) * 0.5f;																		//
+// Calculate centre of the line segment																									//
+	float fPixelsPosX = ( kV2StartPoint.x + kV2EndPoint.x ) * 0.5f;																								//
+	float fPixelsPosY = ( kV2StartPoint.y + kV2EndPoint.y ) * 0.5f;																		//
 
-//CALCULATE LENGTH OF LINE SEGMENT																									//
-	float fPixelsLength = sqrt( ( v2StartPoint.x - v2EndPoint.x ) * ( v2StartPoint.x - v2EndPoint.x ) + ( v2StartPoint.y - v2EndPoint.y ) * ( v2StartPoint.y - v2EndPoint.y ) );
+// Calculate length of the line segment																									//
+	float fPixelsLength = sqrt( ( kV2StartPoint.x - kV2EndPoint.x ) * ( kV2StartPoint.x - kV2EndPoint.x ) + ( kV2StartPoint.y - kV2EndPoint.y ) * ( kV2StartPoint.y - kV2EndPoint.y ) );
 
-//CONVERT CENTER TO BOX2D COORDINATES																									//
+// Convert the centre to Box2D Coordinates																									//
 	float fB2PosX = IGCGameLayer::B2dPixelsToWorld( fPixelsPosX );																	   //
 	float fB2PosY = IGCGameLayer::B2dPixelsToWorld( fPixelsPosY );																											   //
 
-//ADD EDGE FIXTURE TO BODY																									   //
+// Add edge fixture to our body
 	b2EdgeShape b2PlayerEdge;																										   //
-	//SET LENGTH IN BOX COORDINATES																								   //
 
+// Set length in Box2D units
 	float fB2Length = IGCGameLayer::B2dPixelsToWorld( fPixelsLength );																		   //
 
-	//SETTING THE POINTS AS OFFSET DISTANCE FROM CENTER																			   //
-	if( bIsHorizontalEdge )
+	// Setting the points with offset distance from the centre
+	// If this is a horizontal edge ( Top / Bottom )
+	if( kbIsHorizontalEdge )
 	{
 		const b2Vec2 b2v0( -fB2Length * 0.5f, fB2PosY );
 		const b2Vec2 b2v1( fB2Length * 0.5f, fB2PosY );
 		b2PlayerEdge.Set( b2v0, b2v1 );			
 	}
+	// Else, it's a vertical edge ( Left / Right )
 	else 
 	{
 		const b2Vec2 b2v0( fB2PosX - 0.5f, b2v2Start.y );
 		const b2Vec2 b2v1( fB2PosX - 0.5f, b2v2End.y );
 		b2PlayerEdge.Set( b2v0, b2v1 );
 	}
+
+	// Create fixtureDef struct
 	b2FixtureDef fixtureDef;																										   //
 	fixtureDef.shape = &b2PlayerEdge;																								   //
 
@@ -716,7 +723,7 @@ void CPlayer::CreateEdgeShape( const cocos2d::Vec2& v2StartPoint, const cocos2d:
 	const float fRestitution = 0.0f;																								   //
 	const float fFriction = 0.0f;																									   //
 
-	// Set most of the properties for this fixture																						//
+	// Set most of the properties for this fixtureDef																						//
 	fixtureDef.density = fDensity;																										//
 	fixtureDef.restitution = fRestitution;																								//
 	fixtureDef.friction = fFriction;																									//
@@ -725,26 +732,31 @@ void CPlayer::CreateEdgeShape( const cocos2d::Vec2& v2StartPoint, const cocos2d:
 	// Collision matrix data																											//
 	// I got these values from debugging the shark's "Body" fixture construction														//
 	// So categoryBits = 1 means this fixture's category is only marked as part of "player" layer										//
-	// Groups aren't set in any of our game shapes																						//
-	// And it only collides with the layer "platform", which is the 3rd layer so the value for that mask is 4							//
-	// Extra Info: be weary of editing the maskBits manually on PhysicsEditor, because it takes in hexcode. I found out the hard way.	//
-	if( bBrickCollisionOnly )
+	// If bBrickCollisionOnly == true, this fixture will only collide with the "brick" layer, 0x20
+	// Else, it will collide both with "brick" layer and "platform" layer, 0x4
+	// Therefore, the maskBits value will be 32 ( 0x20 ) or 36 (0x20 & 0x4)
+
+	// Extra Info: be weary of editing the maskBits manually on PhysicsEditor, because it takes in hexadecimal.							//
+	if( kbBrickCollisionOnly )
 	{
 		fixtureDef.filter.maskBits = 32;																								//
-		fixtureDef.filter.categoryBits = 1;																								//
 		fixtureDef.density = 0.0f;																										//
 	}
 	else
 	{
 		fixtureDef.filter.maskBits = 36;																								//
-		fixtureDef.filter.categoryBits = 1;																							   //
 	}
+		fixtureDef.filter.categoryBits = 1;																							   //
+	// Groups aren't set in any of our game shapes																						//
 	fixtureDef.filter.groupIndex = 0;																								   //
 
-	// This attaches our new fixture to the existing player body																	   //
+	// Create and attach our new fixture to the existing player body																	   //
 	GetPhysicsBody()->CreateFixture( &fixtureDef );																						//
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OnEscape																							//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::OnEscape()
 {
 	StopRunningSound();
@@ -758,10 +770,6 @@ void CPlayer::OnEscape()
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	HardContactEvent																					//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	const bool bBeganContact																			//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::HardContactEvent( const bool bBeganContact )
 {
@@ -795,10 +803,6 @@ void CPlayer::HardContactEvent( const bool bBeganContact )
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	SensorContactEvent																					//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	const bool bBeganContact																			//
-//																														//
-// Returns		:	void																								//
-// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::SensorContactEvent( const bool bBeganContact )
 {
 // If began a new contact, add to the sum
@@ -819,7 +823,9 @@ void CPlayer::SensorContactEvent( const bool bBeganContact )
 	}
 }
 
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	OnLanded																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::OnLanded()
 {
 // The player is grounded, can jump
@@ -867,12 +873,16 @@ void CPlayer::OnLanded()
 #endif
 		}
 	}
-
+	// Update highest grounded Y coordinate
 	SetHighestGroundedY();
+
+	// Stop jump / falling sound effect
 	StopVerticalMovementSound();
 }
 
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	StopVerticalMovementSound																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::StopVerticalMovementSound()
 {
 	{
@@ -890,6 +900,9 @@ void CPlayer::StopVerticalMovementSound()
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	StopRunningSound																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::StopRunningSound()
 {
 	if( m_uiRunningSoundID != 0 )
@@ -899,6 +912,9 @@ void CPlayer::StopRunningSound()
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	PlayRunningSound																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::PlayRunningSound()
 {
 	if( !m_uiRunningSoundID )
@@ -909,10 +925,6 @@ void CPlayer::PlayRunningSound()
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnWalkablePlatform																			//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LandedOnWalkablePlatform()
 {
@@ -931,10 +943,6 @@ void CPlayer::LandedOnWalkablePlatform()
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LeftGround																							//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LeftGround()
 {
@@ -963,12 +971,14 @@ void CPlayer::LeftGround()
 	SetHighestGroundedY();
 }
 
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ClimbUpBrickLedge																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::ClimbUpBrickLedge()
 {
-	const float kfVerticalSpeed = GetVelocity().y;
+	// https://youtu.be/BgUzteADsRI?t=84
 	// Only climb if going upwards
-	if( kfVerticalSpeed > 0.0f )
+	if( GetVelocity().y > 0.0f )
 	{
 		ApplyDirectionChange( m_eJumpDirection );
 	}
@@ -977,13 +987,12 @@ void CPlayer::ClimbUpBrickLedge()
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	BumpedWithBricks																					//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
-// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::BumpedWithBricks()
 {
+#ifdef PLAYER_DEBUG_CONTACTS
 	CCLOG( "Wall Bump" );
+#endif // PLAYER_DEBUG_CONTACTS
+
 // Make sure player is not standing in conveyor belt
 	if ( !GetIsOnConveyorBelt() )
 	{
@@ -994,10 +1003,6 @@ void CPlayer::BumpedWithBricks()
 
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	LandedOnConveyorBelt																				//
-// -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	const EPlayerDirection eDirectionLock																//
-//																														//
-// Returns		:	void																								//
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 {
@@ -1069,15 +1074,13 @@ void CPlayer::LandedOnConveyorBelt( const EPlayerDirection eDirectionLock )
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	ForceConveyorBeltMovement																			//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
-// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::ForceConveyorBeltMovement( )
 {
 // Debug
+#ifdef PLAYER_DEBUG_DIRECTION
 	CCLOG( "Forced Conveyor Direction" );
-	
+#endif // PLAYER_DEBUG_DIRECTION
+		
 // Set as grounded, can jump, cannot be controlled (direction locked), and no longer pending direction
 	m_bIsGrounded = true;
 	m_bCanJump = true;
@@ -1088,7 +1091,9 @@ void CPlayer::ForceConveyorBeltMovement( )
 	ApplyDirectionChange( m_ePendingDirection, true );
 }
 
-
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	LeftConveyorBelt																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LeftConveyorBelt()
 {
 	m_bIsOnConveyorBelt = false;
@@ -1102,10 +1107,6 @@ void CPlayer::LeftConveyorBelt()
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	Die																									//
 // -------------------------------------------------------------------------------------------------------------------- //
-// Parameters	:	none																								//
-//																														//
-// Returns		:	void																								//
-// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::Die()
 {
 	if ( m_bIsAlive )
@@ -1116,7 +1117,10 @@ void CPlayer::Die()
 }
 
 
-// Is in charge of loading/unloading all the animations required for the Player Class
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	LoadAnimations																						//
+// Is in charge of loading/unloading all the animations required for the Player Class									//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 {
 	int iCounter;
@@ -1149,6 +1153,9 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	InitiateAnimationStateChange																		//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 {
 	// This is called to stop all currently running animations,
@@ -1177,6 +1184,9 @@ void CPlayer::InitiateAnimationStateChange(EAnimationState eNewAnimationState)
 	AnimationStateChange(&eNewAnimationState);
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	AnimationStateChange																				//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 {
 	char* pszAnim = nullptr;
@@ -1222,6 +1232,9 @@ void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 	}
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	AlternateIdleAnimation																				//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::AlternateIdleAnimation(bool bPlayStandardIdle)
 {
 	// stop previous actions/animations
@@ -1235,6 +1248,9 @@ void CPlayer::AlternateIdleAnimation(bool bPlayStandardIdle)
 	RunAction(GCCocosHelpers::CreateAnimationActionLoop(m_pcPlayerAnimationList.at(pszAnim)));
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	ResetIdle																							//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::ResetIdle()
 {
 	// resets member variables that are needed for alternating between different idle animations
@@ -1242,6 +1258,9 @@ void CPlayer::ResetIdle()
 	m_bSelectedStandardIdle = false;
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	SetHighestGroundedY																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::SetHighestGroundedY()
 {
 	// Store last grounded Y coordinate
@@ -1249,6 +1268,9 @@ void CPlayer::SetHighestGroundedY()
 	SetHighestMidAirY();
 }
 
+// -------------------------------------------------------------------------------------------------------------------- //
+// Function		:	SetHighestMidAirY																					//
+// -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::SetHighestMidAirY()
 {
 	// Set last highest Y to be this current coordinate
