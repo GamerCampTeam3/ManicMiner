@@ -103,8 +103,12 @@ void CSolarLight::CheckCollisions()
 	// We'll be checking the areas highlighted in red in my diagram
 	// -----------------------------------------------------------------------------------------------------------------------------------------
 
-	// To avoid bad querying regarding a certain block, we can't check the entire area, as it will trigger with every adjacent block
-	// So we can avoid this by querying a slightly smaller area, 10x10 instead of 60x60 for example
+	// To avoid bad querying regarding a certain block, we can't check the entire area, as it will detect every adjacent block
+	
+	//			I think this is because I decided, back in Module 1, that 1 Box2D unit would equal the length of 1 block...
+	//			If I were to do it again I'd probably set it to be something like 10 or 100 Box2D units.
+
+	// So we can avoid this physics engine issue by querying a slightly smaller area, 10x10 instead of 60x60 for example
 	// Because Querying will be done with Box2D we have to use Box2D units
 	// 1 block is 1 unit, so we can set the margin to be something like 0.40f, and we'll be querying 20% of the area inside the block
 	// 0.40f is 40% of the block, so if we contract the block by 40% on both sides we contracted 80%, hence the 20% area we're left with
