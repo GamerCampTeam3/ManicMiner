@@ -1148,6 +1148,7 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 		{
 			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->release();
 			m_pcPlayerAnimationList.at(pszAnimations[iCounter]) = nullptr;
+			m_pcPlayerAnimationList.erase(pszAnimations[iCounter]);
 		}
 	}
 }
@@ -1220,7 +1221,7 @@ void CPlayer::AnimationStateChange(EAnimationState* eNewAnimationState)
 		}
 	}
 
-	if (bHasAnimation)
+	if (bHasAnimation && nullptr != pszAnim)
 	{
 		auto pAnimation = m_pcPlayerAnimationList[pszAnim];
 		if (nullptr != pAnimation)
