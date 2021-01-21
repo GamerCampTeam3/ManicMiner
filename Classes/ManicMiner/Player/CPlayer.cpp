@@ -1123,7 +1123,7 @@ void CPlayer::Die()
 // -------------------------------------------------------------------------------------------------------------------- //
 void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 {
-	int iCounter;
+	int iCounter = 0;
 	char* pszAnimations[4];
 	pszAnimations[0] = "Idle";
 	pszAnimations[1] = "AlternativeIdle";
@@ -1131,13 +1131,11 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 	pszAnimations[3] = "Jump";
 	if(bShouldLoadAnimations)
 	{
-		iCounter = 0;
 		// Load Animations
 
-		int iCounter = 0;
+		cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
 		for (const char* pszAnim : pszAnimations)
 		{
-			cocos2d::ValueMap& rdictPlist = GCCocosHelpers::CreateDictionaryFromPlist(GetFactoryCreationParams()->strPlistFile);
 			m_pcPlayerAnimationList.insert({ pszAnimations[iCounter], GCCocosHelpers::CreateAnimation(rdictPlist, pszAnimations[iCounter]) });
 			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->retain();
 			iCounter++;
@@ -1149,6 +1147,7 @@ void CPlayer::LoadAnimations(bool bShouldLoadAnimations)
 		for(iCounter; iCounter <= 0; iCounter--)
 		{
 			m_pcPlayerAnimationList.at(pszAnimations[iCounter])->release();
+			m_pcPlayerAnimationList.at(pszAnimations[iCounter]) = nullptr;
 		}
 	}
 }
