@@ -246,7 +246,7 @@ void CSolarLight::CheckCollisions()
 		}
 	}
 #ifdef DEBUG_SOLAR_LIGHT
-	CCLOG( "%d Reflections", iNumOfReflections );
+	CCLOG( "%d Solar Light Reflections", iNumOfReflections );
 #endif //  DEBUG_SOLAR_LIGHT
 
 	// Update the air manager with whether the light is or not overlapping with the player this frame
