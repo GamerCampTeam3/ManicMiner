@@ -37,6 +37,8 @@ public:
 
 	void CB_OnGameExitButton( Ref* pSender);
 
+	void CB_OnLevelSelectButton( Ref* pSender );
+
 	void CB_OnFullScreenButton( Ref* pSender );
 
 	void CB_GoToHelp( Ref* pSender );

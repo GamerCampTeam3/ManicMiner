@@ -262,6 +262,9 @@
     <Filter Include="Classes\ManicMiner\Scenes\Pause">
       <UniqueIdentifier>{61adb2d3-3ce2-4913-8a05-43831fcd5b0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ManicMiner\Scenes\Level Select">
+      <UniqueIdentifier>{1a2008b0-85cf-483e-92c1-10b2e25cfcf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -575,6 +578,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ManicMiner\Scenes\Pause\CPauseScene.cpp">
       <Filter>Classes\ManicMiner\Scenes\Pause</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ManicMiner\Scenes\Level Select\CLevelSelectScene.cpp">
+      <Filter>Classes\ManicMiner\Scenes\Level Select</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -955,6 +961,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ManicMiner\AudioHelper\EBackgroundMusicNames.h">
       <Filter>Classes\ManicMiner\AudioHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ManicMiner\Scenes\Level Select\CLevelSelectScene.h">
+      <Filter>Classes\ManicMiner\Scenes\Level Select</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

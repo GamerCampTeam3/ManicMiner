@@ -94,6 +94,26 @@ bool CMenuLayer::init()
     m_pMenu->setPosition( Vec2::ZERO );
     this->addChild( m_pMenu, 1);
     ///////////////////////////////////////////////////////////////////////////
+
+    MenuItemImage* pLevelSelect = MenuItemImage::create(
+        "Menu/Buttons/choose_level.png",
+        "Menu/Buttons/choose_level.png",
+        CC_CALLBACK_1( CMenuLayer::CB_OnLevelSelectButton, this ) );
+
+    pLevelSelect->setPosition( Vec2( origin.x + (visibleSize.width * 0.638f),
+        origin.y + (visibleSize.height * 0.45f) ) );
+
+    // create menu, it's an autorelease object
+    m_pMenu = Menu::create( pLevelSelect, nullptr );
+    m_pMenu->setPosition( Vec2::ZERO );
+    this->addChild( m_pMenu, 1 );
+
+
+
+
+
+
+	
     /// Create the HELP button that will lead to controls/help scene
     /// If not wanted, simply set the boolean to false
     if ( true )
@@ -131,6 +151,12 @@ bool CMenuLayer::init()
     this->addChild(pSprite, 0);
 
     return true;
+}
+
+
+void CMenuLayer::CB_OnLevelSelectButton(Ref* pSender)
+{
+    m_pcLevelManager->GoToSelection();
 }
 
 

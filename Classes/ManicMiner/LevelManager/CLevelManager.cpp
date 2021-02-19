@@ -48,6 +48,7 @@
 #include "ManicMiner/Layers/CMLTheFinalBarrier.h"
 #include "ManicMiner/Scenes/Controls/CControlsScene.h"
 #include "ManicMiner/Scenes/GameOver/CGameOverScene.h"
+#include "ManicMiner/Scenes/Level Select/CLevelSelectScene.h"
 
 
 USING_NS_CC;
@@ -104,6 +105,12 @@ void CLevelManager::GoToControlsScene()
 	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 0.2f, pScene ) );
 }
 
+void CLevelManager::GoToSelection()
+{
+	Scene* pScene = CLevelSelectScene::scene( *this );
+	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 0.2f, pScene ) );
+}
+
 // -------------------------------------------------------------------------------------------------------------------- //
 // Function		:	GoToGameOverScene																					//
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -114,6 +121,126 @@ void CLevelManager::GoToGameOverScene()
 	
 	Scene* pScene = CGameOverScene::scene( *this );
 	cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionCrossFade::create( 0.2f, pScene ) );	
+}
+
+void CLevelManager::SelectLevel(int i)
+{
+	//static const int n = i;
+
+	cocos2d::Scene* pScene = nullptr;
+
+	
+	switch (i)
+	{
+		case 0:
+			// CENTRAL CAVERN 
+			pScene = TGCGameLayerSceneCreator< CMLCentralCavern >::CreateScene();
+			break;
+		case 1:
+			// THE COLD ROOM
+			pScene = TGCGameLayerSceneCreator< CMLTheColdRoom >::CreateScene();
+			break;
+		case 2:
+			// THE MENAGERIE
+			pScene = TGCGameLayerSceneCreator< CMLTheMenagerie >::CreateScene();
+			break;
+		case 3:
+			// ABANDONED URANIUM WORKINGS
+			pScene = TGCGameLayerSceneCreator< CMLAbandonedUraniumWorkings >::CreateScene();
+			break;
+		case 4:
+			// EUGENES LAIR
+			pScene = TGCGameLayerSceneCreator< CMLEugenesLair >::CreateScene();
+			break;
+		case 5:
+			// PROCESSING PLANT
+			pScene = TGCGameLayerSceneCreator< CMLProcessingPlant >::CreateScene();
+			break;
+		case 6:
+			// THE VAT
+			pScene = TGCGameLayerSceneCreator< CMLTheVat >::CreateScene();
+			break;
+		case 7:
+			// WILLY MEETS KONG
+			pScene = TGCGameLayerSceneCreator< CMLWillyMeetsKong >::CreateScene();
+			break;
+		case 8:
+			// WACKY AMOEBATRONS
+			pScene = TGCGameLayerSceneCreator< CMLWackyAmoebatrons >::CreateScene();
+			break;
+		case 9:
+			// THE ENDORIAN FOREST
+			pScene = TGCGameLayerSceneCreator< CMLTheEndorianForest >::CreateScene();
+			break;
+		case 10:
+			// ATTACK OF THE MUTANT
+			pScene = TGCGameLayerSceneCreator< CMLAttackOfTheMutant >::CreateScene();
+			break;
+		case 11:
+			// RETURN OF KONG
+			pScene = TGCGameLayerSceneCreator< CMLReturnOfKong >::CreateScene();
+			break;
+		case 12:
+			// ORE REFINERY
+			pScene = TGCGameLayerSceneCreator< CMLOreRefinery >::CreateScene();
+			break;
+		case 13:
+			// SKY LAB LANDING BAY
+			pScene = TGCGameLayerSceneCreator< CMLSkyLabLandingBay >::CreateScene();
+			break;
+		case 14:
+			// THE BANK
+			pScene = TGCGameLayerSceneCreator< CMLTheBank >::CreateScene();
+			break;
+		case 15:
+			// THE SIXTEENTH CAVERN
+			pScene = TGCGameLayerSceneCreator< CMLTheSixteenthCavern >::CreateScene();
+			break;
+		case 16:
+			// THE WAREHOUSE
+			pScene = TGCGameLayerSceneCreator< CMLTheWarehouse >::CreateScene();
+			break;
+		case 17:
+			// AMOEBATRONS REVENGE
+			pScene = TGCGameLayerSceneCreator< CMLAmoebatronsRevenge >::CreateScene();
+			break;
+		case 18:
+			// SOLAR POWER GENERATOR
+			pScene = TGCGameLayerSceneCreator< CMLSolarPowerGenerator >::CreateScene();
+			break;
+		case 19:
+			// THE FINAL BARRIER
+			pScene = TGCGameLayerSceneCreator< CMLTheFinalBarrier >::CreateScene();
+			break;
+
+
+		default:
+			// Should not run
+			CC_ASSERT( false );
+			break;
+	}
+
+
+
+	// If pScene is not nullptr, means a CManicLayer was created
+	if (pScene != nullptr)
+	{
+		// Get the new CManicLayer ( child of pScene, tag = 0 )
+		auto newManicLayer = static_cast<CManicLayer*>(pScene->getChildByTag( 0 ));
+
+		// Assign its pointer to this CLevelManager
+		newManicLayer->SetLevelManager( *this );
+
+		// Assign Game Manager pointer to instantiated Game Manager on this class
+		newManicLayer->SetGameManager( *m_pcCGameManager );
+
+		// We initialize the values here
+		newManicLayer->Init();
+
+
+		// Begin transition
+		cocos2d::Director::getInstance()->replaceScene( cocos2d::TransitionPageTurn::create( 1.0f, pScene, false ) );
+	}
 }
 
 
