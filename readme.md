@@ -25,4 +25,6 @@ https://www.artstation.com/helen_wiggin \
 Chris Niblett\
 https://www.artstation.com/chrisniblett \
 Johnny Patroklou\
-https://www.artstation.com/johnnypa
+https://www.artstation.com/johnnypa \
+Aimee-Rose Schiele\
+https://www.artstation.com/aimeeroseschiele
